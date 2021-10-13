@@ -5,24 +5,24 @@ Contains the class DBStorage
 
 import models
 from models.base_model import BaseModel, Base
-from models.student import Student
+from models.student import Students
 from models.partner import Partner
 from models.job import Job
-from models.user import User
+from models.users import Users
 from models.contracttype import Contracttype
 from models.jobtype import Jobtype
 from models.availability import Availability
-from models.resorremote import Presorremote
-from models.usertype import Usertype
+from models.pres_or_remote import PresOrRemot
+from models.user_type import UserType
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Student": Student, "Partner": Partner, "Job": Job, "User": User,
+classes = {"Student": Students, "Partner": Partner, "Job": Job, "User": Users,
            "Contracttype": Contracttype, "Jobtype": Jobtype,
-           "Availability": Availability, "Presorremote": Pressorremote,
-           "Usertype": Usertype}
+           "Availability": Availability, "Presorremote": PresOrRemot,
+           "Usertype": UserType}
 
 
 class DBStorage:
