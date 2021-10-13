@@ -3,22 +3,21 @@
 from sqlalchemy.sql.sqltypes import Numeric
 from models.base_model import BaseModel, Base
 from datetime import datetime
-from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
 from sqlalchemy.dialects.mysql import TINYINT
 from sqlalchemy.orm import backref, relationship
-from models.availability import Availability
-from models.pres_or_remote import PresOrRemot
-from models.users import Users
 
 
-class Students(BaseModel, Base):
+class Student(BaseModel, Base):
     """ inherits from BaseModel and Base """
-    __tablename__ = "STUDENTS"
+    __tablename__ = 'students'
     id = Column(Integer, primary_key=True, nullable=False)
-    firstname = Column(String(128), nullable=False)
-    lastname = Column(String(128), nullable=False)
+    pres_or_remot_id = Column(String(60), ForeignKey('pres_or_remots.id'), nullable=False)
+    ava_id = Column(String(60), ForeignKey('availabilities.id'), nullable=False)
+    firstname = Column(String(45), nullable=False)
+    lastname = Column(String(45), nullable=False)
     email = Column(String(45), nullable=False)
-    phonenumber = Column(Integer, nullable=True)
+    phonenumber = Column(String(15), nullable=True)
     age = Column(Integer, nullable=True)
     nationality = Column(String(45), nullable=True)
     description = Column(String(1000), nullable=True)
@@ -30,9 +29,11 @@ class Students(BaseModel, Base):
     cv_filename_physical = Column(String(250), nullable=True)
     cv_filename_logical = Column(String(250), nullable=True)
     deleted = Column(TINYINT(1), default=0, nullable=False)
-    deleted_At = Column(DateTime, default=datetime.utcnow(), nullable=False)
-    created_by = relationship("Users", backref="STUDENTS", uselist=False)
-    updated_by = relationship("Users", backref="STUDENTS", uselist=False)
-    deleted_by = relationship("Users", backref="STUDENTS", uselist=False)
-    ava_id = relationship("Availability", backref="STUDENTS", uselist=False)
-    pres_or_remote_id = relationship("PresOrRemot", backref="STUDENTS", uselist=False)
+    created_by = Column(Integer, ForeignKey('users.id'), nullable=True)
+    updated_by = Column(Integer, ForeignKey('users.id'), nullable=True)
+    deleted_by = Column(Integer, ForeignKey('users.id'), nullable=True)
+    applications = relationship("Application", backref='student')
+
+    def __init__(self, *args, **kwargs):
+        """initializes student"""
+        super().__init__(*args, **kwargs)

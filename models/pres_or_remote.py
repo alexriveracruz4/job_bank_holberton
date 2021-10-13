@@ -5,9 +5,13 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey
 
 
-class PresOrRemot(BaseModel, Base):
+class Pres_or_remot(BaseModel, Base):
     """ In person or remote inherits from BaseModel and Base """
-    __tablename__ = "PresOrRemot"
+    __tablename__ = "pres_or_remots"
     id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String(45), nullable=False)
-    student_id = Column(Integer, ForeignKey("Students.id"), nullable=False)
+    students = relationship('Student', backref='pres_or_remot')
+
+    def __init__(self, *args, **kwargs):
+        """initializes pres_or_remote"""
+        super().__init__(*args, **kwargs)

@@ -2,15 +2,18 @@
 """ Availability Module for Job Bank Holberton """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy.dialects.mysql import TINYINT
 
 
-class Availability(BaseModel, Base):
+class Job_type(BaseModel, Base):
     """ inherits from BaseModel and Base """
-    __tablename__ = 'availabilities'
+    __tablename__ = 'job_types'
     id = Column(Integer, primary_key=True, nullable=False)
-    type = Column(String(45), nullable=False)
-    students = relationship('Student', backref='availability')
+    name = Column(String(45), nullable=False)
+    sequence = Column(Integer, nullable=False)
+    deleted = deleted = Column(TINYINT(1), default=0, nullable=False)
+    jobs = relationship('Job', backref='job_type')
 
     def __init__(self, *args, **kwargs):
-        """initializes job"""
+        """initializes contract type"""
         super().__init__(*args, **kwargs)
