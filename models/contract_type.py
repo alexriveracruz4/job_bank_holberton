@@ -3,6 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.dialects.mysql import TINYINT
+from sqlalchemy.orm import backref, relationship
 
 
 class Contract_type(BaseModel, Base):
@@ -12,7 +13,7 @@ class Contract_type(BaseModel, Base):
     name = Column(String(45), nullable=False)
     sequence = Column(Integer, nullable=False)
     deleted = deleted = Column(TINYINT(1), default=0, nullable=False)
-    jobs = relationship('Job', backref='contract_type')
+    jobs = relationship('Job', backref='contracttype')
 
     def __init__(self, *args, **kwargs):
         """initializes contract type"""

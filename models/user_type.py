@@ -2,6 +2,7 @@
 """ user_type Module for Job Bank Holberton """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy.orm import backref, relationship
 
 
 class User_type(BaseModel, Base):
