@@ -3,6 +3,7 @@
 from sqlalchemy.sql.expression import null
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy.orm import backref, relationship
 
 
 class Pres_or_remot(BaseModel, Base):
