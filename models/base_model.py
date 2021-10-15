@@ -20,7 +20,7 @@ class BaseModel:
 
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow)
-    deleted_at = Column(DateTime, default=0)
+    deleted_at = Column(DateTime, nullable=True)
 
     def __init__(self, *args, **kwargs):
         """Initialization of the base model"""
