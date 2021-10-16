@@ -46,12 +46,18 @@ class DBStorage:
     def all(self, cls=None):
         """query on the current database session"""
         new_dict = {}
-        for clss in classes:
-            if cls is None or cls is classes[clss] or cls is clss:
-                objs = self.__session.query(classes[clss]).all()
-                for obj in objs:
-                    key = obj.__class__.__name__ + '.' + str(obj.id)
-                    new_dict[key] = obj
+        if cls == classes["Job"]:
+            objs = self.__session.query(Job).all()
+            for obj in objs:
+                key = obj.__class__.__name__ + '.' + str(obj.partner_id) + str(obj.id)
+                new_dict[key] = obj
+        else:
+            for clss in classes:
+                if cls is None or cls is classes[clss] or cls is clss:
+                    objs = self.__session.query(classes[clss]).all()
+                    for obj in objs:
+                        key = obj.__class__.__name__ + '.' + str(obj.id)
+                        new_dict[key] = obj
         return (new_dict)
 
     def new(self, obj):
@@ -88,7 +94,7 @@ class DBStorage:
 
         all_cls = models.storage.all(cls)
         for value in all_cls.values():
-            if (value.id == id):
+            if (value.id == int(id)):
                 return value
 
         return None

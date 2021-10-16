@@ -38,7 +38,8 @@ def delete_student(student_id):
     if not student:
         abort(404)
 
-    storage.delete(student)
+    # storage.delete(student)
+    setattr(student, "deleted", 1)
     storage.save()
 
     return make_response(jsonify({}), 200)
