@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-""" objects that handles all default RestFul API actions for Amenities"""
+""" objects that handles all default RestFul API actions for Students"""
 from models.student import Student
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
+import uuid
 
 
 @app_views.route('/students', methods=['GET'], strict_slashes=False)
@@ -18,13 +19,34 @@ def get_students():
     return jsonify(list_students)
 
 @app_views.route('/students/<student_id>', methods=['GET'], strict_slashes=False)
-def get_state(student_id):
+def get_student(student_id):
     """ Retrieves a specific Student """
     student = storage.get(Student, student_id)
     if not student:
         abort(404)
 
     return jsonify(student.to_dict())
+
+@app_views.route('/students/login', methods=['POST'], strict_slashes=False)
+def get_login_student():
+    """
+    Login for student
+    """
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+    token = str(uuid.uuid4())
+    data = request.get_json()
+    all_students = storage.all(Student).values()
+    list_students = []
+    for student in all_students:
+        list_students.append(student.to_dict(save_fs="No"))
+    for i in range (0, len(list_students)):
+        if data["username"] == list_students[i]["email"]:
+            if data["password"] == list_students[i]["password"]:
+                student =  storage.get(Student, list_students[i]["id"])
+                setattr(student, "token", token)
+                storage.save()
+                return jsonify({"ok": "ok", "token": token})
 
 @app_views.route('/students/<student_id>', methods=['DELETE'],
                  strict_slashes=False)
@@ -60,10 +82,10 @@ def post_student():
         abort(400, description="Missing email")
     if 'password' not in request.get_json():
         abort(400, description="Missing password")
-    if 'pres_or_remot_id' not in request.get_json():
-        abort(400, description="Missing pres_or_remot_id")
-    if 'ava_id' not in request.get_json():
-        abort(400, description="Missing ava_id")
+    if 'pres_or_remot' not in request.get_json():
+        abort(400, description="Missing pres_or_remot")
+    if 'availability' not in request.get_json():
+        abort(400, description="Missing availability")
     data = request.get_json()
     instance = Student(**data)
     instance.save()

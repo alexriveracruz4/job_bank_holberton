@@ -4,6 +4,7 @@ from models.partner import Partner
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
+import uuid
 
 
 @app_views.route('/partners', methods=['GET'], strict_slashes=False)
@@ -25,6 +26,27 @@ def get_partner(partner_id):
         abort(404)
 
     return jsonify(partner.to_dict())
+
+@app_views.route('/partners/login', methods=['POST'], strict_slashes=False)
+def get_login_partner():
+    """
+    Login for partner
+    """
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+    token = str(uuid.uuid4())
+    data = request.get_json()
+    all_partners = storage.all(Partner).values()
+    list_partners = []
+    for partner in all_partners:
+        list_partners.append(partner.to_dict(save_fs="No"))
+    for i in range (0, len(list_partners)):
+        if data["username"] == list_partners[i]["email"]:
+            if data["password"] == list_partners[i]["password"]:
+                partner =  storage.get(Partner, list_partners[i]["id"])
+                setattr(partner, "token", token)
+                storage.save()
+                return jsonify({"ok": "ok", "token": token})
 
 @app_views.route('/partners/<partner_id>', methods=['DELETE'],
                  strict_slashes=False)
