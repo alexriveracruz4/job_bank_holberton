@@ -8,21 +8,15 @@ from models.base_model import BaseModel, Base
 from models.student import Student
 from models.partner import Partner
 from models.job import Job
-from models.user import User
-from models.contract_type import Contract_type
-from models.job_type import Job_type
-from models.availability import Availability
-from models.pres_or_remot import Pres_or_remot
-from models.user_type import User_type
+from models.admin import Admin
+from models.application import Application
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-classes = {"Student": Student, "Partner": Partner, "Job": Job, "User": User,
-           "Contract_type": Contract_type, "Jobtype": Job_type,
-           "Availability": Availability, "Pres_or_remot": Pres_or_remot,
-           "User_type": User_type}
+classes = {"Student": Student, "Partner": Partner, "Job": Job, "Admin": Admin,
+           "Application": Application}
 
 
 class DBStorage:

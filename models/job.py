@@ -15,34 +15,24 @@ class Job(BaseModel, Base):
     __tablename__ = 'jobs'
     partner_id = Column(Integer, ForeignKey('partners.id'), primary_key=True, autoincrement=False)
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=False)
-    contract_type = Column(Integer, ForeignKey("contract_types.id"), nullable=False)
-    job_type = Column(Integer, ForeignKey("job_types.id"), nullable=False)
+    contract_type = Column(String(45), nullable=False)
+    job_type = Column(String(45), nullable=False)
     code = Column(String(255), nullable=False)
     title = Column(String(45), nullable=False)
     description = Column(String(2000), nullable=True)
     city = Column(String(45), nullable=True)
     country = Column(String(45), nullable=True)
-    pres_or_remote = Column(Integer, ForeignKey("pres_or_remots.id"), nullable=False)
+    pres_or_remote = Column(String(45), nullable=False)
     experience = Column(String(45), nullable=False)
-    travel_availability = Column(TINYINT(1), default=0, nullable=False)
+    travel_availability = Column(String(45), nullable=False)
     age_min = Column(Integer, nullable=True)
     age_max =  Column(Integer, nullable=True)
     salary = Column(String(45), nullable=True)
     deleted = Column(TINYINT(1), default=0, nullable=False)
-    created_by_ustype = Column(Integer, nullable=True)
-    updated_by_ustype = Column(Integer, nullable=True)
-    deleted_by_ustype = Column(Integer, nullable=True)
-    created_by_id = Column(Integer, nullable=True)
-    updated_by_id = Column(Integer, nullable=True)
-    deleted_by_id = Column(Integer, nullable=True)
-    __table_args__ = (
-        ForeignKeyConstraint(['created_by_ustype', 'created_by_id'],
-                             ['users.user_type_id', 'users.id']),
-        ForeignKeyConstraint(['updated_by_ustype', 'updated_by_id'],
-                             ['users.user_type_id', 'users.id']),
-        ForeignKeyConstraint(['deleted_by_ustype', 'deleted_by_id'],
-                             ['users.user_type_id', 'users.id'])
-    )
+    created_by = Column(Integer, nullable=True)
+    updated_by = Column(Integer, nullable=True)
+    deleted_by = Column(Integer, nullable=True)
+
     applications = relationship('Application', backref='job')
 
     def __init__(self, *args, **kwargs):
