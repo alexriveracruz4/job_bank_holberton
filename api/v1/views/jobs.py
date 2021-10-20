@@ -61,8 +61,6 @@ def post_job():
     if not request.get_json():
         abort(400, description="Not a JSON")
 
-    if 'contract_type' not in request.get_json():
-        abort(400, description="Missing contract_type")
     if 'job_type' not in request.get_json():
         abort(400, description="Missing job_type")
     if 'code' not in request.get_json():
