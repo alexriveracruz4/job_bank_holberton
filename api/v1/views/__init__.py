@@ -8,3 +8,4 @@ from api.v1.views.index import *
 from api.v1.views.students import *
 from api.v1.views.partners import *
 from api.v1.views.jobs import *
+from api.v1.views.admins import *
