@@ -1,0 +1,108 @@
+.FilterContainer {
+  width: 80%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border: 2px solid black;
+}
+
+.TitleContainer h2{
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.TitleContainer {
+  border-bottom: 2px solid black;
+  text-align: center;
+}
+
+/*Palabra clave*/
+.KeyWord {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 2px solid black;
+  padding-bottom: 10px;
+}
+
+.KeyWord input{
+  width: 80%;
+  border: 2px solid black;
+  padding: 5px;
+}
+.KeyWord button{
+  width: 30%;
+  border: 2px solid black;
+  box-shadow: #000 3px 3px 0;
+}
+.KeyWord button:hover {
+  cursor:pointer;
+  transform: scale(1.05);
+}
+
+.KeyWord button:active {
+  transform: scale(1);
+}
+/*Palabra clave*/
+
+
+/*Tipo de trabajo*/
+.TypeJob {
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 2px solid black;
+  padding-bottom: 10px;
+}
+
+.TypeJob h3{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.OptionsJob div {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.OptionsJob input {
+  margin-right: 10px;
+}
+
+.TypeJob input:hover {
+  cursor:pointer;
+}
+/*Tipo de trabajo*/
+
+/*Region*/
+.TypeRegion {
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 2px solid black;
+  padding-bottom: 10px;
+}
+
+.TypeRegion h3{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.OptionsRegion div {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.OptionsRegion input {
+  margin-right: 10px;
+}
+
+.TypeRegion input:hover {
+  cursor:pointer;
+}
+
+/*Region*/

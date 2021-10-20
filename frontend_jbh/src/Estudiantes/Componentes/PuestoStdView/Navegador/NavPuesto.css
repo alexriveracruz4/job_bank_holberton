@@ -1,0 +1,123 @@
+.App-header {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 2px solid #000;
+    box-shadow: 2px 2px 2px #888;
+}
+
+.logo-container {
+    margin: 10px 50px;
+    max-width: 50px;
+}
+
+@media (max-width: 1200px) and (min-width: 500px) {
+    .logo-container {
+        margin: 0px 0px;
+    }
+    
+}
+
+@media (max-width: 500px) {
+    .logo-container {
+        margin: 40px 10px;
+    }
+    .logo {
+      max-width: 100%;
+    }
+}
+
+.logo {
+    max-width: 100%;
+}
+  
+.usericon {
+    width: 45px;
+    height: 45px;
+}
+  
+.nav-button {
+    display: grid;
+    grid-template-columns: 150px 150px;
+    grid-gap: 2px;
+    margin: 18px 0px;
+    background-color: #000;
+    box-shadow: 3px 3px 3px #888888;
+    list-style: none;
+    border: 2px solid #000;
+}
+
+@media (max-width: 500px) {
+    .nav-button {
+      margin-top: 30px;
+      grid-template-columns: 100px 100px;
+    }
+    .userprofile {
+      padding: 10px;
+    }
+}
+  
+.nav-button a {
+  background-color: transparent;
+  color: #000;
+  text-decoration: none;
+}
+
+.puestos-div {
+  display: flex;
+  text-align: center;
+  transition: all 0.3s ease 0s;
+}
+
+.puestos-div:hover {
+  background-color: rgb(120, 171, 230);
+}
+
+.puestos-button {
+  width: 100%;
+  font-weight: 500;
+}
+
+.postulaciones-div {
+  display: flex;
+  text-align: center;
+  transition: all 0.3s ease 0s;
+}
+
+.postulaciones-div:hover {
+  background-color: rgb(120, 171, 230);
+}
+  
+.postulaciones-button {
+  width: 100%;
+  font-weight: 500;
+}
+  
+.userprofilecontainer {
+  width: 750px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  
+.userprofile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  
+.profile-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+  
+.name-button {
+  display: block;
+  padding: 15px 10px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
