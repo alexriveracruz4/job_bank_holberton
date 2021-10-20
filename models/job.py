@@ -15,7 +15,6 @@ class Job(BaseModel, Base):
     __tablename__ = 'jobs'
     partner_id = Column(Integer, ForeignKey('partners.id'), primary_key=True, autoincrement=False)
     id = Column(Integer, primary_key=True, nullable=False, autoincrement=False)
-    contract_type = Column(String(45), nullable=False)
     job_type = Column(String(45), nullable=False)
     code = Column(String(255), nullable=False)
     title = Column(String(45), nullable=False)
