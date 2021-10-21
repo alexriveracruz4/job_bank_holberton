@@ -135,13 +135,13 @@ def post_student():
     return make_response(jsonify(instance.to_dict()), 201)
 
 @app_views.route('/students/<student_id>', methods=['PUT'], strict_slashes=False)
-def put_state(student_id):
+def put_student(student_id):
     """
     Updates a Student
     """
     student = storage.get(Student, student_id)
 
-    if not state:
+    if not student:
         abort(404)
 
     if not request.get_json():
