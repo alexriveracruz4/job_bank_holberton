@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ objects that handles all default RestFul API actions for Students"""
 from models.student import Student
+from models.application import Application
+from models.job import Job
 from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
@@ -26,6 +28,47 @@ def get_student(student_id):
         abort(404)
 
     return jsonify(student.to_dict())
+
+@app_views.route('/students/applications',
+                 methods=['POST'], strict_slashes=False)
+def post_app_student():
+    """
+    Creates a Application
+    """
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+
+    if 'partner_id' not in request.get_json():
+        abort(400, description="partner_id")
+    if 'job_id' not in request.get_json():
+        abort(400, description="Missing job_id")
+    if 'student_id' not in request.get_json():
+        abort(400, description="Missing student_id")
+
+    data = request.get_json()
+    instance = Application(**data)
+    instance.save()
+    return make_response(jsonify(instance.to_dict()), 201)
+
+@app_views.route('/students/<student_id>/applications', methods=['GET'], strict_slashes=False)
+def get_app_student(student_id):
+    student = storage.get(Student, student_id)
+    if not student:
+        abort(404)
+
+    all_jobs = storage.all(Job).values()
+    all_applications = storage.all(Application).values()
+    list_applications = []
+    for app in all_applications:
+        if app.student_id == int(student_id):
+            list_applications.append(app)
+    apps = []
+    for app in list_applications:
+        for job in all_jobs:
+            if app.partner_id == job.partner_id and app.job_id == job.id:
+                apps.append(job.to_dict())
+
+    return jsonify(apps)
 
 @app_views.route('/students/login', methods=['POST'], strict_slashes=False)
 def get_login_student():

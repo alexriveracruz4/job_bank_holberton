@@ -45,6 +45,11 @@ class DBStorage:
             for obj in objs:
                 key = obj.__class__.__name__ + '.' + str(obj.partner_id) + str(obj.id)
                 new_dict[key] = obj
+        elif cls == classes["Application"]:
+            objs = self.__session.query(Application).all()
+            for obj in objs:
+                key = obj.__class__.__name__ + '.' + str(obj.partner_id) + str(obj.job_id) + str(obj.student_id)
+                new_dict[key] = obj
         else:
             for clss in classes:
                 if cls is None or cls is classes[clss] or cls is clss:
