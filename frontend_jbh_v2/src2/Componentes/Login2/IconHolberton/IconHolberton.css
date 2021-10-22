@@ -1,0 +1,10 @@
+.IconHolberton {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+img {
+  width: 20%;
+  min-width: 300px;
+  padding: 40px;
+}

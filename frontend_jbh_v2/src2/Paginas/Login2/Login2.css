@@ -1,0 +1,31 @@
+* {
+	padding: 0px;
+	margin: 0px;
+	box-sizing: border-box;
+  background-color: #F1F2F2;
+}
+.AppContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction : column;
+}
+
+.BoxLogin {
+  width: 30%;
+}
+@media (max-width: 1200px) and (min-width: 500px){
+  .BoxLogin {
+    width: 50%;
+  }
+}
+
+@media (max-width: 500px) {
+  .BoxLogin {
+    width: 90%;
+  }
+}
+
+.Icon {
+  margin: 20px;
+}

@@ -1,0 +1,56 @@
+.containerPrincipal {
+  width: 100%;
+  border: 2px solid black;
+  padding: 40px;
+  box-shadow: #000 2px 2px 0;
+}
+
+.form-group{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.User {
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.Password {
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.label_user {
+  width: 40%;
+  border: 2px solid black;
+}
+
+input{
+  text-align:center;
+}
+
+
+.Button {
+  margin-top: 20px;
+  border: 2px solid black;
+  box-shadow: #000 3px 3px 0;
+}
+
+.Button:hover {
+  cursor:pointer;
+  transform: scale(1.05);
+}
+
+.Button:active {
+  transform: scale(1);
+}

@@ -1,0 +1,13 @@
+.OneJob {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  border: 2px solid black;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.OneJob:hover {
+  cursor:pointer;
+  transform: scale(1.05);
+}

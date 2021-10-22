@@ -1,0 +1,63 @@
+/* PuestoInfo (description) */
+.info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+  
+.description-container {
+  max-width: 100%;
+  width: 1000px;
+}
+  
+.description-title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5px;
+  border: 2px solid #000;
+}
+  
+.description-title p {
+  margin-bottom: 0;
+}
+  
+.description-content {
+  border: 2px solid #000;
+  border-top: 0px;
+  padding: 5px;
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+  
+.description-content p {
+  line-height: 40px;
+}
+  
+.requirements-container {
+  max-width: 100%;
+  width: 1000px;
+}
+  
+.requirements-title {
+  justify-content: flex-start;
+  padding: 5px;
+  border: 2px solid #000;
+  border-top: 0px;
+}
+  
+.requirements-title p {
+  margin-bottom: 0;
+}
+  
+.requirements-content {
+  padding: 5px;
+  border: 2px solid #000;
+  border-top: 0px;
+  margin-bottom: 10px;
+}
+  
+.requirements-content p {
+  line-height: 40px;
+}

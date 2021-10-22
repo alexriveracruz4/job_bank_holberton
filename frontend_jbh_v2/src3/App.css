@@ -1,0 +1,70 @@
+* {
+	padding: 0px;
+	margin: 0px;
+	box-sizing: border-box;
+  background-color: #F1F2F2;
+}
+
+.AppContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction : column;
+}
+
+.HeaderContainer {
+  display: flex;
+  flex-direction : row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 70px;
+  position: relative;
+}
+
+.BodyContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction : row;
+  border-top: 2px solid black;
+}
+
+.FiltersContainer {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 800px) {
+  .BodyContainer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction : column;
+    border: 3px solid green;
+  }
+
+  .FiltersContainer {
+    width: 80%;
+    border: 3px solid rgb(36, 225, 33);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .JobsContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.JobsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
