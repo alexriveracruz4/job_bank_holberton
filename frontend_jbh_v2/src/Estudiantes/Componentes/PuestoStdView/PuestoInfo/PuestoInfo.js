@@ -8,7 +8,7 @@ function PuestoInfo(props) {
   const datos = props.datos[0];
   
   return (
-    <div className="info-container">
+    <div className="student-info-container">
       <div className="description-container">
         <div className="description-title">
           <p>Descripción</p>

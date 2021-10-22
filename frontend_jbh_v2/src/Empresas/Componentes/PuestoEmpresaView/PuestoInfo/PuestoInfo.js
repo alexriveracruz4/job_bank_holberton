@@ -6,7 +6,7 @@ function PuestoInfo(props) {
   const { id } = useParams();
   const datos = props.datos.filter(i => i.id == id)[0];
   console.log(datos)
-  function Travel_aval() {
+  function TravelAval() {
     if (datos.travel_availability === 0) {
       return "no disponible"
     } else {
@@ -15,7 +15,7 @@ function PuestoInfo(props) {
   }
 
 
-  function Contract_type() {
+  function ContractType() {
     if (datos.contract_type === 0) {
       return 'Contrato indeterminado.'
     } else if (datos.contract_type === 1){
@@ -25,7 +25,7 @@ function PuestoInfo(props) {
     }
   }
 
-  function Pres_or_remote() {
+  function PresOrRemote() {
     if (datos.pres_or_remote === 0) {
       return 'Presencial.'
     } else if (datos.pres_or_remote === 1){
@@ -36,7 +36,7 @@ function PuestoInfo(props) {
   }
 
   return (
-    <div className="info-container">
+    <div className="partner-info-container">
       <div className="description-container">
         <div className="description-title">
           <p>Descripción</p>
@@ -51,11 +51,11 @@ function PuestoInfo(props) {
         </div>
         <div className="requirements-content">
           <p>Experiencia: {datos.experience}</p>
-          <p>Disponibilidad de viajar: <Travel_aval /></p>
-          <p>Tipo de contrato: <Contract_type /></p>
+          <p>Disponibilidad de viajar: <TravelAval /></p>
+          <p>Tipo de contrato: <ContractType /></p>
           <p>País: {datos.country}</p>
           <p>Ciudad: {datos.city}</p>
-          <p>Modalidad: <Pres_or_remote /></p>
+          <p>Modalidad: <PresOrRemote /></p>
           <p>Sueldo: {datos.salary} $</p>
         </div>
       </div>

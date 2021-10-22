@@ -1,5 +1,5 @@
 import React from "react";
-import './NavPuesto.css';
+import './EstudianteNav.css';
 import logo from "./ImagenesNav/holberton-logo.png";
 import UserIcon from "./ImagenesNav/user-icon.png";
 import { useHistory } from 'react-router-dom'; 
@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 function NavPuesto() {
   let history = useHistory();
   return (
-    <header className="App-header">
+    <header className="Student-header">
       <div className="logo-container">
         <img src={ logo } className="logo" alt="logo holberton" />
       </div>

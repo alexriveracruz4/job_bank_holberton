@@ -1,5 +1,5 @@
 import React from "react";
-import { NavPuesto } from "../../Componentes/PuestoEmpresaView/Navegador/NavPuesto";
+import { NavPuesto } from "../../Componentes/PuestoEmpresaView/Navegador/EmpresaNav";
 import { PuestoInfo } from "../../Componentes/PuestoEmpresaView/PuestoInfo/PuestoInfo";
 import { PartnerInfo } from "../../Componentes/PuestoEmpresaView/PartnerInfo/PartnerInfo";
 
