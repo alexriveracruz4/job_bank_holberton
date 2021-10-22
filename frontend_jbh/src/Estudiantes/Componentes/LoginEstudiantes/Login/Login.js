@@ -3,6 +3,7 @@ import './Login.css';
 //import { useHistory } from 'react-router-dom';
 import { withRouter } from "react-router-dom"
 
+
 /*
 function Login() {
   let history = useHistory();
@@ -90,7 +91,7 @@ class LoginComponent extends React.Component {
 		//error
 		//});
 		alert("Error al hacer login.");
-		this.props.history.push("/404");
+		this.props.history.push('/404');
 		}
 	    );
 	}
@@ -132,4 +133,5 @@ class LoginComponent extends React.Component {
 
 }
 
-export { LoginComponent }
+//export { LoginComponent }
+export const LoginComponent_wr = withRouter(LoginComponent);
