@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 function NavPuesto() {
   let history = useHistory();
   return (
-    <header className="App-header">
+    <header className="Admin-header">
       <div className="logo-container">
         <img src={ logo } className="logo" alt="logo holberton" />
       </div>

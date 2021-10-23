@@ -60,7 +60,7 @@ const CrudForm = ({ createData }) => {
 
 
   /*mi codigo*/
-  /*return (
+  return (
     <div className="form-Publicar">
       <div className="profile-title">
         <h1>My profile</h1>
@@ -124,11 +124,11 @@ const CrudForm = ({ createData }) => {
         </form>
       </div>
     </div>
-  )*/
+  )
 
   /*termina mi codigo */
 
-  return (
+  /*return (
     <div>
       <form onSubmit={handleSubmit}>
         <input
@@ -190,7 +190,7 @@ const CrudForm = ({ createData }) => {
         <input type="submit" value="Enviar" />
       </form>
     </div>
-  );
+  );*/
 };
 
 export default CrudForm;
