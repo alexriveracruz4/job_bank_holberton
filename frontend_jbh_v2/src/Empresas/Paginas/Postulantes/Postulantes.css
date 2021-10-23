@@ -1,0 +1,17 @@
+.PostulantesContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction : column;
+}
+
+.PostulantesContainer .HeadersContainer {
+  display: flex;
+  flex-direction : row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 70px;
+  position: relative;
+}
+

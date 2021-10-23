@@ -10,15 +10,15 @@ const datos = Data;
 
 function MisPuestosDeTrabajo() {
   return (
-    <div className='PuestosDeTrabajoEstudianteContainer'>
+    <div className='MisPuestosDeTrabajoContainer'>
       <div className='HeaderContainer'>
         <NavPuesto />
       </div>
-      <div className='BodyContainer'>
-        <div className='FiltersContainer'> 
+      <div className='MPDTBodyContainer'>
+        <div className='MPDTFiltersContainer'> 
           
         </div>
-        <div className='JobsContainer'> 
+        <div className='MPDTJobsContainer'> 
           <ListJobs>
             {datos.map(trabajo => (
             <ItemJob 

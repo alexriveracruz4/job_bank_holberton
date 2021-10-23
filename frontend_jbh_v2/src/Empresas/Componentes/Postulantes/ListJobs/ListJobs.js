@@ -3,7 +3,7 @@ import './ListJobs.css';
 
 function ListJobs(props) {
   return (
-    <section className='PDTEListJob'>
+    <section className='ListJob'>
       <ul>
         {props.children} 
       </ul>

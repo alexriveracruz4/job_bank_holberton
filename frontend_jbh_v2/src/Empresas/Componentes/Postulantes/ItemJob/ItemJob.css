@@ -1,4 +1,4 @@
-.MPDTOneJobeEmpresa {
+.OneJobeEmpresa {
   display: flex;
   justify-content: center;
   margin-top: 24px;
@@ -8,63 +8,63 @@
 }
 
 
-.MPDTNoDisponible {
+.NoDisponible {
   color: red;
   font-size:x-large;
 }
 
-.MPDTDisponible {
+.Disponible {
   color: rgb(37, 37, 243);
   font-size: x-large;
 }
 
 
-.MPDTGroupOfButtons {
+.GroupOfButtons {
   margin-top: 10px;
 }
 
 /*Para el grupo de botones*/
-.MPDTGroupOfButtons button {
+.GroupOfButtons button {
   color: black; /* White text */
   padding: 10px 24px; /* Some padding */
 }
 
-.MPDTVerButton {
+.VerButton {
   background-color: #eaf513; /* Green background */
   border: 1px solid black; /* Green border */
 }
 
-.MPDTVerButton:hover {
+.VerButton:hover {
   cursor:pointer;
   transform: scale(1.1);
 }
 
-.MPDTEditarButton {
+.EditarButton {
   background-color:forestgreen; /* Green background */
   border: 1px solid black; /* Green border */
 }
 
-.MPDTEditarButton:hover {
+.EditarButton:hover {
   cursor:pointer;
   transform: scale(1.1);
 }
 
-.MPDTEliminarButton {
+.EliminarButton {
   background-color:rgb(233, 69, 69); /* Green background */
   border: 1px solid black; /* Green border */
 }
 
-.MPDTEliminarButton:hover {
+.EliminarButton:hover {
   cursor:pointer;
   transform: scale(1.1);
 }
 
-.MPDTPostulantesButton {
+.PostulantesButton {
   background-color:lavenderblush; /* Green background */
   border: 1px solid black; /* Green border */
 }
 
-.MPDTPostulantesButton:hover {
+.PostulantesButton:hover {
   cursor:pointer;
   transform: scale(1.1);
 }
