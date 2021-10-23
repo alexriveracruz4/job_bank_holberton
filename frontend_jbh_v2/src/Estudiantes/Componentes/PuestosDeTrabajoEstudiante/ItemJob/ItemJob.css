@@ -1,4 +1,4 @@
-.OneJob {
+.PDTEOneJob {
   display: flex;
   justify-content: center;
   margin-top: 24px;
@@ -7,7 +7,7 @@
   padding: 10px;
 }
 
-.OneJob:hover {
+.PDTEOneJob:hover {
   cursor:pointer;
   transform: scale(1.05);
 }

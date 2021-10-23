@@ -1,4 +1,4 @@
-.OneJob {
+.MPOneJob {
   display: flex;
   justify-content: center;
   margin-top: 24px;
@@ -7,17 +7,17 @@
   padding: 10px;
 }
 
-.OneJob:hover {
+.MPOneJob:hover {
   cursor:pointer;
   transform: scale(1.05);
 }
 
-.NoDisponible {
+.MPNoDisponible {
   color: red;
   font-size:x-large;
 }
 
-.Disponible {
+.MPDisponible {
   color: rgb(37, 37, 243);
   font-size: x-large;
 }

@@ -1,11 +1,4 @@
-* {
-	padding: 0px;
-	margin: 0px;
-	box-sizing: border-box;
-  background-color: #F1F2F2;
-}
-
-.PuestosDeTrabajoEstudianteContainer {
+.MisPuestosDeTrabajoContainer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,7 +15,7 @@
   position: relative;
 }
 
-.BodyContainer {
+.MPDTBodyContainer {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -30,7 +23,7 @@
   border-top: 2px solid black;
 }
 
-.FiltersContainer {
+.MPDTFiltersContainer {
   width: 30%;
   display: flex;
   flex-direction: column;
@@ -38,24 +31,22 @@
 }
 
 @media (max-width: 800px) {
-  .BodyContainer {
+  .MPDTBodyContainer {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction : column;
-    border: 3px solid green;
   }
 
-  .FiltersContainer {
+  .MPDTFiltersContainer {
     width: 80%;
-    border: 3px solid rgb(36, 225, 33);
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .JobsContainer {
+  .MPDTJobsContainer {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -63,7 +54,7 @@
   }
 }
 
-.JobsContainer {
+.MPDTJobsContainer {
   width: 100%;
   display: flex;
   flex-direction: column;

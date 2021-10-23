@@ -23,15 +23,15 @@ function MisPostulaciones() {
     setAllMyApplications(applications);
   }
   return (
-    <div className='PuestosDeTrabajoEstudianteContainer'>
+    <div className='MisPostulacionesContainer'>
       <div className='HeaderContainer'>
         <NavPuesto />
       </div>
-      <div className='BodyContainer'>
-        <div className='FiltersContainer'> 
+      <div className='MPBodyContainer'>
+        <div className='MPFiltersContainer'> 
           
         </div>
-        <div className='JobsContainer'> 
+        <div className='MPJobsContainer'> 
           <ListJobs>
             {AllMyApplications.map(trabajo => (
             <ItemJob 

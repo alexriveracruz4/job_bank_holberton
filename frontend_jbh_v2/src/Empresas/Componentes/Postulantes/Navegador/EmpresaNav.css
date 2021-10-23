@@ -1,0 +1,132 @@
+.Partner-nav {
+  display: inline-flex;
+  justify-content: space-around;
+  min-width: 100%;
+  margin-bottom: 40px;
+  border-bottom: 2px solid #000;
+  box-shadow: 2px 2px 2px #888;
+}
+
+.Partner-nav .logo-container {
+  margin: 10px 0px;
+  max-width: 50px;
+}
+
+@media (max-width: 1200px) and (min-width: 500px) {
+  .Partner-nav .logo-container {
+      margin: 10px 0px;
+  }
+  
+}
+
+@media (max-width: 500px) {
+  .Partner-nav .logo-container {
+      margin: 40px 10px;
+  }
+  .Partner-nav .logo-container .logo {
+    max-width: 100%;
+  }
+}
+
+.Partner-nav .logo-container .logo {
+  max-width: 100%;
+}
+
+.Partner-nav .nav-button {
+  display: flex;
+  margin: 18px 0px;
+  list-style: none;
+}
+
+@media (max-width: 500px) {
+  .Partner-nav .nav-button {
+    margin-top: 30px;
+    grid-template-columns: 100px 100px;
+  }
+
+  .Partner-nav .userprofile {
+    padding: 10px;
+  }
+}
+
+.Partner-nav .nav-button .puestos-div {
+display: flex;
+text-align: center;
+margin-right: 300px;
+border: 2px solid #000;
+box-shadow: 3px 3px 3px #888888;
+transition: all 0.3s ease 0s;
+}
+
+.Partner-nav .nav-button .puestos-div:hover {
+background-color: rgb(120, 171, 230);
+}
+
+.Partner-nav .nav-button .puestos-div .puestos-button {
+width: 100%;
+font-weight: 500;
+padding: 0px 30px;
+}
+
+.Partner-nav .nav-button .puestos-div .puestos-button a {
+background-color: transparent;
+color: #000;
+text-decoration: none;
+}
+
+.Partner-nav .nav-button .postulaciones-div {
+display: flex;
+text-align: center;
+border: 2px solid #000;
+box-shadow: 3px 3px 3px #888888;
+transition: all 0.3s ease 0s;
+}
+
+.Partner-nav .nav-button .postulaciones-div:hover {
+background-color: rgb(120, 171, 230);
+}
+
+.Partner-nav .nav-button .postulaciones-div .postulaciones-button {
+width: 100%;
+font-weight: 500;
+padding: 0px 30px;
+}
+
+.Partner-nav .nav-button .postulaciones-div .postulaciones-button a {
+background-color: transparent;
+color: #000;
+text-decoration: none;
+}
+
+.Partner-nav .userprofilecontainer {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.Partner-nav .userprofilecontainer .userprofile {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.Partner-nav .userprofilecontainer .userprofile .profile-button {
+display: flex;
+justify-content: center;
+align-items: center;
+text-decoration: none;
+}
+
+.Partner-nav .userprofilecontainer .userprofile .profile-button .usericon {
+width: 45px;
+height: 45px;
+}
+
+.Partner-nav .userprofilecontainer .userprofile .profile-button .name-button {
+display: block;
+padding: 15px 10px;
+border: none;
+background-color: transparent;
+cursor: pointer;
+transition: all 0.3s ease 0s;
+}

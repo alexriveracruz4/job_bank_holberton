@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 function ItemJob(props) {
   return (
     <Link to={`/estudiante/puestos-de-trabajo/partners/${props.id_empresa}/jobs/${props.id_job}`}  style={{color: 'inherit', textDecoration: 'inherit'}}> 
-      <li className='OneJob'>
+      <li className='MPOneJob'>
         {
-          props.deleted ? <b className="NoDisponible"> NO DISPONIBLE </b> : <b className="Disponible"> DISPONIBLE </b>
+          props.deleted ? <b className="MPNoDisponible"> NO DISPONIBLE </b> : <b className="MPDisponible"> DISPONIBLE </b>
         }
         <h2>{props.title}</h2>
         <h3>{props.city}</h3>

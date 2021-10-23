@@ -60,12 +60,12 @@ function PuestosDeTrabajoEstudiante() {
   }
 
   return (
-    <div className='PuestosDeTrabajoEstudianteContainer'>
+    <div className='PDTEPuestosDeTrabajoEstudianteContainer'>
       <div className='HeaderContainer'>
         <NavPuesto />
       </div>
-      <div className='BodyContainer'>
-        <div className='FiltersContainer'> 
+      <div className='PDTEBodyContainer'>
+        <div className='PDTEFiltersContainer'> 
           <Filters 
               searchJob={searchJob}
               setSearchJob={setSearchJob}
@@ -73,7 +73,7 @@ function PuestosDeTrabajoEstudiante() {
               setcheckTypeJob={setcheckTypeJob}
           />
         </div>
-        <div className='JobsContainer'> 
+        <div className='PDTEJobsContainer'> 
           <ListJobs>
             {ListSearchedJobs.map(trabajo => (
             <ItemJob 
