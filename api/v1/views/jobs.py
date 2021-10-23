@@ -5,6 +5,8 @@ from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models.partner import Partner
+from models.student import Student
+from models.application import Application
 
 
 @app_views.route('/jobs', methods=['GET'], strict_slashes=False)
@@ -30,6 +32,24 @@ def get_job(partner_id, job_id):
         abort(404)
 
     return jsonify(job)
+
+@app_views.route('/jobs/<partner_id>/<job_id>/students', methods=['GET'],
+                 strict_slashes=False)
+def get_job_students(partner_id, job_id):
+
+    all_students = storage.all(Student).values()
+    all_applications = storage.all(Application).values()
+    list_applications = []
+    for app in all_applications:
+        if app.partner_id == int(partner_id) and app.job_id == int(job_id):
+            list_applications.append(app)
+    postulantes = []
+    for app in list_applications:
+        for student in all_students:
+            if app.student_id == student.id:
+                postulantes.append(student.to_dict())
+
+    return jsonify(postulantes)
 
 @app_views.route('/partners/<partner_id>/jobs/<job_id>', methods=['DELETE'],
                  strict_slashes=False)
