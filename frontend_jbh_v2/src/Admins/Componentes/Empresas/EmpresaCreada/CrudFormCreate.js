@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Countries from "../data/country.json"
 
 const initailForm = {
   name: "",
@@ -25,6 +26,38 @@ const CrudForm = ({ createData }) => {
     e.preventDefault();
     createData(form);
   };
+
+  function InputCountry() {
+    return (
+      <div className="form-group row">
+        <label htmlFor="exampleFormControlSelect1" className="col-sm-1 col-form-label">País</label>
+        <div className="col-sm-10">
+          <select className="form-control" id="exampleFormControlSelect1">
+            <option></option>
+            {Countries.map(data => {;
+              return <option value={form.nation} onChange={ handleChange } name="nation">{data.country}</option>;
+            })}
+          </select>
+        </div>
+      </div>
+    )
+  }
+
+  function CountChar() {
+    return (
+      <div className="text-div">
+        <textarea
+          className="form-control"
+          id="inputDescription"
+          rows="10"
+          maxLength="1000"
+          name="description"
+          onChange={ handleChange }>
+        </textarea>
+      </div>
+    );
+  }
+
 
   /*mi codigo*/
   /*return (
@@ -82,32 +115,17 @@ const CrudForm = ({ createData }) => {
           <div className="description-div">
             <div className="description-box form-group row">
               <label htmlFor="inputDescription" className="description-label col-sm-1 col-form-label">Descripción</label>
-              <CountChar />
-            </div>
-          </div>
-
-          <div className="update form-group row">
-            <div className="col-sm-10">
-              {isError && <small className="mt-3 d-inline-block text-danger">Something went wrong. Please try again later.</small>}
-              <button
-                type="submit"
-                className="btn btn-primary mt-3"
-                onClick={handleSubmit}
-                disabled={loading}
-              >{loading ? 'Loading...' : 'Update'}</button>
-              {data && <div className="mt-3">
-                <strong>Output:</strong><br />
-                <pre>{JSON.stringify(data, null, 2)}</pre>
+              <div className="text-div">
+                <textarea className="form-control" id="inputDescription" rows="10" maxLength="1000" name="description" onChange={ handleChange } value={form.description} />
               </div>
-              }
             </div>
           </div>
-
+          <input type="submit" value="Enviar" />
         </form>
       </div>
     </div>
-  )
-*/
+  )*/
+
   /*termina mi codigo */
 
   return (
