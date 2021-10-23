@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
+import Navegador from "../../Componentes/PerfilEstudiante/Navegador/EstudianteNav";
+import EstudianteForm from "../../Componentes/PerfilEstudiante/PerfilFormulario/Form"
 
 function PerfilEstudiante() {
-  return (
-    <div>
-      Perfil del estudiante
-    </div>
-  )
+    return (
+        <React.Fragment>
+            <Navegador />
+            <EstudianteForm />
+        </React.Fragment>
+    )
 }
 
-export { PerfilEstudiante };
+export { PerfilEstudiante }

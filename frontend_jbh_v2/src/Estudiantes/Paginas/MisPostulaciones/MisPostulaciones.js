@@ -3,7 +3,7 @@ import './MisPostulaciones.css';
 
 import { ListJobs } from "../../Componentes/MisPostulaciones/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/MisPostulaciones/ItemJob/ItemJob";
-import NavPuesto from "../../Componentes/MisPostulaciones/Navegador/NavPuesto";
+import NavPuesto from "../../Componentes/MisPostulaciones/Navegador/EstudianteNav";
 import Data from "../../data/postulacionesEstudiante.json";
 
 const datos = Data;

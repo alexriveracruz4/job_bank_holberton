@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
+import NavPartner from "../../Componentes/PuestoEditado/Navegador/EmpresaNav"
+import PuestoForm from "../../Componentes/PuestoEditado/PublicarForm/PublicarForm"
 
 function PuestoEditado() {
-  return (
-    <div>
-      Editando el puesto
-    </div>
-  )
+    return (
+        <React.Fragment>
+            <NavPartner />
+            <PuestoForm />
+        </React.Fragment>
+    )
 }
 
-export { PuestoEditado };
+export { PuestoEditado }

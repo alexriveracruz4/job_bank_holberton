@@ -1,0 +1,84 @@
+.form-Estudiante .form-div {
+  max-width: 100%;
+}
+
+.form-Estudiante .form-div .div-user-icon {
+  display: flex;
+  max-width: 100%;
+}
+
+.form-Estudiante .form-div .div-user-icon .div-center-icon {
+  display: flex;
+  margin: auto;
+  width: 10%;
+  justify-content: flex-end;
+}
+
+.form-div .div-center-icon .usericon-form {
+  width: 50px;
+}
+
+.form-Estudiante .form-div .form-form {
+  max-width: 100%;
+}
+
+.form-Estudiante .form-div .form-form .update {
+  display: flex;
+  justify-content: center;
+  text-align: start;
+  margin-top: 20px;
+}
+
+.form-Estudiante .form-div .form-group .col-sm-10 .box-photo {
+  display: flex;
+}
+
+.form-Estudiante .form-div .form-group .col-sm-10 .div-photohelp {
+  display: flex;
+  text-align: justify;
+}
+
+.form-Estudiante .form-div .form-group {
+  display: flex;
+  justify-content: center;
+  text-align: end;
+  margin-top: 20px;
+}
+
+
+@media (max-width: 1300px) {
+  .form-Estudiante .form-div .form-group .col-form-label {
+    padding-right: 90px;
+  }
+}
+
+@media (max-width: 576px) {
+  .form-Estudiante .form-div .form-group .col-form-label {
+    padding-right: 0px;
+  }
+
+  .form-Estudiante .form-div .div-center-icon {
+    width: 50px;
+  }
+
+  .form-Estudiante .form-div .form-group {
+    text-align: center;
+  }
+}
+
+.form-Estudiante .form-div .form-group .col-sm-10 {
+  width: 400px;
+}
+
+.form-Estudiante .form-div .form-group .form-control {
+  border: 3px solid #000;
+}
+
+.form-Estudiante .form-div .form-group .select-travel-div {
+  width: 400px;
+}
+
+
+.form-Estudiante .form-div .form-group .text-div {
+  width: 400px;
+}

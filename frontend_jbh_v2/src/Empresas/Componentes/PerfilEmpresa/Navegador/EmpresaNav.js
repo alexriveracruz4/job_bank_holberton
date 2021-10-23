@@ -1,14 +1,14 @@
 import React from "react";
-import './NavPuesto.css';
+import './EmpresaNav.css';
 import logo from "./ImagenesNav/holberton-logo.png";
 import UserIcon from "./ImagenesNav/user-icon.png";
 import { useHistory } from 'react-router-dom'; 
 
 
-function NavPuesto() {
+function EmpresaNav() {
   let history = useHistory();
   return (
-    <header className="App-header">
+    <header className="Partner-nav">
       <div className="logo-container">
         <img src={ logo } className="logo" alt="logo holberton" />
       </div>
@@ -45,4 +45,4 @@ function NavPuesto() {
   );
 }
 
-export default NavPuesto;
+export default EmpresaNav;

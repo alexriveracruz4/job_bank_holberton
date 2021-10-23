@@ -3,7 +3,7 @@ import './MisPuestosDeTrabajo.css';
 
 import { ListJobs } from "../../Componentes/MisPuestosDeTrabajo/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/MisPuestosDeTrabajo/ItemJob/ItemJob";
-import NavPuesto from "../../Componentes/MisPuestosDeTrabajo/Navegador/NavPuesto";
+import NavPuesto from "../../Componentes/MisPuestosDeTrabajo/Navegador/EmpresaNav";
 import Data from "../../data/MispuestosEmpresa.json";
 
 const datos = Data;
