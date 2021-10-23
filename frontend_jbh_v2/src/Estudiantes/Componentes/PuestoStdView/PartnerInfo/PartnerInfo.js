@@ -8,7 +8,9 @@ function PartnerInfo(props) {
     let history = useHistory();
     const { id_empresa, id } = useParams();
     const datos = props.datos[0];
-    console.log(datos);
+
+    
+
     return (
         <div className="body-container">
             <div className="title-container">
