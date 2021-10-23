@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./EditarEstudianteForm.css"
 import Countries from "../data/country.json"
 
 const initailForm = {
@@ -32,10 +33,10 @@ const CrudForm = ({ createData }) => {
       <div className="form-group row">
         <label htmlFor="exampleFormControlSelect1" className="col-sm-1 col-form-label">País</label>
         <div className="col-sm-10">
-          <select className="form-control" id="exampleFormControlSelect1">
+          <select className="form-control" id="exampleFormControlSelect1" onChange={ handleChange } name="nation" value={form.nation}>
             <option></option>
             {Countries.map(data => {;
-              return <option value={form.nation} onChange={ handleChange } name="nation">{data.country}</option>;
+              return <option value={data.country}>{data.country}</option>;
             })}
           </select>
         </div>
@@ -43,7 +44,8 @@ const CrudForm = ({ createData }) => {
     )
   }
 
-  function CountChar() {
+  /*function CountChar() {
+    const [count, setCount] = useState(0);
     return (
       <div className="text-div">
         <textarea
@@ -52,19 +54,19 @@ const CrudForm = ({ createData }) => {
           rows="10"
           maxLength="1000"
           name="description"
-          onChange={ handleChange }>
+          onChange={e => setCount(e.target.value.length)}>
         </textarea>
+        <p>{ count } / 1000</p>
       </div>
     );
-  }
+  }*/
 
 
   /*mi codigo*/
   return (
-    <div className="form-Publicar">
+    <div className="form-editar-estudiante">
       <div className="profile-title">
-        <h1>My profile</h1>
-        <h2>Edit your profile</h2>
+        <h1>Agregar nuevo hiring partner</h1>
       </div>
       <div className="form-div">
         <form className="form-form" onSubmit={handleSubmit}>
@@ -120,7 +122,14 @@ const CrudForm = ({ createData }) => {
               </div>
             </div>
           </div>
-          <input type="submit" value="Enviar" />
+          <div className="div-button-create-partner">
+            <button
+              type="submit"
+              className="btn btn-primary mt-3"
+              onClick={handleSubmit}
+              value="Enviar">Crear nuevo hiring partner
+            </button>
+          </div>
         </form>
       </div>
     </div>

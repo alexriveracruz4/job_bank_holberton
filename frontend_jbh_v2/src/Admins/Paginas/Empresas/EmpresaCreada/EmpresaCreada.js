@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { helpHttp } from '../../../../helpers/helpHttp';
-import CrudForm from '../../../Componentes/Empresas/EmpresaCreada/CrudFormCreate';
+import CrudForm from '../../../Componentes/Empresas/EmpresaCreada/CrearEmpresaForm';
+import AdminNav from '../../../Componentes/Empresas/EmpresaCreada/Navegador/AdminNav';
 
 function EmpresaCreada() {
   const [db, setDb] = useState([]);
 
   let api = helpHttp();
-  let url = "http://172.29.38.63:5000/api/v1/partners";
+  let url = "http://localhost:5000/api/v1/partners";
 
   const createData = (data) => {
     let options = {
@@ -20,7 +21,7 @@ function EmpresaCreada() {
 
   return (
     <div>
-      <h2>CRUD App</h2>
+      <AdminNav />
       <article className="grid-1-2">
         <CrudForm
             createData={ createData }

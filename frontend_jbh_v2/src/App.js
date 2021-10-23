@@ -37,7 +37,9 @@ import { EmpresaEditada } from './Admins/Paginas/Empresas/EmpresaEditada/Empresa
 import { TodasLasEmpresas } from './Admins/Paginas/Empresas/TodasLasEmpresas/TodasLasEmpresas';
 import { EmpresaCreada } from './Admins/Paginas/Empresas/EmpresaCreada/EmpresaCreada';
 
+import { EstudianteEditado } from './Admins/Paginas/Estudiantes/EstudiantesEditado/EstudiantesEditado'
 import { TodosLosEstudiantes } from './Admins/Paginas/Estudiantes/TodosLosEstudiantes/TodosLosEstudiantes';
+import { EstudianteCreado } from './Admins/Paginas/Estudiantes/EstudiantesCreado/EstudiantesCreado'
 
 import { NotFoundPage } from './NotFoundPage';
 
@@ -76,6 +78,8 @@ function App() {
           <Route exact path="/admin/empresas/crear-empresa" component={EmpresaCreada}/>
 
           <Route exact path="/admin/estudiantes" component={TodosLosEstudiantes}/>
+          <Route exact path="/admin/estudiantes/estudiante-editado/:id" component={EstudianteEditado}/>
+          <Route exact path="/admin/estudiantes/crear-estudiante" component={EstudianteCreado}/>
           
 
 
