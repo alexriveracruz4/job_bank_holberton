@@ -1,16 +1,16 @@
 import React from 'react'
 import './TodasLasEmpresas.css';
 
-import NavPuesto from "../../../Componentes/Empresas/TodasLasEmpresas/Navegador/NavPuesto";
+import AdminNav from "../../../Componentes/Empresas/TodasLasEmpresas/Navegador/AdminNav";
 import TablaEmpresa from "../../../Componentes/Empresas/TodasLasEmpresas/TablaEmpresa/TablaEmpresa"
 
 
 
 function TodasLasEmpresas() {
   return (
-    <div className='PuestosDeTrabajoEstudianteContainer'>
+    <div className='Admin-empresas-div'>
       <div className='HeaderContainer'>
-        <NavPuesto />
+        <AdminNav />
       </div>
       <div className='BodyContainer'>
         <TablaEmpresa />

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router';
 import { helpHttp } from '../../../../helpers/helpHttp';
-import CrudForm from '../../../Componentes/Empresas/EmpresaEditada/CrudFormEdit';
+import AdminNav from '../../../Componentes/Empresas/EmpresaEditada/Navegador/AdminNav';
+import CrudForm from '../../../Componentes/Empresas/EmpresaEditada/EmpresaEditada';
 
 function EmpresaEditada() {
   const location = useLocation();
@@ -29,7 +30,7 @@ function EmpresaEditada() {
 
   return (
     <div>
-      <h2>CRUD App</h2>
+      <AdminNav />
       <article className="grid-1-2">
         <CrudForm
             updateData={updateData}

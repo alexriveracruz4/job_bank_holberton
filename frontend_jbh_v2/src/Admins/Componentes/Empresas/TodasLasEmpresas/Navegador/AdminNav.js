@@ -16,7 +16,7 @@ function AdminNav() {
         <div className="nav-button">
           <div className="admin-estudiantes-div">
             <button 
-              className="admin-estudiantes-button" 
+              className="admin-estudiantes-button"
               onClick={ () => {history.push("/admin/estudiantes")}}>
               Estudiantes
             </button>

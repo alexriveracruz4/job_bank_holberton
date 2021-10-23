@@ -5,14 +5,14 @@
   background-color: #F1F2F2;
 }
 
-.TodasLasEmpresasContainer {
+.Admin-empresas-div {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction : column;
 }
 
-.HeaderContainer {
+.Admin-empresas-div .HeaderContainer {
   display: flex;
   flex-direction : row;
   justify-content: space-between;
@@ -22,7 +22,7 @@
   position: relative;
 }
 
-.BodyContainer {
+.Admin-empresas-div .BodyContainer {
   width: 100%;
   display: flex;
   justify-content: center;

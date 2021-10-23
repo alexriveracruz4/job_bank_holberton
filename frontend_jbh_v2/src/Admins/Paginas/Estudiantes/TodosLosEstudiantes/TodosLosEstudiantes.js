@@ -1,7 +1,7 @@
 import React from 'react'
 import './TodosLosEstudiantes.css';
 
-import NavPuesto from "../../../Componentes/Empresas/TodasLasEmpresas/Navegador/NavPuesto";
+import NavPuesto from "../../../Componentes/Estudiantes/TodosLosEstudiantes/Navegador/AdminNav";
 import TablaEstudiante from "../../../Componentes/Estudiantes/TodosLosEstudiantes/TablaEstudiante/TablaEstudiante"
 
 

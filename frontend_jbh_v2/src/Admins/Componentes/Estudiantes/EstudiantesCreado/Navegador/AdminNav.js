@@ -17,14 +17,14 @@ function AdminNav() {
           <div className="admin-estudiantes-div">
             <button 
               className="admin-estudiantes-button" 
-              onClick={ () => {history.push("/estudiantes/crear-estudiante")}}>
+              onClick={ () => {history.push("/admin/estudiantes")}}>
               Estudiantes
             </button>
           </div>
           <div className="admin-partners-div">
             <button 
               className="admin-partners-button" 
-              onClick={ () => {history.push("/empresa/nuevo-puesto-de-trabajo")}}>
+              onClick={ () => {history.push("/admin/empresas")}}>
               Partners
             </button>
           </div>
