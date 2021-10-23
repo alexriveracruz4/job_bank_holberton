@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 function Login() {
   let history = useHistory();
   return (
-    <div className='containerPrincipal'>
+    <div className='containerPrincipalEstudiante'>
       <div className="form-group">
         <div className="User">
           <div className="label_user">

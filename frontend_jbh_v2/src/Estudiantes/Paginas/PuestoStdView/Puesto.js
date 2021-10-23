@@ -1,5 +1,5 @@
 import React from "react";
-import NavPuesto from "../../Componentes/PuestoStdView/Navegador/NavPuesto";
+import NavPuesto from "../../Componentes/PuestoStdView/Navegador/EstudianteNav";
 import PuestoInfo from "../../Componentes/PuestoStdView/PuestoInfo/PuestoInfo";
 import PartnerInfo from "../../Componentes/PuestoStdView/PartnerInfo/PartnerInfo";
 import { useParams } from 'react-router-dom';

@@ -1,42 +1,39 @@
-.App-header {
+.Student-header {
     display: inline-flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
+    margin-bottom: 40px;
     border-bottom: 2px solid #000;
     box-shadow: 2px 2px 2px #888;
 }
 
-.logo-container {
-    margin: 10px 50px;
+.Student-header .logo-container {
+    margin: 10px 0px;
     max-width: 50px;
 }
 
 @media (max-width: 1200px) and (min-width: 500px) {
-    .logo-container {
-        margin: 0px 0px;
+    .Student-header .logo-container {
+        margin: 10px 0px;
     }
     
 }
 
 @media (max-width: 500px) {
-    .logo-container {
+    .Student-header .logo-container {
         margin: 40px 10px;
     }
-    .logo {
+    .Student-header .logo-container .logo {
       max-width: 100%;
     }
 }
 
-.logo {
+.Student-header .logo-container .logo {
     max-width: 100%;
 }
   
-.usericon {
-    width: 45px;
-    height: 45px;
-}
   
-.nav-button {
+.Student-header .nav-button {
     display: grid;
     grid-template-columns: 150px 150px;
     grid-gap: 2px;
@@ -48,74 +45,77 @@
 }
 
 @media (max-width: 500px) {
-    .nav-button {
+    .Student-header .nav-button {
       margin-top: 30px;
       grid-template-columns: 100px 100px;
     }
-    .userprofile {
+    .Student-header .userprofilecontainer .userprofile {
       padding: 10px;
     }
 }
-  
-.nav-button a {
+
+.Student-header .nav-button .puestos-div {
+  display: flex;
+  text-align: center;
+  transition: all 0.3s ease 0s;
+}
+
+.Student-header .nav-button a {
   background-color: transparent;
   color: #000;
   text-decoration: none;
 }
 
-.puestos-div {
+
+.Student-header .nav-button .puestos-div:hover {
+  background-color: rgb(120, 171, 230);
+}
+
+.Student-header .nav-button .puestos-div .puestos-button {
+  width: 100%;
+  font-weight: 500;
+}
+
+.Student-header .nav-button .postulaciones-div {
   display: flex;
   text-align: center;
   transition: all 0.3s ease 0s;
 }
 
-.puestos-div:hover {
-  background-color: rgb(120, 171, 230);
-}
-
-.puestos-button {
-  width: 100%;
-  font-weight: 500;
-}
-
-
-
-.postulaciones-div {
-  display: flex;
-  text-align: center;
-  transition: all 0.3s ease 0s;
-}
-
-.postulaciones-div:hover {
+.Student-header .nav-button .postulaciones-div:hover {
   background-color: rgb(120, 171, 230);
 }
   
-.postulaciones-button {
+.Student-header .nav-button .postulaciones-div .postulaciones-button {
   width: 100%;
   font-weight: 500;
 }
   
-.userprofilecontainer {
-  width: 750px;
+.Student-header .userprofilecontainer {
   display: flex;
   justify-content: center;
   align-items: center;
 }
   
-.userprofile {
+.Student-header .userprofilecontainer .userprofile {
   display: flex;
   justify-content: center;
   align-items: center;
 }
   
-.profile-button {
+.Student-header .userprofilecontainer .userprofile .profile-button {
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
 }
+
+.Student-header .userprofilecontainer .userprofile .profile-button .usericon {
+  width: 45px;
+  height: 45px;
+}
   
-.name-button {
+.Student-header .userprofilecontainer .userprofile .profile-button .name-button {
   display: block;
   padding: 15px 10px;
   border: none;

@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
+import NavPartner from "../../Componentes/NuevoPuestoDeTrabajo/Navegador/EmpresaNav"
+import PuestoForm from "../../Componentes/NuevoPuestoDeTrabajo/PublicarForm/PublicarForm"
 
 function NuevoPuestoDeTrabajo() {
-  return (
-    <div>
-      NUEVO PUESTO DE Trabajo
-    </div>
-  )
+    return (
+        <React.Fragment>
+            <NavPartner />
+            <PuestoForm />
+        </React.Fragment>
+    )
 }
 
-export { NuevoPuestoDeTrabajo };
+export { NuevoPuestoDeTrabajo }

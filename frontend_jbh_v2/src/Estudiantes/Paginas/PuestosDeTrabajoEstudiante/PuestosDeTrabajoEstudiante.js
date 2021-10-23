@@ -3,7 +3,7 @@ import "./PuestosDeTrabajoEstudiante.css";
 import { Filters } from "../../Componentes/PuestosDeTrabajoEstudiante/Filters/Filters";
 import { ListJobs } from "../../Componentes/PuestosDeTrabajoEstudiante/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/PuestosDeTrabajoEstudiante/ItemJob/ItemJob";
-import NavPuesto from "../../Componentes/PuestoStdView/Navegador/NavPuesto";
+import NavPuesto from "../../Componentes/PuestosDeTrabajoEstudiante/Navegador/EstudianteNav";
 import Data from "../../data/puestodata.json";
 
 
