@@ -17,7 +17,7 @@ def get_students():
     all_students = storage.all(Student).values()
     list_students = []
     for student in all_students:
-        list_students.append(student.to_dict())
+        list_students.append(student.to_dict(save_fs="No"))
     return jsonify(list_students)
 
 @app_views.route('/students/<student_id>', methods=['GET'], strict_slashes=False)
