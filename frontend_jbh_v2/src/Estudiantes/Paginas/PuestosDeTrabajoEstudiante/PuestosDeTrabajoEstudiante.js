@@ -5,14 +5,18 @@ import { ListJobs } from "../../Componentes/PuestosDeTrabajoEstudiante/ListJobs/
 import { ItemJob } from "../../Componentes/PuestosDeTrabajoEstudiante/ItemJob/ItemJob";
 import NavPuesto from "../../Componentes/PuestosDeTrabajoEstudiante/Navegador/EstudianteNav";
 import Data from "../../data/puestodata.json";
+import Cookies from 'universal-cookie';
 
-
-
+const cookies = new Cookies();
 const datos1 = Data;
 console.log(datos1);
 function PuestosDeTrabajoEstudiante() {
-  
-  const [AllJobsData, setAllJobsData] = React.useState([]);
+    console.log('id: ' + cookies.get('id'));
+    console.log('nombre: '+cookies.get('firstname'));
+    console.log('apellido: '+cookies.get('lastname'));
+    console.log('email: '+cookies.get('email'));
+
+    const [AllJobsData, setAllJobsData] = React.useState([]);
 
   React.useEffect(async() => {
     await obtenerDatos();
