@@ -63,13 +63,14 @@ function App() {
 
           <Route path="/login/empresa" component={LoginEmpresas}/>
           <Route exact path="/empresa/mis-puestos-de-trabajo" component={MisPuestosDeTrabajo}/>
-          <Route exact path="/empresa/mis-puestos-de-trabajo/:id" component={PuestoEmpresaView}/>
-          <Route exact path="/empresa/mis-puestos-de-trabajo/:id/puesto-eliminado" component={PuestoEliminado}/>
-          <Route exact path="/empresa/mis-puestos-de-trabajo/:id/puesto-editado" component={PuestoEditado}/>
-          <Route exact path="/empresa/mis-puestos-de-trabajo/:id/postulantes" component={Postulantes}/>
+          <Route exact path="/empresa/mis-puestos-de-trabajo/:JobId" component={PuestoEmpresaView}/>
+          <Route exact path="/empresa/mis-puestos-de-trabajo/:JobId/puesto-eliminado" component={PuestoEliminado}/>
+          <Route exact path="/empresa/mis-puestos-de-trabajo/:JobId/puesto-editado" component={PuestoEditado}/>
+          <Route exact path="/empresa/mis-puestos-de-trabajo/:JobId/postulantes" component={Postulantes}/>
           <Route exact path="/empresa/nuevo-puesto-de-trabajo" component={NuevoPuestoDeTrabajo}/>
           <Route exact path="/empresa/perfil" component={PerfilEmpresa}/>
           
+
 
           <Route exact path="/login/admin" component={LoginAdmins}/>
 

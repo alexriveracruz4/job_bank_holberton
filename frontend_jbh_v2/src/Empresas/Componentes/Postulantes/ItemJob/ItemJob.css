@@ -1,72 +1,44 @@
-.OneJobeEmpresa {
+.ItemContainer {
   display: flex;
-  justify-content: center;
-  margin-top: 24px;
-  border: 2px solid black;
+  width: 20%;
+  max-height: 410px;
+  margin: 15px;
   flex-direction: column;
+  border: 2px solid black;
+}
+
+.POneJobeEmpresa {
+  overflow: auto;
+  max-height: 90%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid black;
   padding: 10px;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+}
+
+.POneJobeEmpresa::-webkit-scrollbar {
+  width: 7px;
 }
 
 
-.NoDisponible {
-  color: red;
-  font-size:x-large;
+.POneJobeEmpresa::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 5px;
 }
 
-.Disponible {
-  color: rgb(37, 37, 243);
-  font-size: x-large;
+.PCVButton {
+  min-height: 10%;
+  margin: 0px;
+  padding: 0px;
+  align-content: center;
+  word-wrap: break-word
 }
 
-
-.GroupOfButtons {
-  margin-top: 10px;
+.PPhotoStudent {
+  max-width: 30%;
+  align-self: center;
+  margin-bottom: 20px;
 }
-
-/*Para el grupo de botones*/
-.GroupOfButtons button {
-  color: black; /* White text */
-  padding: 10px 24px; /* Some padding */
-}
-
-.VerButton {
-  background-color: #eaf513; /* Green background */
-  border: 1px solid black; /* Green border */
-}
-
-.VerButton:hover {
-  cursor:pointer;
-  transform: scale(1.1);
-}
-
-.EditarButton {
-  background-color:forestgreen; /* Green background */
-  border: 1px solid black; /* Green border */
-}
-
-.EditarButton:hover {
-  cursor:pointer;
-  transform: scale(1.1);
-}
-
-.EliminarButton {
-  background-color:rgb(233, 69, 69); /* Green background */
-  border: 1px solid black; /* Green border */
-}
-
-.EliminarButton:hover {
-  cursor:pointer;
-  transform: scale(1.1);
-}
-
-.PostulantesButton {
-  background-color:lavenderblush; /* Green background */
-  border: 1px solid black; /* Green border */
-}
-
-.PostulantesButton:hover {
-  cursor:pointer;
-  transform: scale(1.1);
-}
-
-/*Para el grupo de botones*/

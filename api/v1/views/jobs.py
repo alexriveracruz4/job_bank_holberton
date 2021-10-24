@@ -33,6 +33,20 @@ def get_job(partner_id, job_id):
 
     return jsonify(job)
 
+@app_views.route('/partners/<partner_id>/jobs', methods=['GET'],
+                 strict_slashes=False)
+def get_partner_job(partner_id):
+    """ Retrieves all jobs that a specific Partner has published """
+    partner = storage.get(Partner, partner_id)
+    if not partner:
+        abort(404)
+    jobs = [job.to_dict() for job in partner.jobs]
+    if not jobs:
+        abort(404)
+
+    return jsonify(jobs)
+
+
 @app_views.route('/jobs/<partner_id>/<job_id>/students', methods=['GET'],
                  strict_slashes=False)
 def get_job_students(partner_id, job_id):

@@ -3,11 +3,9 @@ import './ListJobs.css';
 
 function ListJobs(props) {
   return (
-    <section className='ListJob'>
-      <ul>
-        {props.children} 
-      </ul>
-    </section>
+    <ul className='PListJob'>
+      {props.children} 
+    </ul>
   );
 }
 

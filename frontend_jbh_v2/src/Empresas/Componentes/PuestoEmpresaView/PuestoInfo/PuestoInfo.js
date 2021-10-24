@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 
 function PuestoInfo(props) {
   const { id } = useParams();
-  const datos = props.datos.filter(i => i.id == id)[0];
+  const datos = props.datos[0];
   console.log(datos)
   return (
     <div className="partner-info-container">

@@ -14,7 +14,7 @@ function ItemJob(props) {
           props.deleted ? <p>Fecha de eliminacion: FECHA DE ELIMINACION</p> : ""
         }
         <div class="MPDTGroupOfButtons">
-          <Link to={`/empresa/mis-puestos-de-trabajo/${props.id}`} style={{color: 'inherit', textDecoration: 'inherit'}}>
+          <Link to={{ pathname:`/empresa/mis-puestos-de-trabajo/${props.id}` }} style={{color: 'inherit', textDecoration: 'inherit'}}>
           <button className="MPDTVerButton">
               Ver    
           </button>
@@ -37,7 +37,7 @@ function ItemJob(props) {
               </button>
             </Link>
           }
-          <Link to={`/empresa/mis-puestos-de-trabajo/${props.id}/postulantes`} style={{color: 'inherit', textDecoration: 'inherit'}}>
+          <Link to={{ pathname:`/empresa/mis-puestos-de-trabajo/${props.id}/postulantes`, state: { titleJob: props.title } }} style={{color: 'inherit', textDecoration: 'inherit'}}>
               <button className="MPDTPostulantesButton">
               Ver postulantes
               </button>

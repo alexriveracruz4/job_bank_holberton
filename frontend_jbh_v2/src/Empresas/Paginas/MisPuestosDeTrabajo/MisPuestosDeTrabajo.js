@@ -1,14 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './MisPuestosDeTrabajo.css';
 
 import { ListJobs } from "../../Componentes/MisPuestosDeTrabajo/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/MisPuestosDeTrabajo/ItemJob/ItemJob";
 import NavPuesto from "../../Componentes/MisPuestosDeTrabajo/Navegador/EmpresaNav";
 import Data from "../../data/MispuestosEmpresa.json";
-
 const datos = Data;
 
 function MisPuestosDeTrabajo() {
+
+  const partner_id = 1;
+  const [AllMyJobs, setAllMyJobs] = useState([2]);
+
+  useEffect(async() => {
+    await obtenerDatos();
+  }, []);
+
+  const obtenerDatos = async () => {
+    const data = await fetch(`http://localhost:5000/api/v1/partners/${partner_id}/jobs/`);
+    const jobs = await data.json();
+    setAllMyJobs(jobs);
+  }
+
+
   return (
     <div className='MisPuestosDeTrabajoContainer'>
       <div className='HeaderContainer'>
@@ -20,7 +34,7 @@ function MisPuestosDeTrabajo() {
         </div>
         <div className='MPDTJobsContainer'> 
           <ListJobs>
-            {datos.map(trabajo => (
+            {AllMyJobs.map(trabajo => (
             <ItemJob 
               key={trabajo.id}
               id={trabajo.id}
