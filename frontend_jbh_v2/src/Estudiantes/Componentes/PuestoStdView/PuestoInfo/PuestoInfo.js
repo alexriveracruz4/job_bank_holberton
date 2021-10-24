@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 
 function PuestoInfo(props) {
   //const { id } = useParams();
-  const datos = props.datos[0];
+  const datos = props.JobData[0];
   
   return (
     <div className="student-info-container">

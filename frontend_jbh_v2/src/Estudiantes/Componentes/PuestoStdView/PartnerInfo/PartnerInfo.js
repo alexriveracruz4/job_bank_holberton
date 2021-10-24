@@ -5,11 +5,15 @@ import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
  
 function PartnerInfo(props) {
+    const studentId = 3;
     let history = useHistory();
-    const { id_empresa, id } = useParams();
-    const datos = props.datos[0];
+    const { PartnerId, JobId } = useParams();
 
-    
+    console.log(PartnerId);
+
+    const datos = props.JobData[0];
+
+    console.log(props.PostulantesIDs.includes(studentId,0));
 
     return (
         <div className="body-container">
@@ -28,12 +32,12 @@ function PartnerInfo(props) {
                     <img src={ partnerlogo } className="partnerlogopng" alt="logo de la empresa"/>
                 </div>
                 <div className="partner-name">
-                    <p>PARNERT NAME</p>
+                    <p>{props.PartnerName}</p>
                 </div>
-                {datos.deleted ?
+                {datos.deleted || props.PostulantesIDs.includes(studentId,0)?
                     ""
                     :
-                    <div className="postula-container" onClick={ () => {history.push(`/estudiante/puestos-de-trabajo/partners/${id_empresa}/jobs/${id}/puesto-postulado`)}}>
+                    <div className="postula-container" onClick={ () => {history.push(`/estudiante/puestos-de-trabajo/partners/${PartnerId}/jobs/${JobId}/puesto-postulado`)}}>
                         <div className="Postula">
                         <button className="postula-button">Postula aquí</button>
                         </div>

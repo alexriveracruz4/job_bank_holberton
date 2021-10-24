@@ -9,30 +9,51 @@ const datos = Data;
 
 function Puesto() {
 
-  const { id_empresa, id } = useParams();
-  console.log(id_empresa)
-  console.log(id)
+  const studentId = 3;
+  const { PartnerId, JobId } = useParams();
+  console.log(PartnerId)
+  console.log(JobId)
 
   const [JobData, setJobData] = React.useState([2]);
+  const [PostulantesData, setPostulantesData] = React.useState([2]);
+  const [PartnerData, setPartnerData] = React.useState([2]);
 
   React.useEffect(() => {
-    obtenerDatos();
+    obtenerJobDatos();
+    obtenerPostulantesDatos();
+    obtenerParnertDatos();
   }, []);
 
-  const obtenerDatos = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/partners/${id_empresa}/jobs/${id}`);
+  const obtenerJobDatos = async () => {
+    const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/${JobId}`);
     const jobs = await data.json();
     setJobData(jobs);
   }
 
+  const obtenerPostulantesDatos = async () => {
+    const data = await fetch(`http://localhost:5000/api/v1/jobs/${PartnerId}/${JobId}/students`);
+    const postulantes = await data.json();
+    setPostulantesData(postulantes);
+  }
+
+  const obtenerParnertDatos = async () => {
+    const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}`);
+    const parnert = await data.json();
+    setPartnerData(parnert);
+  }
+  
+  let PostulantesIDs = PostulantesData.map(postulante => postulante.id);
+  console.log(PostulantesIDs);
   return (
     <React.Fragment>
         <NavPuesto />
         <PartnerInfo 
-          datos = {JobData}
+          JobData = {JobData}
+          PostulantesIDs={PostulantesIDs}
+          PartnerName={PartnerData.name}
         />
         <PuestoInfo 
-          datos = {JobData}
+          JobData = {JobData}
         />
     </React.Fragment>
   );

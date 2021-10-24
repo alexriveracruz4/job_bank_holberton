@@ -55,8 +55,8 @@ function App() {
 
           <Route path="/login/estudiante" component={LoginEstudiantes}/>
           <Route exact path="/estudiante/puestos-de-trabajo" component={PuestosDeTrabajoEstudiante}/>
-          <Route exact path="/estudiante/puestos-de-trabajo/partners/:id_empresa/jobs/:id" component={Puesto}/>
-          <Route exact path="/estudiante/puestos-de-trabajo/partners/:id_empresa/jobs/:id/puesto-postulado" component={PuestoPostulado}/>
+          <Route exact path="/estudiante/puestos-de-trabajo/partners/:PartnerId/jobs/:JobId" component={Puesto}/>
+          <Route exact path="/estudiante/puestos-de-trabajo/partners/:PartnerId/jobs/:JobId/puesto-postulado" component={PuestoPostulado}/>
           <Route exact path="/estudiante/mis-postulaciones" component={MisPostulaciones}/>
           <Route exact path="/estudiante/perfil" component={PerfilEstudiante}/>
 
