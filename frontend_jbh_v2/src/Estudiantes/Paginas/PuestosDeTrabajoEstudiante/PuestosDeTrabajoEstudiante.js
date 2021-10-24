@@ -9,7 +9,6 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 const datos1 = Data;
-console.log(datos1);
 function PuestosDeTrabajoEstudiante() {
     console.log('id: ' + cookies.get('id'));
     console.log('nombre: '+cookies.get('firstname'));

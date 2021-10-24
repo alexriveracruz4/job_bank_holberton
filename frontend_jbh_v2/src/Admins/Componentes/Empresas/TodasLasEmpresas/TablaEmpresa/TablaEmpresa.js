@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
-import { NotFoundPage } from '../../../../../NotFoundPage';
 import { useHistory } from 'react-router';
 import { helpHttp } from '../../../../../helpers/helpHttp';
-
 
 
 function TablaEmpresa() {
@@ -20,9 +18,9 @@ function TablaEmpresa() {
     { title:'TOKEN', field:'token' }
   ]
 
-  const [AllPartnersData, setAllPartnersData] = React.useState([]);
+  const [AllPartnersData, setAllPartnersData] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     obtenerDatos();
   }, []);
 

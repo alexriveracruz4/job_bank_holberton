@@ -4,15 +4,16 @@ import PuestoInfo from "../../Componentes/PuestoStdView/PuestoInfo/PuestoInfo";
 import PartnerInfo from "../../Componentes/PuestoStdView/PartnerInfo/PartnerInfo";
 import { useParams } from 'react-router-dom';
 import Data from "../../data/puestodata.json";
-
+import { useLocation } from 'react-router-dom';
 const datos = Data;
 
 function Puesto() {
 
   const studentId = 3;
   const { PartnerId, JobId } = useParams();
-  console.log(PartnerId)
-  console.log(JobId)
+  //const location = useLocation();
+  //const Postulado = location.state.EstadoDePostulacion;
+  //console.log("asdasdasda", Postulado); //Muestra el si el estudiante ah postulado o no al trabajo
 
   const [JobData, setJobData] = React.useState([2]);
   const [PostulantesData, setPostulantesData] = React.useState([2]);
@@ -41,9 +42,9 @@ function Puesto() {
     const parnert = await data.json();
     setPartnerData(parnert);
   }
-  
+
+
   let PostulantesIDs = PostulantesData.map(postulante => postulante.id);
-  console.log(PostulantesIDs);
   return (
     <React.Fragment>
         <NavPuesto />

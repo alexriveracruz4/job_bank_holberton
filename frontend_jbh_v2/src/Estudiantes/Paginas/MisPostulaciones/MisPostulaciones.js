@@ -10,7 +10,7 @@ const datos = Data;
 
 function MisPostulaciones() {
 
-  const user_id = 1;
+  const user_id = 3;
   const [AllMyApplications, setAllMyApplications] = React.useState([]);
 
   React.useEffect(() => {
