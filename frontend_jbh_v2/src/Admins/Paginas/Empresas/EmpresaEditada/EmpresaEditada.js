@@ -11,11 +11,10 @@ function EmpresaEditada() {
   const [dataToEdit, setDataToEdit] = useState(location.state[0]);
 
   let api = helpHttp();
-  let url = "http://172.29.38.63:5000/api/v1/partners";
+  let url = "http://localhost:5000/api/v1/partners";
 
   const updateData = (data) => {
     let endpoint = `${url}/${data.id}`;
-    console.log(endpoint);
 
     let options = {
       body: data,

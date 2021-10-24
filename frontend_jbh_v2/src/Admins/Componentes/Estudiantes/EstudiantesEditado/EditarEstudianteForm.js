@@ -3,18 +3,24 @@ import "./EditarEstudianteForm.css"
 import Countries from "../data/country.json"
 
 const initailForm = {
-  name: "",
-  description:"",
+  firstname: "",
+  lastname: "",
   email: "",
-  nation: "",
+  password: "",
   phonenumber: "",
-  region: "",
-  web: "",
-  password: ""
+  age: "",
+  nationality: "",
+  availability: "",
+  pres_or_remot: "",
+  description:""
 };
 
-const CrudForm = ({ createData }) => {
+const CrudForm = ({ updateData, dataToEdit}) => {
   const [form, setForm] = useState(initailForm);
+
+  useEffect(() => {
+    setForm(dataToEdit);
+  }, [dataToEdit]);
 
   const handleChange = (e) => {
     setForm({
@@ -25,16 +31,49 @@ const CrudForm = ({ createData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createData(form);
+    updateData(form);
   };
+
+  function Availability() {
+    return (
+      <div className="travel-row form-group row">
+        <label htmlFor="inputDisptravel" className="travel-label col-sm-1 col-form-label">Estado actual</label>
+        <div className="select-travel-div col-sm-10">
+          <select className="form-control" id="inputDiptravel" onChange={ handleChange } name="availability" value={form.availability}>
+            <option>{form.availability}</option>
+            <option onClick={e => e.target.textarea}>Disponible a nuevas ofertas de trabajo</option>
+            <option onClick={e => e.target.textarea}>No tengo empleo</option>
+            <option onClick={e => e.target.textarea}>Estoy trabajando actualmente</option>
+            <option onClick={e => e.target.textarea}>No tengo ningún interés en un nuevo empleo</option>
+          </select>
+        </div>
+      </div>
+    )
+  }
+
+  function PresOrRemote() {
+    return (
+      <div className="travel-row form-group row">
+        <label htmlFor="inputDisptravel" className="travel-label col-sm-1 col-form-label">Modo de trabajo de preferencia</label>
+        <div className="select-travel-div col-sm-10">
+          <select className="form-control" id="inputDiptravel" onChange={ handleChange } name="pres_or_remot" value={form.pres_or_remot}>
+            <option>{form.pres_or_remot}</option>
+            <option value="Presencial">Presencial</option>
+            <option value="Remoto">Remoto</option>
+            <option value="Semi-presencial">Semi-presencial</option>
+          </select>
+        </div>
+      </div>
+    )
+  }
 
   function InputCountry() {
     return (
       <div className="form-group row">
         <label htmlFor="exampleFormControlSelect1" className="col-sm-1 col-form-label">País</label>
         <div className="col-sm-10">
-          <select className="form-control" id="exampleFormControlSelect1" onChange={ handleChange } name="nation" value={form.nation}>
-            <option></option>
+          <select className="form-control" id="exampleFormControlSelect1" onChange={ handleChange } name="nationality" value={form.nationality}>
+            <option>{form.nationality}</option>
             {Countries.map(data => {;
               return <option value={data.country}>{data.country}</option>;
             })}
@@ -61,58 +100,60 @@ const CrudForm = ({ createData }) => {
     );
   }*/
 
-
-  /*mi codigo*/
   return (
     <div className="form-editar-estudiante">
       <div className="profile-title">
-        <h1>Agregar nuevo hiring partner</h1>
+        <h1>Editar estudiante</h1>
       </div>
       <div className="form-div">
         <form className="form-form" onSubmit={handleSubmit}>
           <div className="form-group row">
-            <label htmlFor="inputTitle" className="col-sm-1 col-form-label">Empresa</label>
+            <label htmlFor="inputFirstname" className="col-sm-1 col-form-label">Nombre</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputTitle" name="name" onChange={handleChange} value={form.name}/>
+              <input type="text" className="form-control" id="inputFirstname" name="firstname" onChange={handleChange} value={form.firstname}/>
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="inputLastname" className="col-sm-1 col-form-label">Apellidos</label>
+            <div className="col-sm-10">
+              <input type="text" className="form-control" id="inputLastname" name="lastname" onChange={handleChange} value={form.lastname}/>
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="inputEmail" className="col-sm-1 col-form-label">Email</label>
+            <div className="col-sm-10">
+              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} />
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="inputPassword" className="col-sm-1 col-form-label">Contraseña</label>
+            <div className="col-sm-10">
+              <input type="password" className="form-control" id="inputPassword" name="password" onChange={handleChange} value={form.password}/>
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="inputPhonenumber" className="col-sm-1 col-form-label">Celular</label>
+            <div className="col-sm-10">
+              <input type="text" className="form-control" id="inputPhonenumber" name="phonenumber" onChange={handleChange} value={form.phonenumber}/>
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="inputAge" className="col-sm-1 col-form-label">Edad</label>
+            <div className="col-sm-10">
+              <input type="number" className="form-control" id="inputAge" min="1" max="100" name="age" onChange={handleChange} value={form.age} />
             </div>
           </div>
 
           <InputCountry />
 
-          <div className="form-group row">
-            <label htmlFor="inputCity" className="col-sm-1 col-form-label">Ciudad</label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputCity" name="region" onChange={handleChange} value={form.region}/>
-            </div>
-          </div>
+          <Availability />
 
-          <div className="form-group row">
-            <label htmlFor="inputCity" className="col-sm-1 col-form-label">Celular</label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputCity" name="phonenumber" onChange={handleChange} value={form.phonenumber}/>
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="inputSalary" className="col-sm-1 col-form-label">Email</label>
-            <div className="col-sm-10">
-              <input type="email" className="form-control" id="inputSalary" name="email" onChange={handleChange} value={form.email} />
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="inputCity" className="col-sm-1 col-form-label">Contraseña</label>
-            <div className="col-sm-10">
-              <input type="password" className="form-control" id="inputCity" name="password" onChange={handleChange} value={form.password}/>
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="inputSalary" className="col-sm-1 col-form-label">Web</label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputSalary" name="web" onChange={handleChange} value={form.web} />
-            </div>
-          </div>
+          <PresOrRemote />
 
           <div className="description-div">
             <div className="description-box form-group row">
@@ -127,79 +168,13 @@ const CrudForm = ({ createData }) => {
               type="submit"
               className="btn btn-primary mt-3"
               onClick={handleSubmit}
-              value="Enviar">Crear nuevo hiring partner
+              value="Enviar">Guardar cambios
             </button>
           </div>
         </form>
       </div>
     </div>
   )
-
-  /*termina mi codigo */
-
-  /*return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Nombre"
-          onChange={handleChange}
-          value={form.name}
-        />
-        <input
-          type="text"
-          name="description"
-          placeholder="description"
-          onChange={handleChange}
-          value={form.description}
-        />
-        <input
-          type="text"
-          name="email"
-          placeholder="email"
-          onChange={handleChange}
-          value={form.email}
-        />
-        <input
-          type="text"
-          name="nation"
-          placeholder="nation"
-          onChange={handleChange}
-          value={form.nation}
-        />
-        <input
-          type="text"
-          name="phonenumber"
-          placeholder="phonenumber"
-          onChange={handleChange}
-          value={form.phonenumber}
-        />
-         <input
-          type="text"
-          name="region"
-          placeholder="region"
-          onChange={handleChange}
-          value={form.region}
-        />
-        <input
-          type="text"
-          name="web"
-          placeholder="web"
-          onChange={handleChange}
-          value={form.web}
-        />
-        <input
-          type="text"
-          name="password"
-          placeholder="password"
-          onChange={handleChange}
-          value={form.password}
-        />
-        <input type="submit" value="Enviar" />
-      </form>
-    </div>
-  );*/
 };
 
 export default CrudForm;

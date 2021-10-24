@@ -7,7 +7,7 @@ function EstudianteCreado() {
   const [db, setDb] = useState([]);
 
   let api = helpHttp();
-  let url = "http://localhost:5000/api/v1/partners";
+  let url = "http://localhost:5000/api/v1/students";
 
   const createData = (data) => {
     let options = {
