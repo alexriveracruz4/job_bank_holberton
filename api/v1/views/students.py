@@ -17,7 +17,7 @@ def get_students():
     all_students = storage.all(Student).values()
     list_students = []
     for student in all_students:
-        list_students.append(student.to_dict(save_fs="No"))
+        list_students.append(student.to_dict())
     return jsonify(list_students)
 
 @app_views.route('/students/<student_id>', methods=['GET'], strict_slashes=False)
@@ -89,7 +89,7 @@ def get_login_student():
                 student =  storage.get(Student, list_students[i]["id"])
                 setattr(student, "token", token)
                 storage.save()
-                return jsonify({"ok": "ok", "token": token})
+                return jsonify(student.to_dict(save_fs="No"))
 
 @app_views.route('/students/<student_id>', methods=['DELETE'],
                  strict_slashes=False)
