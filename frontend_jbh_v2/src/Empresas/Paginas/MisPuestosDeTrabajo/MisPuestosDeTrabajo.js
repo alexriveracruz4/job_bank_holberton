@@ -9,7 +9,7 @@ const datos = Data;
 
 function MisPuestosDeTrabajo() {
 
-  const partner_id = 1;
+  const PartnerId = 2;
   const [AllMyJobs, setAllMyJobs] = useState([2]);
 
   useEffect(async() => {
@@ -17,7 +17,7 @@ function MisPuestosDeTrabajo() {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/partners/${partner_id}/jobs/`);
+    const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/`);
     const jobs = await data.json();
     setAllMyJobs(jobs);
   }

@@ -24,7 +24,7 @@ import { MisPuestosDeTrabajo } from './Empresas/Paginas/MisPuestosDeTrabajo/MisP
 import { NuevoPuestoDeTrabajo } from './Empresas/Paginas/NuevoPuestoDeTrabajo/NuevoPuestoDeTrabajo';
 import { PerfilEmpresa } from './Empresas/Paginas/PerfilEmpresa/PerfilEmpresa';
 import { PuestoEmpresaView } from './Empresas/Paginas/PuestoEmpresaView/PuestoEmpresaView';
-import { PuestoEliminado } from './Empresas/Paginas/PuestoEliminado/PuestoEliminado';
+//import { PuestoEliminado } from './Empresas/Paginas/PuestoEliminado/PuestoEliminado';
 import { PuestoEditado } from './Empresas/Paginas/PuestoEditado/PuestoEditado';
 import { Postulantes } from './Empresas/Paginas/Postulantes/Postulantes';
 
@@ -69,7 +69,7 @@ function App() {
           <Route path="/login/empresa" component={LoginEmpresas}/>
           <Route exact path="/empresa/mis-puestos-de-trabajo" component={MisPuestosDeTrabajo}/>
           <Route exact path="/empresa/mis-puestos-de-trabajo/:JobId" component={PuestoEmpresaView}/>
-          <Route exact path="/empresa/mis-puestos-de-trabajo/:JobId/puesto-eliminado" component={PuestoEliminado}/>
+          {/*<Route exact path="/empresa/mis-puestos-de-trabajo/:JobId/puesto-eliminado" component={PuestoEliminado}/>*/}
           <Route exact path="/empresa/mis-puestos-de-trabajo/:JobId/puesto-editado" component={PuestoEditado}/>
           <Route exact path="/empresa/mis-puestos-de-trabajo/:JobId/postulantes" component={Postulantes}/>
           <Route exact path="/empresa/nuevo-puesto-de-trabajo" component={NuevoPuestoDeTrabajo}/>
