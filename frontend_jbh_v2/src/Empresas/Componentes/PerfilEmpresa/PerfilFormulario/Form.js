@@ -1,49 +1,45 @@
-import React, { useState } from 'react';
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
 import Countries from "../../../data/country.json"
 import UserIcon from "../Navegador/ImagenesNav/user-icon.png"
 import "./Form.css"
 
-function EmpresaForm() {
+const initailForm = {
+  name: "",
+  nation: "",
+  region: "",
+  phonenumber: "",
+  email: "",
+  password: "",
+  web: "",
+  description:""
+};
 
-  const [loading, setLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [data, setData] = useState({
-    name: '',
-    email: '',
-    phonenumber: '',
-    web: ''
-  })
+const CrudForm = ({ updateData, dataToEdit}) => {
+  const [form, setForm] = useState(initailForm);
 
-  function handleInputChange (event) {
-    console.log(event.target.value)
-    setData({
-      ...data,
-      [event.target.name] : event.target.value
-    })
-  }
+  useEffect(() => {
+    setForm(dataToEdit);
+  }, [dataToEdit]);
 
-  const handleSubmit = () => {
-    setLoading(true);
-    setIsError(false);
-
-    axios.put('http://localhost:5000/api/v1/partners/5', data).then(res => {
-      setData(res.data);
-      setLoading(false);
-    }).catch(err => {
-      setLoading(false);
-      setIsError(true);
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value, 
     });
-  }
+  };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateData(form);
+  };
 
   function InputCountry() {
     return (
       <div className="form-group row">
         <label htmlFor="exampleFormControlSelect1" className="col-sm-1 col-form-label">País</label>
         <div className="col-sm-10">
-          <select className="form-control" id="exampleFormControlSelect1">
-            <option></option>
+          <select className="form-control" id="exampleFormControlSelect1" onChange={ handleChange } name="nation" value={form.nation}>
+            <option>{form.nation}</option>
             {Countries.map(data => {;
               return <option value={data.country}>{data.country}</option>;
             })}
@@ -53,7 +49,7 @@ function EmpresaForm() {
     )
   }
 
-  function CountChar() {
+  /*function CountChar() {
     const [count, setCount] = useState(0);
     return (
       <div className="text-div">
@@ -68,13 +64,12 @@ function EmpresaForm() {
         <p>{ count } / 1000</p>
       </div>
     );
-  }
+  }*/
 
   return (
-    <div className="form-Partner">
+    <div className="form-editar-partner">
       <div className="profile-title">
-        <h1>My profile</h1>
-        <h2>Edit your profile</h2>
+        <h1>Editar mi información</h1>
       </div>
       <div className="form-div">
         <div className="div-user-icon">
@@ -82,77 +77,84 @@ function EmpresaForm() {
             <img src={ UserIcon } className="usericon-form" alt="imagen de usuario" />
           </div>
         </div>
-        <form className="form-form">
-          <div className="form-group row">
+        <form className="form-form" onSubmit={handleSubmit}>
+
+        <div className="form-group row">
             <label htmlFor="inputPhoto" className="col-sm-1 col-form-label">Foto de perfil</label>
             <div className="col-sm-10">
               <div className="box-photo form-control">
                 <input type="file" id="myphoto" />
               </div>
               <div className="div-photohelp">
-                <small id="photoHelpInline" class="text-muted">Please upload a square-shaped picture. Max 2MB, Formats allowed: jpg, png.</small>
+                <small id="photoHelpInline" className="text-muted">Please upload a square-shaped picture. Max 2MB, Formats allowed: jpg, png.</small>
               </div>
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="inputFname" className="col-sm-1 col-form-label">Empresa</label>
+            <label htmlFor="inputName" className="col-sm-1 col-form-label">Empresa</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputName" name="name" onChange={handleInputChange} />
+              <input type="text" className="form-control" id="inputName" name="name" onChange={handleChange} value={form.name}/>
+            </div>
+          </div>
+
+          <InputCountry />
+
+          <div className="form-group row">
+            <label htmlFor="inputRegion" className="col-sm-1 col-form-label">Ciudad</label>
+            <div className="col-sm-10">
+              <input type="text" className="form-control" id="inputRegion" name="region" onChange={handleChange} value={form.region}/>
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="inputPhonenumber" className="col-sm-1 col-form-label">Celular</label>
+            <div className="col-sm-10">
+              <input type="text" className="form-control" id="inputPhonenumber" name="phonenumber" onChange={handleChange} value={form.phonenumber}/>
             </div>
           </div>
 
           <div className="form-group row">
             <label htmlFor="inputEmail" className="col-sm-1 col-form-label">Email</label>
             <div className="col-sm-10">
-              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleInputChange} />
+              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} />
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="inputCellphone" className="col-sm-1 col-form-label">Celular</label>
+            <label htmlFor="inputPassword" className="col-sm-1 col-form-label">Contraseña</label>
             <div className="col-sm-10">
-              <input type="tel" className="form-control" id="inputCellphone" name="phonenumber" onChange={handleInputChange} />
+              <input type="password" className="form-control" id="inputPassword" name="password" onChange={handleChange} value={form.password}/>
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="inputEmail" className="col-sm-1 col-form-label">Web</label>
+            <label htmlFor="inputWeb" className="col-sm-1 col-form-label">Web</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputWeb" name="web" onChange={handleInputChange} />
+              <input type="text" className="form-control" id="inputWeb" name="web" onChange={handleChange} value={form.web} />
             </div>
           </div>
-
-          <InputCountry />
 
           <div className="description-div">
             <div className="description-box form-group row">
               <label htmlFor="inputDescription" className="description-label col-sm-1 col-form-label">Descripción</label>
-              <CountChar />
-            </div>
-          </div>
-
-          <div className="update form-group row">
-            <div className="col-sm-10">
-              {isError && <small className="mt-3 d-inline-block text-danger">Something went wrong. Please try again later.</small>}
-              <button
-                type="submit"
-                className="btn btn-primary mt-3"
-                onClick={handleSubmit}
-                disabled={loading}
-              >{loading ? 'Loading...' : 'Update'}</button>
-              {data && <div className="mt-3">
-                <strong>Output:</strong><br />
-                <pre>{JSON.stringify(data, null, 2)}</pre>
+              <div className="text-div">
+                <textarea className="form-control" id="inputDescription" rows="10" maxLength="1000" name="description" onChange={ handleChange } value={form.description} />
               </div>
-              }
             </div>
           </div>
-
+          <div className="div-button-editar-empresa">
+            <button
+              type="submit"
+              className="btn btn-primary mt-3"
+              onClick={handleSubmit}
+              value="Enviar">Guardar cambios
+            </button>
+          </div>
         </form>
       </div>
     </div>
   )
-}
+};
 
-export default EmpresaForm;
+export default CrudForm;

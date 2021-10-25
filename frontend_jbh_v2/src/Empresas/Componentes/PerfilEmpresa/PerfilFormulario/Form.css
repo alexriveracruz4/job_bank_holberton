@@ -3,31 +3,37 @@
   justify-content: center;
   height: 100%;
 }*/
-.form-Partner .form-div {
+.form-editar-partner .profile-title {
+  display: flex;
+  justify-content: center;
+}
+
+
+.form-editar-partner .form-div {
   max-width: 100%;
 }
 
-.form-Partner .form-div .div-user-icon {
+.form-editar-partner .form-div .div-user-icon {
   display: flex;
   max-width: 100%;
 }
 
-.form-Partner .form-div .div-user-icon .div-center-icon {
+.form-editar-partner .form-div .div-user-icon .div-center-icon {
   display: flex;
   margin: auto;
   width: 10%;
   justify-content: flex-end;
 }
 
-.form-Partner .form-div .div-center-icon .usericon-form {
+.form-editar-partner .form-div .div-center-icon .usericon-form {
   width: 50px;
 }
 
-.form-Partner .form-div .form-group .col-sm-10 .box-photo {
+.form-editar-partner .form-div .form-group .col-sm-10 .box-photo {
   display: flex;
 }
 
-.form-Partner .form-div .form-group {
+.form-editar-partner .form-div .form-group {
   display: flex;
   justify-content: center;
   text-align: end;
@@ -35,39 +41,46 @@
 }
 
 @media (max-width: 1300px) {
-  .form-Partner .form-div .form-group .col-form-label {
+  .form-editar-partner .form-div .form-group .col-form-label {
     margin-right: 70px;
   }
 }
 
 @media (max-width: 576px) {
-  .form-Partner .form-div .form-group .col-form-label {
+  .form-editar-partner .form-div .form-group .col-form-label {
     margin-right: 0px;
   }
 
-  .form-Partner .form-div .form-group {
+  .form-editar-partner .form-div .form-group {
     text-align: center;
   }
 }
 
-.form-Partner .form-div .form-group .col-sm-10 {
+.form-editar-partner .form-div .form-group .col-sm-10 {
   width: 400px;
 }
 
-.form-Partner .form-div .form-group .form-control {
+.form-editar-partner .form-div .form-group .form-control {
   border: 3px solid #000;
 }
 
-.form-Partner .form-div .form-group .select-travel-div {
+.form-editar-partner .form-div .form-group .select-travel-div {
   width: 400px;
 }
 
 
-.form-Partner .form-div .form-group .text-div {
+.form-editar-partner .form-div .form-group .text-div {
   width: 400px;
 }
 
-.form-Partner .form-div .form-form .update {
+.form-editar-partner .form-div .form-form .update {
+  display: flex;
+  justify-content: center;
+  text-align: start;
+  margin-top: 20px;
+}
+
+.form-editar-partner .form-div .form-form .div-button-editar-empresa {
   display: flex;
   justify-content: center;
   text-align: start;
