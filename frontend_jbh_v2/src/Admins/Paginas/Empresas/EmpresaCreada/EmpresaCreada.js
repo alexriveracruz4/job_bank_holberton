@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { helpHttp } from '../../../../helpers/helpHttp';
 import CrudForm from '../../../Componentes/Empresas/EmpresaCreada/CrearEmpresaForm';
-import AdminNav from '../../../Componentes/Empresas/EmpresaCreada/Navegador/AdminNav';
+import { AdminNav } from "../../../Navegador/AdminNav";
 
 function EmpresaCreada() {
   const [db, setDb] = useState([]);

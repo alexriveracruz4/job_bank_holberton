@@ -36,10 +36,15 @@ import { LoginAdmins } from './Admins/Paginas/LoginAdmins/LoginAdmins';
 import { EmpresaEditada } from './Admins/Paginas/Empresas/EmpresaEditada/EmpresaEditada';
 import { TodasLasEmpresas } from './Admins/Paginas/Empresas/TodasLasEmpresas/TodasLasEmpresas';
 import { EmpresaCreada } from './Admins/Paginas/Empresas/EmpresaCreada/EmpresaCreada';
+import { TrabajosDeCadaEmpresa } from './Admins/Paginas/Empresas/TrabajosDeCadaEmpresa/TrabajosDeCadaEmpresa';
 
 import { EstudianteEditado } from './Admins/Paginas/Estudiantes/EstudiantesEditado/EstudiantesEditado'
 import { TodosLosEstudiantes } from './Admins/Paginas/Estudiantes/TodosLosEstudiantes/TodosLosEstudiantes';
 import { EstudianteCreado } from './Admins/Paginas/Estudiantes/EstudiantesCreado/EstudiantesCreado'
+import { PostulantesATrabajos } from './Admins/Paginas/Empresas/PostulantesATrabajos/PostulantesATrabajos';
+
+import { TodosLosTrabajos } from './Admins/Paginas/TodosLosTrabajos/TodosLosTrabajos/TodosLosTrabajos';
+
 
 import { NotFoundPage } from './NotFoundPage';
 
@@ -77,11 +82,15 @@ function App() {
           <Route exact path="/admin/empresas" component={TodasLasEmpresas}/>
           <Route exact path="/admin/empresas/empresa-editada/:id" component={EmpresaEditada}/>
           <Route exact path="/admin/empresas/crear-empresa" component={EmpresaCreada}/>
+          <Route exact path="/admin/empresas/trabajos/:PartnerId" component={TrabajosDeCadaEmpresa}/>
+          <Route exact path="/admin/empresas/trabajos/:PartnerId/:JobId/estudiantes" component={PostulantesATrabajos}/>
+
 
           <Route exact path="/admin/estudiantes" component={TodosLosEstudiantes}/>
           <Route exact path="/admin/estudiantes/estudiante-editado/:id" component={EstudianteEditado}/>
           <Route exact path="/admin/estudiantes/crear-estudiante" component={EstudianteCreado}/>
-          
+
+          <Route exact path="/admin/todos-los-trabajos" component={TodosLosTrabajos}/>
 
 
           <Route path="/404" component={NotFoundPage}/>

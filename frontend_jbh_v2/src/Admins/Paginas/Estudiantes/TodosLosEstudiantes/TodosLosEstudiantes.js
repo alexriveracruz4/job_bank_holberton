@@ -1,7 +1,7 @@
 import React from 'react'
-import './TodosLosEstudiantes.css';
+//import './TodosLosEstudiantes.css';
+import { AdminNav } from "../../../Navegador/AdminNav";
 
-import NavPuesto from "../../../Componentes/Estudiantes/TodosLosEstudiantes/Navegador/AdminNav";
 import TablaEstudiante from "../../../Componentes/Estudiantes/TodosLosEstudiantes/TablaEstudiante/TablaEstudiante"
 
 
@@ -10,9 +10,9 @@ function TodosLosEstudiantes() {
   return (
     <div className='PuestosDeTrabajoEstudianteContainer'>
       <div className='HeaderContainer'>
-        <NavPuesto />
+        <AdminNav />
       </div>
-      <div className='BodyContainer'>
+      <div className='TablaEstudiantesContainer'>
         <TablaEstudiante />
       </div>
     </div>

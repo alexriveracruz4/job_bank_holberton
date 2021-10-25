@@ -3,7 +3,7 @@ import "./PuestoInfo.css";
 import { useParams } from 'react-router-dom';
 
 function PuestoInfo(props) {
-  const { id } = useParams();
+  const { JobId } = useParams();
   const datos = props.datos[0];
   console.log(datos)
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router';
 import { helpHttp } from '../../../../helpers/helpHttp';
-import AdminNav from '../../../Componentes/Empresas/EmpresaEditada/Navegador/AdminNav';
+import { AdminNav } from "../../../Navegador/AdminNav";
 import CrudForm from '../../../Componentes/Empresas/EmpresaEditada/EmpresaEditada';
 
 function EmpresaEditada() {

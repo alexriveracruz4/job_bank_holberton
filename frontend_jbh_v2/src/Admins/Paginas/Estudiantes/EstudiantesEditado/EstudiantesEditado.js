@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router';
 import { helpHttp } from '../../../../helpers/helpHttp';
 import CrudForm from '../../../Componentes/Estudiantes/EstudiantesEditado/EditarEstudianteForm';
-import AdminNav from '../../../Componentes/Estudiantes/EstudiantesEditado/Navegador/AdminNav'
+import { AdminNav } from "../../../Navegador/AdminNav";
+
+
 
 function EstudianteEditado() {
   const location = useLocation();

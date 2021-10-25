@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
-import { useHistory } from 'react-router';
+import { useHistory, useLocation, useParams } from 'react-router';
 import { helpHttp } from '../../../../../helpers/helpHttp';
 
-function TablaEstudiante() {
+
+function PostulantesATrabajos() {
+  const location = useLocation();
+  let PartnerName = location.state.PartnerName;
+  let JobTitle = location.state.JobTitle;
+
+
+  let Title = "Postulantes al empleo " + JobTitle + " publicados por la empresa " + PartnerName;
   let history = useHistory();
+  const { PartnerId, JobId } = useParams();
+
 
   let api = helpHttp();
-  let url = "http://localhost:5000/api/v1/students";
+  let url = `http://localhost:5000/api/v1/jobs/${PartnerId}/${JobId}/students`;
 
   const columnas = [
     { title:'ID', field:'id', type:"numeri", textAlign:"center"},
@@ -18,33 +27,33 @@ function TablaEstudiante() {
     { title:'CELULAR', field:'phonenumber' }
   ]
 
-  const [AllPartnersData, setAllPartnersData] = React.useState([]);
+  const [AllPartnerJobs, setAllPartnerJobs] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     obtenerDatos();
+    console.log("object");
   }, []);
 
   const obtenerDatos = async () => {
     const data = await fetch(url);
-    const partners = await data.json();
-    setAllPartnersData(partners);
+    const jobs = await data.json();
+    setAllPartnerJobs(jobs);
   }
 
   const deleteData = (id) => {
-  
     let isDelete = window.confirm(
-      `¿Estás seguro de eliminar el registro con el id '${id}'?`
+      `¿Estás seguro de eliminar el registro con el id = '${id}'?`
     );
   
     if (isDelete) {
-      let endpoint = `${url}/${id}`;
+      let endpoint = `http://localhost:5000/api/v1/students/${id}`;
       let options = {
         headers: { "content-type": "application/json" },
       };
   
       api.del(endpoint, options).then((res) => {
-          let newData = AllPartnersData.filter((el) => el.id !== id);
-          setAllPartnersData(newData);
+          let newData = AllPartnerJobs.filter((el) => el.id !== id);
+          setAllPartnerJobs(newData);
       });
     } else {
       return;
@@ -55,29 +64,20 @@ function TablaEstudiante() {
     <React.StrictMode>
       <MaterialTable
         columns={columnas}
-        data={AllPartnersData}
-        title="ESTUDIANTES"
+        data={AllPartnerJobs}
+        title={Title}
         actions={[
           {
             icon: 'edit',
             tooltip: 'Editar estudiante',
-            onClick: (event, rowData) => {history.push(
-              {
-                pathname:`/admin/estudiantes/estudiante-editado/${rowData.id}`,
-                state: AllPartnersData.filter((trabajo)=> trabajo.id === rowData.id)
-              })}
+            onClick: () => alert("TRABAJO EDITADO")
+            
           },
           {
             icon: 'delete',
             tooltip: 'Eliminar estudiante',
             onClick: (event, rowData) => {deleteData(rowData.id)}
           },
-          {
-            icon:() => <button>NUEVO</button>,
-            tooltip: "Crear estudiante",
-            onClick: (e) => {history.push(`/admin/estudiantes/crear-estudiante`)},
-            isFreeAction:true
-          }
         ]}
         
         options={{
@@ -99,4 +99,4 @@ function TablaEstudiante() {
   );
 }
 
-export default TablaEstudiante;
+export default PostulantesATrabajos;

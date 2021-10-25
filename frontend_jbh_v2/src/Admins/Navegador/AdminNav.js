@@ -25,14 +25,14 @@ function AdminNav() {
             <button 
               className="admin-partners-button" 
               onClick={ () => {history.push("/admin/empresas")}}>
-              Partners
+              Empresas
             </button>
           </div>
           <div className="admin-puestos-div">
             <button 
               className="admin-puestos-button" 
-              onClick={ () => {history.push("/empresa/nuevo-puesto-de-trabajo")}}>
-              Puestos de trabajo
+              onClick={ () => {history.push("/admin/todos-los-trabajos")}}>
+              Todos los Puestos de trabajo
             </button>
           </div>
         </div>
@@ -52,4 +52,4 @@ function AdminNav() {
   );
 }
 
-export default AdminNav;
+export { AdminNav };

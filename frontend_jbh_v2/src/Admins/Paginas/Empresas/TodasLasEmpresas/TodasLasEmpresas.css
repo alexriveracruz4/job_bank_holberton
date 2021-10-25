@@ -1,18 +1,5 @@
-* {
-	padding: 0px;
-	margin: 0px;
-	box-sizing: border-box;
-  background-color: #F1F2F2;
-}
 
-.Admin-empresas-div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction : column;
-}
-
-.Admin-empresas-div .HeaderContainer {
+.HeaderContainer {
   display: flex;
   flex-direction : row;
   justify-content: space-between;
@@ -22,10 +9,7 @@
   position: relative;
 }
 
-.Admin-empresas-div .BodyContainer {
+.TablaEmpresasContainer {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction : row;
   border-top: 2px solid black;
 }

@@ -36,8 +36,8 @@ function MisPuestosDeTrabajo() {
           <ListJobs>
             {AllMyJobs.map(trabajo => (
             <ItemJob 
-              key={trabajo.id}
-              id={trabajo.id}
+              key={trabajo.token}
+              JobId={trabajo.id}
               title={trabajo.title}
               deleted={trabajo.deleted}
             />

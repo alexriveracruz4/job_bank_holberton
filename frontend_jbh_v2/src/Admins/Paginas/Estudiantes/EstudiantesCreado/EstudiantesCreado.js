@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { helpHttp } from '../../../../helpers/helpHttp';
 import CrudForm from '../../../Componentes/Estudiantes/EstudiantesCreado/CrearEstudianteForm';
-import AdminNav from '../../../Componentes/Estudiantes/EstudiantesCreado/Navegador/AdminNav'
+import { AdminNav } from "../../../Navegador/AdminNav";
+
 
 function EstudianteCreado() {
   const [db, setDb] = useState([]);

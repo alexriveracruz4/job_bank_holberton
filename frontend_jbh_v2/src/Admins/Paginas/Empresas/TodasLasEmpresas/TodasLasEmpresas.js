@@ -1,8 +1,7 @@
 import React from 'react'
-import './TodasLasEmpresas.css';
-
-import AdminNav from "../../../Componentes/Empresas/TodasLasEmpresas/Navegador/AdminNav";
-import TablaEmpresa from "../../../Componentes/Empresas/TodasLasEmpresas/TablaEmpresa/TablaEmpresa"
+//import './TodasLasEmpresas.css';
+import { AdminNav } from "../../../Navegador/AdminNav";
+import TablaEmpresa from '../../../Componentes/Empresas/TodasLasEmpresas/TablaEmpresa/TablaEmpresa';
 
 
 
@@ -12,7 +11,7 @@ function TodasLasEmpresas() {
       <div className='HeaderContainer'>
         <AdminNav />
       </div>
-      <div className='BodyContainer'>
+      <div className='TablaEmpresasContainer'>
         <TablaEmpresa />
       </div>
     </div>

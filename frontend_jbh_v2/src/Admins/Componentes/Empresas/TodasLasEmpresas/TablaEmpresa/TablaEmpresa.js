@@ -14,8 +14,7 @@ function TablaEmpresa() {
     { title:'ID', field:'id', type:"numeri", textAlign:"center"},
     { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{"1":"Si", "0":"No"}},
     { title:'EMPRESA', field:'name'},
-    { title:'EMAIL', field:'email' },
-    { title:'TOKEN', field:'token' }
+    { title:'EMAIL', field:'email' }
   ]
 
   const [AllPartnersData, setAllPartnersData] = useState([]);
@@ -74,6 +73,16 @@ function TablaEmpresa() {
             onClick: (event, rowData) => {deleteData(rowData.id)}
           },
           {
+            icon: () => <button>TRABAJOS</button>,
+            tooltip: 'Trabajos publicados',
+            onClick: (event, rowData) => {history.push(
+              {
+                pathname:`/admin/empresas/trabajos/${rowData.id}`,
+                state: {PartnerName:rowData.name}
+              }
+            )}
+          },
+          {
             icon:() => <button>NUEVO</button>,
             tooltip: "Crear una nueva empresa",
             onClick: (e) => {history.push(`/admin/empresas/crear-empresa`)},
@@ -89,6 +98,11 @@ function TablaEmpresa() {
           headerStyle: {
             textAlign: "center"
         }
+        }}
+        localization={{
+          header:{
+            actions: 'ACCIONES'
+          }
         }}
       />
     </React.StrictMode>

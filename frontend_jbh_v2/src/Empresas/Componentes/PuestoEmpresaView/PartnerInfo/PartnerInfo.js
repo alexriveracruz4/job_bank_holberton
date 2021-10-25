@@ -4,7 +4,7 @@ import "./PartnerInfo.css";
 import { useParams } from 'react-router-dom';
  
 function PartnerInfo(props) {
-    const { id } = useParams();
+    const { JobId } = useParams();
     const datos = props.datos[0];
     return (
         <div className="body-container">
