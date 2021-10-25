@@ -82,3 +82,10 @@
 .form-Estudiante .form-div .form-group .text-div {
   width: 400px;
 }
+
+.form-Estudiante .form-div .form-form .div-button-editar-estudiante {
+  display: flex;
+  justify-content: center;
+  text-align: start;
+  margin-top: 20px;
+}

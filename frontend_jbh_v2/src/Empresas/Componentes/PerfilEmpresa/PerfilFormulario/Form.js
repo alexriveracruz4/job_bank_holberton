@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router';
 import Countries from "../../../data/country.json"
 import UserIcon from "../Navegador/ImagenesNav/user-icon.png"
 import "./Form.css"
@@ -28,9 +29,13 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     });
   };
 
+  const history = useHistory();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     updateData(form);
+    let path = `/empresa/mis-puestos-de-trabajo`; 
+    history.push(path);
   };
 
   function InputCountry() {
