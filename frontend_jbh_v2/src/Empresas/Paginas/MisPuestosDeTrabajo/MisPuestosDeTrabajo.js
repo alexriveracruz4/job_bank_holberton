@@ -25,6 +25,12 @@ function MisPuestosDeTrabajo() {
 
   console.log(AllMyJobs);
 
+  useEffect(() => {
+      if (!cookies.get('id')){
+          window.location.href="/login/empresa";
+      }
+  });
+
   return (
     <div className='MisPuestosDeTrabajoContainer'>
       <div className='HeaderContainer'>

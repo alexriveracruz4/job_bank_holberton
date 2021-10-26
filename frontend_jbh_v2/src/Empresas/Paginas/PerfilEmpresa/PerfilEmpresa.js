@@ -37,6 +37,12 @@ function PerfilEmpresa() {
     });
   }
 
+  useEffect(() => {
+      if (!cookies.get('id')){
+          window.location.href="/login/empresa";
+      }
+  });
+
   return (
     <div>
       <EmpresaNav />

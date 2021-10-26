@@ -26,7 +26,13 @@ function Postulantes(props) {
     const applications = await data.json();
     setAllStudentsApplicated(applications);
   }
-  
+
+  useEffect(() => {
+      if (!cookies.get('id')){
+          window.location.href="/login/empresa";
+      }
+  });
+
   return (
     <div className='PostulantesContainer'>
       <div className='HeadersContainer'>

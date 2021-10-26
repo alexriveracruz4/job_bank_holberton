@@ -77,6 +77,12 @@ class LoginComponent extends React.Component {
 	this.setState({password: event.target.value});
     }
 
+    componentDidMount() {
+        if(cookies.get('id')){
+            this.props.history.push("/empresa/mis-puestos-de-trabajo");
+        }
+    }
+
     render() {
 	//let history = useHistory();
 	//let mode = "estudiante"

@@ -25,6 +25,12 @@ function PuestoEmpresaView() {
   }
   console.log(AllAJobData)
 
+  useEffect(() => {
+      if (!cookies.get('id')){
+          window.location.href="/login/empresa";
+      }
+  });
+
   return (
     <React.Fragment>
       <EmpresaNav />
