@@ -1,11 +1,8 @@
 import React from "react";
 import "./PuestoInfo.css";
-import { useParams } from 'react-router-dom';
 
 function PuestoInfo(props) {
-  const { JobId } = useParams();
   const datos = props.datos[0];
-  console.log(datos)
   return (
     <div className="partner-info-container">
       <div className="description-container">

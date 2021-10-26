@@ -6,13 +6,13 @@ import { ListJobs } from "../../Componentes/Postulantes/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/Postulantes/ItemJob/ItemJob";
 
 import { useLocation, useParams } from 'react-router';
+import Cookies from 'universal-cookie';
 
 
-
+const cookies = new Cookies();
 function Postulantes(props) {
   const { JobId } = useParams();
-
-  const partner_id = 2; 
+  const partner_id= cookies.get("id"); //string variable
   const location = useLocation();
   const titleJob = location.state.titleJob;
   const [AllStudentsApplicated, setAllStudentsApplicated] = useState([2]);

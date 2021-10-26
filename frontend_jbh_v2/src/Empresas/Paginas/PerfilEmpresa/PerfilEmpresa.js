@@ -4,10 +4,13 @@ import { EmpresaNav } from '../../Navegador/EmpresaNav';
 
 import { helpHttp } from "../../../helpers/helpHttp";
 import CrudForm from "../../Componentes/PerfilEmpresa/PerfilFormulario/Form"
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 function PerfilEmpresa() {
 
-  const partner_id = 3;
+  const partner_id= cookies.get("id"); //string variable
 
   const [db, setDb] = useState([]);
   const [dataToEdit, setDataToEdit] = useState({});

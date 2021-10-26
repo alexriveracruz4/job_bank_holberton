@@ -5,12 +5,13 @@ import { PuestoInfo } from "../../Componentes/PuestoEmpresaView/PuestoInfo/Puest
 import { PartnerInfo } from "../../Componentes/PuestoEmpresaView/PartnerInfo/PartnerInfo";
 
 import { useParams } from "react-router";
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 function PuestoEmpresaView() {
-  
-  const partner_id = 1;
+  const partner_id= cookies.get("id"); //string variable
+
   const { JobId } = useParams();
-  console.log(JobId);
   const [AllAJobData, setAllAJobDta] = useState([2]);
 
   useEffect(() => {

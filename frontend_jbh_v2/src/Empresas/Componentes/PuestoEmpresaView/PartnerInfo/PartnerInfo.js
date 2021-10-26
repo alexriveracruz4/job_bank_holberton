@@ -1,10 +1,8 @@
 import React from "react";
 import partnerlogo from "./partnerlogo.png"
 import "./PartnerInfo.css";
-import { useParams } from 'react-router-dom';
  
 function PartnerInfo(props) {
-    const { JobId } = useParams();
     const datos = props.datos[0];
     return (
         <div className="body-container">

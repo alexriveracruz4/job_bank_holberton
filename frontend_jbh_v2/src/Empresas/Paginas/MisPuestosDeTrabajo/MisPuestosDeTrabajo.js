@@ -4,11 +4,12 @@ import { EmpresaNav } from '../../Navegador/EmpresaNav';
 
 import { ListJobs } from "../../Componentes/MisPuestosDeTrabajo/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/MisPuestosDeTrabajo/ItemJob/ItemJob";
+import Cookies from 'universal-cookie';
 
-
+const cookies = new Cookies();
 function MisPuestosDeTrabajo() {
 
-  const PartnerId = 2;
+  const PartnerId= cookies.get("id"); //string variable
   const [AllMyJobs, setAllMyJobs] = useState([2]);
 
 
@@ -22,6 +23,7 @@ function MisPuestosDeTrabajo() {
     setAllMyJobs(jobs);
   }
 
+  console.log(AllMyJobs);
 
   return (
     <div className='MisPuestosDeTrabajoContainer'>

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './ItemJob.css';
 import { Link } from 'react-router-dom';
 import { helpHttp } from '../../../../helpers/helpHttp';
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 function ItemJob(props) {
-
-  const PartnerId = 2;
+  const PartnerId= cookies.get("id"); //string variable
   let api = helpHttp();
   let url = `http://localhost:5000/api/v1/partners/${PartnerId}/jobs`;
 
