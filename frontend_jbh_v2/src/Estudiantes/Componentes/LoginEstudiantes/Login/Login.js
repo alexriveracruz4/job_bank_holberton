@@ -21,9 +21,6 @@ class LoginComponent extends React.Component {
     }
 
     doLogin() {
-	//alert(this.state.username);
-	//alert(this.state.password);
-	//const history = useHistory();
 
 	const url = "http://localhost:5000/api/v1/students/login";
 	const data = {
@@ -39,36 +36,47 @@ class LoginComponent extends React.Component {
 	})
 	.then(res => res.json())
 	.then(
-	        (result) => {
-		    //this.setState({
-		    //isLoaded: true,
-		    //items: result.items
-		    //});
-		    alert(result);
-		    if (result.id) {
-			const token = result.token;
-			var respuesta=result;
-			cookies.set('id', respuesta.id, {path:"/"});
-			cookies.set('firstname', respuesta.firstname, {path:"/"});
-			cookies.set('lastname', respuesta.lastname, {path:"/"});
-			cookies.set('email', respuesta.email, {path:"/"});
-			cookies.set('github', respuesta.github, {path:"/"});
-			cookies.set('phonenumber', respuesta.phonenumber, {path:"/"});
-			alert(`Bienvenido ${respuesta.firstname} ${respuesta.lastname}`);
-			localStorage.setItem("token", token);
-			this.props.history.push("/estudiante/puestos-de-trabajo");
-		    }
-		    //this.props.history.push("/estudiante/puestos-de-trabajo");
-		    //history.push("/path/to/push");
-		},
-	        (error) => {
-		    //this.setState({
-		    //isLoaded: true,
-		    //error
-		    //});
-		    alert("Error al hacer login.");
-		    this.props.history.push('/404');
+	    (result) => {
+		// alert(result);
+		if (result.id) {
+		    const token = result.token;
+		    var respuesta=result;
+		    cookies.set('id', respuesta.id, {path:"/"});
+		    cookies.set('firstname', respuesta.firstname, {path:"/"});
+		    cookies.set('lastname', respuesta.lastname, {path:"/"});
+		    cookies.set('email', respuesta.email, {path:"/"});
+		    cookies.set('github', respuesta.github, {path:"/"});
+		    cookies.set('pres_or_remot', respuesta.pres_or_remote, {path:"/"});
+		    cookies.set('availability', respuesta.availability, {path:"/"});
+		    cookies.set('phonenumber', respuesta.phonenumber, {path:"/"});
+		    cookies.set('age', respuesta.age, {path:"/"});
+		    cookies.set('nationality', respuesta.nationality, {path:"/"});
+		    cookies.set('description', respuesta.description, {path:"/"});
+		    cookies.set('disp_travel', respuesta.disp_travel, {path:"/"});
+		    cookies.set('linkedin', respuesta.linkedin, {path:"/"});
+		    cookies.set('twitter', respuesta.twitter, {path:"/"});
+		    cookies.set('token', respuesta.token, {path:"/"});
+		    cookies.set('created_at', respuesta.created_at, {path:"/"});
+		    cookies.set('updated_at', respuesta.updated_at, {path:"/"});
+		    cookies.set('deleted_at', respuesta.deleted_at, {path:"/"});
+		    cookies.set('created_by', respuesta.created_by, {path:"/"});
+		    cookies.set('updated_by', respuesta.updated_by, {path:"/"});
+		    cookies.set('deleted_by', respuesta.deleted_by, {path:"/"});
+		    cookies.set('deleted', respuesta.deleted, {path:"/"});
+		    cookies.set('cv_filename_physical', respuesta.cv_filename_physical, {path:"/"});
+		    cookies.set('cv_filename_logical', respuesta.cv_filename_logical, {path:"/"});
+		    cookies.set('photo_filename_physical', respuesta.photo_filename_physical, {path:"/"});
+		    cookies.set('photo_filename_logical', respuesta.photo_filename_logical, {path:"/"});
+		    alert(`Bienvenido ${respuesta.firstname} ${respuesta.lastname}`);
+		    localStorage.setItem("token", token);
+		    this.props.history.push("/estudiante/puestos-de-trabajo");
 		}
+	    },
+	    (error) => {
+
+		alert("Usuario o Contraseña incorrectos");
+		this.props.history.push('/login/estudiante');
+	    }
 	);
     }
 
@@ -110,4 +118,4 @@ class LoginComponent extends React.Component {
 }
 
 //export { LoginComponent }
-export const LoginComponent_wr = withRouter(LoginComponent);
+export const LoginComponentWr = withRouter(LoginComponent);

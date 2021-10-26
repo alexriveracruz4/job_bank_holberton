@@ -10,10 +10,6 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 const datos1 = Data;
 function PuestosDeTrabajoEstudiante() {
-    console.log('id: ' + cookies.get('id'));
-    console.log('nombre: '+cookies.get('firstname'));
-    console.log('apellido: '+cookies.get('lastname'));
-    console.log('email: '+cookies.get('email'));
 
     const [AllJobsData, setAllJobsData] = React.useState([]);
 

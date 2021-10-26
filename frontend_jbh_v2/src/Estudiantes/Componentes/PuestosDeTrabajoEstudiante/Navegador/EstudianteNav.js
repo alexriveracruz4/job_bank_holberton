@@ -8,13 +8,33 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-function closeSession() {
+function closeSessionEst() {
     cookies.remove("id", {path: "/"});
     cookies.remove("firstname", {path: "/"});
     cookies.remove("lastname", {path: "/"});
     cookies.remove("email", {path: "/"});
     cookies.remove("github", {path: "/"});
-    cookies.remove("phonenumber", {path: "/"});
+    cookies.remove('pres_or_remot', {path:"/"});
+    cookies.remove('availability', {path:"/"});
+    cookies.remove('phonenumber', {path:"/"});
+    cookies.remove('age', {path:"/"});
+    cookies.remove('nationality', {path:"/"});
+    cookies.remove('description', {path:"/"});
+    cookies.remove('disp_travel', {path:"/"});
+    cookies.remove('linkedin', {path:"/"});
+    cookies.remove('twitter', {path:"/"});
+    cookies.remove('token', {path:"/"});
+    cookies.remove('created_at', {path:"/"});
+    cookies.remove('updated_at', {path:"/"});
+    cookies.remove('deleted_at', {path:"/"});
+    cookies.remove('created_by', {path:"/"});
+    cookies.remove('updated_by', {path:"/"});
+    cookies.remove('deleted_by', {path:"/"});
+    cookies.remove('deleted', {path:"/"});
+    cookies.remove('cv_filename_physical', {path:"/"});
+    cookies.remove('cv_filename_logical', {path:"/"});
+    cookies.remove('photo_filename_physical', {path:"/"});
+    cookies.remove('photo_filename_logical', {path:"/"});
     window.location.href="/login/estudiante";
 }
 
@@ -58,7 +78,7 @@ function NavPuesto() {
         <div className="cerrarsesion">
           <button
             className="cerrarsesion-button"
-            onClick={closeSession}>
+            onClick={closeSessionEst}>
 	    Cerrar sesión
           </button>
         </div>
