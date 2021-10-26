@@ -3,6 +3,22 @@ import './AdminNav.css';
 import logo from "./ImagenesNav/holberton-logo.png";
 import UserIcon from "./ImagenesNav/user-icon.png";
 import { useHistory } from 'react-router-dom'; 
+import Cookies from 'universal-cookie';
+
+
+const cookies = new Cookies();
+
+function closeSessionEst() {
+    cookies.remove("id", {path: "/"});
+    cookies.remove("firstname", {path: "/"});
+    cookies.remove("lastname", {path: "/"});
+    cookies.remove("email", {path: "/"});
+    cookies.remove('token', {path:"/"});
+    cookies.remove('created_at', {path:"/"});
+    cookies.remove('updated_at', {path:"/"});
+    cookies.remove('deleted_at', {path:"/"});
+    window.location.href="/login/admin";
+}
 
 
 function AdminNav() {
@@ -44,10 +60,19 @@ function AdminNav() {
             Puestos de Trabajo
             onClick={ () => {history.push("/empresa/perfil")}}>
             <img src={ UserIcon } className="usericon" alt="imagen de usuario" />
-            <button className="name-button">Bill Gates</button>
+            <button className="name-button">{cookies.get('firstname')} {cookies.get('lastname')}</button>
           </div>
         </div>
       </div>
+      <nav>
+        <div className="cerrarsesion">
+          <button
+            className="cerrarsesion-button"
+            onClick={closeSessionEst}>
+            Cerrar sesión
+          </button>
+        </div>
+      </nav>
     </header>
   );
 }
