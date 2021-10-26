@@ -4,10 +4,11 @@ import "./PartnerInfo.css";
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { helpHttp } from "../../../../helpers/helpHttp";
+import Cookies from 'universal-cookie';
 
-
+const cookies = new Cookies();
 function PartnerInfo(props) {
-    const studentId = 3;
+    const studentId = cookies.get("id"); //string variable
     let history = useHistory();
     const { PartnerId, JobId } = useParams();
 
@@ -21,10 +22,6 @@ function PartnerInfo(props) {
           `¿Estás seguro de postular al trabajo de id:${JobId} de la empresa con id:'${PartnerId}'?`
         );
         if (IsPostular) {
-
-        {/*curl -X POST http://0.0.0.0:5000/api/v1/students/applications -H "Content-Type: application/json" -d '{"partner_id": 1, "job_id": 1, "student_id": 1}' -vvv
-                            */}
-
           let url = `http://localhost:5000/api/v1/students/applications`;
           const data = {"partner_id": PartnerId, "job_id": JobId, "student_id": studentId}
           let options = {
@@ -58,7 +55,9 @@ function PartnerInfo(props) {
                 <div className="partner-name">
                     <p>{props.PartnerName}</p>
                 </div>
-                {datos.deleted || props.PostulantesIDs.includes(studentId, 0)?
+                {console.log(props.PostulantesIDs.includes(studentId))}
+                {console.log(typeof studentId)}
+                {datos.deleted || props.PostulantesIDs.includes(parseInt(studentId), 0)?
                     ""
                     :
                     <div className="postula-container" onClick={ () => {history.push(`/estudiante/puestos-de-trabajo/partners/${PartnerId}/jobs/${JobId}/puesto-postulado`)}}>

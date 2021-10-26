@@ -26,7 +26,7 @@ function PuestoInfo(props) {
           <p>País: {datos.country}</p>
           <p>Ciudad: {datos.city}</p>
           <p>Modalidad: {datos.pres_or_remote}</p>
-          <p>Sueldo: {datos.salary} $</p>
+          <p>Sueldo: {datos.salary}</p>
         </div>
       </div>
     </div>

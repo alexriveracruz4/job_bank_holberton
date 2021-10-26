@@ -21,7 +21,7 @@ function Filters( {searchJob, setSearchJob} ) {
           type='text'
           placeholder='Ej:Full Stack'
           name="PalabraClave"
-          value={searchJob.KeyWords}
+          value={searchJob.PalabraClave}
           onChange={handleChange}
         />
         <button>Filtrar</button>
@@ -34,7 +34,7 @@ function Filters( {searchJob, setSearchJob} ) {
               type='radio'
               id='tiempo_completo'
               name='tipoDeTrabajo'
-              value="Tiempo completo"
+              value="Tiempo Completo"
               onChange={handleChange}
             />
             <label htmlFor="tiempo_completo">Tiempo completo</label>
@@ -44,7 +44,7 @@ function Filters( {searchJob, setSearchJob} ) {
               type='radio'
               id='medio_tiempo'
               name='tipoDeTrabajo'
-              value="Tiempo parcial"
+              value="Tiempo Parcial"
               onChange={handleChange} 
             />
             <label htmlFor="medio_tiempo">Tiempo Parcial</label>
@@ -55,7 +55,7 @@ function Filters( {searchJob, setSearchJob} ) {
               id='por_horas'
               name='tipoDeTrabajo'
               value="Por horas"
-              onChange={handleChange} 
+              onChange={handleChange}
             />
             <label htmlFor="por_horas">Por horas</label>
           </div>
@@ -66,6 +66,7 @@ function Filters( {searchJob, setSearchJob} ) {
               name='tipoDeTrabajo'
               value={null}
               onChange={handleChange} 
+              defaultChecked
             />
             <label htmlFor="todas">Todas</label>
           </div>
@@ -111,6 +112,8 @@ function Filters( {searchJob, setSearchJob} ) {
               name='modalidad'
               value={null}
               onChange={handleChange}
+              defaultChecked
+
             />
             <label htmlFor="all">Todas</label>
           </div>

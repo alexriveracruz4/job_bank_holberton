@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./PuestosDeTrabajoEstudiante.css";
 import { EstudianteNav } from '../../Navegador/EstudianteNav'
 import { Filters } from "../../Componentes/PuestosDeTrabajoEstudiante/Filters/Filters";
 import { ListJobs } from "../../Componentes/PuestosDeTrabajoEstudiante/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/PuestosDeTrabajoEstudiante/ItemJob/ItemJob";
-//import NavPuesto from "../../Componentes/PuestosDeTrabajoEstudiante/Navegador/EstudianteNav";
+
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 function PuestosDeTrabajoEstudiante() {
   const studentId = cookies.get("id");
-  console.log("ID",studentId);
-  const [AllJobsData, setAllJobsData] = React.useState([]);
+  const [AllJobsData, setAllJobsData] = useState([]);
 
-  React.useEffect(async() => {
+  useEffect(async() => {
     await obtenerDatos();
   }, []);
 
@@ -23,35 +22,35 @@ function PuestosDeTrabajoEstudiante() {
     setAllJobsData(jobs);
   }
 
-  const [form, setForm] = useState({});
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]:e.targe.value,
-    })
-  }
-
-  const [searchJob, setSearchJob] = React.useState({PalabraClave:"", modalidad:"", tipoDeTrabajo:""});
-
+  const [searchJob, setSearchJob] = useState({PalabraClave:"", modalidad:"", tipoDeTrabajo:""});
 
   const datosNotEliminados = AllJobsData.filter(trabajo => trabajo.deleted === 0);
 
   const datos = datosNotEliminados;
 
   let ListSearchedJobs = [];
-  if (( searchJob.PalabraClave.length === 0 && searchJob.modalidad.length === 0 && searchJob.tipoDeTrabajo.length === 0)) {
-    ListSearchedJobs = datos;
-  } else {
-    ListSearchedJobs = datos.filter(trabajo => {
-      const JobTituloText = trabajo.title.toLowerCase();
-      const JobDescripcionText = trabajo.description.toLowerCase();
-      const alltext = JobTituloText + JobDescripcionText;
-      const searchJobText = searchJob.PalabraClave.toLowerCase();
-      return alltext.includes(searchJobText) && searchJob.modalidad === trabajo.pres_or_remote && searchJob.modalidad === trabajo.modalidad;
-      
-    });
-  }
+    if (( searchJob.PalabraClave.length === 0 && searchJob.modalidad.length === 0 && searchJob.tipoDeTrabajo.length === 0)) {
+      ListSearchedJobs = datos;
+    } else {
+      ListSearchedJobs = datos.filter(trabajo => {
+        const JobTituloText = trabajo.title.toLowerCase();
+        const JobDescripcionText = trabajo.description.toLowerCase();
+        const alltext = JobTituloText + JobDescripcionText;
+        const searchJobText = searchJob.PalabraClave.toLowerCase();
+        const resultadoPalabra = alltext.includes(searchJobText);
 
+        let resultadoModalidad = false;
+        if (searchJob.tipoDeTrabajo === trabajo.job_type || searchJob.tipoDeTrabajo.length === 0) {
+          resultadoModalidad = true;
+        }
+        let resultadoTipoDeTrabajo = false
+        if (searchJob.modalidad === trabajo.pres_or_remote || searchJob.modalidad.length === 0) {
+          resultadoTipoDeTrabajo = true;
+        }
+        return resultadoPalabra && resultadoTipoDeTrabajo && resultadoModalidad;
+      });
+    }
+  
   return (
     <div className='PDTEPuestosDeTrabajoEstudianteContainer'>
       <div className='HeaderContainer'>
@@ -67,7 +66,12 @@ function PuestosDeTrabajoEstudiante() {
         <div className='PDTEJobsContainer'> 
           
           <ListJobs>
-            <h2>HAY {ListSearchedJobs.length} EMPLEOS DISPONIBLES</h2>
+            {ListSearchedJobs.length === 1?
+              <h2 className="PDTENumeroDeEmpleos">SOLO HAY UN EMPLEO DISPONIBLE</h2>
+            :
+              <h2 className="PDTENumeroDeEmpleos">HAY {ListSearchedJobs.length} EMPLEOS DISPONIBLES</h2>
+            }
+            
             {ListSearchedJobs.map(trabajo => (
             <ItemJob 
               key={trabajo.title}
@@ -76,6 +80,7 @@ function PuestosDeTrabajoEstudiante() {
               title={trabajo.title}
               description={trabajo.description} 
               city={trabajo.city}
+              country={trabajo.country}
               experience={trabajo.experience}
             />
             ))}

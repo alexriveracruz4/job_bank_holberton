@@ -11,3 +11,7 @@
   cursor:pointer;
   transform: scale(1.05);
 }
+
+.EstadoDePostulación {
+  color: rgb(77, 247, 77);
+}

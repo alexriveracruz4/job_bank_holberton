@@ -10,11 +10,7 @@ const cookies = new Cookies();
 function Puesto() {
 
   const studentId = cookies.get("id");
-  console.log(studentId);
   const { PartnerId, JobId } = useParams();
-  //const location = useLocation();
-  //const Postulado = location.state.EstadoDePostulacion;
-  //console.log("asdasdasda", Postulado); //Muestra el si el estudiante ah postulado o no al trabajo
 
   const [JobData, setJobData] = React.useState([2]);
   const [PostulantesData, setPostulantesData] = React.useState([2]);
@@ -46,6 +42,7 @@ function Puesto() {
 
 
   let PostulantesIDs = PostulantesData.map(postulante => postulante.id);
+  console.log(PostulantesIDs);
   return (
     <React.Fragment>
         <EstudianteNav />

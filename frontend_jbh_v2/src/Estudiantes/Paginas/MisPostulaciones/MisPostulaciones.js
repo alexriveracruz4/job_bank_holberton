@@ -22,6 +22,7 @@ function MisPostulaciones() {
     const applications = await data.json();
     setAllMyApplications(applications);
   }
+
   return (
     <div className='MisPostulacionesContainer'>
       <div className='HeaderContainer'>
@@ -31,11 +32,16 @@ function MisPostulaciones() {
         <div className='MPFiltersContainer'> 
           
         </div>
-        <div className='MPJobsContainer'> 
+        <div className='MPJobsContainer'>
           <ListJobs>
+            {AllMyApplications.length === 1?
+              <h2 className="NumeroDeEmpleos">HAS POSTULADO A UN EMPLEO</h2>
+            :
+              <h2 className="NumeroDeEmpleos">HAS POSTULADO A {AllMyApplications.length} EMPLEOS</h2> 
+            }
             {AllMyApplications.map(trabajo => (
             <ItemJob 
-              key={trabajo.title}
+              key={trabajo.description}
               id_job={trabajo.id}
               id_empresa={trabajo.partner_id}
               title={trabajo.title}
