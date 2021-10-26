@@ -230,7 +230,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <label htmlFor="inputPhoto" className="col-sm-1 col-form-label">Subir CV</label>
             <div className="col-sm-10">
               <div className="box-photo form-control">
-                <input type="file" id="myphoto" />
+                <input type="file" id="myphoto" name="curriculum" />
               </div>
             </div>
           </div>

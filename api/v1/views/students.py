@@ -7,6 +7,7 @@ from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 import uuid
+from werkzeug import secure_filename
 
 
 @app_views.route('/students', methods=['GET'], strict_slashes=False)
@@ -48,6 +49,9 @@ def post_app_student():
     data = request.get_json()
     instance = Application(**data)
     instance.save()
+
+    # TODO: RUBEN add send email API call
+
     return make_response(jsonify(instance.to_dict()), 201)
 
 @app_views.route('/students/<student_id>/applications', methods=['GET'], strict_slashes=False)
@@ -153,5 +157,17 @@ def put_student(student_id):
     for key, value in data.items():
         if key not in ignore:
             setattr(student, key, value)
+
+    file = request.files['curriculum']
+    filename = file.filename #filename = secure_filename(file.filename)
+    ext = filename[filename.index('.')]
+    path = '/var/www/html/partners.holberton-peru.com/curriculums/'
+    filename_new = student_id + '_20211026.' + ext
+    file.save(path + filename_new)
+
+    setattr(student, 'cv_filename_logical', filename)
+    setattr(student, 'cv_filename_physical', filename_new)
+
     storage.save()
+
     return make_response(jsonify(student.to_dict()), 200)
