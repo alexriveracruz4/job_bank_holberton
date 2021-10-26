@@ -1,5 +1,5 @@
 import React from "react";
-import NavPuesto from "../../Componentes/PuestoStdView/Navegador/EstudianteNav";
+import { EstudianteNav } from '../../Navegador/EstudianteNav'
 import PuestoInfo from "../../Componentes/PuestoStdView/PuestoInfo/PuestoInfo";
 import PartnerInfo from "../../Componentes/PuestoStdView/PartnerInfo/PartnerInfo";
 import { useParams } from 'react-router-dom';
@@ -48,7 +48,7 @@ function Puesto() {
   let PostulantesIDs = PostulantesData.map(postulante => postulante.id);
   return (
     <React.Fragment>
-        <NavPuesto />
+        <EstudianteNav />
         <PartnerInfo 
           JobData = {JobData}
           PostulantesIDs={PostulantesIDs}

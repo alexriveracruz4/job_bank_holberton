@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import './MisPostulaciones.css';
-
+import { EstudianteNav } from '../../Navegador/EstudianteNav'
 import { ListJobs } from "../../Componentes/MisPostulaciones/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/MisPostulaciones/ItemJob/ItemJob";
-import NavPuesto from "../../Componentes/MisPostulaciones/Navegador/EstudianteNav";
 import Cookies from 'universal-cookie';
+
 
 
 const cookies = new Cookies();
@@ -25,7 +25,7 @@ function MisPostulaciones() {
   return (
     <div className='MisPostulacionesContainer'>
       <div className='HeaderContainer'>
-        <NavPuesto />
+        <EstudianteNav />
       </div>
       <div className='MPBodyContainer'>
         <div className='MPFiltersContainer'> 

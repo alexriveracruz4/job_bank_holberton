@@ -38,7 +38,7 @@ function closeSessionEst() {
     window.location.href="/login/estudiante";
 }
 
-function NavPuesto() {
+function EstudianteNav() {
   let history = useHistory();
   return (
     <header className="Student-header">
@@ -87,4 +87,4 @@ function NavPuesto() {
   );
 }
 
-export default NavPuesto;
+export { EstudianteNav };

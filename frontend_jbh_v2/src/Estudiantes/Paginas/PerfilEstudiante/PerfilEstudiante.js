@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { EstudianteNav } from '../../Navegador/EstudianteNav'
 import { helpHttp } from "../../../helpers/helpHttp";
-import EstudianteNav from "../../Componentes/PerfilEstudiante/Navegador/EstudianteNav";
 import CrudForm from "../../Componentes/PerfilEstudiante/PerfilFormulario/Form";
 import Cookies from 'universal-cookie';
 

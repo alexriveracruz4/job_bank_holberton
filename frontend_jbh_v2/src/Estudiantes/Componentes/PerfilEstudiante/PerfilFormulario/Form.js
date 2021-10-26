@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import Countries from "../../../data/country.json"
-import UserIcon from "../Navegador/ImagenesNav/user-icon.png"
+import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
+
 import "./Form.css"
 
 const initailForm = {

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import "./PuestosDeTrabajoEstudiante.css";
+import { EstudianteNav } from '../../Navegador/EstudianteNav'
 import { Filters } from "../../Componentes/PuestosDeTrabajoEstudiante/Filters/Filters";
 import { ListJobs } from "../../Componentes/PuestosDeTrabajoEstudiante/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/PuestosDeTrabajoEstudiante/ItemJob/ItemJob";
-import NavPuesto from "../../Componentes/PuestosDeTrabajoEstudiante/Navegador/EstudianteNav";
+//import NavPuesto from "../../Componentes/PuestosDeTrabajoEstudiante/Navegador/EstudianteNav";
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
@@ -54,7 +55,7 @@ function PuestosDeTrabajoEstudiante() {
   return (
     <div className='PDTEPuestosDeTrabajoEstudianteContainer'>
       <div className='HeaderContainer'>
-        <NavPuesto />
+        <EstudianteNav />
       </div>
       <div className='PDTEBodyContainer'>
         <div className='PDTEFiltersContainer'> 

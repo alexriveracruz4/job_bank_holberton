@@ -5,7 +5,6 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-import './App.css';
 
 import { LoginEstudiantes } from './Estudiantes/Paginas/LoginEstudiantes/LoginEstudiantes';
 
