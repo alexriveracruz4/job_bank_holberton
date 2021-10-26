@@ -1,7 +1,7 @@
 import React from 'react';
 import './LoginEmpresas.css';
 import { IconHolberton } from '../../Componentes/LoginEmpresas/IconHolberton/IconHolberton';
-import { Login } from '../../Componentes/LoginEmpresas/Login/Login';
+import { LoginComponentWr } from '../../Componentes/LoginEmpresas/Login/Login';
 
 
 function LoginEmpresas() {
@@ -11,7 +11,7 @@ function LoginEmpresas() {
         <IconHolberton />
       </div>
       <div className='BoxLogin'> 
-        <Login />
+        <LoginComponentWr />
       </div>
     </div>
   );
