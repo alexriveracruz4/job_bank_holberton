@@ -44,6 +44,7 @@ import { PostulantesATrabajos } from './Admins/Paginas/Empresas/PostulantesATrab
 
 import { TodosLosTrabajos } from './Admins/Paginas/TodosLosTrabajos/TodosLosTrabajos/TodosLosTrabajos';
 
+import { Landing } from './Landing/Paginas/Landing/Landing';
 
 import { NotFoundPage } from './NotFoundPage';
 
@@ -91,6 +92,7 @@ function App() {
 
           <Route exact path="/admin/todos-los-trabajos" component={TodosLosTrabajos}/>
 
+          <Route exact path="/" component={Landing}/>
 
           <Route path="/404" component={NotFoundPage}/>
           <Route path="*">
