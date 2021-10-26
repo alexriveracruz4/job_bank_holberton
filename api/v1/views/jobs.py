@@ -29,7 +29,7 @@ def get_job(partner_id, job_id):
         abort(404)
     job = [job.to_dict() for job in partner.jobs if job.id == int(job_id)]
     if not job:
-        abort(404)
+        return jsonify({[]})
 
     return jsonify(job)
 
@@ -40,10 +40,9 @@ def get_partner_job(partner_id):
     partner = storage.get(Partner, partner_id)
     if not partner:
         abort(404)
-    jobs = [job.to_dict() for job in partner.jobs]
-    if not jobs:
-        abort(404)
-
+    jobs = []
+    for job in partner.jobs:
+        jobs.append(job.to_dict())
     return jsonify(jobs)
 
 
