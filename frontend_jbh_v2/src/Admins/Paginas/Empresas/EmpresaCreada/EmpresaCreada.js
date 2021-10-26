@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { helpHttp } from '../../../../helpers/helpHttp';
 import CrudForm from '../../../Componentes/Empresas/EmpresaCreada/CrearEmpresaForm';
 import { AdminNav } from "../../../Navegador/AdminNav";
+import Cookies from 'universal-cookie';
+
+
+const cookies = new Cookies();
 
 function EmpresaCreada() {
   const [db, setDb] = useState([]);
@@ -18,6 +22,12 @@ function EmpresaCreada() {
         setDb([...db, res]);
     });
   };
+
+  useEffect(() => {
+      if (!cookies.get('id')){
+          window.location.href="/login/admin";
+      }
+  });
 
   return (
     <div>

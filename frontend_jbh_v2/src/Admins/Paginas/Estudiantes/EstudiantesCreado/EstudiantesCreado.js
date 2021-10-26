@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { helpHttp } from '../../../../helpers/helpHttp';
 import CrudForm from '../../../Componentes/Estudiantes/EstudiantesCreado/CrearEstudianteForm';
 import { AdminNav } from "../../../Navegador/AdminNav";
+import Cookies from 'universal-cookie';
 
+
+const cookies = new Cookies();
 
 function EstudianteCreado() {
   const [db, setDb] = useState([]);
@@ -19,6 +22,12 @@ function EstudianteCreado() {
         setDb([...db, res]);
     });
   };
+
+  useEffect(() => {
+      if (!cookies.get('id')){
+          window.location.href="/login/admin";
+      }
+  });
 
   return (
     <div>

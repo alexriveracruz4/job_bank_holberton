@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { helpHttp } from '../../../../helpers/helpHttp';
 import { AdminNav } from "../../../Navegador/AdminNav";
 import CrudForm from '../../../Componentes/Empresas/EmpresaEditada/EmpresaEditada';
+import Cookies from 'universal-cookie';
+
+
+const cookies = new Cookies();
 
 function EmpresaEditada() {
   const location = useLocation();
@@ -26,6 +30,12 @@ function EmpresaEditada() {
       setDb(newData);
     });
   }
+
+  useEffect(() => {
+      if (!cookies.get('id')){
+          window.location.href="/login/admin";
+      }
+  });
 
   return (
     <div>
