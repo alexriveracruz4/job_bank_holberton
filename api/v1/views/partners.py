@@ -46,7 +46,7 @@ def get_login_partner():
                 partner =  storage.get(Partner, list_partners[i]["id"])
                 setattr(partner, "token", token)
                 storage.save()
-                return jsonify({"ok": "ok", "token": token})
+                return jsonify(partner.to_dict(save_fs="No"))
 
 @app_views.route('/partners/<partner_id>', methods=['DELETE'],
                  strict_slashes=False)

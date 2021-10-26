@@ -46,7 +46,7 @@ def get_login_admin():
                 admin =  storage.get(Admin, list_admins[i]["id"])
                 setattr(admin, "token", token)
                 storage.save()
-                return jsonify({"ok": "ok", "token": token})
+                return jsonify(admin.to_dict(save_fs="No"))
 
 @app_views.route('/admins/<admin_id>', methods=['DELETE'],
                  strict_slashes=False)
