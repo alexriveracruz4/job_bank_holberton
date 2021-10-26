@@ -50,35 +50,40 @@ function PuestosDeTrabajoEstudiante() {
         return resultadoPalabra && resultadoTipoDeTrabajo && resultadoModalidad;
       });
     }
-  
+
+  useEffect(() => {
+      if (!cookies.get('id')){
+          window.location.href="/login/estudiante";
+      }
+  });
+
   return (
     <div className='PDTEPuestosDeTrabajoEstudianteContainer'>
       <div className='HeaderContainer'>
         <EstudianteNav />
       </div>
       <div className='PDTEBodyContainer'>
-        <div className='PDTEFiltersContainer'> 
-          <Filters 
+        <div className='PDTEFiltersContainer'>
+          <Filters
               searchJob={searchJob}
               setSearchJob={setSearchJob}
           />
         </div>
-        <div className='PDTEJobsContainer'> 
-          
+        <div className='PDTEJobsContainer'>
+
           <ListJobs>
             {ListSearchedJobs.length === 1?
               <h2 className="PDTENumeroDeEmpleos">SOLO HAY UN EMPLEO DISPONIBLE</h2>
             :
               <h2 className="PDTENumeroDeEmpleos">HAY {ListSearchedJobs.length} EMPLEOS DISPONIBLES</h2>
             }
-            
             {ListSearchedJobs.map(trabajo => (
-            <ItemJob 
+            <ItemJob
               key={trabajo.title}
               id_job={trabajo.id}
               id_empresa={trabajo.partner_id}
               title={trabajo.title}
-              description={trabajo.description} 
+              description={trabajo.description}
               city={trabajo.city}
               country={trabajo.country}
               experience={trabajo.experience}

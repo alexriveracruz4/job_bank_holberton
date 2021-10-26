@@ -36,6 +36,12 @@ function PerfilEstudiante() {
       });
   }
 
+  useEffect(() => {
+      if (!cookies.get('id')){
+          window.location.href="/login/estudiante";
+      }
+  });
+
   return (
       <div>
       <EstudianteNav />

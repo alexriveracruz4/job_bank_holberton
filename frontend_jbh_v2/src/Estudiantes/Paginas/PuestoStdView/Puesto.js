@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { EstudianteNav } from '../../Navegador/EstudianteNav'
 import PuestoInfo from "../../Componentes/PuestoStdView/PuestoInfo/PuestoInfo";
 import PartnerInfo from "../../Componentes/PuestoStdView/PartnerInfo/PartnerInfo";
@@ -43,6 +43,13 @@ function Puesto() {
 
   let PostulantesIDs = PostulantesData.map(postulante => postulante.id);
   console.log(PostulantesIDs);
+
+  useEffect(() => {
+      if (!cookies.get('id')){
+          window.location.href="/login/estudiante";
+      }
+  });
+
   return (
     <React.Fragment>
         <EstudianteNav />
