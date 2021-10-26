@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import './Postulantes.css';
+import { EmpresaNav } from '../../Navegador/EmpresaNav';
 
 import { ListJobs } from "../../Componentes/Postulantes/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/Postulantes/ItemJob/ItemJob";
-import NavPuesto from "../../Componentes/Postulantes/Navegador/EmpresaNav";
-import Data from "../../data/MispuestosEmpresa.json";
+
 import { useLocation, useParams } from 'react-router';
 
 
-const datos = Data;
 
 function Postulantes(props) {
   const { JobId } = useParams();
 
-  const partner_id = 1; 
+  const partner_id = 2; 
   const location = useLocation();
   const titleJob = location.state.titleJob;
   const [AllStudentsApplicated, setAllStudentsApplicated] = useState([2]);
@@ -23,7 +22,7 @@ function Postulantes(props) {
   }, []);
 
   const obtenerDatosDeEstudiantes = async () => {
-    const data = await fetch(`http://172.29.38.63:5000/api/v1/jobs/${partner_id}/${JobId}/students`);
+    const data = await fetch(`http://localhost:5000/api/v1/jobs/${partner_id}/${JobId}/students`);
     const applications = await data.json();
     setAllStudentsApplicated(applications);
   }
@@ -31,7 +30,7 @@ function Postulantes(props) {
   return (
     <div className='PostulantesContainer'>
       <div className='HeadersContainer'>
-        <NavPuesto />
+        <EmpresaNav />
       </div>
       <div className='PTitleContainer'>
         <h2>{titleJob}</h2>

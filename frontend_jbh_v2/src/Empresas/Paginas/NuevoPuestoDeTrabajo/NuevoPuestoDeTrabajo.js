@@ -1,11 +1,12 @@
 import React from "react";
-import NavPartner from "../../Componentes/NuevoPuestoDeTrabajo/Navegador/EmpresaNav"
+import { EmpresaNav } from '../../Navegador/EmpresaNav';
+
 import PuestoForm from "../../Componentes/NuevoPuestoDeTrabajo/PublicarForm/PublicarForm"
 
 function NuevoPuestoDeTrabajo() {
     return (
         <React.Fragment>
-            <NavPartner />
+            <EmpresaNav />
             <PuestoForm />
         </React.Fragment>
     )

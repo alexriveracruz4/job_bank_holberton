@@ -18,7 +18,7 @@ function EmpresaNav() {
             <button 
               className="puestos-button" 
               onClick={ () => {history.push("/empresa/mis-puestos-de-trabajo")}}>
-              Mis puestos de trabajo
+              Mis puestos de trabajoooooo
             </button>
           </div>
           <div className="postulaciones-div">
@@ -45,4 +45,4 @@ function EmpresaNav() {
   );
 }
 
-export default EmpresaNav;
+export { EmpresaNav };

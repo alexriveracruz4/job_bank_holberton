@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import './MisPuestosDeTrabajo.css';
+import { EmpresaNav } from '../../Navegador/EmpresaNav';
 
 import { ListJobs } from "../../Componentes/MisPuestosDeTrabajo/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/MisPuestosDeTrabajo/ItemJob/ItemJob";
-import NavPuesto from "../../Componentes/MisPuestosDeTrabajo/Navegador/EmpresaNav";
-import Data from "../../data/MispuestosEmpresa.json";
-const datos = Data;
+
 
 function MisPuestosDeTrabajo() {
 
   const PartnerId = 2;
   const [AllMyJobs, setAllMyJobs] = useState([2]);
+
 
   useEffect(async() => {
     await obtenerDatos();
@@ -26,7 +26,7 @@ function MisPuestosDeTrabajo() {
   return (
     <div className='MisPuestosDeTrabajoContainer'>
       <div className='HeaderContainer'>
-        <NavPuesto />
+        <EmpresaNav />
       </div>
       <div className='MPDTBodyContainer'>
         <div className='MPDTFiltersContainer'> 

@@ -4,13 +4,13 @@ import './MisPostulaciones.css';
 import { ListJobs } from "../../Componentes/MisPostulaciones/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/MisPostulaciones/ItemJob/ItemJob";
 import NavPuesto from "../../Componentes/MisPostulaciones/Navegador/EstudianteNav";
-import Data from "../../data/postulacionesEstudiante.json";
+import Cookies from 'universal-cookie';
 
-const datos = Data;
 
+const cookies = new Cookies();
 function MisPostulaciones() {
-
-  const user_id = 3;
+  const user_id = cookies.get("id");
+  console.log(user_id);
   const [AllMyApplications, setAllMyApplications] = React.useState([]);
 
   React.useEffect(() => {

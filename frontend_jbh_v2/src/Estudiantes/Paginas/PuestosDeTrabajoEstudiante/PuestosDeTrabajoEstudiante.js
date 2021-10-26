@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "./PuestosDeTrabajoEstudiante.css";
 import { Filters } from "../../Componentes/PuestosDeTrabajoEstudiante/Filters/Filters";
 import { ListJobs } from "../../Componentes/PuestosDeTrabajoEstudiante/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/PuestosDeTrabajoEstudiante/ItemJob/ItemJob";
 import NavPuesto from "../../Componentes/PuestosDeTrabajoEstudiante/Navegador/EstudianteNav";
-import Data from "../../data/puestodata.json";
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
-const datos1 = Data;
 function PuestosDeTrabajoEstudiante() {
-
-    const [AllJobsData, setAllJobsData] = React.useState([]);
+  const studentId = cookies.get("id");
+  console.log("ID",studentId);
+  const [AllJobsData, setAllJobsData] = React.useState([]);
 
   React.useEffect(async() => {
     await obtenerDatos();
@@ -23,38 +22,32 @@ function PuestosDeTrabajoEstudiante() {
     setAllJobsData(jobs);
   }
 
-  const [searchJob, setSearchJob] = React.useState("");
+  const [form, setForm] = useState({});
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]:e.targe.value,
+    })
+  }
 
-  const [checkTypeJob, setcheckTypeJob] = React.useState(false);
+  const [searchJob, setSearchJob] = React.useState({PalabraClave:"", modalidad:"", tipoDeTrabajo:""});
+
 
   const datosNotEliminados = AllJobsData.filter(trabajo => trabajo.deleted === 0);
 
   const datos = datosNotEliminados;
 
-  /*
-  let NewListSearchedJobs = [];
-  if (checkTypeJob === false) {
-    NewListSearchedJobs = datos;
-    console.log("sadasdas");
-  } else {
-    NewListSearchedJobs = datos.filter(trabajo => {
-      if 
-      return trabajo.pres_or_remote  === true 
-    });
-  }
-  */
-
   let ListSearchedJobs = [];
-
-  if (!(searchJob.length >= 1)) {
+  if (( searchJob.PalabraClave.length === 0 && searchJob.modalidad.length === 0 && searchJob.tipoDeTrabajo.length === 0)) {
     ListSearchedJobs = datos;
   } else {
-      ListSearchedJobs = datos.filter(trabajo => {
+    ListSearchedJobs = datos.filter(trabajo => {
       const JobTituloText = trabajo.title.toLowerCase();
       const JobDescripcionText = trabajo.description.toLowerCase();
       const alltext = JobTituloText + JobDescripcionText;
-      const searchJobText = searchJob.toLowerCase();
-      return alltext.includes(searchJobText);
+      const searchJobText = searchJob.PalabraClave.toLowerCase();
+      return alltext.includes(searchJobText) && searchJob.modalidad === trabajo.pres_or_remote && searchJob.modalidad === trabajo.modalidad;
+      
     });
   }
 
@@ -68,12 +61,12 @@ function PuestosDeTrabajoEstudiante() {
           <Filters 
               searchJob={searchJob}
               setSearchJob={setSearchJob}
-              checkTypeJob={checkTypeJob}
-              setcheckTypeJob={setcheckTypeJob}
           />
         </div>
         <div className='PDTEJobsContainer'> 
+          
           <ListJobs>
+            <h2>HAY {ListSearchedJobs.length} EMPLEOS DISPONIBLES</h2>
             {ListSearchedJobs.map(trabajo => (
             <ItemJob 
               key={trabajo.title}

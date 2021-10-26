@@ -3,13 +3,14 @@ import NavPuesto from "../../Componentes/PuestoStdView/Navegador/EstudianteNav";
 import PuestoInfo from "../../Componentes/PuestoStdView/PuestoInfo/PuestoInfo";
 import PartnerInfo from "../../Componentes/PuestoStdView/PartnerInfo/PartnerInfo";
 import { useParams } from 'react-router-dom';
-import Data from "../../data/puestodata.json";
+import Cookies from 'universal-cookie';
 import { useLocation } from 'react-router-dom';
-const datos = Data;
 
+const cookies = new Cookies();
 function Puesto() {
 
-  const studentId = 3;
+  const studentId = cookies.get("id");
+  console.log(studentId);
   const { PartnerId, JobId } = useParams();
   //const location = useLocation();
   //const Postulado = location.state.EstadoDePostulacion;

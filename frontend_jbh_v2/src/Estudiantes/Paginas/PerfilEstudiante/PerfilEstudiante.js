@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { helpHttp } from "../../../helpers/helpHttp";
 import EstudianteNav from "../../Componentes/PerfilEstudiante/Navegador/EstudianteNav";
-import CrudForm from "../../Componentes/PerfilEstudiante/PerfilFormulario/Form"
+import CrudForm from "../../Componentes/PerfilEstudiante/PerfilFormulario/Form";
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 
 function PerfilEstudiante() {
-  const student_id = 7;
+  const student_id = cookies.get("id");
 
+  console.log(student_id);
   const [db, setDb] = useState([]);
   const [dataToEdit, setDataToEdit] = useState({});
 

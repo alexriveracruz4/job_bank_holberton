@@ -3,7 +3,7 @@ import './ItemJob.css';
 import { Link } from 'react-router-dom';
 
 function ItemJob(props) {
-  const studentId=3;
+  const studentId=5;
   const [PostulantesData, setPostulantesData] = React.useState([2]);
 
   React.useEffect(() => {

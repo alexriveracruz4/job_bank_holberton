@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { EmpresaNav } from '../../Navegador/EmpresaNav';
+
 import { helpHttp } from "../../../helpers/helpHttp";
-import EmpresaNav from "../../Componentes/PerfilEmpresa/Navegador/EmpresaNav"
 import CrudForm from "../../Componentes/PerfilEmpresa/PerfilFormulario/Form"
 
 function PerfilEmpresa() {

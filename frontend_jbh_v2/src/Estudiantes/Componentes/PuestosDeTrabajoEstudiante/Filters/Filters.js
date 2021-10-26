@@ -1,16 +1,15 @@
 import React from 'react';
 import './Filters.css';
 
-function Filters( {searchJob, setSearchJob, checkTypeJob, setcheckTypeJob} ) {
-  const onSearchValueChange = (event) => {
-    console.log(event.target.value);
-    setSearchJob(event.target.value);
-  };
+function Filters( {searchJob, setSearchJob} ) {
+  
+  const handleChange = (e) => {
+    setSearchJob({
+      ...searchJob,
+      [e.target.name]:e.target.value,
+    });
+  }
 
-  const onCheckKindOfJob = (event) => {
-    console.log(event.target.checked);
-    setcheckTypeJob(event.target.checked)
-  };
   return (
     <div className='FilterContainer'>
       <div className="TitleContainer">
@@ -21,8 +20,9 @@ function Filters( {searchJob, setSearchJob, checkTypeJob, setcheckTypeJob} ) {
         <input 
           type='text'
           placeholder='Ej:Full Stack'
-          value = {searchJob}
-          onChange={onSearchValueChange} 
+          name="PalabraClave"
+          value={searchJob.KeyWords}
+          onChange={handleChange}
         />
         <button>Filtrar</button>
       </div>
@@ -32,32 +32,42 @@ function Filters( {searchJob, setSearchJob, checkTypeJob, setcheckTypeJob} ) {
           <div>
             <input 
               type='radio'
-              id='tiempo-completo'
-              name='tipo-de-trabajo'
-              value = {checkTypeJob}
-              onChange={onCheckKindOfJob} 
+              id='tiempo_completo'
+              name='tipoDeTrabajo'
+              value="Tiempo completo"
+              onChange={handleChange}
             />
-            <label htmlFor="tiempo-completo">Tiempo completo</label>
+            <label htmlFor="tiempo_completo">Tiempo completo</label>
           </div>
           <div>
             <input 
               type='radio'
-              id='medio-tiempo'
-              name='tipo-de-trabajo'
-              value = {checkTypeJob}
-              onChange={onCheckKindOfJob} 
+              id='medio_tiempo'
+              name='tipoDeTrabajo'
+              value="Tiempo parcial"
+              onChange={handleChange} 
             />
-            <label htmlFor="medio-tiempo">Medio tiempo</label>
+            <label htmlFor="medio_tiempo">Tiempo Parcial</label>
           </div>
           <div>
             <input 
               type='radio'
-              id='ambos'
-              name='tipo-de-trabajo'
-              value = {checkTypeJob}
-              onChange={onCheckKindOfJob} 
+              id='por_horas'
+              name='tipoDeTrabajo'
+              value="Por horas"
+              onChange={handleChange} 
             />
-            <label htmlFor="ambos">Ambos</label>
+            <label htmlFor="por_horas">Por horas</label>
+          </div>
+          <div>
+            <input 
+              type='radio'
+              id='todas'
+              name='tipoDeTrabajo'
+              value={null}
+              onChange={handleChange} 
+            />
+            <label htmlFor="todas">Todas</label>
           </div>
         </div>
       </div>
@@ -69,8 +79,8 @@ function Filters( {searchJob, setSearchJob, checkTypeJob, setcheckTypeJob} ) {
               type='radio'
               id='presencial'
               name='modalidad'
-              value = {checkTypeJob}
-              onChange={onCheckKindOfJob} 
+              value="Presencial"
+              onChange={handleChange} 
             />
             <label htmlFor="presencial">Presencial</label>
           </div>
@@ -79,8 +89,8 @@ function Filters( {searchJob, setSearchJob, checkTypeJob, setcheckTypeJob} ) {
               type='radio'
               id='remoto'
               name='modalidad'
-              value = {checkTypeJob}
-              onChange={onCheckKindOfJob} 
+              value="Remoto"
+              onChange={handleChange} 
             />
             <label htmlFor="remoto">Remoto</label>
           </div>
@@ -89,25 +99,26 @@ function Filters( {searchJob, setSearchJob, checkTypeJob, setcheckTypeJob} ) {
               type='radio'
               id='semi-presencial'
               name='modalidad'
-              value = {checkTypeJob}
-              onChange={onCheckKindOfJob} 
+              value="Semi-presencial"
+              onChange={handleChange} 
             />
             <label htmlFor="semi-presencial">Semi-presencial</label>
           </div>
           <div>
             <input 
               type='radio'
-              id='todas'
+              id='all'
               name='modalidad'
-              value = {checkTypeJob}
-              onChange={onCheckKindOfJob} 
+              value={null}
+              onChange={handleChange}
             />
-            <label htmlFor="todas">Todas</label>
+            <label htmlFor="all">Todas</label>
           </div>
         </div>
       </div>
 
     </div>
+
   );
 }
 

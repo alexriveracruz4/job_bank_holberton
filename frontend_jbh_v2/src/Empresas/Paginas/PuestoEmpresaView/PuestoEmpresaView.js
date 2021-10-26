@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { NavPuesto } from "../../Componentes/PuestoEmpresaView/Navegador/EmpresaNav";
+
+import { EmpresaNav } from '../../Navegador/EmpresaNav';
 import { PuestoInfo } from "../../Componentes/PuestoEmpresaView/PuestoInfo/PuestoInfo";
 import { PartnerInfo } from "../../Componentes/PuestoEmpresaView/PartnerInfo/PartnerInfo";
 
-import Data from "../../data/MispuestosEmpresa.json";
 import { useParams } from "react-router";
-
-const datos = Data;
 
 function PuestoEmpresaView() {
   
@@ -28,7 +26,7 @@ function PuestoEmpresaView() {
 
   return (
     <React.Fragment>
-      <NavPuesto />
+      <EmpresaNav />
       <PartnerInfo 
         datos = {AllAJobData}
       />
