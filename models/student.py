@@ -13,8 +13,8 @@ class Student(BaseModel, Base):
     """ inherits from BaseModel and Base """
     __tablename__ = 'students'
     id = Column(Integer, primary_key=True, nullable=False)
-    pres_or_remot = Column(String(60), nullable=False)
-    availability = Column(String(60), nullable=False)
+    pres_or_remot = Column(String(60), nullable=True)
+    availability = Column(String(60), nullable=True)
     firstname = Column(String(45), nullable=False)
     lastname = Column(String(45), nullable=False)
     email = Column(String(45), nullable=False)
@@ -30,10 +30,12 @@ class Student(BaseModel, Base):
     cv_filename_physical = Column(String(250), nullable=True)
     cv_filename_logical = Column(String(250), nullable=True)
     deleted = Column(TINYINT(1), default=0, nullable=False)
-    created_by = Column(Integer, ForeignKey("admins.id") ,nullable=True)
+    created_by = Column(Integer, ForeignKey("admins.id") ,nullable=False)
     updated_by = Column(Integer, nullable=True)
     deleted_by = Column(Integer, ForeignKey("admins.id"), nullable=True)
     token = Column(String(60), nullable=True)
+    photo_filename_physical = Column(String(250), nullable=True)
+    photo_filename_logical = Column(String(250), nullable=True)
     applications = relationship("Application", backref='student')
 
     def __init__(self, *args, **kwargs):
