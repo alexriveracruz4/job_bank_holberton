@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { helpHttp } from '../../../../helpers/helpHttp';
 import CrudForm from '../../../Componentes/Estudiantes/EstudiantesEditado/EditarEstudianteForm';
 import { AdminNav } from "../../../Navegador/AdminNav";
+import Cookies from 'universal-cookie';
 
+
+const cookies = new Cookies();
 
 
 function EstudianteEditado() {
@@ -28,6 +31,12 @@ function EstudianteEditado() {
       setDb(newData);
     });
   }
+
+  useEffect(() => {
+      if (!cookies.get('id')){
+          window.location.href="/login/admin";
+      }
+  });
 
   return (
     <div>
