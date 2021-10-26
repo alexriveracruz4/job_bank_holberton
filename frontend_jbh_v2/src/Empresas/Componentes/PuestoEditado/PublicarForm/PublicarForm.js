@@ -1,53 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Countries from "../../../data/country.json"
 import "./PublicarForm.css"
 import Cookies from 'universal-cookie';
+import { useHistory } from 'react-router';
+import { formatMs } from '@material-ui/core';
 
 
 const cookies = new Cookies();
-function PuestoForm() {
-  const PartnerId = cookies.get("id"); //string variable
-  const [loading, setLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [data, setData] = useState({
+  
+const CrudForm = ({ updateData, dataToEdit}) => {
+
+  const initailForm = {
     title: '',
+    country: '',
     city:'',
     code: '',
+    pres_or_remote: '',
     experience: '',
+    travel_availability: '',
     age_min: '',
     age_max: '',
     salary: '',
-  })
+    job_type: '',
+    description: '',
+  };
 
-  function handleInputChange (event) {
-    console.log(event.target.value)
-    setData({
-      ...data,
-      [event.target.name] : event.target.value
-    })
-  }
+  const [form, setForm] = useState(initailForm);
 
-  const handleSubmit = () => {
-    setLoading(true);
-    setIsError(false);
+  useEffect(() => {
+    setForm(dataToEdit);
+  }, [dataToEdit]);
 
-    axios.put('http://localhost:5000/api/v1/jobs/5', data).then(res => {
-      setData(res.data);
-      setLoading(false);
-    }).catch(err => {
-      setLoading(false);
-      setIsError(true);
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value, 
     });
-  }
+  };
+
+  const history = useHistory();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateData(form);
+    let path = `/empresa/mis-puestos-de-trabajo`; 
+    history.push(path);
+  };
 
   function InputCountry() {
     return (
       <div className="form-group row">
         <label htmlFor="exampleFormControlSelect1" className="col-sm-1 col-form-label">País</label>
         <div className="col-sm-10">
-          <select className="form-control" id="exampleFormControlSelect1">
-            <option></option>
+          <select className="form-control" id="exampleFormControlSelect1" name="country" onChange={handleChange} value={form.country}>
+            <option>{form.country}</option>
             {Countries.map(data => {;
               return <option value={data.country}>{data.country}</option>;
             })}
@@ -60,13 +67,13 @@ function PuestoForm() {
   function JobType() {
     return (
       <div className="travel-row form-group row">
-        <label htmlFor="inputDisptravel" className="travel-label col-sm-1 col-form-label">Jornada</label>
+        <label htmlFor="inputJobType" className="travel-label col-sm-1 col-form-label">Jornada</label>
         <div className="select-travel-div col-sm-10">
-          <select className="form-control" id="inputDiptravel">
-            <option></option>
-            <option value="tiempo-completo">Tiempo completo</option>
-            <option value="tiempo-parcial">Tiempo parcial</option>
-            <option value="por-horas">Por horas</option>
+          <select className="form-control" id="inputJobType" name="job_type" onChange={handleChange} value={form.job_type}>
+            <option>{form.job_type}</option>
+            <option value="Tiempo completo">Tiempo completo</option>
+            <option value="Tiempo parcial">Tiempo parcial</option>
+            <option value="Por horas">Por horas</option>
           </select>
         </div>
       </div>
@@ -76,13 +83,13 @@ function PuestoForm() {
   function PresOrRemote() {
     return (
       <div className="travel-row form-group row">
-        <label htmlFor="inputDisptravel" className="travel-label col-sm-1 col-form-label">Remoto o presencial</label>
+        <label htmlFor="inputPresOrRemote" className="travel-label col-sm-1 col-form-label">Remoto o presencial</label>
         <div className="select-travel-div col-sm-10">
-          <select className="form-control" id="inputDiptravel">
-            <option></option>
-            <option value="presencial">Presencial</option>
-            <option value="remoto">Remoto</option>
-            <option value="semi-presencial">Semi-presencial</option>
+          <select className="form-control" id="inputPresOrRemote" name="pres_or_remote" onChange={handleChange} value={form.pres_or_remote}>
+            <option>{form.pres_or_remote}</option>
+            <option value="Presencial">Presencial</option>
+            <option value="Remoto">Remoto</option>
+            <option value="Semi-presencial">Semi-presencial</option>
           </select>
         </div>
       </div>
@@ -94,17 +101,17 @@ function PuestoForm() {
         <div className="travel-row form-group row">
           <label htmlFor="inputDisptravel" className="travel-label col-sm-1 col-form-label">Disponibilidad para viajar</label>
           <div className="select-travel-div col-sm-10">
-            <select className="form-control" id="inputDiptravel">
-              <option></option>
-              <option value="si">Si</option>
-              <option value="no">No</option>
+            <select className="form-control" id="inputDiptravel" name="travel_availability" onChange={handleChange} value={form.travel_availability}>
+              <option>{form.travel_availability}</option>
+              <option value="Si">Si</option>
+              <option value="No">No</option>
             </select>
           </div>
         </div>
     )
   }
 
-  function CountChar() {
+  /*function CountChar() {
     const [count, setCount] = useState(0);
     return (
       <div className="text-div">
@@ -119,7 +126,7 @@ function PuestoForm() {
         <p>{ count } / 1000</p>
       </div>
     );
-  }
+  }*/
 
   return (
     <div className="form-Publicar">
@@ -132,7 +139,7 @@ function PuestoForm() {
           <div className="form-group row">
             <label htmlFor="inputTitle" className="col-sm-1 col-form-label">Título</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputTitle" name="title" onChange={handleInputChange} />
+              <input type="text" className="form-control" id="inputTitle" name="title" onChange={handleChange} value={form.title}/>
             </div>
           </div>
 
@@ -141,14 +148,14 @@ function PuestoForm() {
           <div className="form-group row">
             <label htmlFor="inputCity" className="col-sm-1 col-form-label">Ciudad</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputCity" name="city" onChange={handleInputChange} />
+              <input type="text" className="form-control" id="inputCity" name="city" onChange={handleChange} value={form.city}/>
             </div>
           </div>
 
           <div className="form-group row">
             <label htmlFor="inputCode" className="col-sm-1 col-form-label">Código</label>
             <div className="col-sm-10">
-              <input type="number" className="form-control" id="inputCode" name="code" onChange={handleInputChange} />
+              <input type="number" className="form-control" id="inputCode" name="code" onChange={handleChange} value={form.code} />
             </div>
           </div>
 
@@ -157,7 +164,7 @@ function PuestoForm() {
           <div className="form-group row">
             <label htmlFor="inputExp" className="col-sm-1 col-form-label">Experiencia</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputExp" name="experience" onChange={handleInputChange} />
+              <input type="text" className="form-control" id="inputExp" name="experience" onChange={handleChange} value={form.experience}/>
             </div>
           </div>
 
@@ -168,21 +175,21 @@ function PuestoForm() {
           <div className="form-group row">
             <label htmlFor="inputMinAge" className="col-sm-1 col-form-label">Edad mínima</label>
             <div className="col-sm-10">
-              <input type="number" className="form-control" id="inputMinAge" min="1" max="100" name="age_min" onChange={handleInputChange} />
+              <input type="number" className="form-control" id="inputMinAge" min="1" max="100" name="age_min" onChange={handleChange} value={form.age_min}/>
             </div>
           </div>
 
           <div className="form-group row">
             <label htmlFor="inputMaxAge" className="col-sm-1 col-form-label">Edad máxima</label>
             <div className="col-sm-10">
-              <input type="number" className="form-control" id="inputMaxAge" min="1" max="100" name="age_max" onChange={handleInputChange} />
+              <input type="number" className="form-control" id="inputMaxAge" min="1" max="100" name="age_max" onChange={handleChange} value={form.age_max}/>
             </div>
           </div>
 
           <div className="form-group row">
             <label htmlFor="inputSalary" className="col-sm-1 col-form-label">Salario</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputSalary" name="salary" onChange={handleInputChange} />
+              <input type="text" className="form-control" id="inputSalary" name="salary" onChange={handleChange} value={form.salary} />
             </div>
           </div>
 
@@ -191,25 +198,20 @@ function PuestoForm() {
           <div className="description-div">
             <div className="description-box form-group row">
               <label htmlFor="inputDescription" className="description-label col-sm-1 col-form-label">Descripción</label>
-              <CountChar />
+              <div className="text-div">
+                <textarea className="form-control" id="inputDescription" rows="10" maxLength="1000" name="description" onChange={ handleChange } value={form.description} />
+              </div>
             </div>
           </div>
 
-          <div className="update form-group row">
-            <div className="col-sm-10">
-              {isError && <small className="mt-3 d-inline-block text-danger">Something went wrong. Please try again later.</small>}
-              <button
-                type="submit"
-                className="btn btn-primary mt-3"
-                onClick={handleSubmit}
-                disabled={loading}
-              >{loading ? 'Loading...' : 'Update'}</button>
-              {data && <div className="mt-3">
-                <strong>Output:</strong><br />
-                <pre>{JSON.stringify(data, null, 2)}</pre>
-              </div>
-              }
-            </div>
+          <div className="div-button-editar-estudiante">
+            <button
+              type="submit"
+              className="btn btn-primary mt-3"
+              onClick={handleSubmit}
+              onClickCapture
+              value="Enviar">Guardar cambios
+            </button>
           </div>
 
         </form>
@@ -218,4 +220,4 @@ function PuestoForm() {
   )
 }
 
-export default PuestoForm;
+export default CrudForm;

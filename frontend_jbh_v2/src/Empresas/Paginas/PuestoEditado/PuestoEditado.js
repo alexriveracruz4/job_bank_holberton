@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { helpHttp } from "../../../helpers/helpHttp";
 import { EmpresaNav } from '../../Navegador/EmpresaNav';
+import axios from "axios";
 import CrudForm from "../../Componentes/PuestoEditado/PublicarForm/PublicarForm"
 import Cookies from 'universal-cookie';
 import { useLocation, useParams } from "react-router";
@@ -24,12 +25,21 @@ function PuestoEditado() {
   console.log("este es el id del partner", PartnerId)
   const [db, setDb] = useState([]);
   /*const [dataToEdit, setDataToEdit] = useState(location.state[0]);*/
+  const [dataToEdit, setDataToEdit] = useState({});
+
+  useEffect(async ()=>{
+      await axios.get(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/${JobId}`)
+          .then(res => setDataToEdit(res.data[0]))
+  }, []);
+
+  console.log(dataToEdit)
 
   let api = helpHttp();
-  let url = `http://localhost:5000/api/v1/partners${PartnerId}/jobs`;
+  let url = `http://localhost:5000/api/v1/partners/${PartnerId}/jobs`;
 
   const updateData = (data) => {
     let endpoint = `${url}/${data.id}`;
+    console.log("este es el endpoint para put", endpoint)
 
     let options = {
       body: data,
@@ -48,7 +58,7 @@ function PuestoEditado() {
       <article className="grid-1-2">
         <CrudForm
             updateData={updateData}
-            /*dataToEdit={dataToEdit}*/
+            dataToEdit={dataToEdit}
         />
       </article>
     </div>
