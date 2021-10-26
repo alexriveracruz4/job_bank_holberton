@@ -8,7 +8,6 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 function PuestoForm() {
   const PartnerId = cookies.get("id"); //string variable
-  console.log(PartnerId);
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [data, setData] = useState({
@@ -33,7 +32,7 @@ function PuestoForm() {
     setLoading(true);
     setIsError(false);
 
-    axios.put(`http://localhost:5000/api/v1/jobs/5`, data).then(res => {
+    axios.put('http://localhost:5000/api/v1/jobs/5', data).then(res => {
       setData(res.data);
       setLoading(false);
     }).catch(err => {
