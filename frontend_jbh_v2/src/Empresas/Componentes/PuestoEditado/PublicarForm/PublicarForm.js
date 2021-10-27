@@ -14,7 +14,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     title: '',
     country: '',
     city:'',
-    code: '',
     pres_or_remote: '',
     experience: '',
     travel_availability: '',
@@ -144,13 +143,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <label htmlFor="inputCity" className="col-sm-1 col-form-label">Ciudad</label>
             <div className="col-sm-10">
               <input type="text" className="form-control" id="inputCity" name="city" onChange={handleChange} value={form.city}/>
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="inputCode" className="col-sm-1 col-form-label">Código</label>
-            <div className="col-sm-10">
-              <input type="number" className="form-control" id="inputCode" name="code" onChange={handleChange} value={form.code} />
             </div>
           </div>
 

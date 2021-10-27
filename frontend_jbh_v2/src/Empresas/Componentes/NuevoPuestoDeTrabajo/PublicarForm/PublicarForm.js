@@ -36,10 +36,17 @@ const CrudForm = ({ createData }) => {
     const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/`);
     const jobs = await data.json();
 
-    const objects = jobs.map(jobs => jobs.id)
+    const firstid = []
 
-    const PartnerJobId = PartnerId + "_" + (Math.max(...objects) + 1) ;
-    setForm({...form, id: Math.max(...objects) + 1, code: PartnerJobId})
+    if (jobs.length === 0) {
+      firstid.push(0)
+      const PartnerJobId = PartnerId + "_" + (Math.max(...firstid) + 1) ;
+      setForm({...form, id: Math.max(...firstid) + 1, code: PartnerJobId})
+    } else {
+      const objects = jobs.map(jobs => jobs.id)
+      const PartnerJobId = PartnerId + "_" + (Math.max(...objects) + 1) ;
+      setForm({...form, id: Math.max(...objects) + 1, code: PartnerJobId})
+    }
   }
 
   const handleChange = (e) => {
