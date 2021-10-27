@@ -3,7 +3,6 @@ import axios from "axios";
 import Countries from "../../../data/country.json"
 import "./PublicarForm.css"
 import Cookies from 'universal-cookie';
-import { useHistory } from 'react-router';
 import { formatMs } from '@material-ui/core';
 
 
@@ -39,13 +38,9 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     });
   };
 
-  const history = useHistory();
-
   const handleSubmit = (e) => {
     e.preventDefault();
     updateData(form);
-    let path = `/empresa/mis-puestos-de-trabajo`; 
-    history.push(path);
   };
 
   function InputCountry() {

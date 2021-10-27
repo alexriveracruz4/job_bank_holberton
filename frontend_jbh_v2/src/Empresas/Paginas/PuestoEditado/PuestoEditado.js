@@ -4,7 +4,7 @@ import { EmpresaNav } from '../../Navegador/EmpresaNav';
 import axios from "axios";
 import CrudForm from "../../Componentes/PuestoEditado/PublicarForm/PublicarForm"
 import Cookies from 'universal-cookie';
-import { useLocation, useParams } from "react-router";
+import { useHistory, useLocation, useParams } from "react-router";
 
 
 const cookies = new Cookies();
@@ -32,14 +32,13 @@ function PuestoEditado() {
           .then(res => setDataToEdit(res.data[0]))
   }, []);
 
-  console.log(dataToEdit)
-
   let api = helpHttp();
   let url = `http://localhost:5000/api/v1/partners/${PartnerId}/jobs`;
 
+  const history = useHistory()
+
   const updateData = (data) => {
     let endpoint = `${url}/${data.id}`;
-    console.log("este es el endpoint para put", endpoint)
 
     let options = {
       body: data,
@@ -49,6 +48,8 @@ function PuestoEditado() {
     api.put(endpoint, options).then((res) => {
       let newData = db.map((el) => (el.id === data.id ? data : el));
       setDb(newData);
+      let path = `/empresa/mis-puestos-de-trabajo`; 
+      history.push(path);
     });
   }
 

@@ -151,9 +151,9 @@ const CrudForm = ({ createData }) => {
           <InputCountry />
 
           <div className="form-group row">
-            <label htmlFor="inputRegion" className="col-sm-1 col-form-label">Ciudad</label>
+            <label htmlFor="inputCity" className="col-sm-1 col-form-label">Ciudad</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputRegion" name="region" onChange={handleChange} value={form.region}/>
+              <input type="text" className="form-control" id="inputCity" name="city" onChange={handleChange} value={form.city}/>
             </div>
           </div>
 
