@@ -5,6 +5,7 @@ import { EmpresaNav } from '../../Navegador/EmpresaNav';
 import { helpHttp } from "../../../helpers/helpHttp";
 import CrudForm from "../../Componentes/PerfilEmpresa/PerfilFormulario/Form"
 import Cookies from 'universal-cookie';
+import { useLocation } from "react-router";
 
 const cookies = new Cookies();
 
@@ -42,6 +43,7 @@ function PerfilEmpresa() {
           window.location.href="/login/empresa";
       }
   });
+
 
   return (
     <div>
