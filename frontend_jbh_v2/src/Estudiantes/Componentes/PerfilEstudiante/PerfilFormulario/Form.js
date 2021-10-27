@@ -20,6 +20,7 @@ const initailForm = {
   github: '',
   twitter: '',
   description: '',
+  cv_filename_physical: '',
 };
 
 const CrudForm = ({ updateData, dataToEdit}) => {
@@ -230,9 +231,13 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <label htmlFor="inputPhoto" className="col-sm-1 col-form-label">Subir CV</label>
             <div className="col-sm-10">
               <div className="box-photo form-control">
-                <input type="file" id="myphoto" name="curriculum" />
+                <input type="file" id="myphoto" name="curriculum" onChange={handleChange} value={form.cv_filename_physical} />
               </div>
             </div>
+          </div>
+
+          <div className="cv-name">
+            <a href={form.cv_filename_physical}>{form.cv_filename_logical}</a>
           </div>
 
           <div className="div-button-editar-estudiante">

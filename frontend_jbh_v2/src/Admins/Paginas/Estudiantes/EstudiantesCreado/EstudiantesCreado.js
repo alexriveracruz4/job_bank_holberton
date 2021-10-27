@@ -3,11 +3,23 @@ import { helpHttp } from '../../../../helpers/helpHttp';
 import CrudForm from '../../../Componentes/Estudiantes/EstudiantesCreado/CrearEstudianteForm';
 import { AdminNav } from "../../../Navegador/AdminNav";
 import Cookies from 'universal-cookie';
+import { useHistory } from 'react-router';
 
 
 const cookies = new Cookies();
 
 function EstudianteCreado() {
+
+  const AdminID = cookies.get("id")
+
+  useEffect(() => {
+    if (!cookies.get('id')){
+        window.location.href="/login/admin";
+    }
+});
+
+  const history = useHistory()
+
   const [db, setDb] = useState([]);
 
   let api = helpHttp();
@@ -20,14 +32,11 @@ function EstudianteCreado() {
     };
     api.post(url, options).then((res) => {
         setDb([...db, res]);
+        let path = `/admin/estudiantes`; 
+        history.push(path);
+        history.go(0)
     });
   };
-
-  useEffect(() => {
-      if (!cookies.get('id')){
-          window.location.href="/login/admin";
-      }
-  });
 
   return (
     <div>

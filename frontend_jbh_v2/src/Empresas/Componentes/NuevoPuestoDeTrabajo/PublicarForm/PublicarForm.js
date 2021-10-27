@@ -9,21 +9,6 @@ const CrudForm = ({ createData }) => {
 
   const PartnerId = cookies.get("id"); //string variable
 
-  const [AllMyJobs, setAllMyJobs] = useState([2]);
-
-
-  useEffect(async() => {
-    await obtenerDatos();
-  }, []);
-
-  const obtenerDatos = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/`);
-    const jobs = await data.json();
-    setAllMyJobs(jobs[jobs.length - 1].id + 1);
-  }
-
-  console.log(AllMyJobs)
-
   const initailForm = {
     partner_id: parseInt(PartnerId),
     id: '',
@@ -43,10 +28,23 @@ const CrudForm = ({ createData }) => {
 
   const [form, setForm] = useState(initailForm);
 
+  useEffect(async() => {
+    await obtenerDatos();
+  }, []);
+
+  const obtenerDatos = async () => {
+    const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/`);
+    const jobs = await data.json();
+    console.log(jobs)
+    const objects = jobs.map(jobs => jobs.id)
+    console.log(objects)
+    setForm({...form, id: Math.max(...objects) + 1})
+  }
+
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value, 
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -90,9 +88,9 @@ const CrudForm = ({ createData }) => {
   function PresOrRemote() {
     return (
       <div className="travel-row form-group row">
-        <label htmlFor="inputDisptravel" className="travel-label col-sm-1 col-form-label">Remoto o presencial</label>
+        <label htmlFor="inputPresOrRemote" className="travel-label col-sm-1 col-form-label">Remoto o presencial</label>
         <div className="select-travel-div col-sm-10">
-          <select className="form-control" id="inputDiptravel">
+          <select className="form-control" id="inputPresOrRemote" onChange={handleChange} name="pres_or_remote" value={form.pres_or_remote}>
             <option></option>
             <option value="Presencial">Presencial</option>
             <option value="Remoto">Remoto</option>
@@ -176,7 +174,7 @@ const CrudForm = ({ createData }) => {
           <div className="form-group row">
             <label htmlFor="inputMaxAge" className="col-sm-1 col-form-label">Edad máxima</label>
             <div className="col-sm-10">
-              <input type="password" className="form-control" id="inputMaxAge" name="age_max" onChange={handleChange} value={form.age_max}/>
+              <input type="number" className="form-control" id="inputMaxAge" name="age_max" onChange={handleChange} value={form.age_max}/>
             </div>
           </div>
 
@@ -184,13 +182,6 @@ const CrudForm = ({ createData }) => {
             <label htmlFor="inputSalary" className="col-sm-1 col-form-label">Salario</label>
             <div className="col-sm-10">
               <input type="text" className="form-control" id="inputSalary" name="salary" onChange={handleChange} value={form.salary} />
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="inputJobType" className="col-sm-1 col-form-label">Jornada</label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputJobType" name="job_type" onChange={handleChange} value={form.job_type} />
             </div>
           </div>
 

@@ -10,7 +10,6 @@ const initailForm = {
   region: "",
   phonenumber: "",
   email: "",
-  password: "",
   web: "",
   description:""
 };
@@ -123,13 +122,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <label htmlFor="inputEmail" className="col-sm-1 col-form-label">Email</label>
             <div className="col-sm-10">
               <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} />
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="inputPassword" className="col-sm-1 col-form-label">Contraseña</label>
-            <div className="col-sm-10">
-              <input type="password" className="form-control" id="inputPassword" name="password" onChange={handleChange} value={form.password}/>
             </div>
           </div>
 

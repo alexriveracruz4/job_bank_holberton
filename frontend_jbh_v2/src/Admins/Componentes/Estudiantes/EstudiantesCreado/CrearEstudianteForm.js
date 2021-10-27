@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from "react";
-import "./CrearEstudianteForm.css"
-import Countries from "../data/country.json"
+import "./CrearEstudianteForm.css";
+import Countries from "../data/country.json";
+import Cookies from "universal-cookie";
 
-const initailForm = {
-  firstname: "",
-  lastname: "",
-  email: "",
-  password: "",
-  phonenumber: "",
-  nationality: "",
-  availability: "",
-  pres_or_remot: ""
-};
+const cookies = new Cookies();
 
 const CrudForm = ({ createData }) => {
+
+  const AdminID = cookies.get("id");
+
+  const initailForm = {
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    phonenumber: "",
+    nationality: "",
+    availability: "",
+    pres_or_remot: "",
+    created_by: parseInt(AdminID),
+    updated_by: parseInt(AdminID),
+  };
+
   const [form, setForm] = useState(initailForm);
 
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value, 
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -31,26 +39,54 @@ const CrudForm = ({ createData }) => {
   function Availability() {
     return (
       <div className="travel-row form-group row">
-        <label htmlFor="inputDisptravel" className="travel-label col-sm-1 col-form-label">Estado actual</label>
+        <label
+          htmlFor="inputDisptravel"
+          className="travel-label col-sm-1 col-form-label"
+        >
+          Estado actual
+        </label>
         <div className="select-travel-div col-sm-10">
-          <select className="form-control" id="inputDiptravel" onChange={ handleChange } name="availability" value={form.availability}>
+          <select
+            className="form-control"
+            id="inputDiptravel"
+            onChange={handleChange}
+            name="availability"
+            value={form.availability}
+          >
             <option>{form.availability}</option>
-            <option onClick={e => e.target.textarea}>Disponible a nuevas ofertas de trabajo</option>
-            <option onClick={e => e.target.textarea}>No tengo empleo</option>
-            <option onClick={e => e.target.textarea}>Estoy trabajando actualmente</option>
-            <option onClick={e => e.target.textarea}>No tengo ningún interés en un nuevo empleo</option>
+            <option onClick={(e) => e.target.textarea}>
+              Disponible a nuevas ofertas de trabajo
+            </option>
+            <option onClick={(e) => e.target.textarea}>No tengo empleo</option>
+            <option onClick={(e) => e.target.textarea}>
+              Estoy trabajando actualmente
+            </option>
+            <option onClick={(e) => e.target.textarea}>
+              No tengo ningún interés en un nuevo empleo
+            </option>
           </select>
         </div>
       </div>
-    )
+    );
   }
 
   function PresOrRemote() {
     return (
       <div className="travel-row form-group row">
-        <label htmlFor="inputDisptravel" className="travel-label col-sm-1 col-form-label">Modo de trabajo de preferencia</label>
+        <label
+          htmlFor="inputDisptravel"
+          className="travel-label col-sm-1 col-form-label"
+        >
+          Modo de trabajo de preferencia
+        </label>
         <div className="select-travel-div col-sm-10">
-          <select className="form-control" id="inputDiptravel" onChange={ handleChange } name="pres_or_remot" value={form.pres_or_remot}>
+          <select
+            className="form-control"
+            id="inputDiptravel"
+            onChange={handleChange}
+            name="pres_or_remot"
+            value={form.pres_or_remot}
+          >
             <option>{form.pres_or_remot}</option>
             <option value="Presencial">Presencial</option>
             <option value="Remoto">Remoto</option>
@@ -58,23 +94,34 @@ const CrudForm = ({ createData }) => {
           </select>
         </div>
       </div>
-    )
+    );
   }
 
   function InputCountry() {
     return (
       <div className="form-group row">
-        <label htmlFor="exampleFormControlSelect1" className="col-sm-1 col-form-label">País</label>
+        <label
+          htmlFor="exampleFormControlSelect1"
+          className="col-sm-1 col-form-label"
+        >
+          País
+        </label>
         <div className="col-sm-10">
-          <select className="form-control" id="exampleFormControlSelect1" onChange={ handleChange } name="nationality" value={form.nationality}>
+          <select
+            className="form-control"
+            id="exampleFormControlSelect1"
+            onChange={handleChange}
+            name="nationality"
+            value={form.nationality}
+          >
             <option></option>
-            {Countries.map(data => {;
+            {Countries.map((data) => {
               return <option value={data.country}>{data.country}</option>;
             })}
           </select>
         </div>
       </div>
-    )
+    );
   }
 
   /*function CountChar() {
@@ -94,7 +141,6 @@ const CrudForm = ({ createData }) => {
     );
   }*/
 
-
   /*mi codigo*/
   return (
     <div className="form-crear-estudiante">
@@ -103,45 +149,104 @@ const CrudForm = ({ createData }) => {
       </div>
       <div className="form-div">
         <form className="form-form" onSubmit={handleSubmit}>
-        <div className="form-group row">
-            <label htmlFor="inputFirstname" className="col-sm-1 col-form-label">Nombre</label>
+          <div className="form-group row">
+            <label htmlFor="inputFirstname" className="col-sm-1 col-form-label">
+              Nombre
+            </label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputFirstname" name="firstname" onChange={handleChange} value={form.firstname}/>
+              <input
+                type="text"
+                className="form-control"
+                id="inputFirstname"
+                name="firstname"
+                onChange={handleChange}
+                value={form.firstname}
+              />
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="inputLastname" className="col-sm-1 col-form-label">Apellidos</label>
+            <label htmlFor="inputLastname" className="col-sm-1 col-form-label">
+              Apellidos
+            </label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputLastname" name="lastname" onChange={handleChange} value={form.lastname}/>
+              <input
+                type="text"
+                className="form-control"
+                id="inputLastname"
+                name="lastname"
+                onChange={handleChange}
+                value={form.lastname}
+              />
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="inputEmail" className="col-sm-1 col-form-label">Email</label>
+            <label htmlFor="inputEmail" className="col-sm-1 col-form-label">
+              Email
+            </label>
             <div className="col-sm-10">
-              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} />
+              <input
+                type="email"
+                className="form-control"
+                id="inputEmail"
+                name="email"
+                onChange={handleChange}
+                value={form.email}
+              />
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="inputPassword" className="col-sm-1 col-form-label">Contraseña</label>
+            <label htmlFor="inputPassword" className="col-sm-1 col-form-label">
+              Contraseña
+            </label>
             <div className="col-sm-10">
-              <input type="password" className="form-control" id="inputPassword" name="password" onChange={handleChange} value={form.password}/>
+              <input
+                type="password"
+                className="form-control"
+                id="inputPassword"
+                name="password"
+                onChange={handleChange}
+                value={form.password}
+              />
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="inputPhonenumber" className="col-sm-1 col-form-label">Celular</label>
+            <label
+              htmlFor="inputPhonenumber"
+              className="col-sm-1 col-form-label"
+            >
+              Celular
+            </label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputPhonenumber" name="phonenumber" onChange={handleChange} value={form.phonenumber}/>
+              <input
+                type="text"
+                className="form-control"
+                id="inputPhonenumber"
+                name="phonenumber"
+                onChange={handleChange}
+                value={form.phonenumber}
+              />
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="inputAge" className="col-sm-1 col-form-label">Edad</label>
+            <label htmlFor="inputAge" className="col-sm-1 col-form-label">
+              Edad
+            </label>
             <div className="col-sm-10">
-              <input type="number" className="form-control" id="inputAge" min="1" max="100" name="age" onChange={handleChange} value={form.age} />
+              <input
+                type="number"
+                className="form-control"
+                id="inputAge"
+                min="1"
+                max="100"
+                name="age"
+                onChange={handleChange}
+                value={form.age}
+              />
             </div>
           </div>
 
@@ -156,13 +261,15 @@ const CrudForm = ({ createData }) => {
               type="submit"
               className="btn btn-primary mt-3"
               onClick={handleSubmit}
-              value="Enviar">Crear nuevo estudiante
+              value="Enviar"
+            >
+              Crear nuevo estudiante
             </button>
           </div>
         </form>
       </div>
     </div>
-  )
+  );
 };
 
 export default CrudForm;
