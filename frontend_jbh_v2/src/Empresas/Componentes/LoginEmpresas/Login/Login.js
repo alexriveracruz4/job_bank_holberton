@@ -37,7 +37,7 @@ class LoginComponent extends React.Component {
 	.then(
 	    (result) => {
 		// alert(result);
-		if (result.id) {
+		if (result.deleted === 0) {
 		    const token = result.token;
 		    var respuesta=result;
 		    cookies.set('id', respuesta.id, {path:"/"});
@@ -61,6 +61,9 @@ class LoginComponent extends React.Component {
 		    alert(`Bienvenido ${respuesta.name}`);
 		    localStorage.setItem("token", token);
 		    this.props.history.push("/empresa/mis-puestos-de-trabajo");
+		} else {
+		    alert("Usuario o Contraseña incorrectos");
+		    this.props.history.push('/login/empresa');
 		}
 	    },
 	    (error) => {
