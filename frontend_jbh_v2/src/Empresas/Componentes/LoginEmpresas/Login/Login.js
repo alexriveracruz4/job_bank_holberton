@@ -83,6 +83,11 @@ class LoginComponent extends React.Component {
         }
     }
 
+		handleKeyPress = (event) => {
+			if(event.key === 'Enter') {
+				this.doLogin();
+			}
+		}
     render() {
 	//let history = useHistory();
 	//let mode = "estudiante"
@@ -102,7 +107,7 @@ class LoginComponent extends React.Component {
 		<label>Contraseña</label>
 		</div>
 		<div className="input_user">
-		<input type="password" placeholder="Contraseña" name="password" value={this.state.password} onChange={this.handlePasswordChange} />
+		<input type="password" onKeyPress={this.handleKeyPress} placeholder="Contraseña" name="password" value={this.state.password} onChange={this.handlePasswordChange} />
 		</div>
 		</div>
 		<button className="Button" onClick={this.doLogin}>Iniciar Sesión</button>

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import Cookies from 'universal-cookie';
 import Countries from "../../../data/country.json"
 import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
-
 import "./Form.css"
 
+const cookies = new Cookies();
 const initailForm = {
   firstname: "",
   lastname: '',
@@ -42,6 +43,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     updateData(form);
+    cookies.set('firstname', form.firstname, {path:"/"});
+    cookies.set('lastname', form.lastname, {path:"/"});
     let path = `/estudiante/puestos-de-trabajo`; 
     history.push(path);
   };

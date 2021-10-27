@@ -3,7 +3,9 @@ import { useHistory } from 'react-router';
 import Countries from "../../../data/country.json"
 import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
 import "./Form.css"
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 const initailForm = {
   name: "",
   nation: "",
@@ -15,6 +17,8 @@ const initailForm = {
 };
 
 const CrudForm = ({ updateData, dataToEdit}) => {
+
+  
   const [form, setForm] = useState(initailForm);
 
   useEffect(() => {
@@ -33,6 +37,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     updateData(form);
+    cookies.set('name', form.name, {path:"/"});
     let path = `/empresa/mis-puestos-de-trabajo`; 
     history.push(path);
   };
