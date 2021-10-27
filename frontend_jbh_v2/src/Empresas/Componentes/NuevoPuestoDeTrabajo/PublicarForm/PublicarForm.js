@@ -35,10 +35,15 @@ const CrudForm = ({ createData }) => {
   const obtenerDatos = async () => {
     const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/`);
     const jobs = await data.json();
-    console.log(jobs)
-    const objects = jobs.map(jobs => jobs.id)
-    console.log(objects)
-    setForm({...form, id: Math.max(...objects) + 1})
+    const objects = []
+    if (jobs.length === 0) {
+      objects.push(0)
+    }
+    else {
+      objects.push(jobs.map(jobs => jobs.id))
+    }
+    const PartnerJobId = PartnerId + "_" + (Math.max(...objects) + 1) ;
+    setForm({...form, id: Math.max(...objects) + 1, code: PartnerJobId})
   }
 
   const handleChange = (e) => {
@@ -116,7 +121,7 @@ const CrudForm = ({ createData }) => {
     )
   }
 
-  function CountChar() {
+  /**function CountChar() {
     const [count, setCount] = useState(0);
     return (
       <div className="text-div">
@@ -131,7 +136,7 @@ const CrudForm = ({ createData }) => {
         <p>{ count } / 1000</p>
       </div>
     );
-  }
+  }**/
 
   return (
     <div className="form-editar-partner">
@@ -144,7 +149,7 @@ const CrudForm = ({ createData }) => {
           <div className="form-group row">
             <label htmlFor="inputTitle" className="col-sm-1 col-form-label">Título</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputTitle" name="title" onChange={handleChange} value={form.title}/>
+              <input type="text" className="form-control" id="inputTitle" maxLength="40" name="title" onChange={handleChange} value={form.title}/>
             </div>
           </div>
 
@@ -153,35 +158,35 @@ const CrudForm = ({ createData }) => {
           <div className="form-group row">
             <label htmlFor="inputCity" className="col-sm-1 col-form-label">Ciudad</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputCity" name="city" onChange={handleChange} value={form.city}/>
+              <input type="text" className="form-control" id="inputCity" maxLength="45" name="city" onChange={handleChange} value={form.city}/>
             </div>
           </div>
 
           <div className="form-group row">
             <label htmlFor="inputExperience" className="col-sm-1 col-form-label">Experiencia</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputExperience" name="experience" onChange={handleChange} value={form.experience}/>
+              <input type="text" className="form-control" id="inputExperience" maxLength="45" name="experience" onChange={handleChange} value={form.experience}/>
             </div>
           </div>
 
           <div className="form-group row">
             <label htmlFor="inputMinAge" className="col-sm-1 col-form-label">Edad mínima</label>
             <div className="col-sm-10">
-              <input type="number" className="form-control" id="inputMinAge" name="age_min" onChange={handleChange} value={form.age_min} />
+              <input type="number" className="form-control" id="inputMinAge" name="age_min" max="100" onChange={handleChange} value={form.age_min} />
             </div>
           </div>
 
           <div className="form-group row">
             <label htmlFor="inputMaxAge" className="col-sm-1 col-form-label">Edad máxima</label>
             <div className="col-sm-10">
-              <input type="number" className="form-control" id="inputMaxAge" name="age_max" onChange={handleChange} value={form.age_max}/>
+              <input type="number" className="form-control" id="inputMaxAge" name="age_max" max="100" onChange={handleChange} value={form.age_max}/>
             </div>
           </div>
 
           <div className="form-group row">
             <label htmlFor="inputSalary" className="col-sm-1 col-form-label">Salario</label>
             <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputSalary" name="salary" onChange={handleChange} value={form.salary} />
+              <input type="text" className="form-control" id="inputSalary" name="salary" maxLength="45" onChange={handleChange} value={form.salary} />
             </div>
           </div>
 
@@ -195,7 +200,7 @@ const CrudForm = ({ createData }) => {
             <div className="description-box form-group row">
               <label htmlFor="inputDescription" className="description-label col-sm-1 col-form-label">Descripción</label>
               <div className="text-div">
-                <textarea className="form-control" id="inputDescription" rows="10" maxLength="1000" name="description" onChange={ handleChange } value={form.description} />
+                <textarea className="form-control" id="inputDescription" rows="10" maxLength="2000" name="description" onChange={ handleChange } value={form.description} />
               </div>
             </div>
           </div>

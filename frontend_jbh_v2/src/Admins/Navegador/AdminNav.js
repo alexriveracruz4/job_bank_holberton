@@ -57,7 +57,6 @@ function AdminNav() {
         <div className="userprofile">
           <div 
             className="profile-button" 
-            Puestos de Trabajo
             onClick={ () => {history.push("/empresa/perfil")}}>
             <img src={ UserIcon } className="usericon" alt="imagen de usuario" />
             <button className="name-button">{cookies.get('firstname')} {cookies.get('lastname')}</button>

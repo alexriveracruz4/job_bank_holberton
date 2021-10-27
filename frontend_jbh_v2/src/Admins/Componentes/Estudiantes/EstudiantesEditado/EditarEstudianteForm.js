@@ -7,7 +7,6 @@ const cookies = new Cookies();
 
 const CrudForm = ({ updateData, dataToEdit }) => {
   const AdminID = cookies.get("id");
-  console.log("este es admin id", AdminID);
 
   const initailForm = {
     firstname: "",
@@ -44,7 +43,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     return (
       <div className="travel-row form-group row">
         <label
-          htmlFor="inputDisptravel"
+          htmlFor="inputAvailability"
           className="travel-label col-sm-1 col-form-label"
         >
           Estado actual
@@ -52,7 +51,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
         <div className="select-travel-div col-sm-10">
           <select
             className="form-control"
-            id="inputDiptravel"
+            id="inputAvailability"
             onChange={handleChange}
             name="availability"
             value={form.availability}
@@ -78,7 +77,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     return (
       <div className="travel-row form-group row">
         <label
-          htmlFor="inputDisptravel"
+          htmlFor="inputPresOrRemote"
           className="travel-label col-sm-1 col-form-label"
         >
           Modo de trabajo de preferencia
@@ -86,7 +85,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
         <div className="select-travel-div col-sm-10">
           <select
             className="form-control"
-            id="inputDiptravel"
+            id="inputPresOrRemote"
             onChange={handleChange}
             name="pres_or_remot"
             value={form.pres_or_remot}

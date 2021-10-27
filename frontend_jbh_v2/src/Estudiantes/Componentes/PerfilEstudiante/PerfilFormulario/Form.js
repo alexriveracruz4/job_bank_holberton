@@ -6,8 +6,9 @@ import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
 import "./Form.css"
 
 const cookies = new Cookies();
+
 const initailForm = {
-  firstname: "",
+  firstname: '',
   lastname: '',
   email: '',
   password: '',
@@ -21,7 +22,6 @@ const initailForm = {
   github: '',
   twitter: '',
   description: '',
-  cv_filename_physical: '',
 };
 
 const CrudForm = ({ updateData, dataToEdit}) => {
@@ -234,7 +234,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <label htmlFor="inputPhoto" className="col-sm-1 col-form-label">Subir CV</label>
             <div className="col-sm-10">
               <div className="box-photo form-control">
-                <input type="file" id="myphoto" name="curriculum" onChange={handleChange} value={form.cv_filename_physical} />
+                <input type="file" id="myphoto"/>
               </div>
             </div>
           </div>
