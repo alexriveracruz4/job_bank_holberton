@@ -35,13 +35,9 @@ const CrudForm = ({ createData }) => {
   const obtenerDatos = async () => {
     const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/`);
     const jobs = await data.json();
-    const objects = []
-    if (jobs.length === 0) {
-      objects.push(0)
-    }
-    else {
-      objects.push(jobs.map(jobs => jobs.id))
-    }
+
+    const objects = jobs.map(jobs => jobs.id)
+
     const PartnerJobId = PartnerId + "_" + (Math.max(...objects) + 1) ;
     setForm({...form, id: Math.max(...objects) + 1, code: PartnerJobId})
   }
