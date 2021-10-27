@@ -40,6 +40,7 @@ function PostulantesATrabajos() {
     setAllPartnerJobs(jobs);
   }
 
+  /*
   const deleteData = (id) => {
     let isDelete = window.confirm(
       `¿Estás seguro de eliminar el registro con el id = '${id}'?`
@@ -60,26 +61,13 @@ function PostulantesATrabajos() {
     }
   };
 
+  */
   return (
     <React.StrictMode>
       <MaterialTable
         columns={columnas}
         data={AllPartnerJobs}
         title={Title}
-        actions={[
-          {
-            icon: 'edit',
-            tooltip: 'Editar estudiante',
-            onClick: () => alert("TRABAJO EDITADO")
-            
-          },
-          {
-            icon: 'delete',
-            tooltip: 'Eliminar estudiante',
-            onClick: (event, rowData) => {deleteData(rowData.id)}
-          },
-        ]}
-        
         options={{
           actionsColumnIndex: -1,
           cellStyle: {
@@ -99,4 +87,20 @@ function PostulantesATrabajos() {
   );
 }
 
+
+/*
+          actions={[
+          {
+            icon: 'edit',
+            tooltip: 'Editar estudiante',
+            onClick: () => alert("TRABAJO EDITADO")
+            
+          },
+          {
+            icon: 'delete',
+            tooltip: 'Eliminar estudiante',
+            onClick: (event, rowData) => {deleteData(rowData.id)}
+          },
+          ]}
+*/
 export default PostulantesATrabajos;

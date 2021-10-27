@@ -35,8 +35,8 @@ function TablaTrabajosDeCadaEmpresa() {
     const jobs = await data.json();
     setAllPartnerJobs(jobs);
   }
-  console.log("asddasdas", AllPartnerJobs);
 
+  /*
   const deleteData = ( PartnerId, JobId ) => {
     let isDelete = window.confirm(
       `¿Estás seguro de eliminar el registro con el id '${JobId}'?`
@@ -56,7 +56,7 @@ function TablaTrabajosDeCadaEmpresa() {
       return;
     }
   };
-
+  */
   return (
     <React.StrictMode>
       <MaterialTable
@@ -64,17 +64,6 @@ function TablaTrabajosDeCadaEmpresa() {
         data={AllPartnerJobs}
         title={Title}
         actions={[
-          {
-            icon: 'edit',
-            tooltip: 'editar trabajo',
-            onClick: () => alert("TRABAJO EDITADO")
-            
-          },
-          {
-            icon: 'delete',
-            tooltip: 'Eliminar trabajo',
-            onClick: (event, rowData) => {deleteData(rowData.id)}
-          },
           {
             icon: () => <button>Postulantes</button>,
             tooltip: 'Postulantes',
@@ -85,12 +74,6 @@ function TablaTrabajosDeCadaEmpresa() {
               }
             )}
           },
-          {
-            icon:() => <button>NUEVO EMPLEO</button>,
-            tooltip: "Crear una nuevo empleo",
-            onClick: () => alert("NUEVO EMPLEO CREADO"),
-            isFreeAction:true
-          }
         ]}
         
         options={{
@@ -112,9 +95,9 @@ function TablaTrabajosDeCadaEmpresa() {
   );
 }
 
+export default TablaTrabajosDeCadaEmpresa;
 
-/*
-actions={[
+          /*
           {
             icon: 'edit',
             tooltip: 'editar trabajo',
@@ -127,31 +110,9 @@ actions={[
             onClick: (event, rowData) => {deleteData(rowData.id)}
           },
           {
-            icon: () => <button>Postulantes</button>,
-            tooltip: 'Postulantes',
-            onClick: () => (event, rowData) => {history.push(`/admin/empresas/trabajos/${rowData.partner_id}/${rowData.id}/estudiantes`)}
-          },
-          {
             icon:() => <button>NUEVO EMPLEO</button>,
             tooltip: "Crear una nuevo empleo",
             onClick: () => alert("NUEVO EMPLEO CREADO"),
             isFreeAction:true
           }
-        ]}
-        
-        options={{
-          actionsColumnIndex: -1,
-          cellStyle: {
-            textAlign: "center"
-          },
-          headerStyle: {
-            textAlign: "center"
-        }
-        }}
-        localization={{
-          header:{
-            actions: 'ACCIONES'
-          }
-        }}
-*/
-export default TablaTrabajosDeCadaEmpresa;
+          */
