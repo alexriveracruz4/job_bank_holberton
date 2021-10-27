@@ -7,6 +7,7 @@ from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 import uuid
+from datetime import datetime
 # from werkzeug import secure_filename
 
 
@@ -109,6 +110,7 @@ def delete_student(student_id):
 
     # storage.delete(student)
     setattr(student, "deleted", 1)
+    setattr(student, "deleted_at", datetime.utcnow())
     storage.save()
 
     return make_response(jsonify({}), 200)
@@ -157,6 +159,20 @@ def put_student(student_id):
     for key, value in data.items():
         if key not in ignore:
             setattr(student, key, value)
+
+    storage.save()
+
+    return make_response(jsonify(student.to_dict()), 200)
+
+@app_views.route('/students/<student_id>/uploadcv', methods=['PUT'], strict_slashes=False)
+def fileUpload():
+    """
+    Upload Cvs
+    """
+    student = storage.get(Student, student_id)
+
+    if not student:
+        abort(404)
 
     file = request.files['curriculum']
     filename = file.filename #filename = secure_filename(file.filename)

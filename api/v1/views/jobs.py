@@ -7,6 +7,7 @@ from flask import abort, jsonify, make_response, request
 from models.partner import Partner
 from models.student import Student
 from models.application import Application
+from datetime import datetime
 
 
 @app_views.route('/jobs', methods=['GET'], strict_slashes=False)
@@ -82,6 +83,7 @@ def delete_job(partner_id, job_id):
 
     # storage.delete(job1)
     setattr(job1, "deleted", 1)
+    setattr(job1, "deleted_at", datetime.utcnow())
     storage.save()
 
     return make_response(jsonify({}), 200)

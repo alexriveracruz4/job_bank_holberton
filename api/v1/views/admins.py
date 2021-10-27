@@ -5,6 +5,7 @@ from models import storage
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 import uuid
+from datetime import datetime
 
 
 @app_views.route('/admins', methods=['GET'], strict_slashes=False)
@@ -62,6 +63,7 @@ def delete_admin(admin_id):
 
     storage.delete(admin)
     # setattr(admin, "deleted", 1)
+    setattr(admin, "deleted_at", datetime.utcnow())
     storage.save()
 
     return make_response(jsonify({}), 200)
