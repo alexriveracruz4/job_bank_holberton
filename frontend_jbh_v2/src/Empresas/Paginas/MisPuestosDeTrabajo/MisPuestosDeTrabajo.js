@@ -23,8 +23,6 @@ function MisPuestosDeTrabajo() {
     setAllMyJobs(jobs);
   }
 
-  console.log(AllMyJobs);
-
   useEffect(() => {
       if (!cookies.get('id')){
           window.location.href="/login/empresa";
@@ -48,6 +46,8 @@ function MisPuestosDeTrabajo() {
               JobId={trabajo.id}
               title={trabajo.title}
               deleted={trabajo.deleted}
+              created_at={trabajo.created_at}
+              deleted_at={trabajo.deleted_at}
             />
             ))}
           </ListJobs>

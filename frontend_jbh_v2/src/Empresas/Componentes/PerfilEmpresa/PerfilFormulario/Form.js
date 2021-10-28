@@ -4,6 +4,7 @@ import Countries from "../../../data/country.json"
 import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
 import "./Form.css"
 import Cookies from 'universal-cookie';
+import swal from 'sweetalert';
 
 const cookies = new Cookies();
 const initailForm = {
@@ -33,7 +34,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   };
 
   const history = useHistory();
-
+/*
   const handleSubmit = (e) => {
     e.preventDefault();
     updateData(form);
@@ -41,6 +42,27 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     let path = `/empresa/mis-puestos-de-trabajo`; 
     history.push(path);
   };
+*/
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    swal({
+      title: "EDITAR PERFIL",
+      text: `¿Está seguro de guardar los cambios realizados?`,
+      buttons: ["Cancelar", "Guardar"],
+    }).then((willEdit) => {
+      if (willEdit) {
+        updateData(form);
+        cookies.set('name', form.name, {path:"/"});
+        swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
+            timer:"1500"
+          });
+          setTimeout(() => {
+            history.go(0);
+          }, 1000);
+      } 
+    });
+  }
+
 
   function InputCountry() {
     return (

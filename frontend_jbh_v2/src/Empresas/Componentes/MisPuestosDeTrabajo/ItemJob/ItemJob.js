@@ -3,16 +3,19 @@ import './ItemJob.css';
 import { Link } from 'react-router-dom';
 import { helpHttp } from '../../../../helpers/helpHttp';
 import Cookies from 'universal-cookie';
+import { useHistory } from 'react-router';
+import swal from 'sweetalert';
+
 
 const cookies = new Cookies();
 function ItemJob(props) {
   const PartnerId= cookies.get("id"); //string variable
+  const history = useHistory();
   let api = helpHttp();
   let url = `http://localhost:5000/api/v1/partners/${PartnerId}/jobs`;
 
   const [AllMyJobs, setAllMyJobs] = useState([]);
 
-  console.log( "jobid",props.JobId );
   useEffect(() => {
     obtenerDatos();
   }, []);
@@ -22,8 +25,33 @@ function ItemJob(props) {
     const partners = await data.json();
     setAllMyJobs(partners);
   }
-  console.log("datos", AllMyJobs);
 
+  const deleteData = (id) => {
+    swal({
+      title: "EDITAR PERFIL",
+      text: `¿Está seguro de eliminar el trabajo "${props.title}"?`,
+      buttons: true,
+    }).then((willEdit) => {
+      if (willEdit) {     
+        let endpoint = `${url}/${id}`;
+        let options = {
+          headers: { "content-type": "application/json" },
+        };
+        api.del(endpoint, options).then((res) => {
+            let newData = AllMyJobs.filter((el) => el.id !== id);
+            setAllMyJobs(newData);
+        });
+        swal("HAS ELIMINADO ESTE TRABAJO", {
+            timer:"1500"
+          });
+        setTimeout(() => {
+          history.go(0);
+        }, 1000);
+      } 
+    });
+  }
+
+/*
   const deleteData = (id) => {
   
     let isDelete = window.confirm(
@@ -44,16 +72,16 @@ function ItemJob(props) {
       return;
     }
   };
-
+*/
   return (
       <li className='MPDTOneJobeEmpresa'>
         {
           props.deleted ? <b className="MPDTNoDisponible"> EMPLEO ELIMINADO </b> : <b className="MPDTDisponible"> DISPONIBLE </b>
         }
         <h2>{props.title}</h2>
-        <p>Fecha de creación: FECHA DE CREACION</p>
+        <p>Fecha de creación: {props.created_at}</p>
         {
-          props.deleted ? <p>Fecha de eliminacion: FECHA DE ELIMINACION</p> : ""
+          props.deleted ? <p>Fecha de eliminacion: {props.deleted_at}</p> : ""
         }
         <div class="MPDTGroupOfButtons">
           <Link to={{ pathname:`/empresa/mis-puestos-de-trabajo/${props.JobId}` }} style={{color: 'inherit', textDecoration: 'inherit'}}>

@@ -1,8 +1,12 @@
 import React from "react";
 import partnerlogo from "./partnerlogo.png"
 import "./PartnerInfo.css";
- 
+import Cookies from 'universal-cookie';
+
+
+const cookies = new Cookies();
 function PartnerInfo(props) {
+    const Partnert_Name = cookies.get("name");
     const datos = props.datos[0];
     return (
         <div className="body-container">
@@ -21,7 +25,7 @@ function PartnerInfo(props) {
                     <img src={ partnerlogo } className="partnerlogopng" alt="logo de la empresa"/>
                 </div>
                 <div className="partner-name">
-                    <p>PARNERT NAME</p>
+                    <p>{Partnert_Name}</p>
                 </div>
             </div>
         </div>

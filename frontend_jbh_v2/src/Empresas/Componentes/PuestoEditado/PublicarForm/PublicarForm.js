@@ -4,12 +4,13 @@ import Countries from "../../../data/country.json"
 import "./PublicarForm.css"
 import Cookies from 'universal-cookie';
 import { formatMs } from '@material-ui/core';
-
+import swal from 'sweetalert';
+import { useHistory } from 'react-router';
 
 const cookies = new Cookies();
   
 const CrudForm = ({ updateData, dataToEdit}) => {
-
+  const history = useHistory();
   const initailForm = {
     title: '',
     country: '',
@@ -37,10 +38,32 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     });
   };
 
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    swal({
+      title: "EDITAR TRABAJO",
+      text: `¿Está seguro de editar el empleo "${form.title}"?`,
+      buttons: ["Cancelar", "Si"],
+    }).then((willEdit) => {
+      if (willEdit) {
+        updateData(form);
+        swal("HAS EDITADO EXITOSAMENTE ESTE PUESTO DE TRABAJO", {
+            timer:"1500"
+          });
+        setTimeout(() => {
+          history.go(0);
+        }, 1000);
+      }
+    });
+  }
+
+/*
   const handleSubmit = (e) => {
     e.preventDefault();
     updateData(form);
   };
+*/
 
   function InputCountry() {
     return (

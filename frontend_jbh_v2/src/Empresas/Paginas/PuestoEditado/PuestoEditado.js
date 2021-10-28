@@ -48,8 +48,6 @@ function PuestoEditado() {
     api.put(endpoint, options).then((res) => {
       let newData = db.map((el) => (el.id === data.id ? data : el));
       setDb(newData);
-      let path = `/empresa/mis-puestos-de-trabajo`; 
-      history.push(path);
     });
   }
 

@@ -24,7 +24,6 @@ function Filters( {searchJob, setSearchJob} ) {
           value={searchJob.PalabraClave}
           onChange={handleChange}
         />
-        <button>Filtrar</button>
       </div>
       <div className="TypeJob">
         <h3> Tipo de trabajo </h3>

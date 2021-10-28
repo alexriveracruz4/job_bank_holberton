@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { helpHttp } from "../../../../helpers/helpHttp";
 import Cookies from 'universal-cookie';
+import swal from 'sweetalert';
 
 const cookies = new Cookies();
 function PartnerInfo(props) {
@@ -18,9 +19,44 @@ function PartnerInfo(props) {
     const [db, setDb] = useState([]);
     let api = helpHttp();
     const PostularEmpresa = (studentId, PartnerId, JobId) => {
+        swal({
+            title: "POSTULACIÓN",
+            text: `¿Está seguro de postular al trabajo '${datos.title}' de la empresa '${props.PartnerName}'?`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: false,
+          })
+          .then((willApply) => {
+            if (willApply) {
+                let url = `http://localhost:5000/api/v1/students/applications`;
+                const data = {"partner_id": PartnerId, "job_id": JobId, "student_id": studentId}
+                let options = {
+                    body: data,
+                    headers: { "content-type": "application/json" },
+                    };
+                api.post(url, options).then((res) => {
+                  setDb([...db, res]);
+                  swal("HAS POSTULADO A ESTE TRABAJO", {
+                    timer:"2500"
+                  });
+                  setTimeout(() => {
+                    history.go(0);
+                  }, 2000);
+                });
+          } else {
+            swal({
+                text:"HAS CANCELADO TU POSTULACIÓN",
+                timer:"2000"
+                });
+            }
+        });
+    }
+    /*
+    const PostularEmpresa = (studentId, PartnerId, JobId) => {
         let IsPostular = window.confirm(
           `¿Estás seguro de postular al trabajo de id:${JobId} de la empresa con id:'${PartnerId}'?`
         );
+        console.log("ispostular0", IsPostular)
         if (IsPostular) {
           let url = `http://localhost:5000/api/v1/students/applications`;
           const data = {"partner_id": PartnerId, "job_id": JobId, "student_id": studentId}
@@ -35,6 +71,7 @@ function PartnerInfo(props) {
           return;
         }
       };
+    */
 
     return (
         <div className="body-container">
@@ -60,13 +97,14 @@ function PartnerInfo(props) {
                 {datos.deleted || props.PostulantesIDs.includes(parseInt(studentId), 0)?
                     ""
                     :
-                    <div className="postula-container" onClick={ () => {history.push(`/estudiante/puestos-de-trabajo/partners/${PartnerId}/jobs/${JobId}/puesto-postulado`)}}>
+                    <div className="postula-container" 
+                        onClick={() => {
+                            PostularEmpresa(studentId, PartnerId, JobId)
+                        }}>
                         <div className="Postula">
-                            <button className="postula-button"
-                                onClick={() => PostularEmpresa(studentId, PartnerId, JobId)}
-                            >
+                            <h2 className="postula-button">
                                 Postula aquí
-                            </button>
+                            </h2>
                         </div>
                     </div>
                 }

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Countries from "../../../data/country.json"
 import "./PublicarForm.css"
 import Cookies from 'universal-cookie';
+import swal from 'sweetalert';
+import { useHistory } from 'react-router';
 
 const cookies = new Cookies();
   
 const CrudForm = ({ createData }) => {
-
+  const history = useHistory();
   const PartnerId = cookies.get("id"); //string variable
 
   const initailForm = {
@@ -55,11 +57,31 @@ const CrudForm = ({ createData }) => {
       [e.target.name]: e.target.value,
     });
   };
-
+/*
   const handleSubmit = (e) => {
     e.preventDefault();
     createData(form);
   };
+*/
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  swal({
+    title: "CREAR TRABAJO",
+    text: `¿Está seguro de crear un nuevo empleo?`,
+    buttons: ["Cancelar", "Si"],
+  }).then((willEdit) => {
+    if (willEdit) {
+      createData(form);
+      swal("HAS CREADO EXITOSAMENTE UN PUESTO DE TRABAJO", {
+          timer:"1500"
+        });
+      setTimeout(() => {
+        history.push(`/empresa/mis-puestos-de-trabajo/${form.id}`);
+      }, 1000);
+    } 
+  });
+}
 
   function InputCountry() {
     return (
