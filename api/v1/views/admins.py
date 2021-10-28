@@ -95,7 +95,7 @@ def put_admin(admin_id):
     """
     Updates an Admin
     """
-    admin = storage.get(Partner, partner_id)
+    admin = storage.get(Admin, admin_id)
 
     if not admin:
         abort(404)
@@ -103,7 +103,7 @@ def put_admin(admin_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
 
-    ignore = ['id', 'created_at', 'updated_at', 'deleted_at']
+    ignore = ['id', 'created_at', 'updated_at', 'deleted_at', '__class__']
 
     data = request.get_json()
     for key, value in data.items():

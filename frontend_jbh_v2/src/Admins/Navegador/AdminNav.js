@@ -57,21 +57,19 @@ function AdminNav() {
         <div className="userprofile">
           <div 
             className="profile-button" 
-            onClick={ () => {history.push("/empresa/perfil")}}>
+            onClick={ () => {history.push("/admin/perfil")}}>
             <img src={ UserIcon } className="usericon" alt="imagen de usuario" />
             <button className="name-button">{cookies.get('firstname')} {cookies.get('lastname')}</button>
           </div>
         </div>
       </div>
-      <nav>
-        <div className="cerrarsesion">
-          <button
-            className="cerrarsesion-button"
-            onClick={closeSessionEst}>
-            Cerrar sesión
-          </button>
-        </div>
-      </nav>
+      <div className="cerrarsesion">
+        <button
+          className="cerrarsesion-button"
+          onClick={closeSessionEst}>
+          Cerrar sesión
+        </button>
+      </div>
     </header>
   );
 }

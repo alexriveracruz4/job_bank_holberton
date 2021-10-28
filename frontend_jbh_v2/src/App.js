@@ -32,6 +32,8 @@ import { Postulantes } from './Empresas/Paginas/Postulantes/Postulantes';
 
 import { LoginAdmins } from './Admins/Paginas/LoginAdmins/LoginAdmins';
 
+import { PerfilAdmin } from './Admins/Paginas/Admins/AdminEditado/AdminEditado'
+
 import { EmpresaEditada } from './Admins/Paginas/Empresas/EmpresaEditada/EmpresaEditada';
 import { TodasLasEmpresas } from './Admins/Paginas/Empresas/TodasLasEmpresas/TodasLasEmpresas';
 import { EmpresaCreada } from './Admins/Paginas/Empresas/EmpresaCreada/EmpresaCreada';
@@ -78,6 +80,8 @@ function App() {
 
 
           <Route exact path="/login/admin" component={LoginAdmins}/>
+
+          <Route exact path="/admin/perfil" component={PerfilAdmin}/>
 
           <Route exact path="/admin/empresas" component={TodasLasEmpresas}/>
           <Route exact path="/admin/empresas/empresa-editada/:id" component={EmpresaEditada}/>
