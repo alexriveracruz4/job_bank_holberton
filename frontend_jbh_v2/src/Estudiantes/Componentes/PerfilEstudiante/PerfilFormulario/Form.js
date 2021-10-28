@@ -35,7 +35,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value, 
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -46,7 +46,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     updateData(form);
     cookies.set('firstname', form.firstname, {path:"/"});
     cookies.set('lastname', form.lastname, {path:"/"});
-    let path = `/estudiante/puestos-de-trabajo`; 
+    let path = `/estudiante/puestos-de-trabajo`;
     history.push(path);
   };
 */
@@ -58,7 +58,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       buttons: ["Cancelar", "Guardar"],
     }).then((willEdit) => {
       if (willEdit) {
-        
         updateData(form);
         cookies.set('firstname', form.firstname, {path:"/"});
 
@@ -70,7 +69,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
         setTimeout(() => {
           history.go(0);
         }, 1000);
-      } 
+      }
     });
   }
 
@@ -255,19 +254,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             </div>
           </div>
 
-          <div className="form-group row">
-            <label htmlFor="inputPhoto" className="col-sm-1 col-form-label">Subir CV</label>
-            <div className="col-sm-10">
-              <div className="box-photo form-control">
-                <input type="file" id="myphoto"/>
-              </div>
-            </div>
-          </div>
-
-          <div className="cv-name">
-            <a href={form.cv_filename_physical}>{form.cv_filename_logical}</a>
-          </div>
-
           <div className="div-button-editar-estudiante">
             <button
               type="submit"
@@ -301,7 +287,7 @@ class UploadCv extends React.Component {
 
     const data = new FormData();
     data.append('file', this.uploadInput.files[0]);
-    data.append('filename', this.fileName.value);
+    //data.append('filename', this.fileName.value);
     const urlupload = 'http://localhost:5000/api/v1/students/'+ cookies.get('id') + '/uploadcv'
 
     fetch(urlupload, {
@@ -316,19 +302,24 @@ class UploadCv extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleUploadImage}>
-        <div>
-          <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
-        </div>
-        <div>
-          <input ref={(ref) => { this.fileName = ref; }} type="text" placeholder="Enter the desired name of file" />
-        </div>
-        <br />
-        <div>
-          <button>Upload</button>
-        </div>
-        <img src={this.state.imageURL} alt="img" />
+      <div className="form-Estudiante">
+      <div className="form-div">
+      <form onSubmit={this.handleUploadImage} className="form-form">
+        <div className="form-group row">
+          <label htmlFor="inputPhoto" className="col-sm-1 col-form-label">Subir CV</label>
+	  <div className="col-sm-10">
+            <div className="box-photo form-control">
+             <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
+	     <button>Cargar</button>
+	    </div>
+	    <div className="cv-name">
+	    <a href={cookies.get("cv_filename_logical")}>{cookies.get('cv_filename_physical')}</a>
+	    </div>
+          </div>
+	</div>
       </form>
+      </div>
+      </div>
     );
   }
 }

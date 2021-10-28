@@ -8,6 +8,7 @@ from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 import uuid
 from datetime import datetime
+import pathlib
 # from werkzeug import secure_filename
 
 
@@ -165,7 +166,7 @@ def put_student(student_id):
     return make_response(jsonify(student.to_dict()), 200)
 
 @app_views.route('/students/<student_id>/uploadcv', methods=['POST'], strict_slashes=False)
-def fileUpload():
+def fileUpload(student_id):
     """
     Upload Cvs
     """
@@ -176,13 +177,13 @@ def fileUpload():
 
     file = request.files['file']
     filename = file.filename #filename = secure_filename(file.filename)
-    ext = filename[filename.index('.')]
-    path = '/curriculums/'
-    filename_new = student_id + '_20211026.' + ext
+    ext = pathlib.Path(filename).suffix
+    path = '/home/vagrant/job_bank_holberton/frontend_jbh_v2/curriculums/'
+    filename_new = student_id + '_' + datetime.utcnow().strftime('%Y%m%d%H%M%S') + ext
     file.save(path + filename_new)
 
-    setattr(student, 'cv_filename_logical', filename)
-    setattr(student, 'cv_filename_physical', filename_new)
+    setattr(student, 'cv_filename_physical', filename)
+    setattr(student, 'cv_filename_logical', filename_new)
 
     storage.save()
 
