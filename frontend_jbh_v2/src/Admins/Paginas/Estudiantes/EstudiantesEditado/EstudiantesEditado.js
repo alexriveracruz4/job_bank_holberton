@@ -55,9 +55,6 @@ function EstudianteEditado() {
     api.put(endpoint, options).then((res) => {
       let newData = db.map((el) => (el.id === data.id ? data : el));
       setDb(newData);
-      let path = `/admin/estudiantes`; 
-      history.push(path);
-      history.go(0)
     });
   };
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MaterialTable from 'material-table';
 import { useHistory } from 'react-router';
 import { helpHttp } from '../../../../../helpers/helpHttp';
+import swal from 'sweetalert';
 
 function TablaEstudiante() {
   let history = useHistory();
@@ -30,6 +31,34 @@ function TablaEstudiante() {
     setAllPartnersData(partners);
   }
 
+  const deleteData = (id, name, lastname) => {
+    swal({
+      title: "ELIMINAR ESTUDIANTE",
+      text: `¿Está seguro de eliminar los datos del estudiante "${name} ${lastname}"?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willEdit) => {
+      if (willEdit) {     
+        let endpoint = `${url}/${id}`;
+        let options = {
+          headers: { "content-type": "application/json" },
+        };
+        api.del(endpoint, options).then((res) => {
+            let newData = AllPartnersData.filter((el) => el.id !== id);
+            setAllPartnersData(newData);
+        });
+        swal("EL ESTUDIANTE HA SIDO ELIMINADO", {
+            timer:"1500"
+          });
+        setTimeout(() => {
+          history.go(0);
+        }, 1000);
+      } 
+    });
+  }
+
+  /*
   const deleteData = (id) => {
   
     let isDelete = window.confirm(
@@ -50,6 +79,7 @@ function TablaEstudiante() {
       return;
     }
   };
+  */
 
   return (
     <React.StrictMode>
@@ -70,7 +100,7 @@ function TablaEstudiante() {
           {
             icon: 'delete',
             tooltip: 'Eliminar estudiante',
-            onClick: (event, rowData) => {deleteData(rowData.id)}
+            onClick: (event, rowData) => {deleteData(rowData.id, rowData.firstname, rowData.lastname)}
           },
           {
             icon:() => <button>NUEVO</button>,

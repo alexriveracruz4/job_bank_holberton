@@ -32,9 +32,6 @@ function EstudianteCreado() {
     };
     api.post(url, options).then((res) => {
         setDb([...db, res]);
-        let path = `/admin/estudiantes`; 
-        history.push(path);
-        history.go(0)
     });
   };
 

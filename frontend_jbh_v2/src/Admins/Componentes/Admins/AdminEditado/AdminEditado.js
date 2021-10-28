@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./AdminEditado.css"
 import Cookies from "universal-cookie";
 import { useHistory } from "react-router";
+import swal from 'sweetalert';
 
 const cookies = new Cookies();
 
@@ -29,6 +30,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
   const history = useHistory();
 
+/*
   const handleSubmit = (e) => {
     e.preventDefault();
     updateData(form);
@@ -37,6 +39,28 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     let path = `/admin/estudiantes`; 
     history.push(path);
   };
+*/
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    swal({
+      title: "EDITAR ADMIN",
+      text: `¿Está seguro de guardar los nuevos cambios realizados en el admin "${dataToEdit.firstname} ${dataToEdit.lastname}"?`,
+      buttons: ["Cancelar", "Guardar"],
+    }).then((willEdit) => {
+      if (willEdit) {
+        updateData(form);
+        cookies.set('firstname', form.firstname, {path:"/"});
+        cookies.set('lastname', form.lastname, {path:"/"});
+        swal("HAS EDITADO EXITOSAMENTE LOS DATOS DEL ADMIN", {
+            timer:"1500"
+        });
+        setTimeout(() => {
+          history.go(0);
+        }, 1000);
+      }
+    });
+  }
+
 
   return (
     <div className="form-editar-admin">

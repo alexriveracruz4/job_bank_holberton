@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./CrearEstudianteForm.css";
 import Countries from "../data/country.json";
 import Cookies from "universal-cookie";
+import swal from 'sweetalert';
+import { useHistory } from "react-router";
+
 
 const cookies = new Cookies();
-
 const CrudForm = ({ createData }) => {
-
+  const history = useHistory();
   const AdminID = cookies.get("id");
 
   const initailForm = {
@@ -31,10 +33,35 @@ const CrudForm = ({ createData }) => {
     });
   };
 
+/*
   const handleSubmit = (e) => {
     e.preventDefault();
     createData(form);
+    let path = `/admin/estudiantes`; 
+    history.push(path);
+    history.go(0)
   };
+*/
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    swal({
+      title: "CREAR ESTUDIANTE",
+      text: `¿Está seguro de crear el nuevo estudiante?`,
+      buttons: ["Cancelar", "Si"],
+    }).then((willCreate) => {
+      if (willCreate) {
+        createData(form);
+        swal("HAS CREADO EXITOSAMENTE UN NUEVO ESTUDIANTE", {
+            timer:"1500"
+        });
+        setTimeout(() => {
+          let path = `/admin/estudiantes`; 
+          history.push(path);
+        }, 1000);
+      }
+    });
+  }
+
 
   function Availability() {
     return (

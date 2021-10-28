@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./CrearEmpresaForm.css"
 import Countries from "../data/country.json"
+import swal from 'sweetalert';
+import { useHistory } from "react-router";
 
 const initailForm = {
   name: "",
@@ -14,6 +16,8 @@ const initailForm = {
 };
 
 const CrudForm = ({ createData }) => {
+
+  const history = useHistory();
   const [form, setForm] = useState(initailForm);
 
   const handleChange = (e) => {
@@ -23,10 +27,33 @@ const CrudForm = ({ createData }) => {
     });
   };
 
+  /*
   const handleSubmit = (e) => {
     e.preventDefault();
     createData(form);
   };
+*/
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    swal({
+      title: "CREAR EMPRESA",
+      text: `¿Está seguro de crear la nueva empresa?`,
+      buttons: ["Cancelar", "Si"],
+    }).then((willCreate) => {
+      if (willCreate) {
+        createData(form);
+        swal("HAS CREADO EXITOSAMENTE UNA NUEVA EMPRESA", {
+            timer:"1500"
+        });
+        setTimeout(() => {
+          let path = `/admin/empresas`; 
+          history.push(path);
+        }, 1000);
+      }
+    });
+  }
+
+
 
   function InputCountry() {
     return (

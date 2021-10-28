@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import { useHistory } from 'react-router';
 import { helpHttp } from '../../../../../helpers/helpHttp';
-
+import swal from 'sweetalert';
 
 function TablaEmpresa() {
   let history = useHistory();
@@ -29,6 +29,34 @@ function TablaEmpresa() {
     setAllPartnersData(partners);
   }
 
+  const deleteData = (id, name) => {
+    swal({
+      title: "ELIMINAR EMPRESA",
+      text: `¿Está seguro de eliminar los datos de la empresa "${name}"?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willDelete) => {
+      if (willDelete) {     
+        let endpoint = `${url}/${id}`;
+        let options = {
+          headers: { "content-type": "application/json" },
+        };
+        api.del(endpoint, options).then((res) => {
+            let newData = AllPartnersData.filter((el) => el.id !== id);
+            setAllPartnersData(newData);
+        });
+        swal("HAS ELIMINADO UNA EMPRESA", {
+            timer:"1500"
+          });
+        setTimeout(() => {
+          history.go(0);
+        }, 1000);
+      } 
+    });
+  }
+
+  /*
   const deleteData = (id) => {
   
     let isDelete = window.confirm(
@@ -49,6 +77,7 @@ function TablaEmpresa() {
       return;
     }
   };
+  */
 
   return (
     <React.StrictMode>
@@ -70,7 +99,7 @@ function TablaEmpresa() {
           {
             icon: 'delete',
             tooltip: 'Eliminar empresa',
-            onClick: (event, rowData) => {deleteData(rowData.id)}
+            onClick: (event, rowData) => {deleteData(rowData.id, rowData.name)}
           },
           {
             icon: () => <button>TRABAJOS</button>,

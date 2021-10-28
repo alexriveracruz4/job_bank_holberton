@@ -45,11 +45,11 @@ import { EstudianteCreado } from './Admins/Paginas/Estudiantes/EstudiantesCreado
 import { PostulantesATrabajos } from './Admins/Paginas/Empresas/PostulantesATrabajos/PostulantesATrabajos';
 
 import { TodosLosTrabajos } from './Admins/Paginas/TodosLosTrabajos/TodosLosTrabajos/TodosLosTrabajos';
+import { PuestoAdminView } from './Admins/Paginas/TodosLosTrabajos/PuestoAdminView/PuestoAdminView';
 
 import { Landing } from './Landing/Paginas/Landing/Landing';
 
 import { NotFoundPage } from './NotFoundPage';
-
 /*
           <Route exact path="/empresa/mis-puestos-de-trabajo/:id/puesto-editado" component={PuestoEditado}/>
           <Route exact path="/empresa/mis-puestos-de-trabajo/:id/postulantes" component={Postulantes}/>
@@ -95,6 +95,7 @@ function App() {
           <Route exact path="/admin/estudiantes/crear-estudiante" component={EstudianteCreado}/>
 
           <Route exact path="/admin/todos-los-trabajos" component={TodosLosTrabajos}/>
+          <Route exact path="/admin/todos-los-trabajos/ver-trabajo/:PartnerId/:JobId" component={PuestoAdminView}/>
 
           <Route exact path="/" component={Landing}/>
 

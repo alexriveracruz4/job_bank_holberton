@@ -28,8 +28,10 @@ function ItemJob(props) {
 
   const deleteData = (id) => {
     swal({
-      title: "EDITAR PERFIL",
+      title: "ELIMINAR TRABAJO",
       text: `¿Está seguro de eliminar el trabajo "${props.title}"?`,
+      icon: "warning",
+      dangerMode: true,
       buttons: true,
     }).then((willEdit) => {
       if (willEdit) {     

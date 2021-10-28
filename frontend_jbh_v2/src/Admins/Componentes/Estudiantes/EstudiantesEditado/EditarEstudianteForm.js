@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./EditarEstudianteForm.css";
 import Countries from "../data/country.json";
 import Cookies from "universal-cookie";
+import swal from 'sweetalert';
+import { useHistory } from "react-router";
+
 
 const cookies = new Cookies();
 
 const CrudForm = ({ updateData, dataToEdit }) => {
+  const history = useHistory();
   const AdminID = cookies.get("id");
 
   const initailForm = {
@@ -22,7 +26,6 @@ const CrudForm = ({ updateData, dataToEdit }) => {
   };
 
   const [form, setForm] = useState(initailForm);
-
   useEffect(() => {
     setForm(dataToEdit);
   }, [dataToEdit]);
@@ -34,10 +37,32 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     });
   };
 
+/*
   const handleSubmit = (e) => {
     e.preventDefault();
     updateData(form);
   };
+*/
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    swal({
+      title: "EDITAR ESTUDIANTE",
+      text: `¿Está seguro de guardar los nuevos del estudiante "${dataToEdit.firstname} ${dataToEdit.lastname}"?`,
+      buttons: ["Cancelar", "Guardar"],
+    }).then((willEdit) => {
+      if (willEdit) {
+        updateData(form);
+        swal("HAS EDITADO EXITOSAMENTE UN NUEVO ESTUDIANTE", {
+            timer:"1500"
+        });
+        setTimeout(() => {
+          history.go(0);
+        }, 1000);
+      }
+    });
+  }
+
+
 
   function Availability() {
     return (

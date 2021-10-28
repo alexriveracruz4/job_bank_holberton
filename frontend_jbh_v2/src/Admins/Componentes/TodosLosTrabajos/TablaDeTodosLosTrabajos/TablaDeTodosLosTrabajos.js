@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import MaterialTable from 'material-table';
 import { useHistory } from 'react-router';
 import { helpHttp } from '../../../../helpers/helpHttp';
+import swal from 'sweetalert';
 
 
 function TablaDeTodosLosTrabajos() {
@@ -29,6 +30,7 @@ function TablaDeTodosLosTrabajos() {
     setAllJobs(jobs);
   }
 
+  /*
   const deleteData = (PartnerId, JobId) => {
   
     let isDelete = window.confirm(
@@ -49,7 +51,37 @@ function TablaDeTodosLosTrabajos() {
       return;
     }
   };
+*/
 
+  const deleteData = (PartnerId, JobId, TitleJob) => {
+    swal({
+      title: "ELIMINAR TRABAJO",
+      text: `¿Está seguro de eliminar los datos del trabajo "${TitleJob}"?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willDelete) => {
+      if (willDelete) {     
+        let endpoint = `http://localhost:5000/api/v1/partners/${PartnerId}/jobs/${JobId}`;
+        let options = {
+          headers: { "content-type": "application/json" },
+        };
+      
+        api.del(endpoint, options).then((res) => {
+            let newData = AllJobs.filter((el) => el.id !== JobId);
+            setAllJobs(newData);
+        });
+        swal("EL PUESTO DE TRABAJO HA SIDO ELIMINADO", {
+            timer:"1500"
+          });
+        setTimeout(() => {
+          history.go(0);
+        }, 1000);
+      } 
+    });
+  }
+
+//state: AllPartnersData.filter((trabajo)=> trabajo.id === rowData.id)
   return (
     <React.StrictMode>
       <MaterialTable
@@ -59,19 +91,17 @@ function TablaDeTodosLosTrabajos() {
         actions={[
           {
             icon: 'edit',
-            tooltip: 'Editar trabajo',
-            onClick: () => alert("TRABAJO EDITADO")
+            tooltip: 'Ver trabajo',
+            onClick: (event, rowData) => {history.push(
+              {
+                pathname:`/admin/todos-los-trabajos/ver-trabajo/${rowData.partner_id}/${rowData.id}`,
+                state: {partner_id:rowData.partner_id}
+              })}
           },
           {
             icon: 'delete',
             tooltip: 'Eliminar trabajo',
-            onClick: (event, rowData) => {deleteData(rowData.partner_id, rowData.id)}
-          },
-          {
-            icon:() => <button>NUEVO</button>,
-            tooltip: "Crear trabajo",
-            onClick: () => alert("NUEVO TRABAJO"),
-            isFreeAction:true
+            onClick: (event, rowData) => {deleteData(rowData.partner_id, rowData.id, rowData.title)}
           }
         ]}
         

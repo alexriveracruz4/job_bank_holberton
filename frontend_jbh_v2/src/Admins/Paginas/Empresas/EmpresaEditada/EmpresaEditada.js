@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useParams } from 'react-router';
+import axios from "axios";
 import { helpHttp } from '../../../../helpers/helpHttp';
 import { AdminNav } from "../../../Navegador/AdminNav";
 import CrudForm from '../../../Componentes/Empresas/EmpresaEditada/EmpresaEditada';
@@ -7,8 +8,17 @@ import Cookies from 'universal-cookie';
 
 
 const cookies = new Cookies();
-
 function EmpresaEditada() {
+
+  useEffect(() => {
+    if (!cookies.get('id')){
+        window.location.href="/login/admin";
+    }
+  });
+
+  const { id } = useParams();
+  const partner_id = id;
+
   const location = useLocation();
   console.log(location)
   const [db, setDb] = useState([]);
@@ -16,6 +26,12 @@ function EmpresaEditada() {
 
   let api = helpHttp();
   let url = "http://localhost:5000/api/v1/partners";
+
+  useEffect(async () => {
+    await axios
+      .get(`http://localhost:5000/api/v1/partners/${partner_id}`)
+      .then((res) => setDataToEdit(res.data));
+  }, []);
 
   const updateData = (data) => {
     let endpoint = `${url}/${data.id}`;
@@ -31,11 +47,7 @@ function EmpresaEditada() {
     });
   }
 
-  useEffect(() => {
-      if (!cookies.get('id')){
-          window.location.href="/login/admin";
-      }
-  });
+  
 
   return (
     <div>

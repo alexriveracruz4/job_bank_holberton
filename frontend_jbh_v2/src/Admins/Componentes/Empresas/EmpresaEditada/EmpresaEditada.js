@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from "react";
 import "./EmpresaEditada.css"
 import Countries from "../data/country.json"
+import swal from 'sweetalert';
+import { useHistory } from "react-router";
 
-const initailForm = {
-  name: "",
-  nation: "",
-  region: "",
-  phonenumber: "",
-  email: "",
-  password: "",
-  web: "",
-  description:""
-};
 
 const CrudForm = ({ updateData, dataToEdit}) => {
-  const [form, setForm] = useState(initailForm);
+  const history = useHistory();
 
+  const initailForm = {
+    name: "",
+    nation: "",
+    region: "",
+    phonenumber: "",
+    email: "",
+    password: "",
+    web: "",
+    description:""
+  };
+
+  const [form, setForm] = useState(initailForm);
   useEffect(() => {
     setForm(dataToEdit);
   }, [dataToEdit]);
@@ -26,11 +30,32 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       [e.target.name]: e.target.value, 
     });
   };
-
+/*
   const handleSubmit = (e) => {
     e.preventDefault();
     updateData(form);
   };
+*/
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    swal({
+      title: "EDITAR EMPRESA",
+      text: `¿Está seguro de guardar los nuevos cambios realizados en la empresa "${dataToEdit.name}"?`,
+      buttons: ["Cancelar", "Guardar"],
+    }).then((willEdit) => {
+      if (willEdit) {
+        updateData(form);
+        swal("HAS EDITADO EXITOSAMENTE LOS DATOS DE LA EMPRESA", {
+            timer:"1500"
+        });
+        setTimeout(() => {
+          history.go(0);
+        }, 1000);
+      }
+    });
+  }
+
+
 
   function InputCountry() {
     return (
