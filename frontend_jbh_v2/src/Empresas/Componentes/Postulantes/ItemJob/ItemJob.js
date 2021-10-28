@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import icoStudent from './user-icon.png';
 
 function ItemJob(props) {
+
+  const urldown = "http://localhost:5000/api/v1/downloadcv/" + props.cv_filename_logical
   return (
     <div className='ItemContainer'>
       <li className='POneJobeEmpresa'>
@@ -21,7 +23,9 @@ function ItemJob(props) {
         {props.twitter !==null ? <p><b>Twitter:</b> {props.twitter}</p>:""}
         {props.description !==null ? <p><b>Descripción:</b> <br/> {props.description}</p>:""}
       </li>
-      <button className='PCVButton'>DESCARGAR CV</button>
+      <a href={urldown} download className='PCVButton'>
+	<span>DESCARGAR CV</span>
+      </a>
     </div>
   );
 }

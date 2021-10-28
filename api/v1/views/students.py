@@ -5,7 +5,7 @@ from models.application import Application
 from models.job import Job
 from models import storage
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
+from flask import abort, jsonify, make_response, request, send_file
 import uuid
 from datetime import datetime
 import pathlib
@@ -188,3 +188,11 @@ def fileUpload(student_id):
     storage.save()
 
     return make_response(jsonify(student.to_dict()), 200)
+
+@app_views.route('/downloadcv/<cv_filename_logical>', methods=['GET'], strict_slashes=False)
+def fileDownload(cv_filename_logical):
+    """
+    Download CV
+    """
+    path = "/home/vagrant/job_bank_holberton/frontend_jbh_v2/curriculums/" + cv_filename_logical
+    return send_file(path, as_attachment=True)
