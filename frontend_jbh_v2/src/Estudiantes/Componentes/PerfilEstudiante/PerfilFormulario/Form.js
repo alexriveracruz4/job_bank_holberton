@@ -299,6 +299,11 @@ class UploadCv extends React.Component {
         this.setState({ imageURL: `http://localhost:5000/${body.file}` });
       });
     });
+    axios.get(`http://localhost:5000/api/v1/students/` + cookies.get('id'))
+    .then(res => {
+      const cv_name = res.data.cv_filename_physical;
+      cookies.set('cv_filename_physical', cv_name, {path:"/"});
+    })
   }
 
   render() {
