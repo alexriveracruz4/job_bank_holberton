@@ -74,15 +74,13 @@ function EstudianteNav() {
           </div>
         </div>
       </div>
-      <nav>
-        <div className="cerrarsesion">
-          <button
-            className="cerrarsesion-button"
-            onClick={closeSessionEst}>
-	    Cerrar sesión
-          </button>
-        </div>
-      </nav>
+      <div className="cerrarsesion">
+        <button
+          className="cerrarsesion-button"
+          onClick={closeSessionEst}>
+    Cerrar sesión
+        </button>
+      </div>
     </header>
   );
 }

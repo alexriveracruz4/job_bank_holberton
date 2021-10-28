@@ -105,7 +105,7 @@ class LoginComponent extends React.Component {
 	//let history = useHistory();
 	//let mode = "estudiante"
 	return (
-	        <div className='containerPrincipal'>
+	        <div className='containerPrincipalEstudiante'>
 		<div className="form-group">
 		<div className="User">
 		<div className="label_user">
