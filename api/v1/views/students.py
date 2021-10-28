@@ -164,7 +164,7 @@ def put_student(student_id):
 
     return make_response(jsonify(student.to_dict()), 200)
 
-@app_views.route('/students/<student_id>/uploadcv', methods=['PUT'], strict_slashes=False)
+@app_views.route('/students/<student_id>/uploadcv', methods=['POST'], strict_slashes=False)
 def fileUpload():
     """
     Upload Cvs
@@ -174,10 +174,10 @@ def fileUpload():
     if not student:
         abort(404)
 
-    file = request.files['curriculum']
+    file = request.files['file']
     filename = file.filename #filename = secure_filename(file.filename)
     ext = filename[filename.index('.')]
-    path = '/var/www/html/partners.holberton-peru.com/curriculums/'
+    path = '/curriculums/'
     filename_new = student_id + '_20211026.' + ext
     file.save(path + filename_new)
 

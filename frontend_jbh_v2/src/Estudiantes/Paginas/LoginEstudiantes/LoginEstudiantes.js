@@ -4,21 +4,6 @@ import { IconHolberton } from '../../Componentes/LoginEstudiantes/IconHolberton/
 import { LoginComponentWr } from '../../Componentes/LoginEstudiantes/Login/Login';
 // import LoginComponent from '../../Componentes/LoginEstudiantes/Login/Login';
 
-/*
-function LoginEstudiantes() {
-  return (
-    <div className='LoginEstudiantesContainer'>
-      <div className='Icon'>
-        <IconHolberton />
-      </div>
-      <div className='BoxLogin'>
-        <Login />
-      </div>
-    </div>
-  );
-}
-export { LoginEstudiantes };
-*/
 
 class LoginEstudiantes extends React.Component {
 

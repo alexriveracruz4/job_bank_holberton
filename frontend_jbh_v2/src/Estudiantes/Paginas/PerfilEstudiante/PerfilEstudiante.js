@@ -4,6 +4,7 @@ import { EstudianteNav } from "../../Navegador/EstudianteNav";
 import { helpHttp } from "../../../helpers/helpHttp";
 import CrudForm from "../../Componentes/PerfilEstudiante/PerfilFormulario/Form";
 import Cookies from "universal-cookie";
+import { UploadCv } from "../../Componentes/PerfilEstudiante/PerfilFormulario/Form";
 
 const cookies = new Cookies();
 
@@ -48,6 +49,7 @@ function PerfilEstudiante() {
       <EstudianteNav />
       <article className="grid-1-2">
         <CrudForm updateData={updateData} dataToEdit={dataToEdit} />
+	<UploadCv />
       </article>
     </div>
   );
