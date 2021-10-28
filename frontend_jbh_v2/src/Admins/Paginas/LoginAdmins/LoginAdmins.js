@@ -7,7 +7,7 @@ import { LoginComponentWr } from '../../Componentes/LoginAdmins/Login/Login';
 function LoginAdmins() {
   return (
     <div className='LoginAdminsContainer'>
-      <div className='Icon'>
+      <div className='IconHolbLogin'>
         <IconHolberton />
       </div>
       <div className='BoxLogin'> 

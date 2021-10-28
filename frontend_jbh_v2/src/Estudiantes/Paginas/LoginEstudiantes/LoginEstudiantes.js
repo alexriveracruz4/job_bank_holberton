@@ -10,7 +10,7 @@ class LoginEstudiantes extends React.Component {
     render() {
 	return (
 	    <div className='LoginEstudiantesContainer'>
-		  <div className='Icon'>
+		  <div className='IconHolbLogin'>
 		    <IconHolberton />
 		  </div>
 		  <div className='BoxLogin'>

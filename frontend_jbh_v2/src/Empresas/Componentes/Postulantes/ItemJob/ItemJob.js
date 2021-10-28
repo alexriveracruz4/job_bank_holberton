@@ -24,7 +24,7 @@ function ItemJob(props) {
         {props.description !==null ? <p><b>Descripción:</b> <br/> {props.description}</p>:""}
       </li>
       <a href={urldown} download className='PCVButton'>
-	<span>DESCARGAR CV</span>
+	<span className="spanItemJob">DESCARGAR CV</span>
       </a>
     </div>
   );

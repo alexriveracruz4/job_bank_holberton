@@ -7,7 +7,7 @@ import { LoginComponentWr } from '../../Componentes/LoginEmpresas/Login/Login';
 function LoginEmpresas() {
   return (
     <div className='LoginEmpresasContainer'>
-      <div className='Icon'>
+      <div className='IconHolbLogin'>
         <IconHolberton />
       </div>
       <div className='BoxLogin'> 
