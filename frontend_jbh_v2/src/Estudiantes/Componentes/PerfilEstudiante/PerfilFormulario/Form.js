@@ -5,6 +5,7 @@ import Countries from "../../../data/country.json"
 import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
 import "./Form.css"
 import swal from 'sweetalert';
+import axios from 'axios';
 
 const cookies = new Cookies();
 
