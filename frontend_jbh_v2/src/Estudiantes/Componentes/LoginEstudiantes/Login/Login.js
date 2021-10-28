@@ -4,10 +4,9 @@ import './Login.css';
 import { withRouter } from "react-router-dom"
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-
+import swal from 'sweetalert';
 
 const cookies = new Cookies();
-
 class LoginComponent extends React.Component {
 
     constructor(props) {
@@ -67,7 +66,14 @@ class LoginComponent extends React.Component {
 		    cookies.set('cv_filename_logical', respuesta.cv_filename_logical, {path:"/"});
 		    cookies.set('photo_filename_physical', respuesta.photo_filename_physical, {path:"/"});
 		    cookies.set('photo_filename_logical', respuesta.photo_filename_logical, {path:"/"});
-		    alert(`Bienvenido ${respuesta.firstname} ${respuesta.lastname}`);
+
+				swal({
+					title: "Bienvenido(a)",
+					text: `${respuesta.firstname} ${respuesta.lastname}`,
+					icon: "success",
+					timer: "2000"
+				})
+		    //alert(`Bienvenido ${respuesta.firstname} ${respuesta.lastname}`);
 		    localStorage.setItem("token", token);
 		    this.props.history.push("/estudiante/puestos-de-trabajo");
 		} else {
@@ -77,8 +83,16 @@ class LoginComponent extends React.Component {
 	    },
 	    (error) => {
 
-		alert("Usuario o Contraseña incorrectos");
-		this.props.history.push('/login/estudiante');
+
+				swal({
+					title: "Error",
+					text: "Usuario y/o Contraseña incorrectos",
+					icon: "error",
+					dangerMode: true,
+					timer: "2000"
+					})
+				//alert("Usuario o Contraseña incorrectos");
+				this.props.history.push('/login/estudiante');
 	    }
 	);
     }

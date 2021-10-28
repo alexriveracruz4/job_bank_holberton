@@ -3,6 +3,7 @@ import './Login.css';
 //import { useHistory } from 'react-router-dom';
 import { withRouter } from "react-router-dom"
 import Cookies from 'universal-cookie';
+import swal from 'sweetalert';
 
 
 const cookies = new Cookies();
@@ -58,7 +59,14 @@ class LoginComponent extends React.Component {
 		    cookies.set('deleted', respuesta.deleted, {path:"/"});
 		    cookies.set('logo_filename_physical', respuesta.logo_filename_physical, {path:"/"});
 		    cookies.set('logo_filename_logical', respuesta.logo_filename_logical, {path:"/"});
-		    alert(`Bienvenido ${respuesta.name}`);
+
+				swal({
+					title: "Bienvenido",
+					text: `${respuesta.name}`,
+					icon: "success",
+					timer: "2000"
+				})
+		    //alert(`Bienvenido ${respuesta.name}`);
 		    localStorage.setItem("token", token);
 		    this.props.history.push("/empresa/mis-puestos-de-trabajo");
 		} else {
@@ -67,8 +75,17 @@ class LoginComponent extends React.Component {
 		}
 	    },
 	    (error) => {
-		alert("Usuario o Contraseña incorrectos");
-		this.props.history.push('/login/empresa');
+
+
+				swal({
+					title: "Error",
+					text: "Usuario y/o Contraseña incorrectos",
+					icon: "error",
+					dangerMode: true,
+					timer: "2000"
+				})
+				//alert("Usuario o Contraseña incorrectos");
+				this.props.history.push('/login/empresa');
 	    }
 	);
     }

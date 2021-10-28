@@ -43,7 +43,7 @@ function EmpresaNav() {
             <button 
               className="puestos-button" 
               onClick={ () => {history.push("/empresa/mis-puestos-de-trabajo")}}>
-              Mis puestos de trabajoooooo
+              Mis puestos de trabajo
             </button>
           </div>
           <div className="postulaciones-div">
