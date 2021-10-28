@@ -61,6 +61,7 @@ function Postulantes(props) {
           phonenumber={estudiante.phonenumber}
           pres_or_remot={estudiante.pres_or_remot}
           deleted={estudiante.deleted}
+	  cv_filename_logical={estudiante.cv_filename_logical}
         />
         ))}
       </ListJobs>
