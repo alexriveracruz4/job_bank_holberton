@@ -5,6 +5,7 @@ import { helpHttp } from "../../../helpers/helpHttp";
 import CrudForm from "../../Componentes/PerfilEstudiante/PerfilFormulario/Form";
 import Cookies from "universal-cookie";
 import { UploadCv } from "../../Componentes/PerfilEstudiante/PerfilFormulario/Form";
+import apiPath from "../../../ApiPath";
 
 const cookies = new Cookies();
 
@@ -23,12 +24,12 @@ function PerfilEstudiante() {
 
   useEffect(async () => {
     await axios
-      .get(`http://localhost:5000/api/v1/students/${student_id}`)
+      .get(`${apiPath}/students/${student_id}`)
       .then((res) => setDataToEdit(res.data));
   }, []);
 
   let api = helpHttp();
-  let url = "http://localhost:5000/api/v1/students";
+  let url = `${apiPath}/students`;
 
   const updateData = (data) => {
     let endpoint = `${url}/${data.id}`;

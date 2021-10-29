@@ -8,6 +8,8 @@ import { ItemJob } from "../../Componentes/Postulantes/ItemJob/ItemJob";
 import { useLocation, useParams } from 'react-router';
 import Cookies from 'universal-cookie';
 
+import apiPath from '../../../ApiPath';
+
 
 const cookies = new Cookies();
 function Postulantes(props) {
@@ -22,7 +24,7 @@ function Postulantes(props) {
   }, []);
 
   const obtenerDatosDeEstudiantes = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/jobs/${partner_id}/${JobId}/students`);
+    const data = await fetch(`${apiPath}/jobs/${partner_id}/${JobId}/students`);
     const applications = await data.json();
     setAllStudentsApplicated(applications);
   }

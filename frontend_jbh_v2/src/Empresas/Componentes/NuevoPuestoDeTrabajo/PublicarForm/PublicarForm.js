@@ -4,6 +4,7 @@ import "./PublicarForm.css"
 import Cookies from 'universal-cookie';
 import swal from 'sweetalert';
 import { useHistory } from 'react-router';
+import apiPath from '../../../../ApiPath';
 
 const cookies = new Cookies();
   
@@ -35,7 +36,7 @@ const CrudForm = ({ createData }) => {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/`);
+    const data = await fetch(`${apiPath}/partners/${PartnerId}/jobs/`);
     const jobs = await data.json();
 
     const firstid = []

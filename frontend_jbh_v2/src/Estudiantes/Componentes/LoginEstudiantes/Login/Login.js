@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom"
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import swal from 'sweetalert';
+import apiPath from '../../../../ApiPath';
 
 const cookies = new Cookies();
 class LoginComponent extends React.Component {
@@ -21,7 +22,7 @@ class LoginComponent extends React.Component {
 
     doLogin() {
 
-	const url = "http://localhost:5000/api/v1/students/login";
+	const url = `${apiPath}/students/login`;
 	const data = {
 	    "username": this.state.username,
 	    "password": this.state.password

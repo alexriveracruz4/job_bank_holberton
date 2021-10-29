@@ -5,6 +5,7 @@ import { helpHttp } from '../../../../helpers/helpHttp';
 import Cookies from 'universal-cookie';
 import { useHistory } from 'react-router';
 import swal from 'sweetalert';
+import apiPath from '../../../../ApiPath';
 
 
 const cookies = new Cookies();
@@ -12,7 +13,7 @@ function ItemJob(props) {
   const PartnerId= cookies.get("id"); //string variable
   const history = useHistory();
   let api = helpHttp();
-  let url = `http://localhost:5000/api/v1/partners/${PartnerId}/jobs`;
+  let url = `${apiPath}/partners/${PartnerId}/jobs`;
 
   const [AllMyJobs, setAllMyJobs] = useState([]);
 

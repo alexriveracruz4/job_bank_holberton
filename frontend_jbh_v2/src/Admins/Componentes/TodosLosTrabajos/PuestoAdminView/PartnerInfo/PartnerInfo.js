@@ -3,6 +3,7 @@ import partnerlogo from "./partnerlogo.png"
 import "./PartnerInfo.css";
 import Cookies from 'universal-cookie';
 import { useLocation } from "react-router";
+import apiPath from "../../../../../ApiPath";
 
 const cookies = new Cookies();
 
@@ -17,7 +18,7 @@ function PartnerInfo(props) {
     }, []);
 
     const obtenerDatos = async () => {
-      const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}`);
+      const data = await fetch(`${apiPath}/partners/${PartnerId}`);
       const partner = await data.json();
       setPartnerData(partner);
     }

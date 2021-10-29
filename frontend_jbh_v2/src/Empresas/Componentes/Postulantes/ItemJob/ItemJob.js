@@ -2,10 +2,11 @@ import React from 'react';
 import './ItemJob.css';
 import { Link } from 'react-router-dom';
 import icoStudent from './user-icon.png';
+import apiPath from '../../../../ApiPath';
 
 function ItemJob(props) {
 
-  const urldown = "http://localhost:5000/api/v1/downloadcv/" + props.cv_filename_logical
+  const urldown = `${apiPath}/downloadcv/` + props.cv_filename_logical
   return (
     <div className='ItemContainer'>
       <li className='POneJobeEmpresa'>

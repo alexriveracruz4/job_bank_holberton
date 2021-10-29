@@ -5,6 +5,7 @@ import { helpHttp } from '../../../../helpers/helpHttp';
 import { AdminNav } from "../../../Navegador/AdminNav";
 import CrudForm from '../../../Componentes/Empresas/EmpresaEditada/EmpresaEditada';
 import Cookies from 'universal-cookie';
+import apiPath from '../../../../ApiPath';
 
 
 const cookies = new Cookies();
@@ -25,11 +26,11 @@ function EmpresaEditada() {
   const [dataToEdit, setDataToEdit] = useState(location.state[0]);
 
   let api = helpHttp();
-  let url = "http://localhost:5000/api/v1/partners";
+  let url = `${apiPath}/partners`;
 
   useEffect(async () => {
     await axios
-      .get(`http://localhost:5000/api/v1/partners/${partner_id}`)
+      .get(`${apiPath}/partners/${partner_id}`)
       .then((res) => setDataToEdit(res.data));
   }, []);
 

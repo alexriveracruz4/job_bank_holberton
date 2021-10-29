@@ -4,6 +4,7 @@ import PuestoInfo from "../../Componentes/PuestoStdView/PuestoInfo/PuestoInfo";
 import PartnerInfo from "../../Componentes/PuestoStdView/PartnerInfo/PartnerInfo";
 import { useParams } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import apiPath from "../../../ApiPath";
 import { useLocation } from 'react-router-dom';
 
 const cookies = new Cookies();
@@ -23,19 +24,19 @@ function Puesto() {
   }, []);
 
   const obtenerJobDatos = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/${JobId}`);
+    const data = await fetch(`${apiPath}/partners/${PartnerId}/jobs/${JobId}`);
     const jobs = await data.json();
     setJobData(jobs);
   }
 
   const obtenerPostulantesDatos = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/jobs/${PartnerId}/${JobId}/students`);
+    const data = await fetch(`${apiPath}/jobs/${PartnerId}/${JobId}/students`);
     const postulantes = await data.json();
     setPostulantesData(postulantes);
   }
 
   const obtenerParnertDatos = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}`);
+    const data = await fetch(`${apiPath}/partners/${PartnerId}`);
     const parnert = await data.json();
     setPartnerData(parnert);
   }

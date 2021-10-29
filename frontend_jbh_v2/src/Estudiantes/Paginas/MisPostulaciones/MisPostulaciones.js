@@ -4,6 +4,7 @@ import { EstudianteNav } from '../../Navegador/EstudianteNav'
 import { ListJobs } from "../../Componentes/MisPostulaciones/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/MisPostulaciones/ItemJob/ItemJob";
 import Cookies from 'universal-cookie';
+import apiPath from '../../../ApiPath';
 
 
 const cookies = new Cookies();
@@ -18,7 +19,7 @@ function MisPostulaciones() {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/students/${user_id}/applications`);
+    const data = await fetch(`${apiPath}/students/${user_id}/applications`);
     const applications = await data.json();
     setAllMyApplications(applications);
   }

@@ -4,6 +4,7 @@ import { helpHttp } from '../../../../helpers/helpHttp';
 import { AdminNav } from "../../../Navegador/AdminNav";
 import CrudForm from '../../../Componentes/Admins/AdminEditado/AdminEditado';
 import Cookies from 'universal-cookie';
+import apiPath from '../../../../ApiPath';
 
 
 const cookies = new Cookies();
@@ -23,12 +24,12 @@ function PerfilAdmin() {
 
   useEffect(async () => {
     await axios
-      .get(`http://localhost:5000/api/v1/admins/${AdminID}`)
+      .get(`${apiPath}/admins/${AdminID}`)
       .then((res) => setDataToEdit(res.data));
   }, []);
 
   let api = helpHttp();
-  let url = "http://localhost:5000/api/v1/admins";
+  let url = `${apiPath}/admins`;
 
   const updateData = (data) => {
     let endpoint = `${url}/${data.id}`;

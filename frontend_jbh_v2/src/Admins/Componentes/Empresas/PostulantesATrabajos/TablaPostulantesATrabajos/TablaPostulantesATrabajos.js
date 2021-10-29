@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import { useHistory, useLocation, useParams } from 'react-router';
 import { helpHttp } from '../../../../../helpers/helpHttp';
-
+import apiPath from '../../../../../ApiPath';
 
 function PostulantesATrabajos() {
   const location = useLocation();
@@ -16,7 +16,7 @@ function PostulantesATrabajos() {
 
 
   let api = helpHttp();
-  let url = `http://localhost:5000/api/v1/jobs/${PartnerId}/${JobId}/students`;
+  let url = `${apiPath}/jobs/${PartnerId}/${JobId}/students`;
 
   const columnas = [
     { title:'ID', field:'id', type:"numeri", textAlign:"center"},
@@ -47,7 +47,7 @@ function PostulantesATrabajos() {
     );
   
     if (isDelete) {
-      let endpoint = `http://localhost:5000/api/v1/students/${id}`;
+      let endpoint = `${apiPath}/students/${id}`;
       let options = {
         headers: { "content-type": "application/json" },
       };

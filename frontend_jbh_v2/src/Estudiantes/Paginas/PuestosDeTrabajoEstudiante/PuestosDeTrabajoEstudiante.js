@@ -6,6 +6,7 @@ import { ListJobs } from "../../Componentes/PuestosDeTrabajoEstudiante/ListJobs/
 import { ItemJob } from "../../Componentes/PuestosDeTrabajoEstudiante/ItemJob/ItemJob";
 
 import Cookies from 'universal-cookie';
+import apiPath from "../../../ApiPath";
 
 const cookies = new Cookies();
 function PuestosDeTrabajoEstudiante() {
@@ -17,7 +18,7 @@ function PuestosDeTrabajoEstudiante() {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch('http://localhost:5000/api/v1/jobs');
+    const data = await fetch(`${apiPath}/jobs`);
     const jobs = await data.json();
     setAllJobsData(jobs);
   }

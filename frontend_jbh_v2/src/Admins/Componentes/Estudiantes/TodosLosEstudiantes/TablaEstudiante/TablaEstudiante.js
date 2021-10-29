@@ -4,12 +4,13 @@ import { useHistory } from 'react-router';
 import { helpHttp } from '../../../../../helpers/helpHttp';
 import swal from 'sweetalert';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import apiPath from '../../../../../ApiPath';
 
 function TablaEstudiante() {
   let history = useHistory();
 
   let api = helpHttp();
-  let url = "http://localhost:5000/api/v1/students";
+  let url = `${apiPath}/students`;
 
   const columnas = [
     { title:'ID', field:'id', type:"numeri", textAlign:"center"},

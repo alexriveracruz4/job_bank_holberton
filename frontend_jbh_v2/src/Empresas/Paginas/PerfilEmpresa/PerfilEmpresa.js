@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { EmpresaNav } from '../../Navegador/EmpresaNav';
-
 import { helpHttp } from "../../../helpers/helpHttp";
 import CrudForm from "../../Componentes/PerfilEmpresa/PerfilFormulario/Form"
 import Cookies from 'universal-cookie';
 import { useLocation } from "react-router";
+import apiPath from "../../../ApiPath";
 
 const cookies = new Cookies();
 
@@ -17,12 +17,12 @@ function PerfilEmpresa() {
   const [dataToEdit, setDataToEdit] = useState({});
 
   useEffect(async ()=>{
-    await axios.get(`http://localhost:5000/api/v1/partners/${partner_id}`)
+    await axios.get(`${apiPath}/partners/${partner_id}`)
         .then(res => setDataToEdit(res.data))
   }, []);
 
   let api = helpHttp();
-  let url = "http://localhost:5000/api/v1/partners";
+  let url = `${apiPath}/partners`;
 
   const updateData = (data) => {
     let endpoint = `${url}/${data.id}`;

@@ -4,6 +4,7 @@ import './Login.css';
 import { withRouter } from "react-router-dom"
 import Cookies from 'universal-cookie';
 import swal from 'sweetalert';
+import apiPath from '../../../../ApiPath';
 
 
 const cookies = new Cookies();
@@ -22,7 +23,7 @@ class LoginComponent extends React.Component {
 
     doLogin() {
 
-	const url = "http://localhost:5000/api/v1/partners/login";
+	const url = `${apiPath}/partners/login`;
 	const data = {
 	        "username": this.state.username,
 	        "password": this.state.password

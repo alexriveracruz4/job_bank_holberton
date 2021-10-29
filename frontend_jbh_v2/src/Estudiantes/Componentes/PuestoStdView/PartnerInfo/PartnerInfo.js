@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { helpHttp } from "../../../../helpers/helpHttp";
 import Cookies from 'universal-cookie';
 import swal from 'sweetalert';
+import apiPath from "../../../../ApiPath";
 
 const cookies = new Cookies();
 function PartnerInfo(props) {
@@ -28,7 +29,7 @@ function PartnerInfo(props) {
           })
           .then((willApply) => {
             if (willApply) {
-                let url = `http://localhost:5000/api/v1/students/applications`;
+                let url = `${apiPath}/students/applications`;
                 const data = {"partner_id": PartnerId, "job_id": JobId, "student_id": studentId}
                 let options = {
                     body: data,
@@ -58,7 +59,7 @@ function PartnerInfo(props) {
         );
         console.log("ispostular0", IsPostular)
         if (IsPostular) {
-          let url = `http://localhost:5000/api/v1/students/applications`;
+          let url = `${apiPath}/students/applications`;
           const data = {"partner_id": PartnerId, "job_id": JobId, "student_id": studentId}
           let options = {
             body: data,

@@ -4,6 +4,7 @@ import CrudForm from '../../../Componentes/Estudiantes/EstudiantesCreado/CrearEs
 import { AdminNav } from "../../../Navegador/AdminNav";
 import Cookies from 'universal-cookie';
 import { useHistory } from 'react-router';
+import apiPath from '../../../../ApiPath';
 
 
 const cookies = new Cookies();
@@ -23,7 +24,7 @@ function EstudianteCreado() {
   const [db, setDb] = useState([]);
 
   let api = helpHttp();
-  let url = "http://localhost:5000/api/v1/students";
+  let url = `${apiPath}/students`;
 
   const createData = (data) => {
     let options = {

@@ -5,12 +5,13 @@ import { helpHttp } from '../../../../../helpers/helpHttp';
 import swal from 'sweetalert';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import apiPath from '../../../../../ApiPath';
 
 function TablaEmpresa() {
   let history = useHistory();
 
   let api = helpHttp();
-  let url = "http://localhost:5000/api/v1/partners";
+  let url = `${apiPath}/partners`;
 
   const columnas = [
     { title:'ID', field:'id', type:"numeri", textAlign:"center"},

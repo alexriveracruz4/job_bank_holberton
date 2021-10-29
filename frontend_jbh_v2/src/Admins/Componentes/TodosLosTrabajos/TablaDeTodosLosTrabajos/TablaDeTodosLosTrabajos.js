@@ -5,12 +5,13 @@ import { helpHttp } from '../../../../helpers/helpHttp';
 import swal from 'sweetalert';
 import AddIcon from '@material-ui/icons/Add';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import apiPath from '../../../../ApiPath';
 
 function TablaDeTodosLosTrabajos() {
   let history = useHistory();
 
   let api = helpHttp();
-  let url = "http://localhost:5000/api/v1/jobs";
+  let url = `${apiPath}/jobs`;
 
   const columnas = [
     { title:'ID_TRABAJO', field:'id', type:"numeri", textAlign:"center"},
@@ -39,7 +40,7 @@ function TablaDeTodosLosTrabajos() {
     );
   
     if (isDelete) {
-      let endpoint = `http://localhost:5000/api/v1/partners/${PartnerId}/jobs/${JobId}`;
+      let endpoint = `${apiPath}/partners/${PartnerId}/jobs/${JobId}`;
       let options = {
         headers: { "content-type": "application/json" },
       };
@@ -63,7 +64,7 @@ function TablaDeTodosLosTrabajos() {
       buttons: true,
     }).then((willDelete) => {
       if (willDelete) {     
-        let endpoint = `http://localhost:5000/api/v1/partners/${PartnerId}/jobs/${JobId}`;
+        let endpoint = `${apiPath}/partners/${PartnerId}/jobs/${JobId}`;
         let options = {
           headers: { "content-type": "application/json" },
         };

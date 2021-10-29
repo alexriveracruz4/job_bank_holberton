@@ -7,6 +7,8 @@ import { PartnerInfo } from "../../Componentes/PuestoEmpresaView/PartnerInfo/Par
 import { useParams } from "react-router";
 import Cookies from 'universal-cookie';
 
+import apiPath from "../../../ApiPath";
+
 const cookies = new Cookies();
 function PuestoEmpresaView() {
   const partner_id= cookies.get("id"); //string variable
@@ -19,7 +21,7 @@ function PuestoEmpresaView() {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/partners/${partner_id}/jobs/${JobId}`);
+    const data = await fetch(`${apiPath}/partners/${partner_id}/jobs/${JobId}`);
     const jobs = await data.json();
     setAllAJobDta(jobs);
   }

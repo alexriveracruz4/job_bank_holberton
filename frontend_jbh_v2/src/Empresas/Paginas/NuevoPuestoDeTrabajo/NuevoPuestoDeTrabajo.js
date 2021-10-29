@@ -3,6 +3,7 @@ import { EmpresaNav } from '../../Navegador/EmpresaNav';
 import CrudForm from "../../Componentes/NuevoPuestoDeTrabajo/PublicarForm/PublicarForm"
 import { helpHttp } from "../../../helpers/helpHttp";
 import Cookies from 'universal-cookie';
+import apiPath from "../../../ApiPath";
 
 
 const cookies = new Cookies();
@@ -18,7 +19,7 @@ function NuevoPuestoDeTrabajo() {
     const [db, setDb] = useState([]);
 
     let api = helpHttp();
-    let url = `http://localhost:5000/api/v1/jobs`;
+    let url = `${apiPath}/jobs`;
   
     const createData = (data) => {
       let options = {

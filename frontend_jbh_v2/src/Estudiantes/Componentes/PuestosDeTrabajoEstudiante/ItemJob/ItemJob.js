@@ -2,6 +2,7 @@ import React from 'react';
 import './ItemJob.css';
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import apiPath from '../../../../ApiPath';
 
 const cookies = new Cookies();
 
@@ -14,7 +15,7 @@ function ItemJob(props) {
   }, []);
 
   const obtenerPostulantesDatos = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/jobs/${props.id_empresa}/${props.id_job}/students`);
+    const data = await fetch(`${apiPath}/jobs/${props.id_empresa}/${props.id_job}/students`);
     const postulantes = await data.json();
     setPostulantesData(postulantes);
   }

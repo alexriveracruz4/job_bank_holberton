@@ -3,6 +3,7 @@ import { helpHttp } from '../../../../helpers/helpHttp';
 import CrudForm from '../../../Componentes/Empresas/EmpresaCreada/CrearEmpresaForm';
 import { AdminNav } from "../../../Navegador/AdminNav";
 import Cookies from 'universal-cookie';
+import apiPath from '../../../../ApiPath';
 
 
 const cookies = new Cookies();
@@ -11,7 +12,7 @@ function EmpresaCreada() {
   const [db, setDb] = useState([]);
 
   let api = helpHttp();
-  let url = "http://localhost:5000/api/v1/partners";
+  let url = `${apiPath}/partners`;
 
   const createData = (data) => {
     let options = {

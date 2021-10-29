@@ -5,6 +5,7 @@ import axios from "axios";
 import CrudForm from "../../Componentes/PuestoEditado/PublicarForm/PublicarForm"
 import Cookies from 'universal-cookie';
 import { useHistory, useLocation, useParams } from "react-router";
+import apiPath from "../../../ApiPath";
 
 
 const cookies = new Cookies();
@@ -28,12 +29,12 @@ function PuestoEditado() {
   const [dataToEdit, setDataToEdit] = useState({});
 
   useEffect(async ()=>{
-      await axios.get(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/${JobId}`)
+      await axios.get(`${apiPath}/partners/${PartnerId}/jobs/${JobId}`)
           .then(res => setDataToEdit(res.data[0]))
   }, []);
 
   let api = helpHttp();
-  let url = `http://localhost:5000/api/v1/partners/${PartnerId}/jobs`;
+  let url = `${apiPath}/partners/${PartnerId}/jobs`;
 
   const history = useHistory()
 

@@ -5,7 +5,7 @@ import Countries from "../../../data/country.json"
 import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
 import "./Form.css"
 import swal from 'sweetalert';
-import axios from 'axios';
+import apiPath from '../../../../ApiPath';
 
 const cookies = new Cookies();
 
@@ -289,7 +289,7 @@ class UploadCv extends React.Component {
     const data = new FormData();
     data.append('file', this.uploadInput.files[0]);
     //data.append('filename', this.fileName.value);
-    const urlupload = 'http://localhost:5000/api/v1/students/'+ cookies.get('id') + '/uploadcv'
+    const urlupload = `${apiPath}/students/`+ cookies.get('id') + '/uploadcv'
 
     fetch(urlupload, {
       method: 'POST',
@@ -300,7 +300,7 @@ class UploadCv extends React.Component {
         this.setState({ imageURL: `http://localhost:5000/${body.file}` });
       });
     });
-    /*axios.get(`http://localhost:5000/api/v1/students/` + cookies.get('id'))
+    /*axios.get(`${apiPath}/students/` + cookies.get('id'))
     .then(res => {
       const cv_name = res.data.cv_filename_physical;
       cookies.set('cv_filename_physical', cv_name, {path:"/"});

@@ -3,6 +3,7 @@ import MaterialTable from 'material-table';
 import { useHistory, useLocation, useParams } from 'react-router';
 import { helpHttp } from '../../../../../helpers/helpHttp';
 import ChevronRight from '@material-ui/icons/ChevronRight';
+import apiPath from '../../../../../ApiPath';
 
 
 function TablaTrabajosDeCadaEmpresa() {
@@ -14,7 +15,7 @@ function TablaTrabajosDeCadaEmpresa() {
   const { PartnerId } = useParams();
 
   let api = helpHttp();
-  let url = `http://localhost:5000/api/v1/partners/${PartnerId}/jobs`;
+  let url = `${apiPath}/partners/${PartnerId}/jobs`;
 
   const columnas = [
     { title:'ID', field:'id', type:"numeri", textAlign:"center"},
@@ -44,7 +45,7 @@ function TablaTrabajosDeCadaEmpresa() {
     );
   
     if (isDelete) {
-      let endpoint = `http://localhost:5000/api/v1/partners/${PartnerId}/jobs/${JobId}`;
+      let endpoint = `${apiPath}/partners/${PartnerId}/jobs/${JobId}`;
       let options = {
         headers: { "content-type": "application/json" },
       };

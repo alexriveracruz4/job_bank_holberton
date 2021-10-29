@@ -5,6 +5,7 @@ import { EmpresaNav } from '../../Navegador/EmpresaNav';
 import { ListJobs } from "../../Componentes/MisPuestosDeTrabajo/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/MisPuestosDeTrabajo/ItemJob/ItemJob";
 import Cookies from 'universal-cookie';
+import apiPath from '../../../ApiPath';
 
 const cookies = new Cookies();
 function MisPuestosDeTrabajo() {
@@ -18,7 +19,7 @@ function MisPuestosDeTrabajo() {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/`);
+    const data = await fetch(`${apiPath}/partners/${PartnerId}/jobs/`);
     const jobs = await data.json();
     setAllMyJobs(jobs);
   }

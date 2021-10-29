@@ -1,6 +1,6 @@
 import React from 'react';
 import './Login.css';
-//import { useHistory } from 'react-router-dom';
+import apiPath from '../../../../ApiPath';
 import { withRouter } from "react-router-dom"
 import Cookies from 'universal-cookie';
 import swal from 'sweetalert';
@@ -21,7 +21,7 @@ class LoginComponent extends React.Component {
 
     doLogin() {
 
-	const url = "http://localhost:5000/api/v1/admins/login";
+	const url = apiPath + '/admins/login';
 	const data = {
 	        "username": this.state.username,
 	        "password": this.state.password

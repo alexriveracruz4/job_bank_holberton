@@ -5,6 +5,7 @@ import { PuestoInfo } from "../../../Componentes/TodosLosTrabajos/PuestoAdminVie
 import { PartnerInfo } from "../../../Componentes/TodosLosTrabajos/PuestoAdminView/PartnerInfo/PartnerInfo";
 import { useParams } from "react-router";
 import Cookies from 'universal-cookie';
+import apiPath from "../../../../ApiPath";
 
 
 const cookies = new Cookies();
@@ -19,7 +20,7 @@ function PuestoAdminView() {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch(`http://localhost:5000/api/v1/partners/${PartnerId}/jobs/${JobId}`);
+    const data = await fetch(`${apiPath}/partners/${PartnerId}/jobs/${JobId}`);
     const jobs = await data.json();
     setAllAJobDta(jobs);
   }

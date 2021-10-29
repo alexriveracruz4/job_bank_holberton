@@ -6,6 +6,7 @@ import CrudForm from "../../../Componentes/Estudiantes/EstudiantesEditado/Editar
 import { AdminNav } from "../../../Navegador/AdminNav";
 import { useParams } from "react-router";
 import Cookies from "universal-cookie";
+import apiPath from "../../../../ApiPath";
 
 const cookies = new Cookies();
 
@@ -27,7 +28,7 @@ function EstudianteEditado() {
 
   useEffect(async () => {
     await axios
-      .get(`http://localhost:5000/api/v1/students/${student_id}`)
+      .get(`${apiPath}/students/${student_id}`)
       .then((res) => setDataToEdit(res.data));
   }, []);
   /*nuevo codigo arriba*/
@@ -38,7 +39,7 @@ function EstudianteEditado() {
   const [dataToEdit, setDataToEdit] = useState(location.state[0]);*/
 
   let api = helpHttp();
-  let url = "http://localhost:5000/api/v1/students";
+  let url = `${apiPath}/students`;
 
   const history = useHistory()
 
