@@ -3,6 +3,8 @@ import MaterialTable from 'material-table';
 import { useHistory } from 'react-router';
 import { helpHttp } from '../../../../../helpers/helpHttp';
 import swal from 'sweetalert';
+import ChevronRight from '@material-ui/icons/ChevronRight';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 function TablaEmpresa() {
   let history = useHistory();
@@ -89,7 +91,7 @@ function TablaEmpresa() {
         actions={[
           {
             icon: 'edit',
-            tooltip: 'editar empresa',
+            tooltip: 'Editar empresa',
             onClick: (event, rowData) => {history.push(
               {
                 pathname:`/admin/empresas/empresa-editada/${rowData.id}`,
@@ -102,7 +104,7 @@ function TablaEmpresa() {
             onClick: (event, rowData) => {deleteData(rowData.id, rowData.name)}
           },
           {
-            icon: () => <button>TRABAJOS</button>,
+            icon: () => <ChevronRight/>,
             tooltip: 'Trabajos publicados',
             onClick: (event, rowData) => {history.push(
               {
@@ -112,7 +114,7 @@ function TablaEmpresa() {
             )}
           },
           {
-            icon:() => <button>NUEVO</button>,
+            icon: () => <AddCircleIcon fontSize="large"/>,
             tooltip: "Crear una nueva empresa",
             onClick: (e) => {history.push(`/admin/empresas/crear-empresa`)},
             isFreeAction:true
@@ -125,12 +127,16 @@ function TablaEmpresa() {
             textAlign: "center"
           },
           headerStyle: {
-            textAlign: "center"
-        }
+            textAlign: "center",
+            backgroundColor: "#F1F2F2"
+          },
+          paging:true,
+          pageSize:9,       // make initial page size
+          pageSizeOptions:[10,20,30,50],
         }}
         localization={{
           header:{
-            actions: 'ACCIONES'
+            actions: ''
           }
         }}
       />

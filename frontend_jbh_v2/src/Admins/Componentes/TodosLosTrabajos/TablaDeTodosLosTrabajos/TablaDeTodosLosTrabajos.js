@@ -3,7 +3,8 @@ import MaterialTable from 'material-table';
 import { useHistory } from 'react-router';
 import { helpHttp } from '../../../../helpers/helpHttp';
 import swal from 'sweetalert';
-
+import AddIcon from '@material-ui/icons/Add';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 function TablaDeTodosLosTrabajos() {
   let history = useHistory();
@@ -90,7 +91,7 @@ function TablaDeTodosLosTrabajos() {
         title="TODOS LOS TRABAJOS"
         actions={[
           {
-            icon: 'edit',
+            icon: () => <VisibilityIcon />,
             tooltip: 'Ver trabajo',
             onClick: (event, rowData) => {history.push(
               {
@@ -111,12 +112,16 @@ function TablaDeTodosLosTrabajos() {
             textAlign: "center"
           },
           headerStyle: {
-            textAlign: "center"
-        }
+            textAlign: "center",
+            backgroundColor: "#F1F2F2"
+          },
+          paging:true,
+          pageSize:9,       // make initial page size
+          pageSizeOptions:[10,20,30,50],
         }}
         localization={{
           header:{
-            actions: 'ACCIONES'
+            actions: ''
           }
         }}
       />

@@ -74,12 +74,16 @@ function PostulantesATrabajos() {
             textAlign: "center"
           },
           headerStyle: {
-            textAlign: "center"
-        }
+            textAlign: "center",
+            backgroundColor: "#F1F2F2"
+          },
+          paging:true,
+          pageSize:9,       // make initial page size
+          pageSizeOptions:[10,20,30,50],
         }}
         localization={{
           header:{
-            actions: 'ACCIONES'
+            actions: ''
           }
         }}
       />

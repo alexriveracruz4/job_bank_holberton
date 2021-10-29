@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import { useHistory, useLocation, useParams } from 'react-router';
 import { helpHttp } from '../../../../../helpers/helpHttp';
+import ChevronRight from '@material-ui/icons/ChevronRight';
 
 
 function TablaTrabajosDeCadaEmpresa() {
@@ -65,7 +66,7 @@ function TablaTrabajosDeCadaEmpresa() {
         title={Title}
         actions={[
           {
-            icon: () => <button>Postulantes</button>,
+            icon: () => <ChevronRight/>,
             tooltip: 'Postulantes',
             onClick: (event, rowData) => {history.push(
               {
@@ -82,12 +83,16 @@ function TablaTrabajosDeCadaEmpresa() {
             textAlign: "center"
           },
           headerStyle: {
-            textAlign: "center"
-        }
+            textAlign: "center",
+            backgroundColor: "#F1F2F2"
+          },
+          paging:true,
+          pageSize:9,       // make initial page size
+          pageSizeOptions:[10,20,30,50],
         }}
         localization={{
           header:{
-            actions: 'ACCIONES'
+            actions: ''
           }
         }}
       />
