@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MaterialTable from 'material-table';
 import { useHistory } from 'react-router';
 import { helpHttp } from '../../../../../helpers/helpHttp';
@@ -59,29 +59,6 @@ function TablaEstudiante() {
       } 
     });
   }
-
-  /*
-  const deleteData = (id) => {
-  
-    let isDelete = window.confirm(
-      `¿Estás seguro de eliminar el registro con el id '${id}'?`
-    );
-  
-    if (isDelete) {
-      let endpoint = `${url}/${id}`;
-      let options = {
-        headers: { "content-type": "application/json" },
-      };
-  
-      api.del(endpoint, options).then((res) => {
-          let newData = AllPartnersData.filter((el) => el.id !== id);
-          setAllPartnersData(newData);
-      });
-    } else {
-      return;
-    }
-  };
-  */
 
   return (
     <React.StrictMode>

@@ -30,16 +30,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
   const history = useHistory();
 
-/*
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateData(form);
-    cookies.set('firstname', form.firstname, {path:"/"});
-    cookies.set('lastname', form.lastname, {path:"/"});
-    let path = `/admin/estudiantes`; 
-    history.push(path);
-  };
-*/
   const handleSubmit = (e) => {
     e.preventDefault();
     swal({

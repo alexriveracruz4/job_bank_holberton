@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
-import { useHistory, useLocation, useParams } from 'react-router';
-import { helpHttp } from '../../../../../helpers/helpHttp';
+import { useLocation, useParams } from 'react-router';
 import apiPath from '../../../../../ApiPath';
 
 function PostulantesATrabajos() {
@@ -9,13 +8,9 @@ function PostulantesATrabajos() {
   let PartnerName = location.state.PartnerName;
   let JobTitle = location.state.JobTitle;
 
-
   let Title = "Postulantes al empleo " + JobTitle + " publicados por la empresa " + PartnerName;
-  let history = useHistory();
   const { PartnerId, JobId } = useParams();
 
-
-  let api = helpHttp();
   let url = `${apiPath}/jobs/${PartnerId}/${JobId}/students`;
 
   const columnas = [
@@ -31,7 +26,6 @@ function PostulantesATrabajos() {
 
   useEffect(() => {
     obtenerDatos();
-    console.log("object");
   }, []);
 
   const obtenerDatos = async () => {
@@ -40,28 +34,6 @@ function PostulantesATrabajos() {
     setAllPartnerJobs(jobs);
   }
 
-  /*
-  const deleteData = (id) => {
-    let isDelete = window.confirm(
-      `¿Estás seguro de eliminar el registro con el id = '${id}'?`
-    );
-  
-    if (isDelete) {
-      let endpoint = `${apiPath}/students/${id}`;
-      let options = {
-        headers: { "content-type": "application/json" },
-      };
-  
-      api.del(endpoint, options).then((res) => {
-          let newData = AllPartnerJobs.filter((el) => el.id !== id);
-          setAllPartnerJobs(newData);
-      });
-    } else {
-      return;
-    }
-  };
-
-  */
   return (
     <React.StrictMode>
       <MaterialTable
@@ -78,7 +50,7 @@ function PostulantesATrabajos() {
             backgroundColor: "#F1F2F2"
           },
           paging:true,
-          pageSize:9,       // make initial page size
+          pageSize:9, // make initial page size
           pageSizeOptions:[10,20,30,50],
         }}
         localization={{
@@ -91,20 +63,4 @@ function PostulantesATrabajos() {
   );
 }
 
-
-/*
-          actions={[
-          {
-            icon: 'edit',
-            tooltip: 'Editar estudiante',
-            onClick: () => alert("TRABAJO EDITADO")
-            
-          },
-          {
-            icon: 'delete',
-            tooltip: 'Eliminar estudiante',
-            onClick: (event, rowData) => {deleteData(rowData.id)}
-          },
-          ]}
-*/
 export default PostulantesATrabajos;

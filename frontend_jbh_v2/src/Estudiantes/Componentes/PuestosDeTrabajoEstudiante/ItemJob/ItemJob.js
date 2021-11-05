@@ -21,11 +21,10 @@ function ItemJob(props) {
   }
 
   let PostulantesIDs = PostulantesData.map(postulante => postulante.id);
-  let EstadoDePostulacion= PostulantesIDs.includes(parseInt(studentId),0); /* true== postulado; false== no postulado*/
+  let EstadoDePostulacion= PostulantesIDs.includes(parseInt(studentId),0); /*true== postulado; false== no postulado*/
 
   return (
-    <React.StrictMode>
-      
+    <React.StrictMode>     
         <Link to={{ pathname:`/estudiante/puestos-de-trabajo/partners/${props.id_empresa}/jobs/${props.id_job}`, state: { EstadoDePostulacion: EstadoDePostulacion } }} style={{ color: 'inherit', textDecoration: 'inherit'}}> 
           <li className='PDTEOneJob'>
           <h2>{props.title}</h2>
@@ -40,8 +39,6 @@ function ItemJob(props) {
           <p>Experiencia: {props.experience}</p>
           </li>
         </Link>
-      
-      
     </React.StrictMode>
   );
 }

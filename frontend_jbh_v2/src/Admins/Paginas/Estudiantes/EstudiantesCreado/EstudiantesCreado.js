@@ -3,23 +3,17 @@ import { helpHttp } from '../../../../helpers/helpHttp';
 import CrudForm from '../../../Componentes/Estudiantes/EstudiantesCreado/CrearEstudianteForm';
 import { AdminNav } from "../../../Navegador/AdminNav";
 import Cookies from 'universal-cookie';
-import { useHistory } from 'react-router';
 import apiPath from '../../../../ApiPath';
 
 
 const cookies = new Cookies();
 
 function EstudianteCreado() {
-
-  const AdminID = cookies.get("id")
-
   useEffect(() => {
     if (!cookies.get('id')){
         window.location.href="/login/admin";
     }
-});
-
-  const history = useHistory()
+  });
 
   const [db, setDb] = useState([]);
 

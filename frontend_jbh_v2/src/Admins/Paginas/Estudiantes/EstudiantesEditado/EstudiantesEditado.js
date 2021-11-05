@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router";
 import axios from "axios";
 import { helpHttp } from "../../../../helpers/helpHttp";
 import CrudForm from "../../../Componentes/Estudiantes/EstudiantesEditado/EditarEstudianteForm";
@@ -31,17 +30,9 @@ function EstudianteEditado() {
       .get(`${apiPath}/students/${student_id}`)
       .then((res) => setDataToEdit(res.data));
   }, []);
-  /*nuevo codigo arriba*/
-
-  /*const location = useLocation();
-  console.log(location)
-  const [db, setDb] = useState([]);
-  const [dataToEdit, setDataToEdit] = useState(location.state[0]);*/
 
   let api = helpHttp();
   let url = `${apiPath}/students`;
-
-  const history = useHistory()
 
   const updateData = (data) => {
     let endpoint = `${url}/${data.id}`;

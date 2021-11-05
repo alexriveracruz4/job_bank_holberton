@@ -1,3 +1,9 @@
+/*
+Function to use the get, post, update and delete HTTP request methods.
+Ex: 
+  -helpHttp.get(url) => To use the get method
+  -helpHttp.get(url, body) => To use the post method
+*/
 export const helpHttp = () => {
   const customFetch = (endpoint, options) => {
     const defaultHeader = {
@@ -15,7 +21,6 @@ export const helpHttp = () => {
     options.body = JSON.stringify(options.body) || false;
     if (!options.body) delete options.body;
 
-    //console.log(options);
     setTimeout(() => controller.abort(), 3000);
 
     return fetch(endpoint, options)

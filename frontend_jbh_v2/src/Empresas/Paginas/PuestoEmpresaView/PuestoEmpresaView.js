@@ -25,8 +25,6 @@ function PuestoEmpresaView() {
     const jobs = await data.json();
     setAllAJobDta(jobs);
   }
-  console.log(AllAJobData)
-
   useEffect(() => {
       if (!cookies.get('id')){
           window.location.href="/login/empresa";

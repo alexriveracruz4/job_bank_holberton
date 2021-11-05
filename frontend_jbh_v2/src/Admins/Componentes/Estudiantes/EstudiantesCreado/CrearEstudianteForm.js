@@ -33,15 +33,6 @@ const CrudForm = ({ createData }) => {
     });
   };
 
-/*
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createData(form);
-    let path = `/admin/estudiantes`; 
-    history.push(path);
-    history.go(0)
-  };
-*/
   const handleSubmit = (e) => {
     e.preventDefault();
     swal({
@@ -151,24 +142,6 @@ const CrudForm = ({ createData }) => {
     );
   }
 
-  /*function CountChar() {
-    const [count, setCount] = useState(0);
-    return (
-      <div className="text-div">
-        <textarea
-          className="form-control"
-          id="inputDescription"
-          rows="10"
-          maxLength="1000"
-          name="description"
-          onChange={e => setCount(e.target.value.length)}>
-        </textarea>
-        <p>{ count } / 1000</p>
-      </div>
-    );
-  }*/
-
-  /*mi codigo*/
   return (
     <div className="form-crear-estudiante">
       <div className="profile-title">

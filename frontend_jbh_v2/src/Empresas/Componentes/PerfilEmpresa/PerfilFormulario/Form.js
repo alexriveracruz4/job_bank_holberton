@@ -17,9 +17,7 @@ const initailForm = {
   description:""
 };
 
-const CrudForm = ({ updateData, dataToEdit}) => {
-
-  
+const CrudForm = ({ updateData, dataToEdit }) => {
   const [form, setForm] = useState(initailForm);
 
   useEffect(() => {
@@ -34,15 +32,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   };
 
   const history = useHistory();
-/*
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateData(form);
-    cookies.set('name', form.name, {path:"/"});
-    let path = `/empresa/mis-puestos-de-trabajo`; 
-    history.push(path);
-  };
-*/
   const handleSubmit = (e) => {
     e.preventDefault();
     swal({
@@ -79,23 +68,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       </div>
     )
   }
-
-  /*function CountChar() {
-    const [count, setCount] = useState(0);
-    return (
-      <div className="text-div">
-        <textarea
-          className="form-control"
-          id="inputDescription"
-          rows="10"
-          maxLength="1000"
-          name="description"
-          onChange={e => setCount(e.target.value.length)}>
-        </textarea>
-        <p>{ count } / 1000</p>
-      </div>
-    );
-  }*/
 
   return (
     <div className="form-editar-partner">

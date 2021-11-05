@@ -78,7 +78,7 @@ function EstudianteNav() {
         <button
           className="cerrarsesion-button"
           onClick={closeSessionEst}>
-    Cerrar sesión
+          Cerrar sesión
         </button>
       </div>
     </header>

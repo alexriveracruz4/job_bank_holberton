@@ -21,7 +21,6 @@ function EmpresaEditada() {
   const partner_id = id;
 
   const location = useLocation();
-  console.log(location)
   const [db, setDb] = useState([]);
   const [dataToEdit, setDataToEdit] = useState(location.state[0]);
 
@@ -47,8 +46,6 @@ function EmpresaEditada() {
       setDb(newData);
     });
   }
-
-  
 
   return (
     <div>

@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MaterialTable from 'material-table';
 import { useHistory } from 'react-router';
 import { helpHttp } from '../../../../helpers/helpHttp';
 import swal from 'sweetalert';
-import AddIcon from '@material-ui/icons/Add';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import apiPath from '../../../../ApiPath';
 
@@ -31,29 +30,6 @@ function TablaDeTodosLosTrabajos() {
     const jobs = await data.json();
     setAllJobs(jobs);
   }
-
-  /*
-  const deleteData = (PartnerId, JobId) => {
-  
-    let isDelete = window.confirm(
-      `¿Estás seguro de eliminar el registro con el id ${JobId}`
-    );
-  
-    if (isDelete) {
-      let endpoint = `${apiPath}/partners/${PartnerId}/jobs/${JobId}`;
-      let options = {
-        headers: { "content-type": "application/json" },
-      };
-  
-      api.del(endpoint, options).then((res) => {
-          let newData = AllJobs.filter((el) => el.id !== JobId);
-          setAllJobs(newData);
-      });
-    } else {
-      return;
-    }
-  };
-*/
 
   const deleteData = (PartnerId, JobId, TitleJob) => {
     swal({
@@ -83,7 +59,6 @@ function TablaDeTodosLosTrabajos() {
     });
   }
 
-//state: AllPartnersData.filter((trabajo)=> trabajo.id === rowData.id)
   return (
     <React.StrictMode>
       <MaterialTable

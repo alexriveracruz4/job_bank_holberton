@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./CrearEmpresaForm.css"
 import Countries from "../data/country.json"
 import swal from 'sweetalert';
@@ -27,12 +27,6 @@ const CrudForm = ({ createData }) => {
     });
   };
 
-  /*
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createData(form);
-  };
-*/
   const handleSubmit = (e) => {
     e.preventDefault();
     swal({
@@ -53,8 +47,6 @@ const CrudForm = ({ createData }) => {
     });
   }
 
-
-
   function InputCountry() {
     return (
       <div className="form-group row">
@@ -71,25 +63,6 @@ const CrudForm = ({ createData }) => {
     )
   }
 
-  /*function CountChar() {
-    const [count, setCount] = useState(0);
-    return (
-      <div className="text-div">
-        <textarea
-          className="form-control"
-          id="inputDescription"
-          rows="10"
-          maxLength="1000"
-          name="description"
-          onChange={e => setCount(e.target.value.length)}>
-        </textarea>
-        <p>{ count } / 1000</p>
-      </div>
-    );
-  }*/
-
-
-  /*mi codigo*/
   return (
     <div className="form-crear-empresa">
       <div className="profile-title">
@@ -161,72 +134,6 @@ const CrudForm = ({ createData }) => {
       </div>
     </div>
   )
-
-  /*termina mi codigo */
-
-  /*return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Nombre"
-          onChange={handleChange}
-          value={form.name}
-        />
-        <input
-          type="text"
-          name="description"
-          placeholder="description"
-          onChange={handleChange}
-          value={form.description}
-        />
-        <input
-          type="text"
-          name="email"
-          placeholder="email"
-          onChange={handleChange}
-          value={form.email}
-        />
-        <input
-          type="text"
-          name="nation"
-          placeholder="nation"
-          onChange={handleChange}
-          value={form.nation}
-        />
-        <input
-          type="text"
-          name="phonenumber"
-          placeholder="phonenumber"
-          onChange={handleChange}
-          value={form.phonenumber}
-        />
-         <input
-          type="text"
-          name="region"
-          placeholder="region"
-          onChange={handleChange}
-          value={form.region}
-        />
-        <input
-          type="text"
-          name="web"
-          placeholder="web"
-          onChange={handleChange}
-          value={form.web}
-        />
-        <input
-          type="text"
-          name="password"
-          placeholder="password"
-          onChange={handleChange}
-          value={form.password}
-        />
-        <input type="submit" value="Enviar" />
-      </form>
-    </div>
-  );*/
 };
 
 export default CrudForm;

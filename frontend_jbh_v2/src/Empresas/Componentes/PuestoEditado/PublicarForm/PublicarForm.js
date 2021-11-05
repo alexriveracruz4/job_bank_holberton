@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
 import Countries from "../../../data/country.json"
 import "./PublicarForm.css"
-import Cookies from 'universal-cookie';
-import { formatMs } from '@material-ui/core';
 import swal from 'sweetalert';
 import { useHistory } from 'react-router';
 
-const cookies = new Cookies();
-  
+
 const CrudForm = ({ updateData, dataToEdit}) => {
   const history = useHistory();
   const initailForm = {
@@ -57,14 +53,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       }
     });
   }
-
-/*
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateData(form);
-  };
-*/
-
   function InputCountry() {
     return (
       <div className="form-group row">
@@ -127,23 +115,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
         </div>
     )
   }
-
-  /*function CountChar() {
-    const [count, setCount] = useState(0);
-    return (
-      <div className="text-div">
-        <textarea
-          className="form-control"
-          id="inputDescription"
-          rows="10"
-          maxLength="1000"
-          name="description"
-          onChange={e => setCount(e.target.value.length)}>
-        </textarea>
-        <p>{ count } / 1000</p>
-      </div>
-    );
-  }*/
 
   return (
     <div className="form-Publicar">
@@ -223,7 +194,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
               value="Enviar">Guardar cambios
             </button>
           </div>
-
         </form>
       </div>
     </div>

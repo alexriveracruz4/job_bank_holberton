@@ -4,7 +4,6 @@ import { EmpresaNav } from '../../Navegador/EmpresaNav';
 import { helpHttp } from "../../../helpers/helpHttp";
 import CrudForm from "../../Componentes/PerfilEmpresa/PerfilFormulario/Form"
 import Cookies from 'universal-cookie';
-import { useLocation } from "react-router";
 import apiPath from "../../../ApiPath";
 
 const cookies = new Cookies();

@@ -50,7 +50,7 @@ function PerfilEstudiante() {
       <EstudianteNav />
       <article className="grid-1-2">
         <CrudForm updateData={updateData} dataToEdit={dataToEdit} />
-	<UploadCv />
+	      <UploadCv />
       </article>
     </div>
   );

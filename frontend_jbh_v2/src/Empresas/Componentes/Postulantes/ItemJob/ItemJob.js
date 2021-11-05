@@ -1,6 +1,5 @@
 import React from 'react';
 import './ItemJob.css';
-import { Link } from 'react-router-dom';
 import icoStudent from './user-icon.png';
 import apiPath from '../../../../ApiPath';
 
@@ -25,7 +24,7 @@ function ItemJob(props) {
         {props.description !==null ? <p><b>Descripción:</b> <br/> {props.description}</p>:""}
       </li>
       <a href={urldown} download className='PCVButton'>
-	<span className="spanItemJob">DESCARGAR CV</span>
+	    <span className="spanItemJob">DESCARGAR CV</span>
       </a>
     </div>
   );

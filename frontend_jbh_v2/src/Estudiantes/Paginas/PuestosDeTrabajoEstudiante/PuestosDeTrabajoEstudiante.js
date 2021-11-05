@@ -4,13 +4,12 @@ import { EstudianteNav } from '../../Navegador/EstudianteNav'
 import { Filters } from "../../Componentes/PuestosDeTrabajoEstudiante/Filters/Filters";
 import { ListJobs } from "../../Componentes/PuestosDeTrabajoEstudiante/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/PuestosDeTrabajoEstudiante/ItemJob/ItemJob";
-
 import Cookies from 'universal-cookie';
 import apiPath from "../../../ApiPath";
 
+
 const cookies = new Cookies();
 function PuestosDeTrabajoEstudiante() {
-  const studentId = cookies.get("id");
   const [AllJobsData, setAllJobsData] = useState([]);
 
   useEffect(async() => {

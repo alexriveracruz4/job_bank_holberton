@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import { useHistory, useLocation, useParams } from 'react-router';
-import { helpHttp } from '../../../../../helpers/helpHttp';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import apiPath from '../../../../../ApiPath';
 
@@ -14,7 +13,6 @@ function TablaTrabajosDeCadaEmpresa() {
   let history = useHistory();
   const { PartnerId } = useParams();
 
-  let api = helpHttp();
   let url = `${apiPath}/partners/${PartnerId}/jobs`;
 
   const columnas = [
@@ -28,8 +26,6 @@ function TablaTrabajosDeCadaEmpresa() {
 
   useEffect(() => {
     obtenerDatos();
-    console.log("object");
-    
   }, []);
 
   const obtenerDatos = async () => {
@@ -38,27 +34,6 @@ function TablaTrabajosDeCadaEmpresa() {
     setAllPartnerJobs(jobs);
   }
 
-  /*
-  const deleteData = ( PartnerId, JobId ) => {
-    let isDelete = window.confirm(
-      `¿Estás seguro de eliminar el registro con el id '${JobId}'?`
-    );
-  
-    if (isDelete) {
-      let endpoint = `${apiPath}/partners/${PartnerId}/jobs/${JobId}`;
-      let options = {
-        headers: { "content-type": "application/json" },
-      };
-  
-      api.del(endpoint, options).then((res) => {
-          let newData = AllPartnerJobs.filter((el) => el.id !== JobId);
-          setAllPartnerJobs(newData);
-      });
-    } else {
-      return;
-    }
-  };
-  */
   return (
     <React.StrictMode>
       <MaterialTable
@@ -102,23 +77,3 @@ function TablaTrabajosDeCadaEmpresa() {
 }
 
 export default TablaTrabajosDeCadaEmpresa;
-
-          /*
-          {
-            icon: 'edit',
-            tooltip: 'editar trabajo',
-            onClick: () => alert("TRABAJO EDITADO")
-            
-          },
-          {
-            icon: 'delete',
-            tooltip: 'Eliminar trabajo',
-            onClick: (event, rowData) => {deleteData(rowData.id)}
-          },
-          {
-            icon:() => <button>NUEVO EMPLEO</button>,
-            tooltip: "Crear una nuevo empleo",
-            onClick: () => alert("NUEVO EMPLEO CREADO"),
-            isFreeAction:true
-          }
-          */

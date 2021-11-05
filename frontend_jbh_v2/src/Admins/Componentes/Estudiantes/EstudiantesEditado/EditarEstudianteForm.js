@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./EditarEstudianteForm.css";
 import Countries from "../data/country.json";
-import Cookies from "universal-cookie";
 import swal from 'sweetalert';
 import { useHistory } from "react-router";
 
-
-const cookies = new Cookies();
-
 const CrudForm = ({ updateData, dataToEdit }) => {
   const history = useHistory();
-  const AdminID = cookies.get("id");
 
   const initailForm = {
     firstname: "",
@@ -37,12 +32,6 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     });
   };
 
-/*
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateData(form);
-  };
-*/
   const handleSubmit = (e) => {
     e.preventDefault();
     swal({
@@ -151,23 +140,6 @@ const CrudForm = ({ updateData, dataToEdit }) => {
       </div>
     );
   }
-
-  /*function CountChar() {
-    const [count, setCount] = useState(0);
-    return (
-      <div className="text-div">
-        <textarea
-          className="form-control"
-          id="inputDescription"
-          rows="10"
-          maxLength="1000"
-          name="description"
-          onChange={e => setCount(e.target.value.length)}>
-        </textarea>
-        <p>{ count } / 1000</p>
-      </div>
-    );
-  }*/
 
   return (
     <div className="form-editar-estudiante">

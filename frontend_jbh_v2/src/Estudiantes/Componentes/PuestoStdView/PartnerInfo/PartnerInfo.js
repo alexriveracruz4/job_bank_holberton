@@ -13,8 +13,6 @@ function PartnerInfo(props) {
     const studentId = cookies.get("id"); //string variable
     let history = useHistory();
     const { PartnerId, JobId } = useParams();
-
-
     const datos = props.JobData[0];
 
     const [db, setDb] = useState([]);
@@ -52,27 +50,6 @@ function PartnerInfo(props) {
             }
         });
     }
-    /*
-    const PostularEmpresa = (studentId, PartnerId, JobId) => {
-        let IsPostular = window.confirm(
-          `¿Estás seguro de postular al trabajo de id:${JobId} de la empresa con id:'${PartnerId}'?`
-        );
-        console.log("ispostular0", IsPostular)
-        if (IsPostular) {
-          let url = `${apiPath}/students/applications`;
-          const data = {"partner_id": PartnerId, "job_id": JobId, "student_id": studentId}
-          let options = {
-            body: data,
-            headers: { "content-type": "application/json" },
-          };
-          api.post(url, options).then((res) => {
-              setDb([...db, res]);
-          });
-        } else {
-          return;
-        }
-      };
-    */
 
     return (
         <div className="body-container">
@@ -93,23 +70,21 @@ function PartnerInfo(props) {
                 <div className="partner-name">
                     <p>{props.PartnerName}</p>
                 </div>
-                {console.log(props.PostulantesIDs.includes(studentId))}
-                {console.log(typeof studentId)}
-                {datos.deleted || props.PostulantesIDs.includes(parseInt(studentId), 0)?
-                    ""
+                    {datos.deleted || props.PostulantesIDs.includes(parseInt(studentId), 0) ?
+                        ""
                     :
-                    <div className="postula-container" 
-                        onClick={() => {
-                            PostularEmpresa(studentId, PartnerId, JobId)
-                        }}>
-                        <div className="Postula">
-                            <h2 className="postula-button">
-                                Postula aquí
-                            </h2>
+                        <div className="postula-container" 
+                            onClick={() => {
+                                PostularEmpresa(studentId, PartnerId, JobId)
+                            }}>
+                            <div className="Postula">
+                                <h2 className="postula-button">
+                                    Postula aquí
+                                </h2>
+                            </div>
                         </div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
         </div>
     )
 }

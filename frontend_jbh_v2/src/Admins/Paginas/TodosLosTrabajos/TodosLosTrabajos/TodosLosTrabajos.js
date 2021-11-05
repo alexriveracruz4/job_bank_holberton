@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-//import './TodosLosEstudiantes.css';
 import { AdminNav } from "../../../Navegador/AdminNav";
 import TablaDeTodoLosTrabajos from "../../../Componentes/TodosLosTrabajos/TablaDeTodosLosTrabajos/TablaDeTodosLosTrabajos"
 import Cookies from 'universal-cookie';

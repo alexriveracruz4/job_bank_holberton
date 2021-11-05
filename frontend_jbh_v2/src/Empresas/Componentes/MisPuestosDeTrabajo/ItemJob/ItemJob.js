@@ -54,28 +54,6 @@ function ItemJob(props) {
     });
   }
 
-/*
-  const deleteData = (id) => {
-  
-    let isDelete = window.confirm(
-      `¿Estás seguro de eliminar el registro con el id '${id}'?`
-    );
-  
-    if (isDelete) {
-      let endpoint = `${url}/${id}`;
-      let options = {
-        headers: { "content-type": "application/json" },
-      };
-  
-      api.del(endpoint, options).then((res) => {
-          let newData = AllMyJobs.filter((el) => el.id !== id);
-          setAllMyJobs(newData);
-      });
-    } else {
-      return;
-    }
-  };
-*/
   return (
       <li className='MPDTOneJobeEmpresa'>
         {

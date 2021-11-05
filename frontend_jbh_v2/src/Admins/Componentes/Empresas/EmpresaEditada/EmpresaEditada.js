@@ -30,12 +30,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       [e.target.name]: e.target.value, 
     });
   };
-/*
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateData(form);
-  };
-*/
+
   const handleSubmit = (e) => {
     e.preventDefault();
     swal({
@@ -73,25 +68,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     )
   }
 
-  /*function CountChar() {
-    const [count, setCount] = useState(0);
-    return (
-      <div className="text-div">
-        <textarea
-          className="form-control"
-          id="inputDescription"
-          rows="10"
-          maxLength="1000"
-          name="description"
-          onChange={e => setCount(e.target.value.length)}>
-        </textarea>
-        <p>{ count } / 1000</p>
-      </div>
-    );
-  }*/
-
-
-  /*mi codigo*/
   return (
     <div className="form-editar-empresa">
       <div className="profile-title">

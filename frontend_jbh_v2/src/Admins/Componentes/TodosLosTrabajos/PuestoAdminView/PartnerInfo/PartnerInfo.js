@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import partnerlogo from "./partnerlogo.png"
 import "./PartnerInfo.css";
-import Cookies from 'universal-cookie';
 import { useLocation } from "react-router";
 import apiPath from "../../../../../ApiPath";
 
-const cookies = new Cookies();
 
 function PartnerInfo(props) {
     const location = useLocation();

@@ -41,16 +41,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   };
 
   const history = useHistory();
-/*
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateData(form);
-    cookies.set('firstname', form.firstname, {path:"/"});
-    cookies.set('lastname', form.lastname, {path:"/"});
-    let path = `/estudiante/puestos-de-trabajo`;
-    history.push(path);
-  };
-*/
   const handleSubmit = (e) => {
     e.preventDefault();
     swal({
@@ -137,24 +127,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
         </div>
     )
   }
-
-  /*function CountChar() {
-    const [count, setCount] = useState(0);
-    return (
-      <div className="text-div">
-        <textarea
-          className="form-control"
-          id="inputDescription"
-          rows="10"
-          maxLength="1000"
-          name="description"
-          onChange={e => setCount(e.target.value.length)}>
-        </textarea>
-        <p>{ count } / 1000</p>
-      </div>
-    );
-  }*/
-
   return (
     <div className="form-Estudiante">
       <div className="profile-title">
@@ -288,7 +260,6 @@ class UploadCv extends React.Component {
 
     const data = new FormData();
     data.append('file', this.uploadInput.files[0]);
-    //data.append('filename', this.fileName.value);
     const urlupload = `${apiPath}/students/`+ cookies.get('id') + '/uploadcv'
 
     fetch(urlupload, {
@@ -300,11 +271,6 @@ class UploadCv extends React.Component {
         this.setState({ imageURL: `http://localhost:5000/${body.file}` });
       });
     });
-    /*axios.get(`${apiPath}/students/` + cookies.get('id'))
-    .then(res => {
-      const cv_name = res.data.cv_filename_physical;
-      cookies.set('cv_filename_physical', cv_name, {path:"/"});
-    })*/
   }
 
   render() {

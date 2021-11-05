@@ -4,7 +4,7 @@ import { EmpresaNav } from '../../Navegador/EmpresaNav';
 import axios from "axios";
 import CrudForm from "../../Componentes/PuestoEditado/PublicarForm/PublicarForm"
 import Cookies from 'universal-cookie';
-import { useHistory, useLocation, useParams } from "react-router";
+import { useParams } from "react-router";
 import apiPath from "../../../ApiPath";
 
 
@@ -12,20 +12,17 @@ const cookies = new Cookies();
 
 function PuestoEditado() {
 
-    useEffect(() => {
-	if (!cookies.get('id')){
-            window.location.href="/login/empresa";
-	}
-    });
+  useEffect(() => {
+	  if (!cookies.get('id')){
+      window.location.href="/login/empresa";
+	  }
+  });
 
   const PartnerId = cookies.get("id")
 
-  const location = useLocation();
   const { JobId } = useParams();
-  console.log("este es el id del trabajo", JobId)
-  console.log("este es el id del partner", PartnerId)
+
   const [db, setDb] = useState([]);
-  /*const [dataToEdit, setDataToEdit] = useState(location.state[0]);*/
   const [dataToEdit, setDataToEdit] = useState({});
 
   useEffect(async ()=>{
@@ -35,8 +32,6 @@ function PuestoEditado() {
 
   let api = helpHttp();
   let url = `${apiPath}/partners/${PartnerId}/jobs`;
-
-  const history = useHistory()
 
   const updateData = (data) => {
     let endpoint = `${url}/${data.id}`;

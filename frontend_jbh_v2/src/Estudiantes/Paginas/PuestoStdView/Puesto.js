@@ -5,14 +5,10 @@ import PartnerInfo from "../../Componentes/PuestoStdView/PartnerInfo/PartnerInfo
 import { useParams } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import apiPath from "../../../ApiPath";
-import { useLocation } from 'react-router-dom';
 
 const cookies = new Cookies();
 function Puesto() {
-
-  const studentId = cookies.get("id");
   const { PartnerId, JobId } = useParams();
-
   const [JobData, setJobData] = React.useState([2]);
   const [PostulantesData, setPostulantesData] = React.useState([2]);
   const [PartnerData, setPartnerData] = React.useState([2]);
@@ -43,7 +39,6 @@ function Puesto() {
 
 
   let PostulantesIDs = PostulantesData.map(postulante => postulante.id);
-  console.log(PostulantesIDs);
 
   useEffect(() => {
       if (!cookies.get('id')){

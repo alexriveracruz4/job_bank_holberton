@@ -58,12 +58,6 @@ const CrudForm = ({ createData }) => {
       [e.target.name]: e.target.value,
     });
   };
-/*
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createData(form);
-  };
-*/
 
 const handleSubmit = (e) => {
   e.preventDefault();
@@ -146,23 +140,6 @@ const handleSubmit = (e) => {
         </div>
     )
   }
-
-  /**function CountChar() {
-    const [count, setCount] = useState(0);
-    return (
-      <div className="text-div">
-        <textarea
-          className="form-control"
-          id="inputDescription"
-          rows="20"
-          maxLength="1000"
-          name="description"
-          onChange={e => setCount(e.target.value.length)}>
-        </textarea>
-        <p>{ count } / 1000</p>
-      </div>
-    );
-  }**/
 
   return (
     <div className="form-editar-partner">

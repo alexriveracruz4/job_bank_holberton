@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import './MisPostulaciones.css';
 import { EstudianteNav } from '../../Navegador/EstudianteNav'
 import { ListJobs } from "../../Componentes/MisPostulaciones/ListJobs/ListJobs";
@@ -11,7 +11,6 @@ const cookies = new Cookies();
 
 function MisPostulaciones() {
   const user_id = cookies.get("id");
-  console.log(user_id);
   const [AllMyApplications, setAllMyApplications] = React.useState([]);
 
   React.useEffect(() => {
