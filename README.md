@@ -39,7 +39,6 @@
 
 
 <!-- TABLE OF CONTENTS -->
-<details>
   <summary>Table of Contents</summary>
   <ol>
     <li>
@@ -60,14 +59,15 @@
     <li><a href="#related-projects">Related projects</a></li>
     <li><a href="#license">License</a></li>
   </ol>
-</details>
 
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+#
+<img alt="sergey" src="images/video-to-gif-converter.gif">
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+#
 
 This project was born from the need that our alma mater Holberton School Peru needs a more organized and easy way to connect Holbies with Hiring Partners, this project will help students a lot to position themselves in the job market as well as Hiring Partners to find true talents.
 
@@ -95,6 +95,7 @@ This project was born from the need that our alma mater Holberton School Peru ne
       </ul>
     </li>
   </ol>
+
 ### Built With
 
 * [React.js](https://reactjs.org/)
@@ -167,14 +168,9 @@ This project was born from the need that our alma mater Holberton School Peru ne
    ```sh
    npm start
    ```
+4. Create a new user, for example a new student.
+<img alt="sergey" src="images/usage_create_student.gif">
 
-
-CAPTURA DE crear PARTNER y estudiante
-
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 
 
