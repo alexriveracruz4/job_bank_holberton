@@ -11,6 +11,7 @@ const cookies = new Cookies();
 
 function EstudianteEditado() {
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
     if (!cookies.get("id")) {
       window.location.href = "/login/admin";
@@ -19,6 +20,7 @@ function EstudianteEditado() {
 
   const AdminID = cookies.get("id")
 
+  // Gets the student data and saves it in dataToEdit
   const { id } = useParams();
   const student_id = id;
 
@@ -31,6 +33,7 @@ function EstudianteEditado() {
       .then((res) => setDataToEdit(res.data));
   }, []);
 
+  // Update the student data with the updateData arrow function
   let api = helpHttp();
   let url = `${apiPath}/students`;
 

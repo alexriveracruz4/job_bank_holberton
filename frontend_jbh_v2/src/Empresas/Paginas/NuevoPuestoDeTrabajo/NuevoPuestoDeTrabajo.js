@@ -10,12 +10,14 @@ const cookies = new Cookies();
 
 function NuevoPuestoDeTrabajo() {
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
 	  if (!cookies.get('id')){
       window.location.href="/login/empresa";
 	  }
   });
 
+  // Create the new job with the arrow function createData
   const [db, setDb] = useState([]);
   let api = helpHttp();
   let url = `${apiPath}/jobs`;

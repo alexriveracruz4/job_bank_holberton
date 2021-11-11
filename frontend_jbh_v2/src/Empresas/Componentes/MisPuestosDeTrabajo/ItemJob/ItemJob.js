@@ -10,6 +10,8 @@ import apiPath from '../../../../ApiPath';
 
 const cookies = new Cookies();
 function ItemJob(props) {
+
+  // Gets the Jobs data and saves it in AllmyJobs
   const PartnerId= cookies.get("id"); //string variable
   const history = useHistory();
   let api = helpHttp();
@@ -27,6 +29,7 @@ function ItemJob(props) {
     setAllMyJobs(partners);
   }
 
+  // Sweetalert to confirm when the user clicks in Eliminar
   const deleteData = (id) => {
     swal({
       title: "ELIMINAR TRABAJO",

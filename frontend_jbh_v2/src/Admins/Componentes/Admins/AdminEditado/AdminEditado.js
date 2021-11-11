@@ -8,6 +8,8 @@ const cookies = new Cookies();
 
 const CrudForm = ({ updateData, dataToEdit}) => {
 
+  // Form with empty string start
+
   const initailForm = {
     firstname: "",
     lastname: "",
@@ -15,6 +17,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     password: ""
   };
 
+  // Adding state to fill the form
   const [form, setForm] = useState(initailForm);
 
   useEffect(() => {
@@ -28,6 +31,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     });
   };
 
+  // Sweetalert to confirm when the user clicks in Guardar cambios
   const history = useHistory();
 
   const handleSubmit = (e) => {

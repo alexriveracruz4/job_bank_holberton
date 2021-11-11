@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './MisPuestosDeTrabajo.css';
 import { EmpresaNav } from '../../Navegador/EmpresaNav';
-
 import { ListJobs } from "../../Componentes/MisPuestosDeTrabajo/ListJobs/ListJobs";
 import { ItemJob } from "../../Componentes/MisPuestosDeTrabajo/ItemJob/ItemJob";
 import Cookies from 'universal-cookie';
@@ -10,10 +9,11 @@ import apiPath from '../../../ApiPath';
 const cookies = new Cookies();
 function MisPuestosDeTrabajo() {
 
+  
   const PartnerId= cookies.get("id"); //string variable
   const [AllMyJobs, setAllMyJobs] = useState([2]);
 
-
+  // Gets the Jobs data and saves it in AllmyJobs
   useEffect(async() => {
     await obtenerDatos();
   }, []);
@@ -24,6 +24,7 @@ function MisPuestosDeTrabajo() {
     setAllMyJobs(jobs);
   }
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('id')){
           window.location.href="/login/empresa";

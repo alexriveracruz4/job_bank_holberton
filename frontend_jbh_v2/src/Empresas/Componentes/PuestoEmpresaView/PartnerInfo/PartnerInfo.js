@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 
 
 const cookies = new Cookies();
+// Partner information for job description
 function PartnerInfo(props) {
     const Partnert_Name = cookies.get("name");
     const datos = props.datos[0];

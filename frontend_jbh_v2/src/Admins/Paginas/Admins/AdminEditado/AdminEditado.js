@@ -11,6 +11,7 @@ const cookies = new Cookies();
 
 function PerfilAdmin() {
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
     if (!cookies.get("id")) {
       window.location.href = "/login/admin";
@@ -19,6 +20,7 @@ function PerfilAdmin() {
 
   const AdminID = cookies.get("id")
 
+  // Gets the Administrator data and saves it in dataToEdit
   const [db, setDb] = useState([]);
   const [dataToEdit, setDataToEdit] = useState({});
 
@@ -28,6 +30,8 @@ function PerfilAdmin() {
       .then((res) => setDataToEdit(res.data));
   }, []);
 
+
+  // Update the administrator data with the updateData arrow function
   let api = helpHttp();
   let url = `${apiPath}/admins`;
 
@@ -44,12 +48,6 @@ function PerfilAdmin() {
       setDb(newData);
     });
   }
-
-  useEffect(() => {
-      if (!cookies.get('id')){
-          window.location.href="/login/admin";
-      }
-  });
 
   return (
     <div>

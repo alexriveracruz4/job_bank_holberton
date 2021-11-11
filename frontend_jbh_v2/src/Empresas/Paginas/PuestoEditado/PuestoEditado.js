@@ -12,6 +12,7 @@ const cookies = new Cookies();
 
 function PuestoEditado() {
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
 	  if (!cookies.get('id')){
       window.location.href="/login/empresa";
@@ -20,6 +21,7 @@ function PuestoEditado() {
 
   const PartnerId = cookies.get("id")
 
+  // Get the data of a job
   const { JobId } = useParams();
 
   const [db, setDb] = useState([]);
@@ -30,6 +32,7 @@ function PuestoEditado() {
           .then(res => setDataToEdit(res.data[0]))
   }, []);
 
+  // Update the job with the updateData arrow function
   let api = helpHttp();
   let url = `${apiPath}/partners/${PartnerId}/jobs`;
 

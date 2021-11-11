@@ -12,6 +12,7 @@ function TablaDeTodosLosTrabajos() {
   let api = helpHttp();
   let url = `${apiPath}/jobs`;
 
+  // Column name
   const columnas = [
     { title:'ID_TRABAJO', field:'id', type:"numeri", textAlign:"center"},
     { title:'ID_EMPRESA', field:'partner_id', type:"numeri", textAlign:"center"},
@@ -19,6 +20,7 @@ function TablaDeTodosLosTrabajos() {
     { title:'TITULO', field:'title'}
   ]
 
+  // Get all the jobs data and save to AllJobs
   const [AllJobs, setAllJobs] = React.useState([]);
 
   React.useEffect(() => {
@@ -31,6 +33,7 @@ function TablaDeTodosLosTrabajos() {
     setAllJobs(jobs);
   }
 
+  // Sweetalert to confirm removal of job
   const deleteData = (PartnerId, JobId, TitleJob) => {
     swal({
       title: "ELIMINAR TRABAJO",
@@ -45,7 +48,7 @@ function TablaDeTodosLosTrabajos() {
           headers: { "content-type": "application/json" },
         };
       
-        api.del(endpoint, options).then((res) => {
+        api.del(endpoint, options).then((res) => { // DELETE method
             let newData = AllJobs.filter((el) => el.id !== JobId);
             setAllJobs(newData);
         });

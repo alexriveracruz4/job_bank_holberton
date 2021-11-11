@@ -2,6 +2,7 @@ import React from 'react';
 import './Filters.css';
 
 function Filters( {searchJob, setSearchJob} ) {
+  // Filters component
   
   const handleChange = (e) => {
     setSearchJob({

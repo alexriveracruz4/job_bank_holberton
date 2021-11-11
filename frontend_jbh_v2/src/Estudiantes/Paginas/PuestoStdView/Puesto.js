@@ -8,6 +8,7 @@ import apiPath from "../../../ApiPath";
 
 const cookies = new Cookies();
 function Puesto() {
+  // Get data to use in the component
   const { PartnerId, JobId } = useParams();
   const [JobData, setJobData] = React.useState([2]);
   const [PostulantesData, setPostulantesData] = React.useState([2]);
@@ -40,6 +41,7 @@ function Puesto() {
 
   let PostulantesIDs = PostulantesData.map(postulante => postulante.id);
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('id')){
           window.location.href="/login/estudiante";

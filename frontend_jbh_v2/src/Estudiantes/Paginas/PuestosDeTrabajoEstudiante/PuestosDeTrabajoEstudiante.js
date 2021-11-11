@@ -10,6 +10,7 @@ import apiPath from "../../../ApiPath";
 
 const cookies = new Cookies();
 function PuestosDeTrabajoEstudiante() {
+  // Obtains the data of the jobs and saves them in AllJobsData
   const [AllJobsData, setAllJobsData] = useState([]);
 
   useEffect(async() => {
@@ -22,12 +23,13 @@ function PuestosDeTrabajoEstudiante() {
     setAllJobsData(jobs);
   }
 
-  const [searchJob, setSearchJob] = useState({PalabraClave:"", modalidad:"", tipoDeTrabajo:""});
+  const [searchJob, setSearchJob] = useState({PalabraClave:"", modalidad:"", tipoDeTrabajo:""}); // Status to filter by 3 options
 
   const datosNotEliminados = AllJobsData.filter(trabajo => trabajo.deleted === 0);
 
   const datos = datosNotEliminados;
 
+  // Filter to search for jobs
   let ListSearchedJobs = [];
     if (( searchJob.PalabraClave.length === 0 && searchJob.modalidad.length === 0 && searchJob.tipoDeTrabajo.length === 0)) {
       ListSearchedJobs = datos;
@@ -51,6 +53,7 @@ function PuestosDeTrabajoEstudiante() {
       });
     }
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('id')){
           window.location.href="/login/estudiante";

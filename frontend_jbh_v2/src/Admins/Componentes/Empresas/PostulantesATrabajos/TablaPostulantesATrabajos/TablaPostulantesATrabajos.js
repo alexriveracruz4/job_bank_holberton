@@ -8,11 +8,13 @@ function PostulantesATrabajos() {
   let PartnerName = location.state.PartnerName;
   let JobTitle = location.state.JobTitle;
 
+  // Table title
   let Title = "Postulantes al empleo " + JobTitle + " publicados por la empresa " + PartnerName;
   const { PartnerId, JobId } = useParams();
 
   let url = `${apiPath}/jobs/${PartnerId}/${JobId}/students`;
 
+  // Columns name
   const columnas = [
     { title:'ID', field:'id', type:"numeri", textAlign:"center"},
     { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{"1":"Si", "0":"No"}},
@@ -22,6 +24,7 @@ function PostulantesATrabajos() {
     { title:'CELULAR', field:'phonenumber' }
   ]
 
+  // Get data of students
   const [AllPartnerJobs, setAllPartnerJobs] = useState([]);
 
   useEffect(() => {

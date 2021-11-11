@@ -21,12 +21,14 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     description: '',
   };
 
+  // Gets the partner data and saves it in dataToEdit
   const [form, setForm] = useState(initailForm);
 
   useEffect(() => {
     setForm(dataToEdit);
   }, [dataToEdit]);
 
+  // This event fills the form every time a key is pressed
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -34,7 +36,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     });
   };
 
-
+  // Sweetalert to confirm when the user clicks in Guardar Cambios
   const handleSubmit = (e) => {
     e.preventDefault();
     swal({
@@ -53,6 +55,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       }
     });
   }
+
+  // Select with countries as options that are received from country.json
   function InputCountry() {
     return (
       <div className="form-group row">
@@ -69,6 +73,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     )
   }
 
+  // Function that returns a select with job type options
   function JobType() {
     return (
       <div className="travel-row form-group row">
@@ -85,6 +90,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     )
   }
 
+  // Function that returns a select with work mode options
   function PresOrRemote() {
     return (
       <div className="travel-row form-group row">
@@ -101,6 +107,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     )
   }
 
+  // Function that returns a select with availability options
   function InputTravelAval() {
       return (
         <div className="travel-row form-group row">
@@ -119,8 +126,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   return (
     <div className="form-Publicar">
       <div className="profile-title">
-        <h1>My profile</h1>
-        <h2>Edit your profile</h2>
+        <h1>Editar puesto de trabajo</h1>
       </div>
       <div className="form-div">
         <form className="form-form">

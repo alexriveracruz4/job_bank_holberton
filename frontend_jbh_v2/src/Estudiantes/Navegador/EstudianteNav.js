@@ -8,6 +8,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
+// Function that removes cookies from the current session
 function closeSessionEst() {
     cookies.remove("id", {path: "/"});
     cookies.remove("firstname", {path: "/"});
@@ -38,6 +39,7 @@ function closeSessionEst() {
     window.location.href="/login/estudiante";
 }
 
+// Navigator component
 function EstudianteNav() {
   let history = useHistory();
   return (

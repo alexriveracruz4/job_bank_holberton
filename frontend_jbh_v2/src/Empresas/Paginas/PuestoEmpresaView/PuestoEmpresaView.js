@@ -11,6 +11,8 @@ import apiPath from "../../../ApiPath";
 
 const cookies = new Cookies();
 function PuestoEmpresaView() {
+
+  // Obtains the data of a job and stores it in AllAJobData
   const partner_id= cookies.get("id"); //string variable
 
   const { JobId } = useParams();
@@ -25,6 +27,8 @@ function PuestoEmpresaView() {
     const jobs = await data.json();
     setAllAJobDta(jobs);
   }
+
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('id')){
           window.location.href="/login/empresa";

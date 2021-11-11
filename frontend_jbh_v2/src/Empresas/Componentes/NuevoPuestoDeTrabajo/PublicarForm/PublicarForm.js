@@ -12,6 +12,7 @@ const CrudForm = ({ createData }) => {
   const history = useHistory();
   const PartnerId = cookies.get("id"); //string variable
 
+  // Form with empty string and with the id of the partner who will create it
   const initailForm = {
     partner_id: parseInt(PartnerId),
     id: '',
@@ -41,17 +42,18 @@ const CrudForm = ({ createData }) => {
 
     const firstid = []
 
-    if (jobs.length === 0) {
+    if (jobs.length === 0) { // If the partner does not have jobs created, an array will be created with id 1
       firstid.push(0)
-      const PartnerJobId = PartnerId + "_" + (Math.max(...firstid) + 1) ;
-      setForm({...form, id: Math.max(...firstid) + 1, code: PartnerJobId})
-    } else {
+      const PartnerJobId = PartnerId + "_" + (Math.max(...firstid) + 1) ; // This is to save it in code (Partnerid + _ + (First Jobid + 1))
+      setForm({...form, id: Math.max(...firstid) + 1, code: PartnerJobId}) // Save the id and code in the form
+    } else {  // it will look for the last id and create a new one with last id + 1
       const objects = jobs.map(jobs => jobs.id)
-      const PartnerJobId = PartnerId + "_" + (Math.max(...objects) + 1) ;
-      setForm({...form, id: Math.max(...objects) + 1, code: PartnerJobId})
+      const PartnerJobId = PartnerId + "_" + (Math.max(...objects) + 1) ; // This is to save it in code (Partnerid + _ + (Last Jobid + 1))
+      setForm({...form, id: Math.max(...objects) + 1, code: PartnerJobId}) // Save the id and code in the form
     }
   }
 
+  // This event fills the form every time a key is pressed
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -59,6 +61,7 @@ const CrudForm = ({ createData }) => {
     });
   };
 
+// Sweetalert to confirm when the user clicks in Guardar Cambios
 const handleSubmit = (e) => {
   e.preventDefault();
   swal({
@@ -78,6 +81,7 @@ const handleSubmit = (e) => {
   });
 }
 
+  // Select with countries as options that are received from country.json
   function InputCountry() {
     return (
       <div className="form-group row">
@@ -94,6 +98,7 @@ const handleSubmit = (e) => {
     )
   }
 
+  // Function that returns a select with Job type options
   function JobType() {
     return (
       <div className="travel-row form-group row">
@@ -110,6 +115,7 @@ const handleSubmit = (e) => {
     )
   }
 
+  // Function that returns a select with preference work mode options
   function PresOrRemote() {
     return (
       <div className="travel-row form-group row">
@@ -126,6 +132,7 @@ const handleSubmit = (e) => {
     )
   }
 
+  // Function that returns a select with Travel Availability options
   function InputTravelAval() {
       return (
         <div className="travel-row form-group row">

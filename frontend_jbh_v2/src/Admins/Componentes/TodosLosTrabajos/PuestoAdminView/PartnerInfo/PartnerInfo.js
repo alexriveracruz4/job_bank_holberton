@@ -4,7 +4,7 @@ import "./PartnerInfo.css";
 import { useLocation } from "react-router";
 import apiPath from "../../../../../ApiPath";
 
-
+// Function to obtain partner data
 function PartnerInfo(props) {
     const location = useLocation();
     const datos = props.datos[0];

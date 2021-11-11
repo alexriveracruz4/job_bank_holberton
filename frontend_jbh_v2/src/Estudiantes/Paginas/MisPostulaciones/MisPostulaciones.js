@@ -10,6 +10,7 @@ import apiPath from '../../../ApiPath';
 const cookies = new Cookies();
 
 function MisPostulaciones() {
+  // Obtains the data of the jobs to which the student has applied and saves them in AllMyApplications
   const user_id = cookies.get("id");
   const [AllMyApplications, setAllMyApplications] = React.useState([]);
 
@@ -23,6 +24,7 @@ function MisPostulaciones() {
     setAllMyApplications(applications);
   }
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('id')){
           window.location.href="/login/estudiante";

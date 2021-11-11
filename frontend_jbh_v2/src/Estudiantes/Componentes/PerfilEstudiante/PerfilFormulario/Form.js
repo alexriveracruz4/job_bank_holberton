@@ -9,6 +9,7 @@ import apiPath from '../../../../ApiPath';
 
 const cookies = new Cookies();
 
+// Form with empty string at the beginning
 const initailForm = {
   firstname: '',
   lastname: '',
@@ -26,6 +27,7 @@ const initailForm = {
   description: '',
 };
 
+// Update the student with the updateData arrow function
 const CrudForm = ({ updateData, dataToEdit}) => {
   const [form, setForm] = useState(initailForm);
 
@@ -33,6 +35,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     setForm(dataToEdit);
   }, [dataToEdit]);
 
+  // This event fills the form every time a key is pressed
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -40,6 +43,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     });
   };
 
+  // Sweetalert to confirm when the user clicks in Guardar Cambios
   const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,6 +68,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     });
   }
 
+  // Select with countries as options that are received from country.json
   function InputCountry() {
     return (
       <div className="form-group row">
@@ -80,6 +85,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     )
   }
 
+  // Function that returns a select with availability options
   function Availability() {
     return (
       <div className="travel-row form-group row">
@@ -97,6 +103,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     )
   }
 
+  // Function that returns a select with work preference options
   function PresOrRemote() {
     return (
       <div className="travel-row form-group row">
@@ -113,6 +120,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     )
   }
 
+  // Function that returns a select with travel availability options
   function InputTravelAval() {
       return (
         <div className="travel-row form-group row">
@@ -255,6 +263,7 @@ class UploadCv extends React.Component {
     this.handleUploadImage = this.handleUploadImage.bind(this);
   }
 
+  // Event that uploads the curriculum
   handleUploadImage(ev) {
     ev.preventDefault();
 
