@@ -1,6 +1,7 @@
 import React from "react";
 import "./PuestoInfo.css";
 
+// This is the information section of the job, when a student clicks on a job
 function PuestoInfo(props) {
   const datos = props.JobData[0];
   

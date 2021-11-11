@@ -52,3 +52,8 @@
   text-align: start;
   margin-top: 20px;
 }
+
+.form-Publicar .form-div .form-form .div-button-editar-estudiante {
+  display: flex;
+  justify-content: center;
+}

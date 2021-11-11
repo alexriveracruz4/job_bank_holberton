@@ -22,6 +22,7 @@ class LoginComponent extends React.Component {
 
     doLogin() {
 
+			// Login function
 			const url = `${apiPath}/partners/login`;
 			const data = {
 			        "username": this.state.username,
@@ -35,7 +36,7 @@ class LoginComponent extends React.Component {
 			.then(res => res.json())
 			.then(
 	    	(result) => {
-					if (result.deleted === 0) {
+					if (result.deleted === 0) { // //setting cookies when the user logged in
 		  	  	const token = result.token;
 		  	  	var respuesta=result;
 		  	  	cookies.set('id', respuesta.id, {path:"/"});
@@ -57,7 +58,7 @@ class LoginComponent extends React.Component {
 		  	  	cookies.set('logo_filename_physical', respuesta.logo_filename_physical, {path:"/"});
 		  	  	cookies.set('logo_filename_logical', respuesta.logo_filename_logical, {path:"/"});
 
-						swal({
+						swal({ // Sweetalert Welcome
 							title: "Bienvenido",
 							text: `${respuesta.name}`,
 							icon: "success",
@@ -66,7 +67,7 @@ class LoginComponent extends React.Component {
 		  	  	localStorage.setItem("token", token);
 		  	  	this.props.history.push("/empresa/mis-puestos-de-trabajo");
 					} else {
-		  	  		alert("Usuario o Contraseña incorrectos");
+		  	  		alert("Usuario o Contraseña incorrectos"); // Sweetalert incorrect user
 		  	  		this.props.history.push('/login/empresa');
 						}
 	    	},
@@ -96,6 +97,7 @@ class LoginComponent extends React.Component {
         }
     }
 
+		// Submit when the user press enter
 		handleKeyPress = (event) => {
 			if(event.key === 'Enter') {
 				this.doLogin();

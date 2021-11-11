@@ -8,6 +8,7 @@ import { useHistory } from "react-router";
 const CrudForm = ({ updateData, dataToEdit}) => {
   const history = useHistory();
 
+  // Form with empty string start
   const initailForm = {
     name: "",
     nation: "",
@@ -19,11 +20,13 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     description:""
   };
 
+  // Adding state to fill the form with the data received from dataToEdit
   const [form, setForm] = useState(initailForm);
   useEffect(() => {
     setForm(dataToEdit);
   }, [dataToEdit]);
 
+  // This event changes the form every time a key is pressed
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -31,6 +34,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     });
   };
 
+  // Sweetalert to confirm when the user clicks in Guardar cambios
   const handleSubmit = (e) => {
     e.preventDefault();
     swal({
@@ -51,7 +55,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   }
 
 
-
+  // Select with countries as options that are received from country.json
   function InputCountry() {
     return (
       <div className="form-group row">

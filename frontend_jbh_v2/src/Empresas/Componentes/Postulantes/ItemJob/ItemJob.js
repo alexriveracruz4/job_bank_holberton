@@ -5,6 +5,7 @@ import apiPath from '../../../../ApiPath';
 
 function ItemJob(props) {
 
+  // Card with information of each applicant
   const urldown = `${apiPath}/downloadcv/` + props.cv_filename_logical
   return (
     <div className='ItemContainer'>

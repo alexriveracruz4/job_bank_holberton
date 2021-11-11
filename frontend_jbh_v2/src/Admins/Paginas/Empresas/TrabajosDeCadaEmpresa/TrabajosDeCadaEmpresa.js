@@ -9,6 +9,7 @@ const cookies = new Cookies();
 
 function TrabajosDeCadaEmpresa() {
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('id')){
           window.location.href="/login/admin";

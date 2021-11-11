@@ -11,7 +11,7 @@ import apiPath from "../../../../ApiPath";
 const cookies = new Cookies();
 function PuestoAdminView() {
 
-  
+  // Gets the student data in JSON and saves it in AllAJobData
   const { PartnerId, JobId } = useParams();
   const [AllAJobData, setAllAJobDta] = useState([2]);
 
@@ -25,9 +25,10 @@ function PuestoAdminView() {
     setAllAJobDta(jobs);
   }
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('id')){
-          window.location.href="/login/empresa";
+          window.location.href="/login/admin";
       }
   });
   return (

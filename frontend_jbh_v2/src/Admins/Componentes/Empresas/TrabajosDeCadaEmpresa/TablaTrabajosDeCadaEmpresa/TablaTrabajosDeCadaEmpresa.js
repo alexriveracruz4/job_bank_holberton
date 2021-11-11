@@ -13,8 +13,10 @@ function TablaTrabajosDeCadaEmpresa() {
   let history = useHistory();
   const { PartnerId } = useParams();
 
+  // api path to jobs of partner
   let url = `${apiPath}/partners/${PartnerId}/jobs`;
 
+  // Columns name
   const columnas = [
     { title:'ID', field:'id', type:"numeri", textAlign:"center"},
     { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{"1":"Si", "0":"No"}},
@@ -22,6 +24,7 @@ function TablaTrabajosDeCadaEmpresa() {
     { title:'FECHA DE CREACION', field:'created_at'}
   ]
 
+  // Get all partner jobs and save to AllPartnerJobs
   const [AllPartnerJobs, setAllPartnerJobs] = useState([]);
 
   useEffect(() => {

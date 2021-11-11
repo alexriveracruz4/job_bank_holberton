@@ -11,12 +11,14 @@ const cookies = new Cookies();
 
 function PerfilEstudiante() {
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
     if (!cookies.get("id")) {
       window.location.href = "/login/estudiante";
     }
   });
 
+  // Obtains the student's data and saves it in dataToEdit
   const student_id = cookies.get("id");
 
   const [db, setDb] = useState([]);
@@ -28,6 +30,7 @@ function PerfilEstudiante() {
       .then((res) => setDataToEdit(res.data));
   }, []);
 
+  // Update the student profile with the updateData arrow function
   let api = helpHttp();
   let url = `${apiPath}/students`;
 

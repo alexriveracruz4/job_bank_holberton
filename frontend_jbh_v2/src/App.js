@@ -1,13 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
+// Student imports
 import { LoginEstudiantes } from './Estudiantes/Paginas/LoginEstudiantes/LoginEstudiantes';
 import { PuestosDeTrabajoEstudiante } from "./Estudiantes/Paginas/PuestosDeTrabajoEstudiante/PuestosDeTrabajoEstudiante"
 import { Puesto } from "./Estudiantes/Paginas/PuestoStdView/Puesto";
 import { MisPostulaciones } from "./Estudiantes/Paginas/MisPostulaciones/MisPostulaciones";
 import { PerfilEstudiante } from "./Estudiantes/Paginas/PerfilEstudiante/PerfilEstudiante";
 
-
+// Partner imports
 import { LoginEmpresas } from './Empresas/Paginas/LoginEmpresas/LoginEmpresas';
 import { MisPuestosDeTrabajo } from './Empresas/Paginas/MisPuestosDeTrabajo/MisPuestosDeTrabajo';
 import { NuevoPuestoDeTrabajo } from './Empresas/Paginas/NuevoPuestoDeTrabajo/NuevoPuestoDeTrabajo';
@@ -16,7 +17,7 @@ import { PuestoEmpresaView } from './Empresas/Paginas/PuestoEmpresaView/PuestoEm
 import { PuestoEditado } from './Empresas/Paginas/PuestoEditado/PuestoEditado';
 import { Postulantes } from './Empresas/Paginas/Postulantes/Postulantes';
 
-
+// Admin imports
 import { LoginAdmins } from './Admins/Paginas/LoginAdmins/LoginAdmins';
 import { PerfilAdmin } from './Admins/Paginas/Admins/AdminEditado/AdminEditado'
 import { EmpresaEditada } from './Admins/Paginas/Empresas/EmpresaEditada/EmpresaEditada';
@@ -30,8 +31,10 @@ import { PostulantesATrabajos } from './Admins/Paginas/Empresas/PostulantesATrab
 import { TodosLosTrabajos } from './Admins/Paginas/TodosLosTrabajos/TodosLosTrabajos/TodosLosTrabajos';
 import { PuestoAdminView } from './Admins/Paginas/TodosLosTrabajos/PuestoAdminView/PuestoAdminView';
 
+// Landing page import
 import { Landing } from './Landing/Paginas/Landing/Landing';
 
+// Not found 404 import
 import { NotFoundPage } from './NotFoundPage';
 
 function App() {

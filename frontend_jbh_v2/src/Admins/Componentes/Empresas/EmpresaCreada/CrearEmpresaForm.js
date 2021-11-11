@@ -4,6 +4,7 @@ import Countries from "../data/country.json"
 import swal from 'sweetalert';
 import { useHistory } from "react-router";
 
+// Form with empty string start
 const initailForm = {
   name: "",
   description:"",
@@ -17,6 +18,7 @@ const initailForm = {
 
 const CrudForm = ({ createData }) => {
 
+  // Adding state to fill the form
   const history = useHistory();
   const [form, setForm] = useState(initailForm);
 
@@ -27,6 +29,7 @@ const CrudForm = ({ createData }) => {
     });
   };
 
+  // Sweetalert to confirm when the user clicks in Crear nuevo hiring partner
   const handleSubmit = (e) => {
     e.preventDefault();
     swal({
@@ -47,6 +50,7 @@ const CrudForm = ({ createData }) => {
     });
   }
 
+  // Select with countries as options that are received from country.json
   function InputCountry() {
     return (
       <div className="form-group row">

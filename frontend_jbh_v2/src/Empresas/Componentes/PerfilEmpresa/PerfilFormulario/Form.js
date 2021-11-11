@@ -7,6 +7,8 @@ import Cookies from 'universal-cookie';
 import swal from 'sweetalert';
 
 const cookies = new Cookies();
+
+// Form with empty string at the beginning
 const initailForm = {
   name: "",
   nation: "",
@@ -17,6 +19,7 @@ const initailForm = {
   description:""
 };
 
+// Adding state to fill the form with the data received from dataToEdit
 const CrudForm = ({ updateData, dataToEdit }) => {
   const [form, setForm] = useState(initailForm);
 
@@ -24,6 +27,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     setForm(dataToEdit);
   }, [dataToEdit]);
 
+  // This event changes the form every time a key is pressed
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -31,6 +35,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     });
   };
 
+  // Sweetalert to confirm when the user clicks in Guardar cambios
   const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,7 +57,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     });
   }
 
-
+  // Select with countries as options that are received from country.json
   function InputCountry() {
     return (
       <div className="form-group row">

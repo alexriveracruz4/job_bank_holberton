@@ -17,6 +17,8 @@ function PartnerInfo(props) {
 
     const [db, setDb] = useState([]);
     let api = helpHttp();
+
+    // Sweetalert to confirm when the user clicks in Postula Aquí
     const PostularEmpresa = (studentId, PartnerId, JobId) => {
         swal({
             title: "POSTULACIÓN",
@@ -51,6 +53,7 @@ function PartnerInfo(props) {
         });
     }
 
+    // This is the partner information section when a student clicks on a job
     return (
         <div className="body-container">
             <div className="title-container">

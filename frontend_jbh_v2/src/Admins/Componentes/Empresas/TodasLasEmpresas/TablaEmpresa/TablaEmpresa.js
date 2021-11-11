@@ -13,6 +13,7 @@ function TablaEmpresa() {
   let api = helpHttp();
   let url = `${apiPath}/partners`;
 
+  // Columns name
   const columnas = [
     { title:'ID', field:'id', type:"numeri", textAlign:"center"},
     { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{"1":"Si", "0":"No"}},
@@ -20,6 +21,7 @@ function TablaEmpresa() {
     { title:'EMAIL', field:'email' }
   ]
 
+  // Get partners data and save to AllPartnersData
   const [AllPartnersData, setAllPartnersData] = useState([]);
 
   useEffect(() => {
@@ -32,6 +34,7 @@ function TablaEmpresa() {
     setAllPartnersData(partners);
   }
 
+  // Sweetalert to confirm removal of partner
   const deleteData = (id, name) => {
     swal({
       title: "ELIMINAR EMPRESA",

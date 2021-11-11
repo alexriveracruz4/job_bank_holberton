@@ -9,14 +9,18 @@ import apiPath from '../../../../ApiPath';
 const cookies = new Cookies();
 
 function EstudianteCreado() {
+
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
     if (!cookies.get('id')){
         window.location.href="/login/admin";
     }
   });
 
+  // State that saves data in db
   const [db, setDb] = useState([]);
 
+  // Create the new student data with the arrow function createData
   let api = helpHttp();
   let url = `${apiPath}/students`;
 

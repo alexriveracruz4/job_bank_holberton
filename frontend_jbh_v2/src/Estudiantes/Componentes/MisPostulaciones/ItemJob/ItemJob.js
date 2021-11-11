@@ -3,6 +3,7 @@ import './ItemJob.css';
 import { Link } from 'react-router-dom';
 
 function ItemJob(props) {
+  // Information on the jobs you applied for
   return (
     <Link to={`/estudiante/puestos-de-trabajo/partners/${props.id_empresa}/jobs/${props.id_job}`}  style={{color: 'inherit', textDecoration: 'inherit'}}> 
       <li className='MPOneJob'>

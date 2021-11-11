@@ -1,6 +1,7 @@
 import React from "react";
 import "./PuestoInfo.css";
 
+// Function that returns the job information
 function PuestoInfo(props) {
   const datos = props.datos[0];
   return (

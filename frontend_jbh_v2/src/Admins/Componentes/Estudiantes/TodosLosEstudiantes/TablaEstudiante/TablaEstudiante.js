@@ -12,6 +12,7 @@ function TablaEstudiante() {
   let api = helpHttp();
   let url = `${apiPath}/students`;
 
+  // Column name
   const columnas = [
     { title:'ID', field:'id', type:"numeri", textAlign:"center"},
     { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{"1":"Si", "0":"No"}},
@@ -21,6 +22,7 @@ function TablaEstudiante() {
     { title:'CELULAR', field:'phonenumber' }
   ]
 
+  // Get all student data and save to AllPartnersData
   const [AllPartnersData, setAllPartnersData] = React.useState([]);
 
   React.useEffect(() => {
@@ -33,6 +35,7 @@ function TablaEstudiante() {
     setAllPartnersData(partners);
   }
 
+  // Sweetalert to confirm removal of student
   const deleteData = (id, name, lastname) => {
     swal({
       title: "ELIMINAR ESTUDIANTE",

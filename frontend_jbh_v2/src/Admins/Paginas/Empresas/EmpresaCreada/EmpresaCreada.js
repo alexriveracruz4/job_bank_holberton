@@ -9,8 +9,11 @@ import apiPath from '../../../../ApiPath';
 const cookies = new Cookies();
 
 function EmpresaCreada() {
+
+  // State that saves data in db
   const [db, setDb] = useState([]);
 
+  // Create the new partner data with the arrow function createData
   let api = helpHttp();
   let url = `${apiPath}/partners`;
 
@@ -24,6 +27,7 @@ function EmpresaCreada() {
     });
   };
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('id')){
           window.location.href="/login/admin";

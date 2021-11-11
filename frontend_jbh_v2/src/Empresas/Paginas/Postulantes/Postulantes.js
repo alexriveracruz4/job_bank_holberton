@@ -10,7 +10,7 @@ import Cookies from 'universal-cookie';
 
 import apiPath from '../../../ApiPath';
 
-
+// Get the data of all applicants for a job
 const cookies = new Cookies();
 function Postulantes(props) {
   const { JobId } = useParams();
@@ -29,6 +29,7 @@ function Postulantes(props) {
     setAllStudentsApplicated(applications);
   }
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('id')){
           window.location.href="/login/empresa";

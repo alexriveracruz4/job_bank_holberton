@@ -11,12 +11,14 @@ import apiPath from '../../../../ApiPath';
 const cookies = new Cookies();
 function EmpresaEditada() {
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
     if (!cookies.get('id')){
         window.location.href="/login/admin";
     }
   });
 
+  // Gets the partner data and saves it in dataToEdit
   const { id } = useParams();
   const partner_id = id;
 
@@ -33,6 +35,7 @@ function EmpresaEditada() {
       .then((res) => setDataToEdit(res.data));
   }, []);
 
+  // Update the partner data with the updateData arrow function
   const updateData = (data) => {
     let endpoint = `${url}/${data.id}`;
 

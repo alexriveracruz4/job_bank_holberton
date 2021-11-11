@@ -12,6 +12,7 @@ function PerfilEmpresa() {
 
   const partner_id= cookies.get("id"); //string variable
 
+  // Gets the partner data and saves it in dataToEdit
   const [db, setDb] = useState([]);
   const [dataToEdit, setDataToEdit] = useState({});
 
@@ -20,6 +21,7 @@ function PerfilEmpresa() {
         .then(res => setDataToEdit(res.data))
   }, []);
 
+  // Update the partner data with the updateData arrow function
   let api = helpHttp();
   let url = `${apiPath}/partners`;
 
@@ -37,6 +39,7 @@ function PerfilEmpresa() {
     });
   }
 
+  // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('id')){
           window.location.href="/login/empresa";

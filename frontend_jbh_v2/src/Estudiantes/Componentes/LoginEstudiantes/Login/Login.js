@@ -11,7 +11,7 @@ class LoginComponent extends React.Component {
     constructor(props) {
 			super(props);
 			this.state = { username: '', password: '' };
-
+			// This binding is necessary to make `this` work in the callback
 			this.handleUsernameChange = this.handleUsernameChange.bind(this);
 			this.handlePasswordChange = this.handlePasswordChange.bind(this);
 			this.doLogin = this.doLogin.bind(this);
@@ -32,7 +32,7 @@ class LoginComponent extends React.Component {
 	.then(res => res.json())
 	.then(
 	    (result) => {
-		if (result.deleted === 0) {
+		if (result.deleted === 0) { //setting cookies when the user logged in
 		    const token = result.token;
 		    var respuesta=result;
 		    cookies.set('id', respuesta.id, {path:"/"});
@@ -62,6 +62,7 @@ class LoginComponent extends React.Component {
 		    cookies.set('photo_filename_physical', respuesta.photo_filename_physical, {path:"/"});
 		    cookies.set('photo_filename_logical', respuesta.photo_filename_logical, {path:"/"});
 
+				// Sweetalert Welcome
 				swal({
 					title: "Bienvenido(a)",
 					text: `${respuesta.firstname} ${respuesta.lastname}`,
@@ -70,7 +71,7 @@ class LoginComponent extends React.Component {
 				})
 		    localStorage.setItem("token", token);
 		    this.props.history.push("/estudiante/puestos-de-trabajo");
-		} else {
+		} else { // Sweetalert incorrect user
 		    alert("Usuario o Contraseña incorrectos");
 		    this.props.history.push('/login/estudiante');
 		}
@@ -101,6 +102,7 @@ class LoginComponent extends React.Component {
         }
     }
 
+		// Submit when the user press enter
 		handleKeyPress = (event) => {
 			if(event.key === 'Enter') {
 				this.doLogin();

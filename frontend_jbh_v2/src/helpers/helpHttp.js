@@ -13,15 +13,15 @@ export const helpHttp = () => {
     const controller = new AbortController();
     options.signal = controller.signal;
 
-    options.method = options.method || "GET";
+    options.method = options.method || "GET"; // GET method by default if options.method is empty
     options.headers = options.headers
-      ? { ...defaultHeader, ...options.headers }
+      ? { ...defaultHeader, ...options.headers } // Add user-fetched headers
       : defaultHeader;
 
-    options.body = JSON.stringify(options.body) || false;
+    options.body = JSON.stringify(options.body) || false; // Converts object to string
     if (!options.body) delete options.body;
 
-    setTimeout(() => controller.abort(), 3000);
+    setTimeout(() => controller.abort(), 3000); // Run abort if no response in 3 seconds
 
     return fetch(endpoint, options)
       .then((res) =>

@@ -2,6 +2,7 @@ import React from "react";
 import "./PuestoInfo.css";
 
 function PuestoInfo(props) {
+  // Job information
   const datos = props.datos[0];
   return (
     <div className="partner-info-container">

@@ -7,10 +7,14 @@ import { useHistory } from "react-router";
 
 
 const cookies = new Cookies();
+
 const CrudForm = ({ createData }) => {
+
+  // Declaring variables to use useHistory and admin cookies
   const history = useHistory();
   const AdminID = cookies.get("id");
 
+  // Form with empty string and with the id of the admin who will create it
   const initailForm = {
     firstname: "",
     lastname: "",
@@ -24,8 +28,10 @@ const CrudForm = ({ createData }) => {
     updated_by: parseInt(AdminID),
   };
 
+  // Adding state to fill the form
   const [form, setForm] = useState(initailForm);
 
+  // This event fills the form every time a key is pressed
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -33,6 +39,7 @@ const CrudForm = ({ createData }) => {
     });
   };
 
+  // Sweetalert to confirm when the user clicks in Crear nuevo estudiante
   const handleSubmit = (e) => {
     e.preventDefault();
     swal({
@@ -53,7 +60,7 @@ const CrudForm = ({ createData }) => {
     });
   }
 
-
+  // Function that returns a select with availability options
   function Availability() {
     return (
       <div className="travel-row form-group row">
@@ -88,6 +95,7 @@ const CrudForm = ({ createData }) => {
     );
   }
 
+  // Function that returns a select with preference work mode options
   function PresOrRemote() {
     return (
       <div className="travel-row form-group row">
@@ -115,6 +123,7 @@ const CrudForm = ({ createData }) => {
     );
   }
 
+  // Function that returns a select with names of countries from country.json as options
   function InputCountry() {
     return (
       <div className="form-group row">

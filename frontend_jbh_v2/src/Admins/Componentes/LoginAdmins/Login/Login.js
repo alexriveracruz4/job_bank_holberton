@@ -18,6 +18,7 @@ class LoginComponent extends React.Component {
 		this.doLogin = this.doLogin.bind(this);
   }
   doLogin() {
+		// Login Function
 		const url = apiPath + '/admins/login';
 		const data = {
 		        "username": this.state.username,
@@ -31,7 +32,7 @@ class LoginComponent extends React.Component {
 		.then(res => res.json())
 		.then(
 		  (result) => {
-				if (result.id) {
+				if (result.id) { // Setting cookies when the user logged in
 			    const token = result.token;
 			    var respuesta=result;
 			    cookies.set('id', respuesta.id, {path:"/"});
@@ -43,7 +44,7 @@ class LoginComponent extends React.Component {
 			    cookies.set('updated_at', respuesta.updated_at, {path:"/"});
 			    cookies.set('deleted_at', respuesta.deleted_at, {path:"/"});
 					swal({
-						title: "Bienvenido(a)",
+						title: "Bienvenido(a)", // Sweetalert Welcome
 						text: `${respuesta.firstname} ${respuesta.lastname}`,
 						icon: "success",
 						timer: "2000"
@@ -55,7 +56,7 @@ class LoginComponent extends React.Component {
 		    (error) => {
 					swal({
 						title: "Error",
-						text: "Usuario y/o Contraseña incorrectos",
+						text: "Usuario y/o Contraseña incorrectos", // Sweetalert incorrect user
 						icon: "error",
 						dangerMode: true,
 						timer: "2000"
@@ -78,6 +79,7 @@ class LoginComponent extends React.Component {
 			}
     }
 
+		// Submit when the user press enter
 		handleKeyPress = (event) => {
 			if(event.key === 'Enter') {
 				this.doLogin();
