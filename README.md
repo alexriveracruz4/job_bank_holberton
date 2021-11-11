@@ -194,7 +194,26 @@ Would you like to contribute to this project? You can do it, all the details on 
 
 <!-- PROJECTS -->
 ## Related projects
-
+<ol>
+    <li>
+      Kenny Reyes
+      <ul>
+        <li><a href="https://github.com/alexriveracruz4/AirBnB_clone_v4">AirBnB Clone - The Console</a></li>
+      </ul>
+    </li>
+    <li>
+      Jhonatan Jauja
+      <ul>
+        <li><a href="https://github.com/andres-condezo/AirBnB_clone_v4">AirBnB Clone - The Console</a></li>
+      </ul>
+    </li>
+    <li>
+      Alex Rivera
+      <ul>
+        <li><a href="https://github.com/alexriveracruz4/AirBnB_clone_v4">AirBnB Clone - The Console</a></li>
+      </ul>
+    </li>
+</ol>
 
 
 <!-- LICENSE -->
