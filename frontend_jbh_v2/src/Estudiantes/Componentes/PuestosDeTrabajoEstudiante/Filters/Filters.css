@@ -3,6 +3,7 @@
   margin-top: 30px;
   margin-bottom: 30px;
   border: 2px solid black;
+  border-radius: 10px;
 }
 
 .TitleContainer h2{
@@ -106,3 +107,17 @@
 }
 
 /*Region*/
+
+.ConfirmationButtons {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.ConfirmationButtons button {
+  padding: 10px;
+  border-radius: 10px;
+  
+}

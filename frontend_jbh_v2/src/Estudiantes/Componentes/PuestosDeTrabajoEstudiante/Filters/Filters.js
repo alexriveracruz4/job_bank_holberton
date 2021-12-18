@@ -1,14 +1,44 @@
 import React from 'react';
 import './Filters.css';
 
-function Filters( {searchJob, setSearchJob} ) {
+function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, copia} ) {
   // Filters component
   
   const handleChange = (e) => {
+    console.log("HANDLECHANGE")
+    console.log(searchJob)
+    console.log(copia)
     setSearchJob({
       ...searchJob,
       [e.target.name]:e.target.value,
     });
+  }
+  
+  
+
+
+  const handleFilters = async () => {
+    console.log(searchJob)
+    console.log(copia)
+    setCopia({...searchJob})
+    console.log("COPIA")
+    console.log(copia)
+    console.log(searchJob)
+    const commentsFormServer = await fetchComments(0);
+    //const commentsFormServer = ListSearchedJobs.slice(currentPage*limit, limit*(currentPage + 1));
+    console.log("PRUEBA")
+    console.log(commentsFormServer)
+    setItems(commentsFormServer);
+  };
+
+  const handleClean = async () => {
+    window.location.reload(false);
+  };
+  
+  const handleKeyPress = (event) => {
+    if(event.key === 'Enter') {
+      handleFilters();
+    }
   }
 
   return (
@@ -24,6 +54,7 @@ function Filters( {searchJob, setSearchJob} ) {
           name="PalabraClave"
           value={searchJob.PalabraClave}
           onChange={handleChange}
+          onKeyPress={handleKeyPress}
         />
       </div>
       <div className="TypeJob">
@@ -34,7 +65,7 @@ function Filters( {searchJob, setSearchJob} ) {
               type='radio'
               id='tiempo_completo'
               name='tipoDeTrabajo'
-              value="Tiempo Completo"
+              value="Tiempo completo"
               onChange={handleChange}
             />
             <label htmlFor="tiempo_completo">Tiempo completo</label>
@@ -44,10 +75,10 @@ function Filters( {searchJob, setSearchJob} ) {
               type='radio'
               id='medio_tiempo'
               name='tipoDeTrabajo'
-              value="Tiempo Parcial"
+              value="Tiempo parcial"
               onChange={handleChange} 
             />
-            <label htmlFor="medio_tiempo">Tiempo Parcial</label>
+            <label htmlFor="medio_tiempo">Tiempo parcial</label>
           </div>
           <div>
             <input 
@@ -64,7 +95,7 @@ function Filters( {searchJob, setSearchJob} ) {
               type='radio'
               id='todas'
               name='tipoDeTrabajo'
-              value={null}
+              value="todas"
               onChange={handleChange} 
               defaultChecked
             />
@@ -110,7 +141,7 @@ function Filters( {searchJob, setSearchJob} ) {
               type='radio'
               id='all'
               name='modalidad'
-              value={null}
+              value="todas"
               onChange={handleChange}
               defaultChecked
 
@@ -118,6 +149,17 @@ function Filters( {searchJob, setSearchJob} ) {
             <label htmlFor="all">Todas</label>
           </div>
         </div>
+      </div>
+
+      <div className="ConfirmationButtons">
+        <button 
+          onClick={handleFilters}> 
+          Filtrar 
+        </button>
+        <button
+          onClick={handleClean}> 
+          Limpiar filtros
+        </button>
       </div>
 
     </div>

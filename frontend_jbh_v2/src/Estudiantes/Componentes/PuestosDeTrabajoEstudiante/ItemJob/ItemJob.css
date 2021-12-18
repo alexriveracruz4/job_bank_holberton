@@ -1,6 +1,7 @@
 .PDTEOneJob {
   display: flex;
   justify-content: center;
+  border-radius: 15px;
   margin-top: 24px;
   border: 2px solid black;
   flex-direction: column;

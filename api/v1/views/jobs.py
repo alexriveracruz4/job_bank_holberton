@@ -8,18 +8,75 @@ from models.partner import Partner
 from models.student import Student
 from models.application import Application
 from datetime import datetime
-
+from math import ceil
 
 @app_views.route('/jobs', methods=['GET'], strict_slashes=False)
 def get_jobs():
     """
     Retrieves a list of all jobs
     """
+    page = request.args.get('_page')
+    limit = request.args.get('_limit')
+    filter_words = request.args.get('_filter_words')
+    kind_of_job = request.args.get('_kind_of_job')
+    modality = request.args.get('_modality')
+
+    if kind_of_job is None:
+        kind_of_job = "todas"
+    if modality is None:
+        modality = "todas"
+    if filter_words is None:
+        filter_words = ""
+
     all_jobs = storage.all(Job).values()
+
+    def filtro_de_eliminados(list_de_datos):
+        nueva_lista=[]
+        for i in list_de_datos:
+            if i.__dict__["deleted"] == 0:
+                nueva_lista.append(i)
+        return nueva_lista
+
+    #print(list(all_jobs)[1].to_dict()) #same
+    #print(type(list(all_jobs)[1].__dict__["created_at"])) #same
+    datos_no_borrados = filtro_de_eliminados(list(all_jobs))
+    
     list_jobs = []
-    for job in all_jobs:
-        list_jobs.append(job.to_dict())
-    return jsonify(list_jobs)
+    try:
+        page = int(request.args.get('_page'))
+        limit = int(request.args.get('_limit'))
+
+        
+
+        for job in datos_no_borrados:
+            list_jobs.append(job.to_dict())
+
+        datos_filtrados = [ x for x in list_jobs if (x['pres_or_remote'] == modality or modality == "todas") and 
+                                                    (x['job_type'] == kind_of_job or kind_of_job == "todas") and 
+                                                    (filter_words in x['title'].lower()+x["description"].lower()  or filter_words == "") 
+                                                    ]
+        #print(datos_filtrados)
+        number_of_pages = ceil(len(datos_filtrados)/limit)
+        datos_no_borrados_ordenados = sorted(datos_filtrados, key=lambda d: d['created_at']) 
+        datos_no_borrados_ordenados.reverse()
+
+        part_of_jobs = datos_no_borrados_ordenados[limit*page:limit*(page+1)]
+        
+        data = {"data":part_of_jobs,
+                "len_not_deleted_data":len(list_jobs),
+                "len_total_data":len(all_jobs),
+                "len_filter_data":len(datos_filtrados)
+                }
+        out = jsonify(data)
+        return out
+    except:
+        for job in datos_no_borrados:
+            list_jobs.append(job.to_dict())
+        newlist = sorted(list_jobs, key=lambda d: d['created_at']) 
+        newlist.reverse()
+        data = {"data":newlist, "len_not_deleted_data":len(list_jobs), "len_total_data":len(all_jobs)}
+        out = jsonify(data)
+        return out
 
 @app_views.route('/partners/<partner_id>/jobs/<job_id>', methods=['GET'],
                  strict_slashes=False)
@@ -45,7 +102,6 @@ def get_partner_job(partner_id):
     for job in partner.jobs:
         jobs.append(job.to_dict())
     return jsonify(jobs)
-
 
 @app_views.route('/jobs/<partner_id>/<job_id>/students', methods=['GET'],
                  strict_slashes=False)

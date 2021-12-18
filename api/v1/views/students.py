@@ -10,6 +10,7 @@ import uuid
 from datetime import datetime
 import pathlib
 # from werkzeug import secure_filename
+from math import ceil
 
 
 @app_views.route('/students', methods=['GET'], strict_slashes=False)
@@ -58,6 +59,8 @@ def post_app_student():
 
 @app_views.route('/students/<student_id>/applications', methods=['GET'], strict_slashes=False)
 def get_app_student(student_id):
+    page = request.args.get('_page')
+    limit = request.args.get('_limit')
     student = storage.get(Student, student_id)
     if not student:
         abort(404)
@@ -74,7 +77,24 @@ def get_app_student(student_id):
             if app.partner_id == job.partner_id and app.job_id == job.id:
                 apps.append(job.to_dict())
 
-    return jsonify(apps)
+    apps_ordenadas = sorted(apps, key=lambda d: d['created_at'])
+    apps_ordenadas.reverse()
+    try:
+        page = int(page)
+        limit = int(limit)
+        
+        number_of_pages = ceil(len(apps)/limit)
+        part_of_jobs = apps_ordenadas[limit*page:limit*(page+1)]
+        
+        data = {"data":part_of_jobs,
+                "len_total_data":len(apps),
+                }
+        out = jsonify(data)
+        return out
+    except:
+        data = {"data":apps_ordenadas, "len_total_data":len(apps)}
+        out = jsonify(data)
+        return out
 
 @app_views.route('/students/login', methods=['POST'], strict_slashes=False)
 def get_login_student():
@@ -178,7 +198,7 @@ def fileUpload(student_id):
     file = request.files['file']
     filename = file.filename #filename = secure_filename(file.filename)
     ext = pathlib.Path(filename).suffix
-    path = '/home/vagrant/job_bank_holberton/frontend_jbh_v2/curriculums/'
+    path = '/home/jhonatanjc/job_bank_holberton/frontend_jbh_v2/curriculums/'
     filename_new = student_id + '_' + datetime.utcnow().strftime('%Y%m%d%H%M%S') + ext
     file.save(path + filename_new)
 
@@ -194,5 +214,5 @@ def fileDownload(cv_filename_logical):
     """
     Download CV
     """
-    path = "/home/vagrant/job_bank_holberton/frontend_jbh_v2/curriculums/" + cv_filename_logical
+    path = "/home/jhonatanjc/job_bank_holberton/frontend_jbh_v2/curriculums/" + cv_filename_logical
     return send_file(path, as_attachment=True)
