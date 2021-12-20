@@ -2,7 +2,6 @@
   display: inline-flex;
   justify-content: space-around;
   width: 100%;
-  margin-bottom: 40px;
   border-bottom: 2px solid #000;
   box-shadow: 2px 2px 2px #888;
 }
@@ -19,6 +18,10 @@
 }
 
 @media (max-width: 500px) {
+  .Student-header {
+    width: 500px;
+  }
+
   .Student-header .logo-container {
     margin: 40px 10px;
   }
