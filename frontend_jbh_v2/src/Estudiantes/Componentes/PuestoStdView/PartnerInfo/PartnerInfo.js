@@ -8,6 +8,7 @@ import Cookies from 'universal-cookie';
 import swal from 'sweetalert';
 import apiPath from "../../../../ApiPath";
 
+
 const cookies = new Cookies();
 function PartnerInfo(props) {
     const studentId = cookies.get("id"); //string variable
@@ -19,6 +20,15 @@ function PartnerInfo(props) {
     let api = helpHttp();
 
     // Sweetalert to confirm when the user clicks in Postula Aquí
+
+    const sendEmail = (title) => {
+        const partner_email = props.PartnerEmail;
+        const copia_email="jhonatan.jauja.c@uni.pe"
+        const subject=`POSTULACION AL TRABAJO: ${title}`
+        const body="Me gustaría postular a este trabajo"
+        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${partner_email}&su=${subject}&body=${body}&cc=${copia_email}`); 
+    }
+
     const PostularEmpresa = (studentId, PartnerId, JobId) => {
         swal({
             title: "POSTULACIÓN",
@@ -34,21 +44,22 @@ function PartnerInfo(props) {
                 let options = {
                     body: data,
                     headers: { "content-type": "application/json" },
-                    };
+                };
                 api.post(url, options).then((res) => {
-                  setDb([...db, res]);
-                  swal("HAS POSTULADO A ESTE TRABAJO", {
-                    timer:"2500"
-                  });
-                  setTimeout(() => {
-                    history.go(0);
-                  }, 2000);
+                    setDb([...db, res]);
+                    swal("HAS POSTULADO A ESTE TRABAJO", {
+                        timer:"2500"
+                    });
+                    setTimeout(() => {
+                        history.go(0);
+                    }, 2000);
                 });
-          } else {
-            swal({
+                sendEmail(datos.title);
+            } else {
+              swal({
                 text:"HAS CANCELADO TU POSTULACIÓN",
                 timer:"2000"
-                });
+              });
             }
         });
     }

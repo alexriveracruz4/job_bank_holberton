@@ -1,7 +1,7 @@
 import React from 'react';
 import './Filters.css';
 
-function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, copia} ) {
+function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, copia, handleClean} ) {
   // Filters component
   
   const handleChange = (e) => {
@@ -13,9 +13,6 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
       [e.target.name]:e.target.value,
     });
   }
-  
-  
-
 
   const handleFilters = async () => {
     console.log(searchJob)
@@ -31,9 +28,6 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
     setItems(commentsFormServer);
   };
 
-  const handleClean = async () => {
-    window.location.reload(false);
-  };
   
   const handleKeyPress = (event) => {
     if(event.key === 'Enter') {
@@ -55,6 +49,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
           value={searchJob.PalabraClave}
           onChange={handleChange}
           onKeyPress={handleKeyPress}
+          defaultValue={copia.tipoDeTrabajo}
         />
       </div>
       <div className="TypeJob">
@@ -67,6 +62,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
               name='tipoDeTrabajo'
               value="Tiempo completo"
               onChange={handleChange}
+              defaultChecked={"Tiempo completo" === copia.tipoDeTrabajo}
             />
             <label htmlFor="tiempo_completo">Tiempo completo</label>
           </div>
@@ -76,7 +72,8 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
               id='medio_tiempo'
               name='tipoDeTrabajo'
               value="Tiempo parcial"
-              onChange={handleChange} 
+              onChange={handleChange}
+              defaultChecked={"Tiempo parcial" === copia.tipoDeTrabajo}
             />
             <label htmlFor="medio_tiempo">Tiempo parcial</label>
           </div>
@@ -87,6 +84,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
               name='tipoDeTrabajo'
               value="Por horas"
               onChange={handleChange}
+              defaultChecked={"Por horas" === copia.tipoDeTrabajo}
             />
             <label htmlFor="por_horas">Por horas</label>
           </div>
@@ -96,8 +94,8 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
               id='todas'
               name='tipoDeTrabajo'
               value="todas"
-              onChange={handleChange} 
-              defaultChecked
+              onChange={handleChange}
+              defaultChecked={"todas" === copia.tipoDeTrabajo}
             />
             <label htmlFor="todas">Todas</label>
           </div>
@@ -112,7 +110,8 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
               id='presencial'
               name='modalidad'
               value="Presencial"
-              onChange={handleChange} 
+              onChange={handleChange}
+              defaultChecked={"Presencial" === copia.modalidad}
             />
             <label htmlFor="presencial">Presencial</label>
           </div>
@@ -122,7 +121,8 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
               id='remoto'
               name='modalidad'
               value="Remoto"
-              onChange={handleChange} 
+              onChange={handleChange}
+              defaultChecked={"Remoto" === copia.modalidad}
             />
             <label htmlFor="remoto">Remoto</label>
           </div>
@@ -132,7 +132,8 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
               id='semi-presencial'
               name='modalidad'
               value="Semi-presencial"
-              onChange={handleChange} 
+              onChange={handleChange}
+              defaultChecked={"Semi-presencial" === copia.modalidad}
             />
             <label htmlFor="semi-presencial">Semi-presencial</label>
           </div>
@@ -143,8 +144,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
               name='modalidad'
               value="todas"
               onChange={handleChange}
-              defaultChecked
-
+              defaultChecked={"todas" === copia.modalidad}
             />
             <label htmlFor="all">Todas</label>
           </div>

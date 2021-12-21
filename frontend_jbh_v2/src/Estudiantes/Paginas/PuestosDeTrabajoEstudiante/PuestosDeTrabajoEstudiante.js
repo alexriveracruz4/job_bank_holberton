@@ -11,10 +11,13 @@ import "./Paginacion.css";
 
 const cookies = new Cookies();
 let copia_2 = {PalabraClave:"", modalidad:"todas", tipoDeTrabajo:"todas"}
+console.log("1")
 function PuestosDeTrabajoEstudiante() {
+  console.log("COPIAAA")
+  console.log(copia_2)
   const [searchJob, setSearchJob] = useState({PalabraClave:"", modalidad:"todas", tipoDeTrabajo:"todas"}); // Status to filter by 3 options
   const [copia, setCopia] = useState({...searchJob});
-  
+
 
   const setCopia_2 = (data) => {
     copia_2 = data
@@ -81,6 +84,10 @@ function PuestosDeTrabajoEstudiante() {
       }
   });
 
+
+  const handleClean = async () => {
+    window.location.reload(false);
+  };
   //para los filtros
   //const [searchJob, setSearchJob] = useState({PalabraClave:"", modalidad:"", tipoDeTrabajo:""});
 
@@ -99,7 +106,7 @@ function PuestosDeTrabajoEstudiante() {
   useEffect(() => {
     const getComments = async () => {
       const res = await fetch(
-        `${apiPath}/jobs?_page=0&_limit=${limit}`
+        `${apiPath}/jobs?_page=0&_limit=${limit}&_filter_words=${copia_2.PalabraClave}&_kind_of_job=${copia_2.tipoDeTrabajo}&_modality=${copia_2.modalidad}`
       );
       const datos_completos = await res.json();
       const data = datos_completos.data;
@@ -111,7 +118,7 @@ function PuestosDeTrabajoEstudiante() {
       setItems(data);
     };
     getComments();
-  }, [limit]);
+  }, []);
 
   const fetchComments = async (currentPage) => {
     console.log("copia2")
@@ -156,6 +163,7 @@ function PuestosDeTrabajoEstudiante() {
               setItems={setItems}
               setCopia={setCopia_2}
               copia={copia_2}
+              handleClean={handleClean}
           />
         </div>
         <div className='PDTEJobsContainer'>

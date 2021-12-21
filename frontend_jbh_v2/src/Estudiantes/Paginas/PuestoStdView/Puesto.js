@@ -55,6 +55,7 @@ function Puesto() {
           JobData = {JobData}
           PostulantesIDs={PostulantesIDs}
           PartnerName={PartnerData.name}
+          PartnerEmail={PartnerData.email}
         />
         <PuestoInfo 
           JobData = {JobData}
