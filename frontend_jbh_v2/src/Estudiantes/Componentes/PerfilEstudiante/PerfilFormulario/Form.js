@@ -106,7 +106,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       formFirstname.className = 'form-control error';
       errorFirstname.innerText = "Completa este campo.";
       formIsValid = false;
-    } else if (!(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(firstnamevalue))) {
+    } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(firstnamevalue))) {
       formFirstname.className = 'form-control error';
       errorFirstname.innerText = "Usa solo letras.";
       formIsValid = false;
@@ -122,7 +122,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       formLastname.className = 'form-control error';
       errorLastname.innerText = "Completa este campo.";
       formIsValid = false;
-    } else if (!(/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u.test(lastnamevalue))) {
+    } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(lastnamevalue))) {
       formLastname.className = 'form-control error';
       errorLastname.innerText = "Usa solo letras.";
       formIsValid = false;
@@ -138,7 +138,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       formEmail.className = 'form-control error';
       errorEmail.innerText = "Completa este campo.";
       formIsValid = false;
-    } else if (!(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(emailvalue))) {
+    } else if (!(/^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/.test(emailvalue))) {
       formEmail.className = 'form-control error';
       errorEmail.innerText = "Por favor ingrese un email válido";
       formIsValid = false;
@@ -207,87 +207,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     return formIsValid
   }
 
-  // Select with countries as options that are received from country.json
-  function InputCountry() {
-    return (
-      <div className="form-group row">
-        <label htmlFor="exampleFormControlSelect1" className="col-sm-1 col-form-label">País</label>
-        <div className="col-sm-10">
-          <select className="form-control" id="exampleFormControlSelect1" onChange={handleChange} name="nationality" value={form.nationality}>
-            <option>{form.nationality}</option>
-            {Countries.map(data => {;
-              return <option value={data.country}>{data.country}</option>;
-            })}
-          </select>
-          <i className="fas fa-check-circle" />
-          <i className="fas fa-exclamation-circle" id='exclCircleFName' />
-          <small> Error message </small>
-        </div>
-      </div>
-    )
-  }
-
-  // Function that returns a select with availability options
-  function Availability() {
-    return (
-      <div className="travel-row form-group row">
-        <label htmlFor="inputAvailability" className="travel-label col-sm-1 col-form-label">Estado actual</label>
-        <div className="select-travel-div col-sm-10">
-          <select className="form-control" id="inputAvailability" onChange={handleChange} name="availability" value={form.availability}>
-            <option>{form.availability}</option>
-            <option onClick={e => e.target.textarea}>Disponible a nuevas ofertas de trabajo</option>
-            <option onClick={e => e.target.textarea}>No tengo empleo</option>
-            <option onClick={e => e.target.textarea}>Estoy trabajando actualmente</option>
-            <option onClick={e => e.target.textarea}>No tengo ningún interés en un nuevo empleo</option>
-          </select>
-          <i className="fas fa-check-circle" />
-          <i className="fas fa-exclamation-circle" />
-          <small> Error message </small>
-        </div>
-      </div>
-    )
-  }
-
-  // Function that returns a select with work preference options
-  function PresOrRemote() {
-    return (
-      <div className="travel-row form-group row">
-        <label htmlFor="inputPresOrRemote" className="travel-label col-sm-1 col-form-label">Modo de trabajo de preferencia</label>
-        <div className="select-travel-div col-sm-10">
-          <select className="form-control" id="inputPresOrRemote" onChange={handleChange} name="pres_or_remot" value={form.pres_or_remot}>
-            <option>{form.pres_or_remot}</option>
-            <option value="Presencial">Presencial</option>
-            <option value="Remoto">Remoto</option>
-            <option value="Semi-presencial">Semi-presencial</option>
-          </select>
-          <i className="fas fa-check-circle" />
-          <i className="fas fa-exclamation-circle" />
-          <small> Error message </small>
-        </div>
-      </div>
-    )
-  }
-
-  // Function that returns a select with travel availability options
-  function InputTravelAval() {
-      return (
-        <div className="travel-row form-group row">
-          <label htmlFor="inputDisptravel" className="travel-label col-sm-1 col-form-label">Disponibilidad para viajar</label>
-          <div className="select-travel-div col-sm-10">
-            <select className="form-control" id="inputDiptravel" onChange={handleChange} name="disp_travel" value={form.disp_travel}>
-              <option>{form.disp_travel}</option>
-              <option value="Disponible">Disponible</option>
-              <option value="No disponible">No disponible</option>
-            </select>
-            <i className="fas fa-check-circle" />
-            <i className="fas fa-exclamation-circle" />
-            <small> Error message </small>
-          </div>
-        </div>
-    )
-  }
-
-  let classError = "";
   return (
     <div className="container-profile">
       <div className="header-profile">
@@ -405,7 +324,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <label htmlFor="inputDisptravel">Disponibilidad para viajar</label>
             <div className='inputFormDiv'>
               <select className="form-control" id="inputDiptravel" onChange={handleChange} name="disp_travel" value={form.disp_travel}>
-                <option selected disabled hidden></option>
+                <option selected disabled hidden>{form.disp_travel}</option>
                 <option value="Disponible">Disponible</option>
                 <option value="No disponible">No disponible</option>
               </select>

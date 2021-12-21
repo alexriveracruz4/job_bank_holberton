@@ -11,7 +11,8 @@ from datetime import datetime
 import pathlib
 # from werkzeug import secure_filename
 from math import ceil
-
+import re
+from api.v1.views.countries import countries
 
 @app_views.route('/students', methods=['GET'], strict_slashes=False)
 def get_students():
@@ -175,12 +176,92 @@ def put_student(student_id):
         abort(400, description="Not a JSON")
 
     ignore = ['id', 'created_at', 'updated_at', 'deleted_at', '__class__']
+    availabilityList = ["Disponible a nuevas ofertas de trabajo", "No tengo empleo", "Estoy trabajando actualmente", "No tengo ningún interés en un nuevo empleo"]
+    pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial"]
+    disp_travelList = ["Disponible", "No disponible"]
+
+    isvalid = True
 
     data = request.get_json()
     for key, value in data.items():
         if key not in ignore:
-            setattr(student, key, value)
-
+            # Form validation
+            if key == "firstname":
+                if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid firstname")
+            if key == "lastname":
+                if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid lastname")
+            if key == "email":
+                if re.match(r"^(?=.{4,45}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid email")
+            if key == "phonenumber":
+                if re.match(r"^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,9}$", value):
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid phonenumber")
+            if key == "age":
+                if re.match(r"^[1-9][0-9]?$|^100$", str(value)):
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid age")
+            if key == "availability":
+                if len(value) <= 60:
+                    if value in availabilityList:
+                        isvalid = True
+                    else:
+                        abort(400, description="Not a valid option in availability")
+                else:
+                    abort(400, description="Must contain a maximum of 60 characters")
+            if key == "pres_or_remot":
+                if len(value) <= 60:
+                    if value in pres_or_remotList:
+                        isvalid = True
+                    else:
+                        abort(400, description="Not a valid option in pres_or_remot")
+                else:
+                    abort(400, description="Must contain a maximum of 60 characters")
+            if key == "nationality":
+                if len(value) <= 45:
+                    for country in countries:
+                        if value in country.values():
+                            break
+                        isvalid = True
+                    else:
+                        abort(400, description="Country not found")
+                else:
+                    abort(400, description="Must contain a maximum of 45 characters")
+            if key == "disp_travel":
+                if len(value) <= 45:
+                    if value in disp_travelList:
+                        isvalid = True
+                    else:
+                        abort(400, description="Not a valid option in disp_travel")
+                else:
+                    abort(400, description="Must contain a maximum of 45 characters")
+            if key == "linkedin":
+                if len(value) <= 70:
+                    isvalid = True
+                else:
+                    abort(400, description="Must contain a maximum of 70 characters")
+            if key == "github":
+                if len(value) <= 70:
+                    isvalid = True
+                else:
+                    abort(400, description="Must contain a maximum of 70 characters")
+            if key == "twitter":
+                if len(value) <= 70:
+                    isvalid = True
+                else:
+                    abort(400, description="Must contain a maximum of 70 characters")
+            if isvalid is True:
+                setattr(student, key, value)
     storage.save()
 
     return make_response(jsonify(student.to_dict()), 200)
@@ -214,5 +295,5 @@ def fileDownload(cv_filename_logical):
     """
     Download CV
     """
-    path = "/home/jhonatanjc/job_bank_holberton/frontend_jbh_v2/curriculums/" + cv_filename_logical
+    path = "/mnt/d/jbgithub/job_bank_holberton/frontend_jbh_v2/curriculums/" + cv_filename_logical
     return send_file(path, as_attachment=True)
