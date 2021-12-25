@@ -14,6 +14,10 @@ from math import ceil
 import re
 from api.v1.views.countries import countries
 
+availabilityList = ["Disponible a nuevas ofertas de trabajo", "No tengo empleo", "Estoy trabajando actualmente", "No tengo ningún interés en un nuevo empleo"]
+pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial"]
+disp_travelList = ["Disponible", "No disponible"]
+
 @app_views.route('/students', methods=['GET'], strict_slashes=False)
 def get_students():
     """
@@ -157,8 +161,68 @@ def post_student():
         abort(400, description="Missing pres_or_remot")
     if 'availability' not in request.get_json():
         abort(400, description="Missing availability")
+
     data = request.get_json()
-    instance = Student(**data)
+    isvalid = True
+    for key, value in data.items():
+        if key == "firstname":
+            if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+                isvalid = True
+            else:
+                abort(400, description="Enter a valid firstname, max 45 characters")
+        if key == "lastname":
+            if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+                isvalid = True
+            else:
+                abort(400, description="Enter a valid lastname, max 45 characters")
+        if key == "email":
+            if re.match(r"^(?=.{4,45}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
+                isvalid = True
+            else:
+                abort(400, description="Enter a valid email, max 45 characters")
+        if key == "password":
+            if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
+                isvalid = True
+            else:
+                abort(400, description="Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
+        if key == "phonenumber":
+            if re.match(r"^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,9}$", value):
+                isvalid = True
+            else:
+                abort(400, description="Not a valid phonenumber, use numbers and max 15 characters")
+        if key == "age":
+            if re.match(r"^[1-9][0-9]?$|^100$", str(value)):
+                isvalid = True
+            else:
+                abort(400, description="Not a valid age")
+        if key == "nationality":
+            if len(value) <= 45:
+                for country in countries:
+                    if value in country.values():
+                        break
+                    isvalid = True
+                else:
+                    abort(400, description="Country not found")
+            else:
+                abort(400, description="Must contain a maximum of 45 characters")
+        if key == "availability":
+            if len(value) <= 60:
+                if value in availabilityList:
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid option in availability")
+            else:
+                abort(400, description="Must contain a maximum of 60 characters")
+        if key == "pres_or_remot":
+            if len(value) <= 60:
+                if value in pres_or_remotList:
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid option in pres_or_remot")
+            else:
+                abort(400, description="Must contain a maximum of 60 characters")
+        if isvalid is True:
+            instance = Student(**data)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
 
@@ -176,9 +240,6 @@ def put_student(student_id):
         abort(400, description="Not a JSON")
 
     ignore = ['id', 'created_at', 'updated_at', 'deleted_at', '__class__']
-    availabilityList = ["Disponible a nuevas ofertas de trabajo", "No tengo empleo", "Estoy trabajando actualmente", "No tengo ningún interés en un nuevo empleo"]
-    pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial"]
-    disp_travelList = ["Disponible", "No disponible"]
 
     isvalid = True
 
@@ -260,6 +321,16 @@ def put_student(student_id):
                     isvalid = True
                 else:
                     abort(400, description="Must contain a maximum of 70 characters")
+            if key == "description":
+                if len(value) <= 1000:
+                    isvalid = True
+                else:
+                    abort(400, description="Must contain a maximum of 1000 characters")
+            if key == "password":
+                if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
+                    isvalid = True
+                else:
+                    abort(400, description="Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
             if isvalid is True:
                 setattr(student, key, value)
     storage.save()

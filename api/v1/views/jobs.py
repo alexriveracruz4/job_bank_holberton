@@ -9,6 +9,12 @@ from models.student import Student
 from models.application import Application
 from datetime import datetime
 from math import ceil
+import re
+from api.v1.views.countries import countries
+
+job_typeList = ["Tiempo completo", "Tiempo parcial", "Por horas"]
+pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial"]
+travel_availabilityList = ["Si", "No"]
 
 @app_views.route('/jobs', methods=['GET'], strict_slashes=False)
 def get_jobs():

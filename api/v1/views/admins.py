@@ -6,6 +6,7 @@ from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 import uuid
 from datetime import datetime
+import re
 
 
 @app_views.route('/admins', methods=['GET'], strict_slashes=False)
@@ -86,7 +87,31 @@ def post_admin():
         abort(400, description="Missing password")
 
     data = request.get_json()
-    instance = Admin(**data)
+    isvalid = True
+
+    for key, value in data.items():
+        if key == "firstname":
+            if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+                isvalid = True
+            else:
+                abort(400, description="Enter a valid firstname, max 45 characters")
+        if key == "lastname":
+            if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+                isvalid = True
+            else:
+                abort(400, description="Enter a valid lastname, max 45 characters")
+        if key == "email":
+            if re.match(r"^(?=.{4,45}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
+                isvalid = True
+            else:
+                abort(400, description="Enter a valid email, max 45 characters")
+        if key == "password":
+            if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
+                isvalid = True
+            else:
+                abort(400, description="Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
+        if isvalid is True:
+            instance = Admin(**data)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
 
@@ -105,9 +130,33 @@ def put_admin(admin_id):
 
     ignore = ['id', 'created_at', 'updated_at', 'deleted_at', '__class__']
 
+    isvalid = True
+
     data = request.get_json()
     for key, value in data.items():
         if key not in ignore:
-            setattr(admin, key, value)
+            # Form validation
+            if key == "firstname":
+                if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+                    isvalid = True
+                else:
+                    abort(400, description="Enter a valid firstname, max 45 characters")
+            if key == "lastname":
+                if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+                    isvalid = True
+                else:
+                    abort(400, description="Enter a valid lastname, max 45 characters")
+            if key == "email":
+                if re.match(r"^(?=.{4,45}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
+                    isvalid = True
+                else:
+                    abort(400, description="Enter a valid email, max 45 characters")
+            if key == "password":
+                if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
+                    isvalid = True
+                else:
+                    abort(400, description="Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
+            if isvalid is True:
+                setattr(admin, key, value)
     storage.save()
     return make_response(jsonify(admin.to_dict()), 200)
