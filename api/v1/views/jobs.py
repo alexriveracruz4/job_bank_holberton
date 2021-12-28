@@ -172,7 +172,88 @@ def post_job():
         abort(400, description="Missing salary")
 
     data = request.get_json()
-    instance = Job(**data)
+    jobs = storage.all(Job).values()
+    isvalid = True
+
+    for key, value in data.items():
+        #Form validation
+        if key == "code":
+            if re.match(r"^[0-9]+_+[0-9]+$", value):
+                isvalid = True
+            else:
+                abort(400, description='''Invalid format, please use number_number. Example: 2_10''')
+
+            for job in jobs:
+                if value in job.code:
+                    abort(400, description="This job code exists")
+                else:
+                    isvalid = True
+        if key == "title":
+            if len(value) <= 70:
+                isvalid = True
+            else:
+                abort(400, description="Title must contain a maximum of 45 characters")
+        if key == "country":
+            if len(value) <= 45:
+                for country in countries:
+                    if value in country.values():
+                        break
+                    isvalid = True
+                else:
+                    abort(400, description="Country option not found")
+            else:
+                abort(400, description="Country must contain a maximum of 45 characters")
+        if key == "experience":
+            if len(value) <= 45:
+                isvalid = True
+            else:
+                abort(400, description="Experience must contain a maximum of 45 characters")
+        if key == "age_min":
+            if re.match(r"^[1-9][0-9]?$|^100$", str(value)):
+                isvalid = True
+            else:
+                abort(400, description="Not a valid age")
+        if key == "age_max":
+            if re.match(r"^[1-9][0-9]?$|^100$", str(value)):
+                isvalid = True
+            else:
+                abort(400, description="Not a valid age")
+        if key == "salary":
+            if len(value) <= 45:
+                isvalid = True
+            else:
+                abort(400, description="Salary must contain a maximum of 45 characters")
+        if key == "job_type":
+            if len(value) <= 45:
+                if value in job_typeList:
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid option in availability")
+            else:
+                abort(400, description="Job_type must contain a maximum of 45 characters")
+        if key == "pres_or_remote":
+            if len(value) <= 45:
+                if value in pres_or_remotList:
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid option in pres_or_remot")
+            else:
+                abort(400, description="Pres_or_remote must contain a maximum of 45 characters")
+        if key == "travel_availability":
+            if len(value) <= 45:
+                if value in travel_availabilityList:
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid option in disp_travel")
+            else:
+                abort(400, description="Travel_availability must contain a maximum of 45 characters")
+        if key == "description":
+            if len(value) <= 2000:
+                isvalid = True
+            else:
+                abort(400, description="Description must contain a maximum of 2000 characters")
+        if isvalid is True:
+            instance = Job(**data)
     instance.save()
     return make_response(jsonify(instance.to_dict()), 201)
 
@@ -196,11 +277,78 @@ def put_job(partner_id, job_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
 
-    ignore = ['id', 'created_at', 'updated_at', 'deleted_at', '__class__']
+    ignore = ['id', 'created_at', 'updated_at', 'deleted_at', '__class__', 'partner_id', 'code']
 
     data = request.get_json()
+    isvalid = True
     for key, value in data.items():
         if key not in ignore:
-            setattr(job1, key, value)
+            # Form validation
+            if key == "title":
+                if len(value) <= 70:
+                    isvalid = True
+                else:
+                    abort(400, description="Title must contain a maximum of 45 characters")
+            if key == "country":
+                if len(value) <= 45:
+                    for country in countries:
+                        if value in country.values():
+                            break
+                        isvalid = True
+                    else:
+                        abort(400, description="Country option not found")
+                else:
+                    abort(400, description="Country must contain a maximum of 45 characters")
+            if key == "experience":
+                if len(value) <= 45:
+                    isvalid = True
+                else:
+                    abort(400, description="Experience must contain a maximum of 45 characters")
+            if key == "age_min":
+                if re.match(r"^[1-9][0-9]?$|^100$", str(value)):
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid age")
+            if key == "age_max":
+                if re.match(r"^[1-9][0-9]?$|^100$", str(value)):
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid age")
+            if key == "salary":
+                if len(value) <= 45:
+                    isvalid = True
+                else:
+                    abort(400, description="Salary must contain a maximum of 45 characters")
+            if key == "job_type":
+                if len(value) <= 45:
+                    if value in job_typeList:
+                        isvalid = True
+                    else:
+                        abort(400, description="Not a valid option in availability")
+                else:
+                    abort(400, description="Job_type must contain a maximum of 45 characters")
+            if key == "pres_or_remote":
+                if len(value) <= 45:
+                    if value in pres_or_remotList:
+                        isvalid = True
+                    else:
+                        abort(400, description="Not a valid option in pres_or_remot")
+                else:
+                    abort(400, description="Pres_or_remote must contain a maximum of 45 characters")
+            if key == "travel_availability":
+                if len(value) <= 45:
+                    if value in travel_availabilityList:
+                        isvalid = True
+                    else:
+                        abort(400, description="Not a valid option in disp_travel")
+                else:
+                    abort(400, description="Travel_availability must contain a maximum of 45 characters")
+            if key == "description":
+                if len(value) <= 2000:
+                    isvalid = True
+                else:
+                    abort(400, description="Description must contain a maximum of 2000 characters")
+            if isvalid is True:
+                setattr(job1, key, value)
     storage.save()
     return make_response(jsonify(job1.to_dict()), 200)
