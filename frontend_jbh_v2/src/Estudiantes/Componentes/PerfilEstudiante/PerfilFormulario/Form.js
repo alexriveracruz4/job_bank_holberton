@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router';
 import Cookies from 'universal-cookie';
 import Countries from "../../../data/country.json"
@@ -206,6 +206,27 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
     return formIsValid
   }
+  
+  const [imageURL, setImageURL] = useState();
+  let uploadInput = useRef();
+
+  const handleUploadImage = (e) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append('file', uploadInput.files[0]);
+    const urlupload = `${apiPath}/students/`+ cookies.get('id') + '/uploadphoto'
+
+    fetch(urlupload, {
+      method: 'POST',
+      body: data,
+    }).then((response) => {
+      response.json().then((body) => {
+        cookies.set('cv_filename_physical', body.cv_filename_physical);
+        imageURL(`http://localhost:5000/${body.file}`);
+      });
+    });
+  }
 
   return (
     <div className="container-profile">
@@ -215,13 +236,30 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       {/* new form without bootstrap */}
       <div className='container-form'>
         <form className='form'>
+          {/* Photo */}
           <div className='form-control'>
-            <label htmlFor="inputPhoto" className="col-form-label">Foto de perfil</label>
-            <div className='usericon-div'>
-              <img src={ UserIcon } className="usericon-form" alt="imagen de usuario" />
+            <div className="form-Estudiante">
+              <div className="form-div">
+                <form onSubmit={ handleUploadImage } className="form-form">
+                  <div className="photoform-div">
+                    <label htmlFor="inputPhoto" className="col-form-label">Foto de perfil</label>
+                    <div className='usericon-div'>
+                      <img src={ UserIcon } className="usericon-form" alt="imagen de usuario" />
+                    </div>
+                    <small id="photoHelpInline" className="text-muted">Please upload a square-shaped picture. Max 2MB, Formats allowed: jpg, png.</small>
+                    <div className="container-selectFile">
+                      <div className="box-photo form-control">
+                        <input ref={(ref) => { uploadInput = ref; }} type="file" />
+                        <button>Cargar</button>
+                      </div>
+                      <div className="cv-name">
+                        <a href={cookies.get("photo_filename_logical")}>{cookies.get('photo_filename_physical')}</a>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
-            <input type="file" id="myphoto" className="form-control" />
-            <small id="photoHelpInline" className="text-muted">Please upload a square-shaped picture. Max 2MB, Formats allowed: jpg, png.</small>
           </div>
 
           <div className='form-control' id='form-firstname'>
