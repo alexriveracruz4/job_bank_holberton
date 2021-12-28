@@ -392,6 +392,62 @@ def fileUpload(student_id):
 
     return make_response(jsonify(student.to_dict()), 200)
 
+@app_views.route('/students/<student_id>/uploadphoto', methods=['POST'], strict_slashes=False)
+def fileUploadPhoto(student_id):
+    """
+    Upload Photo
+    """
+    student = storage.get(Student, student_id)
+
+    if not student:
+        abort(404)
+
+    file = request.files['file']
+
+    # This part is just to calculate the size of the file
+    file.seek(0, os.SEEK_END) # to count the size of the file
+    file_length = file.tell() # size of the file in Bytes
+    max_size = 2*10**6 # 4MB max
+    if int(file_length) > max_size:
+        abort(400, description="Maximum file size exceeded")
+
+    file.seek(0, 0)
+    # end file size count
+
+    #image_bytes = io.BytesIO(file.stream.read())
+    # save bytes in a buffer
+
+    #img = Image.open(image_bytes)
+    # produces a PIL Image object
+
+    #size = img.size
+    #print(size)
+    #print(file.__dict__)
+    #print(os.stat(file).st_size )
+    filename = file.filename #filename = secure_filename(file.filename)
+    ext = pathlib.Path(filename).suffix
+    if ext != ".png" or ext != ".jpg":
+        abort(400, description="It is not a png or jpg file")
+
+    path = '/home/jhonatanjc/job_bank_holberton/frontend_jbh_v2/photos/'
+    filename_new = student_id + '_' + datetime.utcnow().strftime('%Y%m%d%H%M%S') + ext
+
+    file.save(path + filename_new)
+    
+    new_list = [cv for cv in os.listdir(path) if cv.startswith(str(student_id) + "_")]
+    for file_ in sorted(new_list)[:-1]:
+        os.remove(path + file_)
+
+
+    setattr(student, 'photo_filename_physical', filename)
+    setattr(student, 'photo_filename_logical', filename_new)
+
+    storage.save()
+
+    return make_response(jsonify(student.to_dict()), 200)
+
+
+
 @app_views.route('/downloadcv/<cv_filename_logical>', methods=['GET'], strict_slashes=False)
 def fileDownload(cv_filename_logical):
     """
