@@ -45,10 +45,11 @@ def get_jobs():
 
     #print(list(all_jobs)[1].to_dict()) #same
     #print(type(list(all_jobs)[1].__dict__["created_at"])) #same
-    datos_no_borrados = filtro_de_eliminados(list(all_jobs))
-    
+        
     list_jobs = []
     try:
+        datos_no_borrados = filtro_de_eliminados(list(all_jobs))
+
         page = int(request.args.get('_page'))
         limit = int(request.args.get('_limit'))
 
@@ -76,7 +77,7 @@ def get_jobs():
         out = jsonify(data)
         return out
     except:
-        for job in datos_no_borrados:
+        for job in all_jobs:
             list_jobs.append(job.to_dict())
         newlist = sorted(list_jobs, key=lambda d: d['created_at']) 
         newlist.reverse()

@@ -138,6 +138,8 @@ function PuestosDeTrabajoEstudiante() {
 
 
   const handlePageClick = async (data) => {
+    console.log("PAGINACION")
+    console.log(data);
     console.log(data.selected);
     let currentPage = data.selected;
     //setcurrentPage(data.selected);

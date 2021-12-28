@@ -13,6 +13,7 @@ import pathlib
 from math import ceil
 import re
 from api.v1.views.countries import countries
+import os
 
 availabilityList = ["Disponible a nuevas ofertas de trabajo", "No tengo empleo", "Estoy trabajando actualmente", "No tengo ningún interés en un nuevo empleo"]
 pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial"]
@@ -348,11 +349,41 @@ def fileUpload(student_id):
         abort(404)
 
     file = request.files['file']
+
+    # This part is just to calculate the size of the file
+    file.seek(0, os.SEEK_END) # to count the size of the file
+    file_length = file.tell() # size of the file in Bytes
+    max_size = 4*10**6 # 4MB max
+    if int(file_length) > max_size:
+        abort(400, description="Maximum file size exceeded")
+
+    file.seek(0, 0)
+    # end file size count
+
+    #image_bytes = io.BytesIO(file.stream.read())
+    # save bytes in a buffer
+
+    #img = Image.open(image_bytes)
+    # produces a PIL Image object
+
+    #size = img.size
+    #print(size)
+    #print(file.__dict__)
+    #print(os.stat(file).st_size )
     filename = file.filename #filename = secure_filename(file.filename)
     ext = pathlib.Path(filename).suffix
+    if ext != ".pdf":
+        abort(400, description="It is not a pdf file")
+
     path = '/home/jhonatanjc/job_bank_holberton/frontend_jbh_v2/curriculums/'
     filename_new = student_id + '_' + datetime.utcnow().strftime('%Y%m%d%H%M%S') + ext
+
     file.save(path + filename_new)
+    
+    new_list = [cv for cv in os.listdir(path) if cv.startswith(str(student_id) + "_")]
+    for file_ in sorted(new_list)[:-2]:
+        os.remove(path + file_)
+
 
     setattr(student, 'cv_filename_physical', filename)
     setattr(student, 'cv_filename_logical', filename_new)
@@ -366,5 +397,5 @@ def fileDownload(cv_filename_logical):
     """
     Download CV
     """
-    path = "/mnt/d/jbgithub/job_bank_holberton/frontend_jbh_v2/curriculums/" + cv_filename_logical
+    path = "/home/jhonatanjc/job_bank_holberton/frontend_jbh_v2/curriculums/" + cv_filename_logical
     return send_file(path, as_attachment=True)

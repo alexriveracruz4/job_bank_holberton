@@ -23,15 +23,17 @@ function TablaDeTodosLosTrabajos() {
   // Get all the jobs data and save to AllJobs
   const [AllJobs, setAllJobs] = React.useState([]);
 
-  React.useEffect(() => {
-    obtenerDatos();
-  }, []);
+  
 
   const obtenerDatos = async () => {
     const data = await fetch(url);
     const jobs = await data.json();
-    setAllJobs(jobs);
+    setAllJobs(jobs.data);
   }
+
+  React.useEffect(() => {
+    obtenerDatos();
+  }, []);
 
   // Sweetalert to confirm removal of job
   const deleteData = (PartnerId, JobId, TitleJob) => {
@@ -95,7 +97,7 @@ function TablaDeTodosLosTrabajos() {
             backgroundColor: "#F1F2F2"
           },
           paging:true,
-          pageSize:9,       // make initial page size
+          pageSize:10,       // make initial page size
           pageSizeOptions:[10,20,30,50],
         }}
         localization={{

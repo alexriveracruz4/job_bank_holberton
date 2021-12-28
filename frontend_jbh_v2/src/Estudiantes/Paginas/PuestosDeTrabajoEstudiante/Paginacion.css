@@ -6,11 +6,13 @@
   list-style: none;
   outline: none;
   justify-content: center;
+}
+
+/*
   position:fixed;
   left: 70%;
   top: 80px;
-
-}
+*/
 .pagination > li > a{
   color: black;
   margin: 8px;
