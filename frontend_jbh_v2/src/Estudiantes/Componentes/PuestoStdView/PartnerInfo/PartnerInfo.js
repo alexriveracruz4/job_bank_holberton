@@ -26,7 +26,7 @@ function PartnerInfo(props) {
         const copia_email="jhonatan.jauja.c@uni.pe"
         const subject=`POSTULACION AL TRABAJO: ${title}`
         const body="Me gustaría postular a este trabajo"
-        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${partner_email}&su=${subject}&body=${body}&cc=${copia_email}`); 
+        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${partner_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
     }
 
     const PostularEmpresa = (studentId, PartnerId, JobId) => {
@@ -47,12 +47,15 @@ function PartnerInfo(props) {
                 };
                 api.post(url, options).then((res) => {
                     setDb([...db, res]);
-                    swal("HAS POSTULADO A ESTE TRABAJO", {
-                        timer:"2500"
+                    swal({
+                        title: "Excelente",
+                        text: `Has postulado exitosamente al trabajo: '${datos.title}' de la empresa '${props.PartnerName}'`,
+                        icon: "success",
                     });
                     setTimeout(() => {
-                        history.go(0);
-                    }, 2000);
+                        history.goBack();
+                    }, 1000);
+                    
                 });
                 sendEmail(datos.title);
             } else {
@@ -84,7 +87,7 @@ function PartnerInfo(props) {
                 <div className="partner-name">
                     <p>{props.PartnerName}</p>
                 </div>
-                    {datos.deleted || props.PostulantesIDs.includes(parseInt(studentId), 0) ?
+                    {datos.deleted || props.EstadoDePostulacion ?
                         ""
                     :
                         <div className="postula-container" 

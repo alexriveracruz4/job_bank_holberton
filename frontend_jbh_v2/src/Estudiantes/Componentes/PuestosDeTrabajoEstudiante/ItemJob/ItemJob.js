@@ -11,9 +11,12 @@ function ItemJob(props) {
 
   // Obtains the data of the applicants for a job and saves them in PostulantesData
   const [PostulantesData, setPostulantesData] = React.useState([2]);
+  const [PartnerData, setPartnerData] = React.useState([2]);
+
 
   React.useEffect(() => {
     obtenerPostulantesDatos();
+    obtenerParnertDatos()
   }, []);
 
   const obtenerPostulantesDatos = async () => {
@@ -22,13 +25,20 @@ function ItemJob(props) {
     setPostulantesData(postulantes);
   }
 
+  const obtenerParnertDatos = async () => {
+    const data = await fetch(`${apiPath}/partners/${props.id_empresa}`);
+    const parnert = await data.json();
+    setPartnerData(parnert);
+  }
+
+
   // Jobs to be displayed upon login
   let PostulantesIDs = PostulantesData.map(postulante => postulante.id);
   let EstadoDePostulacion= PostulantesIDs.includes(parseInt(studentId),0); /*true== postulado; false== no postulado*/
 
   return (
     <React.StrictMode>     
-        <Link to={{ pathname:`/estudiante/puestos-de-trabajo/partners/${props.id_empresa}/jobs/${props.id_job}`, state: { EstadoDePostulacion: EstadoDePostulacion } }} style={{ color: 'inherit', textDecoration: 'inherit'}}> 
+        <Link to={{ pathname:`/estudiante/puestos-de-trabajo/partners/${props.id_empresa}/jobs/${props.id_job}`, state: { EstadoDePostulacion: EstadoDePostulacion, DatosEmpresa: PartnerData } }} style={{ color: 'inherit', textDecoration: 'inherit'}}> 
           <li className='PDTEOneJob'>
           <h2>{props.title}</h2>
           {EstadoDePostulacion === true 

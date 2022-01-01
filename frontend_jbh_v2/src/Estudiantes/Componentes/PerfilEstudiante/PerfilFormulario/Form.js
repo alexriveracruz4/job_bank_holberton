@@ -237,6 +237,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       <div className='container-form'>
         <form className='form'>
           {/* Photo */}
+          <UploadCv />
+
           <div className='form-control'>
             <div className="form-Estudiante">
               <div className="form-div">

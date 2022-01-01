@@ -10,29 +10,10 @@ import "./Paginacion1.css";
 
 const cookies = new Cookies();
 
+let copia = 0;
 function MisPostulaciones() {
   // Obtains the data of the jobs to which the student has applied and saves them in AllMyApplications
   const user_id = cookies.get("id");
-
-  /*
-  const [AllMyApplications, setAllMyApplications] = React.useState([]);
-
-  React.useEffect(() => {
-    obtenerDatos();
-  }, []);
-
-  const obtenerDatos = async () => {
-    const data = await fetch(`${apiPath}/students/${user_id}/applications`);
-    const applications = await data.json();
-    applications.sort(function(a,b){
-      // Turn your strings into dates, and then subtract them
-      // to get a value that is either negative, positive, or zero.
-      return new Date(b.created_at) - new Date(a.created_at);
-    });
-    setAllMyApplications(applications);
-  }
-  */
-
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
@@ -41,27 +22,34 @@ function MisPostulaciones() {
       }
   });
 
+  
+
   const [items, setItems] = useState([]);
 
   const [pageCount, setpageCount] = useState(0);
 
   const [datosTotales, setDatosTotales] = useState(0);
 
+  const [paginaActual, setPaginaActual] = useState(copia);
+
+  const setCopia = (data) => {
+    copia = data
+  }
+
+  console.log("Pagina Actual")
+  console.log(paginaActual);
+  console.log("Pagina Actual")
+  console.log(paginaActual);
   let limit = 4;
 
-  //const total = ListSearchedJobs.length;
-  //setpageCount(Math.ceil(total / limit));
-  //setItems(data);
 
   useEffect(() => {
     const getComments = async () => {
       const res = await fetch(
-        `${apiPath}/students/${user_id}/applications?_page=0&_limit=${limit}`
+        `${apiPath}/students/${user_id}/applications?_page=${paginaActual}&_limit=${limit}`
       );
       const datos_completos = await res.json();
       const data = datos_completos.data;
-      //console.log("dasdasdasd")|dd
-      //console.log(total)
       const total = datos_completos.len_total_data;
       setDatosTotales(total)
       setpageCount(Math.ceil(total / limit));
@@ -85,7 +73,8 @@ function MisPostulaciones() {
 
   const handlePageClick = async (data) => {
     let currentPage = data.selected;
-    //setcurrentPage(data.selected);
+    setPaginaActual(currentPage);
+    window.scrollTo(0, 0);
     const commentsFormServer = await fetchComments(currentPage);
     setItems(commentsFormServer);
   };
@@ -110,6 +99,7 @@ function MisPostulaciones() {
             nextLabel={">"}
             breakLabel={"..."}
             pageCount={pageCount}
+            forcePage={paginaActual}
             marginPagesDisplayed={2}
             pageRangeDisplayed={3}
             onPageChange={handlePageClick}
@@ -123,11 +113,12 @@ function MisPostulaciones() {
             breakClassName={"page-item"}
             breakLinkClassName={"page-link"}
             activeClassName={"active"}
+            renderOnZeroPageCount={null}
           />
 
           <ListJobs>
             
-            {items.reverse().map(trabajo => (
+            {items.map(trabajo => (
             <ItemJob
               key={trabajo.title}
               id_job={trabajo.id}
@@ -137,6 +128,8 @@ function MisPostulaciones() {
               city={trabajo.city}
               experience={trabajo.experience}
               deleted={trabajo.deleted}
+              setCopia={setCopia}
+              paginaActual={paginaActual}
             />
             ))}
           </ListJobs>
@@ -146,6 +139,7 @@ function MisPostulaciones() {
             nextLabel={">"}
             breakLabel={"..."}
             pageCount={pageCount}
+            forcePage={paginaActual}
             marginPagesDisplayed={2}
             pageRangeDisplayed={3}
             onPageChange={handlePageClick}
@@ -159,6 +153,7 @@ function MisPostulaciones() {
             breakClassName={"page-item"}
             breakLinkClassName={"page-link"}
             activeClassName={"active"}
+            renderOnZeroPageCount={null}
           />
 
         </div>

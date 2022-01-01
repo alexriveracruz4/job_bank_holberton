@@ -1,13 +1,10 @@
 import React from 'react';
 import './Filters.css';
 
+// Filters component
 function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, copia, handleClean} ) {
-  // Filters component
   
   const handleChange = (e) => {
-    console.log("HANDLECHANGE")
-    console.log(searchJob)
-    console.log(copia)
     setSearchJob({
       ...searchJob,
       [e.target.name]:e.target.value,
@@ -15,20 +12,11 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
   }
 
   const handleFilters = async () => {
-    console.log(searchJob)
-    console.log(copia)
     setCopia({...searchJob})
-    console.log("COPIA")
-    console.log(copia)
-    console.log(searchJob)
     const commentsFormServer = await fetchComments(0);
-    //const commentsFormServer = ListSearchedJobs.slice(currentPage*limit, limit*(currentPage + 1));
-    console.log("PRUEBA")
-    console.log(commentsFormServer)
     setItems(commentsFormServer);
   };
 
-  
   const handleKeyPress = (event) => {
     if(event.key === 'Enter') {
       handleFilters();

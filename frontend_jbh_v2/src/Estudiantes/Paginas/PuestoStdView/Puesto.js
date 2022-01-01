@@ -5,41 +5,31 @@ import PartnerInfo from "../../Componentes/PuestoStdView/PartnerInfo/PartnerInfo
 import { useParams } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import apiPath from "../../../ApiPath";
+import { BackButton } from "../../../helpers/BackButton";
+import { useLocation } from "react-router-dom";
+
 
 const cookies = new Cookies();
 function Puesto() {
   // Get data to use in the component
   const { PartnerId, JobId } = useParams();
   const [JobData, setJobData] = React.useState([2]);
-  const [PostulantesData, setPostulantesData] = React.useState([2]);
-  const [PartnerData, setPartnerData] = React.useState([2]);
+
+  let location = useLocation();
+  let EstadoDePostulacion = location.state.EstadoDePostulacion
+  let DatosEmpresa = location.state.DatosEmpresa
+
 
   React.useEffect(() => {
     obtenerJobDatos();
-    obtenerPostulantesDatos();
-    obtenerParnertDatos();
   }, []);
 
   const obtenerJobDatos = async () => {
+    window.scrollTo(0, 0);
     const data = await fetch(`${apiPath}/partners/${PartnerId}/jobs/${JobId}`);
     const jobs = await data.json();
     setJobData(jobs);
   }
-
-  const obtenerPostulantesDatos = async () => {
-    const data = await fetch(`${apiPath}/jobs/${PartnerId}/${JobId}/students`);
-    const postulantes = await data.json();
-    setPostulantesData(postulantes);
-  }
-
-  const obtenerParnertDatos = async () => {
-    const data = await fetch(`${apiPath}/partners/${PartnerId}`);
-    const parnert = await data.json();
-    setPartnerData(parnert);
-  }
-
-
-  let PostulantesIDs = PostulantesData.map(postulante => postulante.id);
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
@@ -51,11 +41,12 @@ function Puesto() {
   return (
     <React.Fragment>
         <EstudianteNav />
+        <BackButton/>
         <PartnerInfo 
           JobData = {JobData}
-          PostulantesIDs={PostulantesIDs}
-          PartnerName={PartnerData.name}
-          PartnerEmail={PartnerData.email}
+          PartnerName={DatosEmpresa.name}
+          PartnerEmail={DatosEmpresa.email}
+          EstadoDePostulacion={EstadoDePostulacion}
         />
         <PuestoInfo 
           JobData = {JobData}
