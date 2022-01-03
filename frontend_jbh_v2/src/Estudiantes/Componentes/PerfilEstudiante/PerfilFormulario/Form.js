@@ -223,7 +223,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     }).then((response) => {
       response.json().then((body) => {
         cookies.set('cv_filename_physical', body.cv_filename_physical);
-        imageURL(`http://localhost:5000/${body.file}`);
+        imageURL(`${apiPath}/${body.file}`);
       });
     });
   }
@@ -237,7 +237,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       <div className='container-form'>
         <form className='form'>
           {/* Photo */}
-          <UploadCv />
 
           <div className='form-control'>
             <div className="form-Estudiante">
@@ -460,7 +459,7 @@ class UploadCv extends React.Component {
     }).then((response) => {
       response.json().then((body) => {
         cookies.set('cv_filename_physical', body.cv_filename_physical);
-        this.setState({ imageURL: `http://localhost:5000/${body.file}` });
+        this.setState({ imageURL: `${apiPath}/${body.file}` });
       });
     });
   }
