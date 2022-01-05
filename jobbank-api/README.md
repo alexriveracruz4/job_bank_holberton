@@ -1,0 +1,9 @@
+* jobbank-api
+
+** variables
+	JBH_API_HOST
+	JBH_API_PORT
+	JBH_MYSQL_USER
+	JBH_MYSQL_PWD
+	JBH_MYSQL_HOST
+	JBH_MYSQL_DB

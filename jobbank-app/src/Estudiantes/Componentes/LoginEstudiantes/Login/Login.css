@@ -1,0 +1,64 @@
+.containerPrincipalEstudiante {
+  width: 100%;
+  border: 2px solid black;
+  padding: 40px;
+  box-shadow: #000 2px 2px 0;
+}
+
+.containerPrincipalEstudiante .form-group {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.containerPrincipalEstudiante .form-group .User {
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.containerPrincipalEstudiante .form-group .Password {
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.containerPrincipalEstudiante .form-group .User .label_user {
+  width: 40%;
+  border: 2px solid black;
+}
+
+.containerPrincipalEstudiante .form-group .User .input_user input{
+  text-align:center;
+}
+
+.containerPrincipalEstudiante .form-group .Password .label_user {
+  width: 40%;
+  border: 2px solid black;
+}
+
+.containerPrincipalEstudiante .form-group .Password .input_user input {
+  text-align: center;
+}
+
+.containerPrincipalEstudiante .form-group .Button {
+  margin-top: 20px;
+  border: 2px solid black;
+  box-shadow: #000 3px 3px 0;
+}
+
+.containerPrincipalEstudiante .form-group .Button:hover {
+  cursor:pointer;
+  transform: scale(1.05);
+}
+
+.containerPrincipalEstudiante .form-group .Button:active {
+  transform: scale(1);
+}
