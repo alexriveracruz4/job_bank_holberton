@@ -2,11 +2,26 @@ import React from 'react';
 import './ItemJob.css';
 import icoStudent from './user-icon.png';
 import apiPath from '../../../../ApiPath';
+import swal from 'sweetalert';
 
 function ItemJob(props) {
-
   // Card with information of each applicant
   const urldown = `${apiPath}/downloadcv/` + props.cv_filename_logical
+
+
+  const Downloadcv = (cv_filename_logical, nombre, apellido) => {
+    if (cv_filename_logical === null) {
+      swal({
+        title: "Lástima",
+        text: `El usuario ${nombre} ${apellido} no ha cargado su CV, intente en otro momento.`,
+        icon: "error",
+        timer:"4000"
+      });      
+    } else {
+      window.open(urldown);
+    }
+  }
+
   return (
     <div className='ItemContainer'>
       <li className='POneJobeEmpresa'>
@@ -24,11 +39,12 @@ function ItemJob(props) {
         {props.twitter !==null ? <p><b>Twitter:</b> {props.twitter}</p>:""}
         {props.description !==null ? <p><b>Descripción:</b> <br/> {props.description}</p>:""}
       </li>
-      <a href={urldown} download className='PCVButton'>
+      <button onClick={() => Downloadcv(props.cv_filename_logical, props.firstname, props.lastname)} className='PCVButton'>
 	    <span className="spanItemJob">DESCARGAR CV</span>
-      </a>
+      </button>
     </div>
   );
 }
 
+//<a href={urldown} download className='PCVButton'>
 export { ItemJob };

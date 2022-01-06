@@ -4,7 +4,7 @@ import logo from "./ImagenesNav/holberton-logo.png";
 import UserIcon from "./ImagenesNav/user-icon.png";
 import { useHistory } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-
+import apiPath from "../../ApiPath";
 
 const cookies = new Cookies();
 
@@ -42,6 +42,12 @@ function closeSessionEst() {
 // Navigator component
 function EstudianteNav() {
   let history = useHistory();
+
+  let photo = UserIcon;
+  if (cookies.get('photo_filename_logical') !== "null"){
+    photo = `${apiPath}/student_photos/${cookies.get('photo_filename_logical')}`;
+  }
+
   return (
     <header className="Student-header">
       <div className="logo-container">
@@ -71,7 +77,7 @@ function EstudianteNav() {
             className="profile-button" 
             Puestos de Trabajo
             onClick={ () => {history.push("/estudiante/perfil")}}>
-            <img src={ UserIcon } className="usericon" alt="imagen de usuario" />
+            <img src={ photo } className="usericon" alt="imagen de usuario" />
             <button className="name-button">{cookies.get('firstname')} {cookies.get('lastname')}</button>
           </div>
         </div>

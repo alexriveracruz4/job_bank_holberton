@@ -375,7 +375,7 @@ def fileUpload(student_id):
     if ext != ".pdf":
         abort(400, description="It is not a pdf file")
 
-    path = '/home/jhonatanjc/job_bank_holberton/frontend_jbh_v2/curriculums/'
+    path = '/home/jhonatanjc/job_bank_holberton/curriculums/'
     filename_new = student_id + '_' + datetime.utcnow().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -429,7 +429,7 @@ def fileUploadPhoto(student_id):
     if ext != ".png" or ext != ".jpg":
         abort(400, description="It is not a png or jpg file")
 
-    path = '/home/jhonatanjc/job_bank_holberton/frontend_jbh_v2/photos/'
+    path = '/home/jhonatanjc/job_bank_holberton/student_photos/'
     filename_new = student_id + '_' + datetime.utcnow().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -453,5 +453,5 @@ def fileDownload(cv_filename_logical):
     """
     Download CV
     """
-    path = "/home/jhonatanjc/job_bank_holberton/frontend_jbh_v2/curriculums/" + cv_filename_logical
-    return send_file(path, as_attachment=True)
+    path = "/home/jhonatanjc/job_bank_holberton/curriculums/" + cv_filename_logical
+    return send_file(path)
