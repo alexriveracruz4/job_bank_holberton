@@ -57,6 +57,7 @@ const CrudForm = ({ createData }) => {
             let path = `/admin/estudiantes`; 
             history.push(path);
           }, 1000);
+          window.scrollTo(0, 0);
         }
       });
     };

@@ -52,6 +52,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           setTimeout(() => {
             history.go(0);
           }, 1000);
+          window.scrollTo(0, 0);
         }
       });
     };

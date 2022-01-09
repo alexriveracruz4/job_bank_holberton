@@ -47,6 +47,7 @@ const CrudForm = ({ createData }) => {
             let path = `/admin/empresas`; 
             history.push(path);
           }, 1000);
+          window.scrollTo(0, 0);
         }
       });
     };

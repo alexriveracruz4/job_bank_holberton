@@ -79,6 +79,7 @@ const handleSubmit = (e) => {
         setTimeout(() => {
           history.push(`/empresa/mis-puestos-de-trabajo/${form.id}`);
         }, 1000);
+        window.scrollTo(0, 0);
       } 
     });
   };
