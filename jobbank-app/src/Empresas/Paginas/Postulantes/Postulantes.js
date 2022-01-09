@@ -84,6 +84,7 @@ function Postulantes(props) {
               description={estudiante.description}
               nationality={estudiante.nationality}
               phonenumber={estudiante.phonenumber}
+              photo_filename_logical={estudiante.photo_filename_logical}
               pres_or_remot={estudiante.pres_or_remot}
               deleted={estudiante.deleted}
 	            cv_filename_logical={estudiante.cv_filename_logical}

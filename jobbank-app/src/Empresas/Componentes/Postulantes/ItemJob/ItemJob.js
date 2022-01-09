@@ -21,11 +21,16 @@ function ItemJob(props) {
       window.open(urldown);
     }
   }
+  let photo = icoStudent;
+
+  if (props.photo_filename_logical != null || props.photo_filename_logical != undefined){
+    photo = `${apiPath}/student_photos/${props.photo_filename_logical}`;
+  }
 
   return (
     <div className='ItemContainer'>
       <li className='POneJobeEmpresa'>
-        <img className='PPhotoStudent' src={icoStudent} />
+        <img className='PPhotoStudent' src={photo} />
         {props.firstname !== null ? <p><b>Nombre:</b> {props.firstname} {props.lastname}</p>:""}
         {props.age !==null ? <p><b>Edad:</b> {props.age}</p>:""}
         {props.phonenumber !==null ? <p><b>Celular:</b> {props.phonenumber}</p>:""}
