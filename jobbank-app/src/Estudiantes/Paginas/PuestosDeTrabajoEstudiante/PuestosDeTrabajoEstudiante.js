@@ -8,6 +8,9 @@ import Cookies from 'universal-cookie';
 import apiPath from "../../../ApiPath";
 import ReactPaginate from "react-paginate";
 import "./Paginacion.css";
+import { helpHttp } from "../../../helpers/helpHttp";
+import Loader from "../../../helpers/Loader";
+import Message from "../../../helpers/Message";
 
 
 const cookies = new Cookies();
@@ -32,49 +35,70 @@ function PuestosDeTrabajoEstudiante() {
   };
   //para los filtros
 
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(null);
 
-  const [pageCount, setpageCount] = useState(3);
+  const [pageCount, setpageCount] = useState(0);
 
-  const [datosTotales, setDatosTotales] = useState(3);
+  const [datosTotales, setDatosTotales] = useState(0);
+
+  const [error, setError] = useState(null);
+
+  const [loading, setLoading] = useState(false);
+
+  const [errorPage, setErrorPage] = useState(null);
+
+  const [loadingPage, setLoadingPage] = useState(false);
 
   let limit = 4;
 
-  useEffect(() => {
+  let api = helpHttp();
+
+  useEffect(() => { 
     const getComments = async () => {
-      const res = await fetch(
-        `${apiPath}/jobs?_page=${copia.page}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}`
-      );
-      const datos_completos = await res.json();
-      const data = datos_completos.data;
-      const total = datos_completos.len_filter_data;
-      setDatosTotales(total)
-      setpageCount(Math.ceil(total / limit));
-      setItems(data);
+      const url = `${apiPath}/jobs?_page=${copia.page}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}`
+      setLoading(true);
+      api.get(url).then((res) => {
+        if (!res.err) {
+          const jobs_data = res.data;
+          const totalPages = res.len_filter_data;
+          setDatosTotales(totalPages)
+          setpageCount(Math.ceil(totalPages / limit));
+          setItems(jobs_data);
+          setError(null)
+        } else {
+          setItems(null);
+          setError(res);
+        }
+        setLoading(false);
+      })
     };
     getComments();
   }, []);
-
   const fetchComments = async (currentPage) => {
-    const res = await fetch(
-      `${apiPath}/jobs?_page=${currentPage}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}`
-    );
-
-    const datos_completos = await res.json();
-    const data = datos_completos.data;
-    const total = datos_completos.len_filter_data;
-    setDatosTotales(total);
-    setpageCount(Math.ceil(total / limit));
-    setItems(data);
-    return data;
+    const url = `${apiPath}/jobs?_page=${currentPage}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}`
+      setLoadingPage(true);
+      api.get(url).then((res) => {
+        if (!res.err) {
+          const jobs_data = res.data;
+          const totalPages = res.len_filter_data;
+          setDatosTotales(totalPages)
+          setpageCount(Math.ceil(totalPages / limit));
+          setItems(jobs_data);
+          setErrorPage(null)
+        } else {
+          setItems(null);
+          setErrorPage(res);
+        }
+        setLoadingPage(false);
+      })
   };
+
 
   const handlePageClick = async ({selected: selectedPage}) => {
     let currentPage = selectedPage;
     copia.page = currentPage;
     window.scrollTo(0, 0);
-    const commentsFormServer = await fetchComments(currentPage);
-    setItems(commentsFormServer);
+    fetchComments(currentPage);
   };
 
   return (
@@ -101,7 +125,8 @@ function PuestosDeTrabajoEstudiante() {
             :
             <h2 className="PDTENumeroDeEmpleos">{datosTotales} EMPLEOS DISPONIBLES</h2>
           }
-
+          
+          {items &&
           <ReactPaginate
             previousLabel={"<"}
             nextLabel={">"}
@@ -123,22 +148,29 @@ function PuestosDeTrabajoEstudiante() {
             activeClassName={"active"}
             renderOnZeroPageCount={null}
           />
+          }
+          {loading && <Loader/>}
+          {(error || errorPage) && <Message/>}
+          {(items) &&
+            <ListJobs>
+              {loadingPage && <Loader/>}
+              {items.map(trabajo => (
+                <ItemJob
+                  key={trabajo.title}
+                  id_job={trabajo.id}
+                  id_empresa={trabajo.partner_id}
+                  title={trabajo.title}
+                  description={trabajo.description}
+                  city={trabajo.city}
+                  country={trabajo.country}
+                  experience={trabajo.experience}
+                />
+              ))
+            }
+            </ListJobs>          
+          }   
 
-          <ListJobs>
-            {items.map(trabajo => (
-            <ItemJob
-              key={trabajo.title}
-              id_job={trabajo.id}
-              id_empresa={trabajo.partner_id}
-              title={trabajo.title}
-              description={trabajo.description}
-              city={trabajo.city}
-              country={trabajo.country}
-              experience={trabajo.experience}
-            />
-            ))}
-          </ListJobs>
-
+          {items && 
           <ReactPaginate
             previousLabel={"<"}
             nextLabel={">"}
@@ -160,6 +192,7 @@ function PuestosDeTrabajoEstudiante() {
             activeClassName={"active"}
             renderOnZeroPageCount={null}
           />
+          }
         </div>
       </div>
     </div>

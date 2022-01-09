@@ -6,13 +6,18 @@ import swal from 'sweetalert';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import apiPath from '../../../../../ApiPath';
+import Message from '../../../../../helpers/Message';
+import Loader from '../../../../../helpers/Loader';
+
 
 function TablaEmpresa() {
   let history = useHistory();
 
   let api = helpHttp();
   let url = `${apiPath}/partners`;
-
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [loadingEliminate, setLoadingEliminate] = useState(false);
   // Columns name
   const columnas = [
     { title:'ID', field:'id', type:"numeri", textAlign:"center"},
@@ -25,17 +30,25 @@ function TablaEmpresa() {
   const [AllPartnersData, setAllPartnersData] = useState([]);
 
   useEffect(() => {
+    const obtenerDatos = async () => {
+      //setLoading(true);
+      api.get(url).then((res) => {
+        if (!res.err) {
+          setAllPartnersData(res);
+          setError(null)
+        } else {
+          setAllPartnersData(null);
+          setError(res);
+        }
+        setLoading(false);
+      })
+    };
     obtenerDatos();
   }, []);
 
-  const obtenerDatos = async () => {
-    const data = await fetch(url);
-    const partners = await data.json();
-    setAllPartnersData(partners);
-  }
 
   // Sweetalert to confirm removal of partner
-  const deleteData = (id, name) => {
+  const deleteData = (id, name, isDeleted) => {
     swal({
       title: "ELIMINAR EMPRESA",
       text: `¿Está seguro de eliminar los datos de la empresa "${name}"?`,
@@ -43,27 +56,49 @@ function TablaEmpresa() {
       dangerMode: true,
       buttons: true,
     }).then((willDelete) => {
-      if (willDelete) {     
+      if (willDelete) {   
+        if (isDeleted === 1) {
+          swal({
+            title: "Error",
+            text: `La empresa ${name} ya está eliminado`,
+            icon: "warning",
+          });
+          return 0;
+        }
+        setLoadingEliminate(true);
         let endpoint = `${url}/${id}`;
         let options = {
           headers: { "content-type": "application/json" },
         };
         api.del(endpoint, options).then((res) => {
+          if (!res.err) {
             let newData = AllPartnersData.filter((el) => el.id !== id);
             setAllPartnersData(newData);
+            setLoadingEliminate(false);
+            swal(`La empresa ${name} ha sido eliminado.`, {
+              timer:"1500"
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          } else {
+            setLoadingEliminate(false);
+            swal({
+              title: "ERROR",
+              text: `No se pudo elimiar la empresa'`,
+              icon: "error",
+            });
+          }
         });
-        swal("HAS ELIMINADO UNA EMPRESA", {
-            timer:"1500"
-          });
-        setTimeout(() => {
-          history.go(0);
-        }, 1000);
+        
       } 
     });
   }
 
   return (
     <React.StrictMode>
+      {error && <Message/>}
+      {loadingEliminate && <Loader/>}
       <MaterialTable
         columns={columnas}
         data={AllPartnersData}
@@ -82,7 +117,7 @@ function TablaEmpresa() {
           {
             icon: 'delete',
             tooltip: 'Eliminar empresa',
-            onClick: (event, rowData) => {deleteData(rowData.id, rowData.name)}
+            onClick: (event, rowData) => {deleteData(rowData.id, rowData.name, rowData.deleted)}
           },
           {
             icon: () => <ChevronRight/>,
@@ -101,8 +136,9 @@ function TablaEmpresa() {
             isFreeAction:true
           }
         ]}
-        
+        isLoading={loading}
         options={{
+          loadingType: "overlay",
           actionsColumnIndex: -1,
           cellStyle: {
             textAlign: "center"

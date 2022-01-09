@@ -3,6 +3,8 @@ import MaterialTable from 'material-table';
 import { useHistory, useLocation, useParams } from 'react-router';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import apiPath from '../../../../../ApiPath';
+import Message from '../../../../../helpers/Message';
+import { helpHttp } from '../../../../../helpers/helpHttp';
 
 
 function TablaTrabajosDeCadaEmpresa() {
@@ -12,7 +14,10 @@ function TablaTrabajosDeCadaEmpresa() {
   let Title = "Puestos publicados por la empresa: " + PartnerName;
   let history = useHistory();
   const { PartnerId } = useParams();
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  let api = helpHttp();
   // api path to jobs of partner
   let url = `${apiPath}/partners/${PartnerId}/jobs`;
 
@@ -28,17 +33,26 @@ function TablaTrabajosDeCadaEmpresa() {
   const [AllPartnerJobs, setAllPartnerJobs] = useState([]);
 
   useEffect(() => {
+    const obtenerDatos = async () => {
+      //setLoading(true);
+      api.get(url).then((res) => {
+        if (!res.err) {
+          const datos = res.data;
+          setAllPartnerJobs(datos);
+          setError(null)
+        } else {
+          setAllPartnerJobs(null);
+          setError(res);
+        }
+        setLoading(false);
+      })
+    };
     obtenerDatos();
   }, []);
 
-  const obtenerDatos = async () => {
-    const data = await fetch(url);
-    const jobs = await data.json();
-    setAllPartnerJobs(jobs);
-  }
-
   return (
     <React.StrictMode>
+      {error && <Message/>}
       <MaterialTable
         columns={columnas}
         data={AllPartnerJobs}
@@ -55,8 +69,9 @@ function TablaTrabajosDeCadaEmpresa() {
             )}
           },
         ]}
-        
+        isLoading={loading}
         options={{
+          loadingType: "overlay",
           actionsColumnIndex: -1,
           cellStyle: {
             textAlign: "center"

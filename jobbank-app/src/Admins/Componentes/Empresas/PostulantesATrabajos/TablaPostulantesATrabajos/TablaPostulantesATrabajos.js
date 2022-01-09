@@ -2,16 +2,22 @@ import React, { useEffect, useState } from 'react';
 import MaterialTable from 'material-table';
 import { useLocation, useParams } from 'react-router';
 import apiPath from '../../../../../ApiPath';
+import { helpHttp } from '../../../../../helpers/helpHttp';
+import Message from '../../../../../helpers/Message';
+
 
 function PostulantesATrabajos() {
   const location = useLocation();
   let PartnerName = location.state.PartnerName;
   let JobTitle = location.state.JobTitle;
 
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   // Table title
   let Title = "Postulantes al empleo " + JobTitle + " publicados por la empresa " + PartnerName;
   const { PartnerId, JobId } = useParams();
 
+  let api = helpHttp();
   let url = `${apiPath}/jobs/${PartnerId}/${JobId}/students`;
 
   // Columns name
@@ -28,22 +34,32 @@ function PostulantesATrabajos() {
   const [AllPartnerJobs, setAllPartnerJobs] = useState([]);
 
   useEffect(() => {
+    const obtenerDatos = async () => {
+      //setLoading(true);
+      api.get(url).then((res) => {
+        if (!res.err) {
+          setAllPartnerJobs(res);
+          setError(null)
+        } else {
+          setAllPartnerJobs(null);
+          setError(res);
+        }
+        setLoading(false);
+      })
+    };
     obtenerDatos();
   }, []);
 
-  const obtenerDatos = async () => {
-    const data = await fetch(url);
-    const jobs = await data.json();
-    setAllPartnerJobs(jobs);
-  }
-
   return (
     <React.StrictMode>
+      {error && <Message/>}
       <MaterialTable
         columns={columnas}
         data={AllPartnerJobs}
         title={Title}
+        isLoading={loading}
         options={{
+          loadingType: "overlay",
           actionsColumnIndex: -1,
           cellStyle: {
             textAlign: "center"

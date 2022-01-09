@@ -102,6 +102,36 @@ def get_job(partner_id, job_id):
                  strict_slashes=False)
 def get_partner_job(partner_id):
     """ Retrieves all jobs that a specific Partner has published """
+    page = request.args.get('_page')
+    limit = request.args.get('_limit')
+    partner = storage.get(Partner, partner_id)
+    if not partner:
+        abort(404)
+    
+    jobs = []
+    for job in partner.jobs:
+        jobs.append(job.to_dict())
+    datos_ordenados = sorted(jobs, key=lambda d: d['created_at']) 
+    datos_ordenados.reverse()
+    try:
+        page = int(page)
+        limit = int(limit)
+        
+        number_of_pages = ceil(len(datos_ordenados)/limit)
+        
+        part_of_jobs = datos_ordenados[limit*page:limit*(page+1)]
+        
+        data = {"data":part_of_jobs,
+                "len_total_data":len(jobs),
+                }
+        out = jsonify(data)
+        return out
+    except:
+        data = {"data":datos_ordenados, "len_total_data":len(datos_ordenados)}
+        out = jsonify(data)
+        return out
+
+    """
     partner = storage.get(Partner, partner_id)
     if not partner:
         abort(404)
@@ -109,6 +139,7 @@ def get_partner_job(partner_id):
     for job in partner.jobs:
         jobs.append(job.to_dict())
     return jsonify(jobs)
+    """
 
 @app_views.route('/jobs/<partner_id>/<job_id>/students', methods=['GET'],
                  strict_slashes=False)

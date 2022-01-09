@@ -7,6 +7,7 @@ import { helpHttp } from "../../../../helpers/helpHttp";
 import Cookies from 'universal-cookie';
 import swal from 'sweetalert';
 import apiPath from "../../../../ApiPath";
+import Loader from "../../../../helpers/Loader";
 
 
 const cookies = new Cookies();
@@ -16,6 +17,8 @@ function PartnerInfo(props) {
     const { PartnerId, JobId } = useParams();
     const datos = props.JobData[0];
 
+    const [loading, setLoading] = useState(false);
+
     const [db, setDb] = useState([]);
     let api = helpHttp();
 
@@ -23,7 +26,7 @@ function PartnerInfo(props) {
 
     const sendEmail = (title) => {
         const partner_email = props.PartnerEmail;
-        const copia_email="jhonatan.jauja.c@uni.pe"
+        const copia_email="valery.vargas@holbertonschool.com"
         const subject=`POSTULACION AL TRABAJO: ${title}`
         const body="Me gustaría postular a este trabajo"
         window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${partner_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
@@ -39,6 +42,7 @@ function PartnerInfo(props) {
           })
           .then((willApply) => {
             if (willApply) {
+                setLoading(true);
                 let url = `${apiPath}/students/applications`;
                 const data = {"partner_id": PartnerId, "job_id": JobId, "student_id": studentId}
                 let options = {
@@ -46,18 +50,27 @@ function PartnerInfo(props) {
                     headers: { "content-type": "application/json" },
                 };
                 api.post(url, options).then((res) => {
-                    setDb([...db, res]);
-                    swal({
-                        title: "Excelente",
-                        text: `Has postulado exitosamente al trabajo: '${datos.title}' de la empresa '${props.PartnerName}'`,
-                        icon: "success",
-                    });
-                    setTimeout(() => {
-                        history.goBack();
-                    }, 1000);
-                    
+                    if (!res.err) {
+                        setDb([...db, res]);
+                        setLoading(false);
+                        swal({
+                            title: "Excelente",
+                            text: `Has postulado exitosamente al trabajo: '${datos.title}' de la empresa '${props.PartnerName}'`,
+                            icon: "success",
+                        });
+                        setTimeout(() => {
+                            history.goBack();
+                        }, 1000);
+                        sendEmail(datos.title);
+                    } else {
+                      setLoading(false);
+                      swal({
+                            title: "ERROR",
+                            text: `No ha podido postular al trabajo: '${datos.title}'`,
+                            icon: "error",
+                        });
+                    } 
                 });
-                sendEmail(datos.title);
             } else {
               swal({
                 text:"HAS CANCELADO TU POSTULACIÓN",
@@ -70,6 +83,7 @@ function PartnerInfo(props) {
     // This is the partner information section when a student clicks on a job
     return (
         <div className="body-container">
+            
             <div className="title-container">
                 <div className="title">
                     <h1>{ datos.title }</h1>
@@ -80,6 +94,7 @@ function PartnerInfo(props) {
                     <p> {datos.city}, {datos.country}</p>
                 </div>
             </div>
+            {loading && <Loader/>}
             <div className="half-page">
                 <div className="partner">
                     <img src={ partnerlogo } className="partnerlogopng" alt="logo de la empresa"/>

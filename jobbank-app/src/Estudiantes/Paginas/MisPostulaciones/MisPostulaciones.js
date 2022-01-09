@@ -7,6 +7,10 @@ import Cookies from 'universal-cookie';
 import apiPath from '../../../ApiPath';
 import ReactPaginate from "react-paginate";
 import "./Paginacion1.css";
+import { helpHttp } from '../../../helpers/helpHttp';
+import Loader from '../../../helpers/Loader';
+import Message from '../../../helpers/Message';
+
 
 const cookies = new Cookies();
 
@@ -22,9 +26,7 @@ function MisPostulaciones() {
       }
   });
 
-  
-
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(null);
 
   const [pageCount, setpageCount] = useState(0);
 
@@ -32,51 +34,68 @@ function MisPostulaciones() {
 
   const [paginaActual, setPaginaActual] = useState(copia);
 
+  const [error, setError] = useState(null);
+
+  const [loading, setLoading] = useState(false);
+
+  const [errorPage, setErrorPage] = useState(null);
+
+  const [loadingPage, setLoadingPage] = useState(false);
+
   const setCopia = (data) => {
     copia = data
   }
 
-  console.log("Pagina Actual")
-  console.log(paginaActual);
-  console.log("Pagina Actual")
-  console.log(paginaActual);
   let limit = 4;
 
+  let api = helpHttp();
 
-  useEffect(() => {
+  useEffect(() => { 
     const getComments = async () => {
-      const res = await fetch(
-        `${apiPath}/students/${user_id}/applications?_page=${paginaActual}&_limit=${limit}`
-      );
-      const datos_completos = await res.json();
-      const data = datos_completos.data;
-      const total = datos_completos.len_total_data;
-      setDatosTotales(total)
-      setpageCount(Math.ceil(total / limit));
-      setItems(data);
+      const url = `${apiPath}/students/${user_id}/applications?_page=${paginaActual}&_limit=${limit}`
+      setLoading(true);
+      api.get(url).then((res) => {
+        if (!res.err) {
+          const jobs_data = res.data;
+          const totalPages = res.len_total_data;
+          setDatosTotales(totalPages)
+          setpageCount(Math.ceil(totalPages / limit));
+          setItems(jobs_data);
+          setError(null)
+        } else {
+          setItems(null);
+          setError(res);
+        }
+        setLoading(false);
+      })
     };
     getComments();
   }, [limit]);
 
   const fetchComments = async (currentPage) => {
-    const res = await fetch(
-      `${apiPath}/students/${user_id}/applications?_page=${currentPage}&_limit=${limit}`
-    );
-    const datos_completos = await res.json();
-    const data = datos_completos.data;
-    const total = datos_completos.len_total_data;
-    setDatosTotales(total);
-    setpageCount(Math.ceil(total / limit));
-    setItems(data);
-    return data;
+    const url = `${apiPath}/students/${user_id}/applications?_page=${currentPage}&_limit=${limit}`
+      setLoadingPage(true);
+      api.get(url).then((res) => {
+        if (!res.err) {
+          const jobs_data = res.data;
+          const totalPages = res.len_total_data;
+          setDatosTotales(totalPages)
+          setpageCount(Math.ceil(totalPages / limit));
+          setItems(jobs_data);
+          setErrorPage(null)
+        } else {
+          setItems(null);
+          setErrorPage(res);
+        }
+        setLoadingPage(false);
+      })
   };
 
   const handlePageClick = async (data) => {
     let currentPage = data.selected;
     setPaginaActual(currentPage);
     window.scrollTo(0, 0);
-    const commentsFormServer = await fetchComments(currentPage);
-    setItems(commentsFormServer);
+    fetchComments(currentPage);
   };
 
   return (
@@ -88,74 +107,79 @@ function MisPostulaciones() {
         <div className='MPFiltersContainer'>
         </div>
         <div className='MPJobsContainer'>
-
-            {items.length === 1?
-              <h2 className="NumeroDeEmpleos">HAS POSTULADO A UN EMPLEO</h2>
-            :
-              <h2 className="NumeroDeEmpleos">HAS POSTULADO A {datosTotales} EMPLEOS</h2> 
-            }
-          <ReactPaginate
-            previousLabel={"<"}
-            nextLabel={">"}
-            breakLabel={"..."}
-            pageCount={pageCount}
-            forcePage={paginaActual}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={3}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination"}
-            pageClassName={"page-item"}
-            pageLinkClassName={"page-link"}
-            previousClassName={"page-item"}
-            previousLinkClassName={"page-link"}
-            nextClassName={"page-item "}
-            nextLinkClassName={"page-link"}
-            breakClassName={"page-item"}
-            breakLinkClassName={"page-link"}
-            activeClassName={"active"}
-            renderOnZeroPageCount={null}
-          />
-
-          <ListJobs>
-            
-            {items.map(trabajo => (
-            <ItemJob
-              key={trabajo.title}
-              id_job={trabajo.id}
-              id_empresa={trabajo.partner_id}
-              title={trabajo.title}
-              description={trabajo.description}
-              city={trabajo.city}
-              experience={trabajo.experience}
-              deleted={trabajo.deleted}
-              setCopia={setCopia}
-              paginaActual={paginaActual}
+          {datosTotales.length === 1?
+            <h2 className="NumeroDeEmpleos">HAS POSTULADO A UN EMPLEO</h2>
+          :
+            <h2 className="NumeroDeEmpleos">HAS POSTULADO A {datosTotales} EMPLEOS</h2> 
+          }
+          {(items) &&
+            <ReactPaginate
+              previousLabel={"<"}
+              nextLabel={">"}
+              breakLabel={"..."}
+              pageCount={pageCount}
+              forcePage={paginaActual}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination"}
+              pageClassName={"page-item"}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={"page-item "}
+              nextLinkClassName={"page-link"}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              activeClassName={"active"}
+              renderOnZeroPageCount={null}
             />
-            ))}
-          </ListJobs>
-
-          <ReactPaginate
-            previousLabel={"<"}
-            nextLabel={">"}
-            breakLabel={"..."}
-            pageCount={pageCount}
-            forcePage={paginaActual}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={3}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination"}
-            pageClassName={"page-item"}
-            pageLinkClassName={"page-link"}
-            previousClassName={"page-item"}
-            previousLinkClassName={"page-link"}
-            nextClassName={"page-item "}
-            nextLinkClassName={"page-link"}
-            breakClassName={"page-item"}
-            breakLinkClassName={"page-link"}
-            activeClassName={"active"}
-            renderOnZeroPageCount={null}
-          />
-
+          }
+          {loading && <Loader/>}
+          {(error|| errorPage) && <Message/>}
+          {(items) &&
+            
+            <ListJobs>
+              {loadingPage && <Loader/>}
+              {items.map(trabajo => (
+                <ItemJob
+                  key={trabajo.title}
+                  id_job={trabajo.id}
+                  id_empresa={trabajo.partner_id}
+                  title={trabajo.title}
+                  description={trabajo.description}
+                  city={trabajo.city}
+                  experience={trabajo.experience}
+                  deleted={trabajo.deleted}
+                  setCopia={setCopia}
+                  paginaActual={paginaActual}
+                />
+              ))}
+            </ListJobs>
+          }
+          {items &&
+            <ReactPaginate
+              previousLabel={"<"}
+              nextLabel={">"}
+              breakLabel={"..."}
+              pageCount={pageCount}
+              forcePage={paginaActual}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination"}
+              pageClassName={"page-item"}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={"page-item "}
+              nextLinkClassName={"page-link"}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              activeClassName={"active"}
+              renderOnZeroPageCount={null}
+            />
+          }
         </div>
       </div>
     </div>

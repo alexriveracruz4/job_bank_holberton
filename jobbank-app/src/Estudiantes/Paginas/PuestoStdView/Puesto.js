@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { EstudianteNav } from '../../Navegador/EstudianteNav'
 import PuestoInfo from "../../Componentes/PuestoStdView/PuestoInfo/PuestoInfo";
 import PartnerInfo from "../../Componentes/PuestoStdView/PartnerInfo/PartnerInfo";
@@ -7,29 +7,44 @@ import Cookies from 'universal-cookie';
 import apiPath from "../../../ApiPath";
 import { BackButton } from "../../../helpers/BackButton";
 import { useLocation } from "react-router-dom";
+import { helpHttp } from "../../../helpers/helpHttp";
+import Loader from "../../../helpers/Loader";
+import Message from "../../../helpers/Message";
+
 
 
 const cookies = new Cookies();
 function Puesto() {
   // Get data to use in the component
   const { PartnerId, JobId } = useParams();
-  const [JobData, setJobData] = React.useState([2]);
+  const [JobData, setJobData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   let location = useLocation();
-  let EstadoDePostulacion = location.state.EstadoDePostulacion
-  let DatosEmpresa = location.state.DatosEmpresa
+  let EstadoDePostulacion = location.state.EstadoDePostulacion;
+  let DatosEmpresa = location.state.DatosEmpresa;
 
+  let api = helpHttp();
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const obtenerJobDatos = async () => {
+      window.scrollTo(0, 0);
+      const url = `${apiPath}/partners/${PartnerId}/jobs/${JobId}`;
+      setLoading(true);
+      api.get(url).then((res) => {
+        if (!res.err) {
+          setJobData(res);
+          setError(null)
+        } else {
+          setJobData(null);
+          setError(res);
+        }
+        setLoading(false);
+      })
+    };
     obtenerJobDatos();
   }, []);
-
-  const obtenerJobDatos = async () => {
-    window.scrollTo(0, 0);
-    const data = await fetch(`${apiPath}/partners/${PartnerId}/jobs/${JobId}`);
-    const jobs = await data.json();
-    setJobData(jobs);
-  }
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
@@ -42,15 +57,22 @@ function Puesto() {
     <React.Fragment>
         <EstudianteNav />
         <BackButton/>
-        <PartnerInfo 
-          JobData = {JobData}
-          PartnerName={DatosEmpresa.name}
-          PartnerEmail={DatosEmpresa.email}
-          EstadoDePostulacion={EstadoDePostulacion}
-        />
-        <PuestoInfo 
-          JobData = {JobData}
-        />
+
+        {loading && <Loader/>}
+        {error && <Message/>}
+        {JobData &&
+          <PartnerInfo 
+            JobData = {JobData}
+            PartnerName={DatosEmpresa.name}
+            PartnerEmail={DatosEmpresa.email}
+            EstadoDePostulacion={EstadoDePostulacion}
+          />
+        }
+        {JobData &&
+          <PuestoInfo 
+            JobData = {JobData}
+          />
+        }
     </React.Fragment>
   );
 }

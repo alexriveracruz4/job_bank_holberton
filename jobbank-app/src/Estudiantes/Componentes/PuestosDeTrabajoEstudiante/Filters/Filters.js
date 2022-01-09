@@ -13,8 +13,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
 
   const handleFilters = async () => {
     setCopia({...searchJob})
-    const commentsFormServer = await fetchComments(0);
-    setItems(commentsFormServer);
+    fetchComments(0);
   };
 
   const handleKeyPress = (event) => {

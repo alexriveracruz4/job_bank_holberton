@@ -37,8 +37,9 @@ const CrudForm = ({ createData }) => {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch(`${apiPath}/partners/${PartnerId}/jobs/`);
-    const jobs = await data.json();
+    const datos = await fetch(`${apiPath}/partners/${PartnerId}/jobs/`);
+    const trabajos = await datos.json();
+    const jobs = await trabajos.data;
 
     const firstid = []
 
