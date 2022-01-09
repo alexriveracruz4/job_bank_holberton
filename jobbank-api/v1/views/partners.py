@@ -95,7 +95,9 @@ def post_partner():
             else:
                 abort(400, description="Not a valid name, max 45 characters")
         if key == "nation":
-            if len(value) <= 45:
+            if value == None or value == "":
+                    isvalid = True
+            elif len(value) <= 45:
                 for country in countries:
                     if value in country.values():
                         break
@@ -105,12 +107,16 @@ def post_partner():
             else:
                 abort(400, description="Nation must contain a maximum of 45 characters")
         if key == "region":
-            if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+            if value == None or value == "":
+                    isvalid = True
+            elif re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
                 isvalid = True
             else:
                 abort(400, description="Enter a valid city")
         if key == "phonenumber":
-            if re.match(r"^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,9}$", value):
+            if value == None or value == "":
+                    isvalid = True
+            elif re.match(r"^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,9}$", value):
                 isvalid = True
             else:
                 abort(400, description="Enter a valid phonenumber, max 15 characters")
@@ -125,12 +131,16 @@ def post_partner():
             else:
                 abort(400, description="Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
         if key == "web":
-            if re.match(r"(?=.{0,70}$)\S*$", value):
+            if value == None or value == "":
+                    isvalid = True
+            elif re.match(r"(?=.{0,70}$)\S*$", value):
                 isvalid = True
             else:
                 abort(400, description="Enter a valid web, max 70 characters")
         if key == "description":
-            if len(value) <= 1000:
+            if value == None or value == "":
+                    isvalid = True
+            elif len(value) <= 1000:
                 isvalid = True
             else:
                 abort(400, description="Description must contain a maximum of 1000 characters")
@@ -167,7 +177,9 @@ def put_partner(partner_id):
                 else:
                     abort(400, description="Not a valid name")
             if key == "nation":
-                if len(value) <= 45:
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 45:
                     for country in countries:
                         if value in country.values():
                             break
@@ -177,12 +189,16 @@ def put_partner(partner_id):
                 else:
                     abort(400, description="Nation must contain a maximum of 45 characters")
             if key == "region":
-                if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+                if value == None or value == "":
+                    isvalid = True
+                elif re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
                     isvalid = True
                 else:
                     abort(400, description="Enter a valid city")
             if key == "phonenumber":
-                if re.match(r"^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,9}$", value):
+                if value == None or value == "":
+                    isvalid = True
+                elif re.match(r"^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,9}$", value):
                     isvalid = True
                 else:
                     abort(400, description="Enter a valid phonenumber")
@@ -192,12 +208,16 @@ def put_partner(partner_id):
                 else:
                     abort(400, description="Enter a valid email")
             if key == "web":
-                if re.match(r"(?=.{0,70}$)\S*$", value):
+                if value == None or value == "":
+                    isvalid = True
+                elif re.match(r"(?=.{0,70}$)\S*$", value):
                     isvalid = True
                 else:
                     abort(400, description="Enter a valid web")
             if key == "description":
-                if len(value) <= 1000:
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 1000:
                     isvalid = True
                 else:
                     abort(400, description="Description must contain a maximum of 1000 characters")

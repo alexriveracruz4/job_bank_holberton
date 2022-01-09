@@ -36,59 +36,151 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    swal({
-      title: "EDITAR ADMIN",
-      text: `¿Está seguro de guardar los nuevos cambios realizados en el admin "${dataToEdit.firstname} ${dataToEdit.lastname}"?`,
-      buttons: ["Cancelar", "Guardar"],
-    }).then((willEdit) => {
-      if (willEdit) {
-        updateData(form);
-        cookies.set('firstname', form.firstname, {path:"/"});
-        cookies.set('lastname', form.lastname, {path:"/"});
-        swal("HAS EDITADO EXITOSAMENTE LOS DATOS DEL ADMIN", {
-            timer:"1500"
-        });
-        setTimeout(() => {
-          history.go(0);
-        }, 1000);
-      }
-    });
+    if (validateInputs() === true) {
+      swal({
+        title: "EDITAR ADMIN",
+        text: `¿Está seguro de guardar los nuevos cambios realizados en el admin "${dataToEdit.firstname} ${dataToEdit.lastname}"?`,
+        buttons: ["Cancelar", "Guardar"],
+      }).then((willEdit) => {
+        if (willEdit) {
+          updateData(form);
+          cookies.set('firstname', form.firstname, {path:"/"});
+          cookies.set('lastname', form.lastname, {path:"/"});
+          swal("HAS EDITADO EXITOSAMENTE LOS DATOS DEL ADMIN", {
+              timer:"1500"
+          });
+          setTimeout(() => {
+            history.go(0);
+          }, 1000);
+        }
+      });
+    };
+  };
+
+  // Getting variables from html
+  const inputFirstname = document.getElementById('inputFirstname');
+  const inputLastname = document.getElementById('inputLastname');
+  const inputEmail = document.getElementById('inputEmail');
+  const inputPassword = document.getElementById('inputPassword');
+
+ // Validate form inputs
+ function validateInputs() {
+  let formIsValid = true;
+
+  const firstnamevalue = inputFirstname.value.trim();
+  const formFirstname = document.getElementById('form-firstname');
+  const errorFirstname = document.getElementById('smallFirstname');
+
+  if (firstnamevalue === "") {
+    formFirstname.className = 'form-control error';
+    errorFirstname.innerText = "Complete este campo.";
+    formIsValid = false;
+  } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(firstnamevalue))) {
+    formFirstname.className = 'form-control error';
+    errorFirstname.innerText = "Use solo letras.";
+    formIsValid = false;
+  } else {
+    formFirstname.classList.remove('error');
   }
 
+  const lastnamevalue = inputLastname.value.trim();
+  const formLastname = document.getElementById('form-lastname');
+  const errorLastname = document.getElementById('smallLastname');
+
+  if (lastnamevalue === "") {
+    formLastname.className = 'form-control error';
+    errorLastname.innerText = "Complete este campo.";
+    formIsValid = false;
+  } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(lastnamevalue))) {
+    formLastname.className = 'form-control error';
+    errorLastname.innerText = "Use solo letras.";
+    formIsValid = false;
+  } else {
+    formLastname.classList.remove('error');
+  }
+
+  const emailvalue = inputEmail.value.trim();
+  const formEmail = document.getElementById('form-email')
+  const errorEmail = document.getElementById('smallEmail')
+
+  if (emailvalue === "") {
+    formEmail.className = 'form-control error';
+    errorEmail.innerText = "Complete este campo.";
+    formIsValid = false;
+  } else if (!(/^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/.test(emailvalue))) {
+    formEmail.className = 'form-control error';
+    errorEmail.innerText = "Por favor ingrese un email válido";
+    formIsValid = false;
+  } else {
+    formEmail.classList.remove('error');
+  }
+
+  const passwordvalue = inputPassword.value.trim();
+  const formPassword = document.getElementById('form-password')
+  const errorPassword = document.getElementById('smallPassword')
+
+  if (passwordvalue === "") {
+    formPassword.className = 'form-control error';
+    errorPassword.innerText = "Complete este campo.";
+    formIsValid = false;
+  } else if (!(/^^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(passwordvalue))) {
+    formPassword.className = 'form-control error';
+    errorPassword.innerText = "Use entre 8 y 20 caracteres. Mínimo una letra Mayúscula, una letra minúscula y un número";
+    formIsValid = false;
+  } else {
+    formPassword.classList.remove('error');
+  }
+
+  return formIsValid
+}
 
   return (
-    <div className="form-editar-admin">
+    <div className="container-profile-admin-edit">
       <div className="profile-title">
         <h1>Editar perfil</h1>
       </div>
-      <div className="form-div">
-        <form className="form-form" onSubmit={handleSubmit}>
-          <div className="form-group row">
-            <label htmlFor="inputFirstname" className="col-sm-1 col-form-label">Nombre</label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputFirstname" name="firstname" onChange={handleChange} value={form.firstname}/>
+
+      <div className='container-form'>
+        <form className='form'>
+
+          <div className="form-control" id='form-firstname'>
+            <label htmlFor="inputFirstname">Nombre</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputFirstname" name="firstname" onChange={handleChange} maxLength={45} value={form.firstname}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallFirstname'> Error message </small>
           </div>
 
-          <div className="form-group row">
-            <label htmlFor="inputLastname" className="col-sm-1 col-form-label">Apellidos</label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputLastname" name="lastname" onChange={handleChange} value={form.lastname}/>
+          <div className="form-control" id='form-lastname'>
+            <label htmlFor="inputLastname">Apellidos</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputLastname" name="lastname" onChange={handleChange} maxLength={45} value={form.lastname}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallLastname'> Error message </small>
           </div>
 
-          <div className="form-group row">
-            <label htmlFor="inputEmail" className="col-sm-1 col-form-label">Email</label>
-            <div className="col-sm-10">
-              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} />
+          <div className="form-control" id='form-email'>
+            <label htmlFor="inputEmail">Email</label>
+            <div className="inputFormDiv">
+              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} maxLength={45} value={form.email} />
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallEmail'> Error message </small>
           </div>
 
-          <div className="form-group row">
-            <label htmlFor="inputPassword" className="col-sm-1 col-form-label">Contraseña</label>
-            <div className="col-sm-10">
-              <input type="password" className="form-control" id="inputPassword" name="password" onChange={handleChange} value={form.password}/>
+          <div className="form-control" id='form-password'>
+            <label htmlFor="inputPassword">Contraseña</label>
+            <div className="inputFormDiv">
+              <input type="password" className="form-control" id="inputPassword" name="password" onChange={handleChange} maxLength={20} value={form.password}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallPassword'> Error message </small>
           </div>
 
           <div className="div-button-edit-admin">

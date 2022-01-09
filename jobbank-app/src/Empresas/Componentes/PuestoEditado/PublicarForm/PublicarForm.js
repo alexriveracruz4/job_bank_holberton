@@ -39,156 +39,314 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   // Sweetalert to confirm when the user clicks in Guardar Cambios
   const handleSubmit = (e) => {
     e.preventDefault();
-    swal({
-      title: "EDITAR TRABAJO",
-      text: `¿Está seguro de editar el empleo "${form.title}"?`,
-      buttons: ["Cancelar", "Si"],
-    }).then((willEdit) => {
-      if (willEdit) {
-        updateData(form);
-        swal("HAS EDITADO EXITOSAMENTE ESTE PUESTO DE TRABAJO", {
-            timer:"1500"
-          });
-        setTimeout(() => {
-          history.go(0);
-        }, 1000);
+    if (validateInputs() === true) {
+      swal({
+        title: "EDITAR TRABAJO",
+        text: `¿Está seguro de editar el empleo "${form.title}"?`,
+        buttons: ["Cancelar", "Si"],
+      }).then((willEdit) => {
+        if (willEdit) {
+          updateData(form);
+          swal("HAS EDITADO EXITOSAMENTE ESTE PUESTO DE TRABAJO", {
+              timer:"1500"
+            });
+          setTimeout(() => {
+            history.go(0);
+          }, 1000);
+        }
+      });
+    };
+  };
+
+  // Getting variables from html
+  const inputTitle = document.getElementById('inputTitle');
+  const inputCountry = document.getElementById('inputCountry');
+  const inputCity = document.getElementById('inputCity');
+  const inputExperience = document.getElementById('inputExperience');
+  const inputAgeMin = document.getElementById('inputAgeMin');
+  const inputAgeMax = document.getElementById('inputAgeMax');
+  const inputJobType = document.getElementById('inputJobType');
+  const inputPresOrRemote = document.getElementById('inputPresOrRemote');
+  const inputTravelAvailability = document.getElementById('inputDipTravel');
+  const inputDescription = document.getElementById('inputDescription');
+
+    // Validate form inputs
+    function validateInputs() {
+      let formIsValid = true;
+  
+      const titlevalue = inputTitle.value.trim();
+      const formTitle = document.getElementById('form-title');
+      const errorTitle = document.getElementById('smallTitle');
+  
+      if (titlevalue === "") {
+        formTitle.className = 'form-control error';
+        errorTitle.innerText = "Complete este campo.";
+        formIsValid = false;
+      } else {
+        formTitle.classList.remove('error');
       }
-    });
-  }
-
-  // Select with countries as options that are received from country.json
-  function InputCountry() {
-    return (
-      <div className="form-group row">
-        <label htmlFor="exampleFormControlSelect1" className="col-sm-1 col-form-label">País</label>
-        <div className="col-sm-10">
-          <select className="form-control" id="exampleFormControlSelect1" name="country" onChange={handleChange} value={form.country}>
-            <option>{form.country}</option>
-            {Countries.map(data => {;
-              return <option value={data.country}>{data.country}</option>;
-            })}
-          </select>
-        </div>
-      </div>
-    )
-  }
-
-  // Function that returns a select with job type options
-  function JobType() {
-    return (
-      <div className="travel-row form-group row">
-        <label htmlFor="inputJobType" className="travel-label col-sm-1 col-form-label">Jornada</label>
-        <div className="select-travel-div col-sm-10">
-          <select className="form-control" id="inputJobType" name="job_type" onChange={handleChange} value={form.job_type}>
-            <option>{form.job_type}</option>
-            <option value="Tiempo completo">Tiempo completo</option>
-            <option value="Tiempo parcial">Tiempo parcial</option>
-            <option value="Por horas">Por horas</option>
-          </select>
-        </div>
-      </div>
-    )
-  }
-
-  // Function that returns a select with work mode options
-  function PresOrRemote() {
-    return (
-      <div className="travel-row form-group row">
-        <label htmlFor="inputPresOrRemote" className="travel-label col-sm-1 col-form-label">Remoto o presencial</label>
-        <div className="select-travel-div col-sm-10">
-          <select className="form-control" id="inputPresOrRemote" name="pres_or_remote" onChange={handleChange} value={form.pres_or_remote}>
-            <option>{form.pres_or_remote}</option>
-            <option value="Presencial">Presencial</option>
-            <option value="Remoto">Remoto</option>
-            <option value="Semi-presencial">Semi-presencial</option>
-          </select>
-        </div>
-      </div>
-    )
-  }
-
-  // Function that returns a select with availability options
-  function InputTravelAval() {
-      return (
-        <div className="travel-row form-group row">
-          <label htmlFor="inputDisptravel" className="travel-label col-sm-1 col-form-label">Disponibilidad para viajar</label>
-          <div className="select-travel-div col-sm-10">
-            <select className="form-control" id="inputDiptravel" name="travel_availability" onChange={handleChange} value={form.travel_availability}>
-              <option>{form.travel_availability}</option>
-              <option value="Si">Si</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-        </div>
-    )
-  }
+  
+      const countryvalue = inputCountry.value.trim();
+      const formCountry = document.getElementById('form-country');
+      const errorCountry = document.getElementById('smallCountry');
+  
+      if (countryvalue === "") {
+        formCountry.className = 'form-control error';
+        errorCountry.innerText = "Complete este campo.";
+        formIsValid = false;
+      } else {
+        formCountry.classList.remove('error');
+      }
+  
+      const cityvalue = inputCity.value.trim();
+      const formCity = document.getElementById('form-city');
+      const errorCity = document.getElementById('smallCity');
+    
+      if (cityvalue === "") {
+        formCity.classList.remove('error');
+      } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(cityvalue))) {
+        formCity.className = 'form-control error';
+        errorCity.innerText = "Use solo letras.";
+        formIsValid = false;
+      } else {
+        formCity.classList.remove('error');
+      }
+  
+      const experiencevalue = inputExperience.value.trim();
+      const formExperience = document.getElementById('form-experience');
+      const errorExperience = document.getElementById('smallExperience');
+  
+      if (experiencevalue === "") {
+        formExperience.className = 'form-control error';
+        errorExperience.innerText = "Complete este campo.";
+        formIsValid = false;
+      } else {
+        formExperience.classList.remove('error');
+      }
+  
+      const AgeMinValue = inputAgeMin.value.trim();
+      const AgeMinIntValue = parseInt(AgeMinValue)
+      const formAgeMin = document.getElementById('form-age_min');
+      const errorAgeMin = document.getElementById('smallAgeMin');
+  
+      if (AgeMinIntValue === 0) {
+        formAgeMin.className = 'form-control error';
+        errorAgeMin.innerText = "Complete este campo.";
+        formIsValid = false;
+      } else if (!(/^[1-9][0-9]{1}$|^99$/.test(AgeMinIntValue))) {
+        formAgeMin.className = 'form-control error';
+        errorAgeMin.innerText = "Ingrese una edad válida"
+        formIsValid = false;
+      } else if (typeof(AgeMinIntValue) === "string") { 
+        formAgeMin.className = 'form-control error';
+        errorAgeMin.innerText = "Solo puedes ingresar números."
+        formIsValid = false;
+      } else {
+        formAgeMin.classList.remove('error');
+      }
+  
+      const AgeMaxValue = inputAgeMax.value.trim();
+      const AgeMaxIntValue = parseInt(AgeMaxValue)
+      const formAgeMax = document.getElementById('form-age_max');
+      const errorAgeMax = document.getElementById('smallAgeMax');
+  
+      if (AgeMaxIntValue === 0) {
+        formAgeMax.className = 'form-control error';
+        errorAgeMax.innerText = "Complete este campo.";
+        formIsValid = false;
+      } else if (!(/^[1-9][0-9]{1}$|^99$/.test(AgeMaxIntValue))) {
+        formAgeMax.className = 'form-control error';
+        errorAgeMax.innerText = "Ingrese una edad válida"
+        formIsValid = false;
+      } else if (typeof(AgeMaxIntValue) === "string") { 
+        formAgeMax.className = 'form-control error';
+        errorAgeMax.innerText = "Solo puedes ingresar números."
+        formIsValid = false;
+      } else {
+        formAgeMax.classList.remove('error');
+      }
+  
+      const JobTypeValue = inputJobType.value.trim();
+      const formJobType = document.getElementById('form-job_type');
+      const errorJobType = document.getElementById('smallJobType');
+  
+      if (JobTypeValue === "") {
+        formJobType.className = 'form-control error';
+        errorJobType.innerText = "Complete este campo.";
+        formIsValid = false;
+      } else {
+        formJobType.classList.remove('error');
+      }
+  
+      const PresOrRemoteValue = inputPresOrRemote.value.trim();
+      const formPresOrRemote = document.getElementById('form-pres_or_remote');
+      const errorPresOrRemote = document.getElementById('smallPresOrRemot');
+  
+      if (PresOrRemoteValue === "") {
+        formPresOrRemote.className = 'form-control error';
+        errorPresOrRemote.innerText = "Complete este campo.";
+        formIsValid = false;
+      } else {
+        formPresOrRemote.classList.remove('error');
+      }
+  
+      const TravelAvailabilityValue = inputTravelAvailability.value.trim();
+      const formTravelAvailability = document.getElementById('form-travel_availability');
+      const errorTravelAvailability = document.getElementById('smallTravelAvailability');
+  
+      if (TravelAvailabilityValue === "") {
+        formTravelAvailability.className = 'form-control error';
+        errorTravelAvailability.innerText = "Complete este campo.";
+        formIsValid = false;
+      } else {
+        formTravelAvailability.classList.remove('error');
+      }
+  
+      const DescriptionValue = inputDescription.value.trim();
+      const formDescription = document.getElementById('form-description');
+      const errorDescription = document.getElementById('smallDescription');
+  
+      if (DescriptionValue === "") {
+        formDescription.className = 'form-control error';
+        errorDescription.innerText = "Complete este campo.";
+        formIsValid = false;
+      } else {
+        formDescription.classList.remove('error');
+      }
+  
+      return formIsValid
+    }
 
   return (
-    <div className="form-Publicar">
+    <div className="container-profile-job-edit">
       <div className="profile-title">
         <h1>Editar puesto de trabajo</h1>
       </div>
-      <div className="form-div">
-        <form className="form-form">
-          <div className="form-group row">
-            <label htmlFor="inputTitle" className="col-sm-1 col-form-label">Título</label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputTitle" name="title" onChange={handleChange} value={form.title}/>
+
+      <div className='container-form'>
+        <form className='form'>
+
+          <div className="form-control" id='form-title'>
+            <label htmlFor="inputTitle">Título</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputTitle" name="title" maxLength={40} onChange={handleChange} value={form.title}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallTitle'> Error message </small>
           </div>
 
-          <InputCountry />
-
-          <div className="form-group row">
-            <label htmlFor="inputCity" className="col-sm-1 col-form-label">Ciudad</label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputCity" name="city" onChange={handleChange} value={form.city}/>
+          <div className='form-control' id='form-country'>
+            <label htmlFor="inputCountry">País</label>
+            <div className='inputFormDiv'>
+              <select className="form-control" id="inputCountry" onChange={handleChange} name="country" value={form.country}>
+                <option>{form.country}</option>
+                {Countries.map(data => {;
+                  return <option value={data.country}>{data.country}</option>;
+                })}
+              </select>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallCountry'> Error message </small>
           </div>
 
-          <PresOrRemote />
-
-          <div className="form-group row">
-            <label htmlFor="inputExp" className="col-sm-1 col-form-label">Experiencia</label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputExp" name="experience" onChange={handleChange} value={form.experience}/>
+          <div className="form-control" id='form-city'>
+            <label htmlFor="inputCity">Ciudad</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputCity" maxLength={45} name="city" onChange={handleChange} value={form.city}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallCity'> Error message </small>
           </div>
 
-          <div className="travel-div">
-            <InputTravelAval />
+          <div className="form-control" id='form-experience'>
+            <label htmlFor="inputExperience">Experiencia</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputExperience" maxLength={45} name="experience" onChange={handleChange} value={form.experience}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallExperience'> Error message </small>
           </div>
 
-          <div className="form-group row">
-            <label htmlFor="inputMinAge" className="col-sm-1 col-form-label">Edad mínima</label>
-            <div className="col-sm-10">
-              <input type="number" className="form-control" id="inputMinAge" min="1" max="100" name="age_min" onChange={handleChange} value={form.age_min}/>
+          <div className="form-control" id='form-age_min'>
+            <label htmlFor="inputAgeMin">Edad mínima</label>
+            <div className="inputFormDiv">
+              <input type="tel" className="form-control" id="inputAgeMin" name="age_min" maxLength={2} onChange={handleChange} value={form.age_min} />
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallAgeMin'> Error message </small>
           </div>
 
-          <div className="form-group row">
-            <label htmlFor="inputMaxAge" className="col-sm-1 col-form-label">Edad máxima</label>
-            <div className="col-sm-10">
-              <input type="number" className="form-control" id="inputMaxAge" min="1" max="100" name="age_max" onChange={handleChange} value={form.age_max}/>
+          <div className="form-control" id='form-age_max'>
+            <label htmlFor="inputAgeMax">Edad máxima</label>
+            <div className="inputFormDiv">
+              <input type="tel" className="form-control" id="inputAgeMax" name="age_max" maxLength={2} onChange={handleChange} value={form.age_max}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallAgeMax'> Error message </small>
           </div>
 
-          <div className="form-group row">
-            <label htmlFor="inputSalary" className="col-sm-1 col-form-label">Salario</label>
-            <div className="col-sm-10">
-              <input type="text" className="form-control" id="inputSalary" name="salary" onChange={handleChange} value={form.salary} />
+          <div className="form-control" id='form-salary'>
+            <label htmlFor="inputSalary">Salario</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputSalary" name="salary" maxLength={45} onChange={handleChange} value={form.salary} />
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallSalary'> Error message </small>
           </div>
 
-          <JobType />
-
-          <div className="description-div">
-            <div className="description-box form-group row">
-              <label htmlFor="inputDescription" className="description-label col-sm-1 col-form-label">Descripción</label>
-              <div className="text-div">
-                <textarea className="form-control" id="inputDescription" rows="10" maxLength="1000" name="description" onChange={ handleChange } value={form.description} />
-              </div>
+          <div className="form-control" id='form-job_type'>
+            <label htmlFor="inputJobType">Jornada</label>
+            <div className="inputFormDiv">
+              <select className="form-control" id="inputJobType" onChange={handleChange} name="job_type" value={form.job_type}>
+                <option></option>
+                <option value="Tiempo completo">Tiempo completo</option>
+                <option value="Tiempo parcial">Tiempo parcial</option>
+                <option value="Por horas">Por horas</option>
+              </select>
             </div>
+            <small id='smallJobType'> Error message </small>
+          </div>
+
+          <div className="form-control" id='form-pres_or_remote'>
+            <label htmlFor="inputPresOrRemote">Remoto o presencial</label>
+            <div className="inputFormDiv">
+              <select className="form-control" id="inputPresOrRemote" onChange={handleChange} name="pres_or_remote" value={form.pres_or_remote}>
+                <option></option>
+                <option value="Presencial">Presencial</option>
+                <option value="Remoto">Remoto</option>
+                <option value="Semi-presencial">Semi-presencial</option>
+              </select>
+            </div>
+            <small id='smallPresOrRemot'> Error message </small>
+          </div>
+
+          <div className="form-control" id='form-travel_availability'>
+            <label htmlFor="inputDispTravel">Disponibilidad para viajar</label>
+            <div className="inputFormDiv">
+              <select className="form-control" id="inputDipTravel" onChange={handleChange} name="travel_availability" value={form.travel_availability}>
+                <option></option>
+                <option value="Si">Si</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+            <small id='smallTravelAvailability'> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-description'>
+            <label htmlFor="inputDescription">Descripción</label>
+            <div className='inputFormDiv'>
+              <textarea className="form-control" id="inputDescription" rows="10" maxLength={2000} name="description" onChange={ handleChange } value={form.description} />
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallDescription'> Error message </small>
           </div>
 
           <div className="div-button-editar-estudiante">

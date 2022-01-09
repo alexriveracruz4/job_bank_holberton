@@ -45,26 +45,68 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
   // Sweetalert to confirm when the user clicks in Guardar Cambios
   const history = useHistory();
+  let uploadInputImage = useRef();
+  let uploadInputCV = useRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateInputs() === true) {
+
       swal({
         title: "EDITAR PERFIL",
         text: `¿Está seguro de guardar los cambios realizados?`,
         buttons: ["Cancelar", "Guardar"],
       }).then((willEdit) => {
         if (willEdit) {
-          updateData(form);
-          cookies.set('firstname', form.firstname, {path:"/"});
+
+          // updateData function
+          async function updateForm() {
+            const updata = await updateData(form);
+
+            if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
+              const data = new FormData();
+              data.append('file', uploadInputImage.files[0]);
+              const urlupload = `${apiPath}/students/`+ cookies.get('id') + '/uploadphoto'
   
-          cookies.set('lastname', form.lastname, {path:"/"});
+              fetch(urlupload, {
+                method: 'POST',
+                body: data,
+              }).then((response) => {
+                response.json().then((body) => {
+                  cookies.set('photo_filename_physical', body.photo_filename_physical);
+                });
+              })
+            }
   
-          swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
-              timer:"1500"
-          });
-          setTimeout(() => {
-            history.go(0);
-          }, 1000);
+            // Upload CV
+            if (uploadInputCV.files[0] != undefined) {
+              const cvData = new FormData();
+              cvData.append('file', uploadInputCV.files[0]);
+              const urlUploadCV = `${apiPath}/students/`+ cookies.get('id') + '/uploadcv'
+          
+              fetch(urlUploadCV, {
+                method: 'POST',
+                body: cvData,
+              }).then((response) => {
+                response.json().then((body) => {
+                  cookies.set('cv_filename_physical', body.cv_filename_physical);
+                });
+              });
+            }
+  
+            cookies.set('firstname', form.firstname, {path:"/"});
+    
+            cookies.set('lastname', form.lastname, {path:"/"});
+    
+            swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
+                timer:"1500"
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          }
+
+          updateForm();
         }
       });
     } else {
@@ -77,7 +119,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     }
   }
 
-  // validacion formulario
+  // Getting variables from html
 
   const inputFirstname = document.getElementById('inputFirstname');
   const inputLastname = document.getElementById('inputLastname');
@@ -85,15 +127,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const inputCellphone = document.getElementById('inputCellphone');
   const inputAge = document.getElementById('inputAge');
   const inputAvailability = document.getElementById('inputAvailability');
-  const inputPresOrRemote= document.getElementById('inputPresOrRemote');
-  const inputNationality = document.getElementById('inputNationality');
-  const inputDiptravel = document.getElementById('inputDiptravel');
-  const inputLinkedIn = document.getElementById('inputLinkedIn');
-  const inputGithub = document.getElementById('inputGithub');
-  const inputTwitter = document.getElementById('inputTwitter');
-  const inputDescription = document.getElementById('inputDescription');
 
-  // mio
+  // Validate form inputs
 
   function validateInputs() {
     let formIsValid = true;
@@ -104,11 +139,11 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
     if (firstnamevalue === "") {
       formFirstname.className = 'form-control error';
-      errorFirstname.innerText = "Completa este campo.";
+      errorFirstname.innerText = "Complete este campo.";
       formIsValid = false;
     } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(firstnamevalue))) {
       formFirstname.className = 'form-control error';
-      errorFirstname.innerText = "Usa solo letras.";
+      errorFirstname.innerText = "Use solo letras.";
       formIsValid = false;
     } else {
       formFirstname.classList.remove('error');
@@ -120,11 +155,11 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
     if (lastnamevalue === "") {
       formLastname.className = 'form-control error';
-      errorLastname.innerText = "Completa este campo.";
+      errorLastname.innerText = "Complete este campo.";
       formIsValid = false;
     } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(lastnamevalue))) {
       formLastname.className = 'form-control error';
-      errorLastname.innerText = "Usa solo letras.";
+      errorLastname.innerText = "Use solo letras.";
       formIsValid = false;
     } else {
       formLastname.classList.remove('error');
@@ -136,7 +171,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
     if (emailvalue === "") {
       formEmail.className = 'form-control error';
-      errorEmail.innerText = "Completa este campo.";
+      errorEmail.innerText = "Complete este campo.";
       formIsValid = false;
     } else if (!(/^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/.test(emailvalue))) {
       formEmail.className = 'form-control error';
@@ -152,11 +187,11 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
     if (cellphonevalue === "") {
       formCellphone.className = 'form-control error';
-      errorEmail.innerText = "Completa este campo."
+      errorEmail.innerText = "Complete este campo."
       formIsValid = false;
     } else if (!(/^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,6}$/im.test(cellphonevalue))) {
       formCellphone.className = 'form-control error';
-      errorCellphone.innerText = "Sólo puedes ingresar números.";
+      errorCellphone.innerText = "Solo puedes ingresar números.";
       formIsValid = false;
     } else {
       formCellphone.classList.remove('error');
@@ -169,7 +204,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
     if (ageintvalue === 0) {
       formAge.className = 'form-control error';
-      errorAge.innerText = "Completa este campo.";
+      errorAge.innerText = "Complete este campo.";
       formIsValid = false;
     } else if (!(/^[1-9][0-9]{1}$|^99$/.test(ageintvalue))) {
       formAge.className = 'form-control error';
@@ -177,7 +212,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       formIsValid = false;
     } else if (typeof(ageintvalue) === "string") { 
       formAge.className = 'form-control error';
-      errorAge.innerText = "Sólo puedes ingresar números."
+      errorAge.innerText = "Solo puedes ingresar números."
       formIsValid = false;
     } else {
       formAge.classList.remove('error');
@@ -194,11 +229,11 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
     if (availabvalue === "") {
       formAvailability.className = 'form-control error';
-      errorAvailability.innerText = "Completa este campo.";
+      errorAvailability.innerText = "Complete este campo.";
       formIsValid = false;
     } else if (!(arrayoptions.includes(availabvalue))) {
       formAvailability.className = 'form-control error';
-      errorAvailability.innerText = "Ingrese Disponible a nuevas ofertas"
+      errorAvailability.innerText = "Ingrese una opcion del menú desplegable"
       formIsValid = false;
     } else {
       formAvailability.classList.remove('error');
@@ -206,54 +241,48 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
     return formIsValid
   }
-  
-  const [imageURL, setImageURL] = useState();
-  let uploadInput = useRef();
 
-  const handleUploadImage = (e) => {
-    e.preventDefault();
+  // See the chosen image
+  const uploadedImage = React.useRef(null);
 
-    const data = new FormData();
-    data.append('file', uploadInput.files[0]);
-    const urlupload = `${apiPath}/students/`+ cookies.get('id') + '/uploadphoto'
-
-    fetch(urlupload, {
-      method: 'POST',
-      body: data,
-    }).then((response) => {
-      response.json().then((body) => {
-        cookies.set('cv_filename_physical', body.cv_filename_physical);
-        imageURL(`${apiPath}/${body.file}`);
-      });
-    });
-  }
+  const handleImageUploaded = e => {
+    const [file] = e.target.files;
+    if (file) {
+      const reader = new FileReader();
+      const {current} = uploadedImage;
+      current.file = file;
+      reader.onload = (e) => {
+          current.src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <div className="container-profile">
       <div className="header-profile">
         <h1>Editar mi perfil</h1>
       </div>
+
       {/* new form without bootstrap */}
       <div className='container-form'>
         <form className='form'>
           {/* Photo */}
-
           <div className='form-control'>
             <div className="form-Estudiante">
               <div className="form-div">
-                <form onSubmit={ handleUploadImage } className="form-form">
+                <form className="form-form">
                   <div className="photoform-div">
                     <label htmlFor="inputPhoto" className="col-form-label">Foto de perfil</label>
                     <div className='usericon-div'>
-                      <img src={ UserIcon } className="usericon-form" alt="imagen de usuario" />
+                      <img src={ UserIcon } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
                     </div>
                     <small id="photoHelpInline" className="text-muted">Please upload a square-shaped picture. Max 2MB, Formats allowed: jpg, png.</small>
                     <div className="container-selectFile">
                       <div className="box-photo form-control">
-                        <input ref={(ref) => { uploadInput = ref; }} type="file" />
-                        <button>Cargar</button>
+                        <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/*" onChange={handleImageUploaded} />
                       </div>
-                      <div className="cv-name">
+                      <div className="cv-photo">
                         <a href={cookies.get("photo_filename_logical")}>{cookies.get('photo_filename_physical')}</a>
                       </div>
                     </div>
@@ -413,9 +442,25 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <small> Error message </small>
           </div>
 
-          <UploadCv />
-
-
+          <div className='form-control'>
+            <div className="form-Estudiante">
+              <div className="form-div">
+                <form className="form-form">
+                  <div className="form-group row">
+                    <label htmlFor="inputPhoto" className="col-form-label">Subir CV</label>
+                    <div className="container-selectFile">
+                      <div className="box-photo form-control">
+                        <input ref={(ref) => { uploadInputCV = ref; }} type="file" accept="application/pdf" />
+                      </div>
+                      <div className="cv-name">
+                        <a href={cookies.get("cv_filename_logical")}>{cookies.get('cv_filename_physical')}</a>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
 
           <div className='form-control'>
             <button
@@ -433,61 +478,3 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 }
 
 export default CrudForm;
-
-class UploadCv extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      imageURL: '',
-    };
-
-    this.handleUploadImage = this.handleUploadImage.bind(this);
-  }
-
-  // Event that uploads the curriculum
-  handleUploadImage(ev) {
-    ev.preventDefault();
-
-    const data = new FormData();
-    data.append('file', this.uploadInput.files[0]);
-    const urlupload = `${apiPath}/students/`+ cookies.get('id') + '/uploadcv'
-
-    fetch(urlupload, {
-      method: 'POST',
-      body: data,
-    }).then((response) => {
-      response.json().then((body) => {
-        cookies.set('cv_filename_physical', body.cv_filename_physical);
-        this.setState({ imageURL: `${apiPath}/${body.file}` });
-      });
-    });
-  }
-
-  render() {
-    return (
-      <div className='form-control'>
-        <div className="form-Estudiante">
-          <div className="form-div">
-            <form onSubmit={this.handleUploadImage} className="form-form">
-              <div className="form-group row">
-                <label htmlFor="inputPhoto" className="col-form-label">Subir CV</label>
-                <div className="container-selectFile">
-                  <div className="box-photo form-control">
-                    <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
-                    <button>Cargar</button>
-                  </div>
-                  <div className="cv-name">
-                    <a href={cookies.get("cv_filename_logical")}>{cookies.get('cv_filename_physical')}</a>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-export { UploadCv };

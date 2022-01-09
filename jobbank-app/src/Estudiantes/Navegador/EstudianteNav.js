@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import './EstudianteNav.css';
 import logo from "./ImagenesNav/holberton-logo.png";
 import UserIcon from "./ImagenesNav/user-icon.png";
@@ -41,11 +41,27 @@ function closeSessionEst() {
 
 // Navigator component
 function EstudianteNav() {
+
+  const [student, setStudent] = useState([2]);
+
+  React.useEffect(() => {
+    obtenerDatosDeEstudiantes();
+  }, []);
+
+  let student_id = cookies.get('id')
+
+  const obtenerDatosDeEstudiantes = async () => {
+    const data = await fetch(`${apiPath}/students/${student_id}`);
+    const applications = await data.json();
+    setStudent(applications);
+  }
+
   let history = useHistory();
 
   let photo = UserIcon;
-  if (cookies.get('photo_filename_logical') !== "null"){
-    photo = `${apiPath}/student_photos/${cookies.get('photo_filename_logical')}`;
+
+  if (student.photo_filename_logical != null && student.photo_filename_logical != undefined){
+    photo = `${apiPath}/student_photos/${student.photo_filename_logical}`;
   }
 
   return (

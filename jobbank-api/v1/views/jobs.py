@@ -131,16 +131,6 @@ def get_partner_job(partner_id):
         out = jsonify(data)
         return out
 
-    """
-    partner = storage.get(Partner, partner_id)
-    if not partner:
-        abort(404)
-    jobs = []
-    for job in partner.jobs:
-        jobs.append(job.to_dict())
-    return jsonify(jobs)
-    """
-
 @app_views.route('/jobs/<partner_id>/<job_id>/students', methods=['GET'],
                  strict_slashes=False)
 def get_job_students(partner_id, job_id):
@@ -235,6 +225,11 @@ def post_job():
                     abort(400, description="Country option not found")
             else:
                 abort(400, description="Country must contain a maximum of 45 characters")
+        if key == "city":
+            if len(value) <= 45:
+                isvalid = True
+            else:
+                abort(400, description="Salary must contain a maximum of 45 characters")
         if key == "experience":
             if len(value) <= 45:
                 isvalid = True
@@ -251,7 +246,9 @@ def post_job():
             else:
                 abort(400, description="Not a valid age")
         if key == "salary":
-            if len(value) <= 45:
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 45:
                 isvalid = True
             else:
                 abort(400, description="Salary must contain a maximum of 45 characters")
@@ -331,23 +328,36 @@ def put_job(partner_id, job_id):
                         abort(400, description="Country option not found")
                 else:
                     abort(400, description="Country must contain a maximum of 45 characters")
+            if key == "city":
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 45:
+                    isvalid = True
+                else:
+                    abort(400, description="Title must contain a maximum of 45 characters")
             if key == "experience":
                 if len(value) <= 45:
                     isvalid = True
                 else:
                     abort(400, description="Experience must contain a maximum of 45 characters")
             if key == "age_min":
-                if re.match(r"^[1-9][0-9]?$|^100$", str(value)):
+                if value == None or value == "":
+                    isvalid = True
+                elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
                     isvalid = True
                 else:
                     abort(400, description="Not a valid age")
             if key == "age_max":
-                if re.match(r"^[1-9][0-9]?$|^100$", str(value)):
+                if value == None or value == "":
+                    isvalid = True
+                elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
                     isvalid = True
                 else:
                     abort(400, description="Not a valid age")
             if key == "salary":
-                if len(value) <= 45:
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 45:
                     isvalid = True
                 else:
                     abort(400, description="Salary must contain a maximum of 45 characters")

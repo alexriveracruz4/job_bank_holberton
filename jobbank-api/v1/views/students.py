@@ -15,9 +15,9 @@ import re
 from v1.views.countries import countries
 import os
 
-availabilityList = ["Disponible a nuevas ofertas de trabajo", "No tengo empleo", "Estoy trabajando actualmente", "No tengo ningún interés en un nuevo empleo"]
-pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial"]
-disp_travelList = ["Disponible", "No disponible"]
+availabilityList = ["Disponible a nuevas ofertas de trabajo", "No tengo empleo", "Estoy trabajando actualmente", "No tengo ningún interés en un nuevo empleo", ""]
+pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial", ""]
+disp_travelList = ["Disponible", "No disponible", ""]
 
 @app_views.route('/students', methods=['GET'], strict_slashes=False)
 def get_students():
@@ -158,10 +158,10 @@ def post_student():
         abort(400, description="Missing email")
     if 'password' not in request.get_json():
         abort(400, description="Missing password")
-    if 'pres_or_remot' not in request.get_json():
+    """if 'pres_or_remot' not in request.get_json():
         abort(400, description="Missing pres_or_remot")
     if 'availability' not in request.get_json():
-        abort(400, description="Missing availability")
+        abort(400, description="Missing availability")"""
 
     data = request.get_json()
     isvalid = True
@@ -187,17 +187,23 @@ def post_student():
             else:
                 abort(400, description="Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
         if key == "phonenumber":
-            if re.match(r"^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,9}$", value):
+            if value == None or value == "":
+                isvalid = True
+            elif re.match(r"^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,9}$", value):
                 isvalid = True
             else:
                 abort(400, description="Not a valid phonenumber, use numbers and max 15 characters")
         if key == "age":
-            if re.match(r"^[1-9][0-9]?$|^100$", str(value)):
+            if value == None or value == "":
+                isvalid = True
+            elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
                 isvalid = True
             else:
                 abort(400, description="Not a valid age")
         if key == "nationality":
-            if len(value) <= 45:
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 45:
                 for country in countries:
                     if value in country.values():
                         break
@@ -207,7 +213,9 @@ def post_student():
             else:
                 abort(400, description="Must contain a maximum of 45 characters")
         if key == "availability":
-            if len(value) <= 60:
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 60:
                 if value in availabilityList:
                     isvalid = True
                 else:
@@ -215,13 +223,54 @@ def post_student():
             else:
                 abort(400, description="Must contain a maximum of 60 characters")
         if key == "pres_or_remot":
-            if len(value) <= 60:
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 60:
                 if value in pres_or_remotList:
                     isvalid = True
                 else:
                     abort(400, description="Not a valid option in pres_or_remot")
             else:
                 abort(400, description="Must contain a maximum of 60 characters")
+        if key == "disp_travel":
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 45:
+                if value in pres_or_remotList:
+                    isvalid = True
+                else:
+                    abort(400, description="Not a valid option in disp_travel")
+            else:
+                abort(400, description="Must contain a maximum of 45 characters")
+        if key == "linkedin":
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 70:
+                isvalid = True
+            else:
+                abort(400, description="Must contain a maximum of 70 characters")
+        if key == "github" or value == "":
+            if value == None:
+                isvalid = True
+            elif len(value) <= 70:
+                isvalid = True
+            else:
+                abort(400, description="Must contain a maximum of 70 characters")
+        if key == "twitter" or value == "":
+            if value == None:
+                isvalid = True
+            elif len(value) <= 70:
+                isvalid = True
+            else:
+                abort(400, description="Must contain a maximum of 70 characters")
+        if key == "description":
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 1000:
+                isvalid = True
+            else:
+                abort(400, description="Must contain a maximum of 1000 characters")
+
         if isvalid is True:
             instance = Student(**data)
     instance.save()
@@ -264,17 +313,23 @@ def put_student(student_id):
                 else:
                     abort(400, description="Not a valid email")
             if key == "phonenumber":
-                if re.match(r"^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,9}$", value):
+                if value == None or value == "":
+                    isvalid = True
+                elif re.match(r"^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,9}$", value):
                     isvalid = True
                 else:
                     abort(400, description="Not a valid phonenumber")
             if key == "age":
-                if re.match(r"^[1-9][0-9]?$|^100$", str(value)):
+                if value == None or value == "":
+                    isvalid = True
+                elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
                     isvalid = True
                 else:
                     abort(400, description="Not a valid age")
             if key == "availability":
-                if len(value) <= 60:
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 60:
                     if value in availabilityList:
                         isvalid = True
                     else:
@@ -282,7 +337,9 @@ def put_student(student_id):
                 else:
                     abort(400, description="Must contain a maximum of 60 characters")
             if key == "pres_or_remot":
-                if len(value) <= 60:
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 60:
                     if value in pres_or_remotList:
                         isvalid = True
                     else:
@@ -290,7 +347,9 @@ def put_student(student_id):
                 else:
                     abort(400, description="Must contain a maximum of 60 characters")
             if key == "nationality":
-                if len(value) <= 45:
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 45:
                     for country in countries:
                         if value in country.values():
                             break
@@ -300,7 +359,9 @@ def put_student(student_id):
                 else:
                     abort(400, description="Must contain a maximum of 45 characters")
             if key == "disp_travel":
-                if len(value) <= 45:
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 45:
                     if value in disp_travelList:
                         isvalid = True
                     else:
@@ -308,22 +369,30 @@ def put_student(student_id):
                 else:
                     abort(400, description="Must contain a maximum of 45 characters")
             if key == "linkedin":
-                if len(value) <= 70:
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 70:
                     isvalid = True
                 else:
                     abort(400, description="Must contain a maximum of 70 characters")
             if key == "github":
-                if len(value) <= 70:
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 70:
                     isvalid = True
                 else:
                     abort(400, description="Must contain a maximum of 70 characters")
             if key == "twitter":
-                if len(value) <= 70:
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 70:
                     isvalid = True
                 else:
                     abort(400, description="Must contain a maximum of 70 characters")
             if key == "description":
-                if len(value) <= 1000:
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 1000:
                     isvalid = True
                 else:
                     abort(400, description="Must contain a maximum of 1000 characters")
@@ -375,7 +444,7 @@ def fileUpload(student_id):
     if ext != ".pdf":
         abort(400, description="It is not a pdf file")
 
-    path = '/home/jhonatanjc/job_bank_holberton/curriculums/'
+    path = '/mnt/d/jbgithub/job_bank_holberton/curriculums/'
     filename_new = student_id + '_' + datetime.utcnow().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -426,10 +495,10 @@ def fileUploadPhoto(student_id):
     #print(os.stat(file).st_size )
     filename = file.filename #filename = secure_filename(file.filename)
     ext = pathlib.Path(filename).suffix
-    if ext != ".png" or ext != ".jpg":
+    if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
         abort(400, description="It is not a png or jpg file")
 
-    path = '/home/jhonatanjc/job_bank_holberton/student_photos/'
+    path = '/mnt/d/jbgithub/job_bank_holberton/student_photos/'
     filename_new = student_id + '_' + datetime.utcnow().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -453,5 +522,13 @@ def fileDownload(cv_filename_logical):
     """
     Download CV
     """
-    path = "/home/jhonatanjc/job_bank_holberton/curriculums/" + cv_filename_logical
+    path = "/mnt/d/jbgithub/job_bank_holberton/curriculums/" + cv_filename_logical
+    return send_file(path)
+
+@app_views.route('/student_photos/<photo_filename_logical>', methods=['GET'], strict_slashes=False)
+def studentPhoto(photo_filename_logical):
+    """
+    Photo
+    """
+    path = "/mnt/d/jbgithub/job_bank_holberton/student_photos/" + photo_filename_logical
     return send_file(path)

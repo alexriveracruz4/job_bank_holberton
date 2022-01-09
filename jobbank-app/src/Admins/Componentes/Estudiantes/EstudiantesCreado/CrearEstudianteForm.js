@@ -42,228 +42,299 @@ const CrudForm = ({ createData }) => {
   // Sweetalert to confirm when the user clicks in Crear nuevo estudiante
   const handleSubmit = (e) => {
     e.preventDefault();
-    swal({
-      title: "CREAR ESTUDIANTE",
-      text: `¿Está seguro de crear el nuevo estudiante?`,
-      buttons: ["Cancelar", "Si"],
-    }).then((willCreate) => {
-      if (willCreate) {
-        createData(form);
-        swal("HAS CREADO EXITOSAMENTE UN NUEVO ESTUDIANTE", {
-            timer:"1500"
-        });
-        setTimeout(() => {
-          let path = `/admin/estudiantes`; 
-          history.push(path);
-        }, 1000);
-      }
-    });
-  }
+    if (validateInputs() === true) {
+      swal({
+        title: "CREAR ESTUDIANTE",
+        text: `¿Está seguro de crear el nuevo estudiante?`,
+        buttons: ["Cancelar", "Si"],
+      }).then((willCreate) => {
+        if (willCreate) {
+          createData(form);
+          swal("HAS CREADO EXITOSAMENTE UN NUEVO ESTUDIANTE", {
+              timer:"1500"
+          });
+          setTimeout(() => {
+            let path = `/admin/estudiantes`; 
+            history.push(path);
+          }, 1000);
+        }
+      });
+    };
+  };
 
-  // Function that returns a select with availability options
-  function Availability() {
-    return (
-      <div className="travel-row form-group row">
-        <label
-          htmlFor="inputDisptravel"
-          className="travel-label col-sm-1 col-form-label"
-        >
-          Estado actual
-        </label>
-        <div className="select-travel-div col-sm-10">
-          <select
-            className="form-control"
-            id="inputDiptravel"
-            onChange={handleChange}
-            name="availability"
-            value={form.availability}
-          >
-            <option>{form.availability}</option>
-            <option onClick={(e) => e.target.textarea}>
-              Disponible a nuevas ofertas de trabajo
-            </option>
-            <option onClick={(e) => e.target.textarea}>No tengo empleo</option>
-            <option onClick={(e) => e.target.textarea}>
-              Estoy trabajando actualmente
-            </option>
-            <option onClick={(e) => e.target.textarea}>
-              No tengo ningún interés en un nuevo empleo
-            </option>
-          </select>
-        </div>
-      </div>
-    );
-  }
+  // Getting variables from html
 
-  // Function that returns a select with preference work mode options
-  function PresOrRemote() {
-    return (
-      <div className="travel-row form-group row">
-        <label
-          htmlFor="inputDisptravel"
-          className="travel-label col-sm-1 col-form-label"
-        >
-          Modo de trabajo de preferencia
-        </label>
-        <div className="select-travel-div col-sm-10">
-          <select
-            className="form-control"
-            id="inputDiptravel"
-            onChange={handleChange}
-            name="pres_or_remot"
-            value={form.pres_or_remot}
-          >
-            <option>{form.pres_or_remot}</option>
-            <option value="Presencial">Presencial</option>
-            <option value="Remoto">Remoto</option>
-            <option value="Semi-presencial">Semi-presencial</option>
-          </select>
-        </div>
-      </div>
-    );
-  }
+  const inputFirstname = document.getElementById('inputFirstname');
+  const inputLastname = document.getElementById('inputLastname');
+  const inputEmail = document.getElementById('inputEmail');
+  const inputPassword = document.getElementById('inputPassword');
+  const inputPhonenumber = document.getElementById('inputPhonenumber');
+  const inputAge = document.getElementById('inputAge');
+  const inputNationality = document.getElementById('inputNationality');
+  const inputAvailability = document.getElementById('inputAvailability');
 
-  // Function that returns a select with names of countries from country.json as options
-  function InputCountry() {
-    return (
-      <div className="form-group row">
-        <label
-          htmlFor="exampleFormControlSelect1"
-          className="col-sm-1 col-form-label"
-        >
-          País
-        </label>
-        <div className="col-sm-10">
-          <select
-            className="form-control"
-            id="exampleFormControlSelect1"
-            onChange={handleChange}
-            name="nationality"
-            value={form.nationality}
-          >
-            <option></option>
-            {Countries.map((data) => {
-              return <option value={data.country}>{data.country}</option>;
-            })}
-          </select>
-        </div>
-      </div>
-    );
+  // Validate form inputs
+
+  function validateInputs() {
+    let formIsValid = true;
+  
+    //arreglar esto
+    const firstnamevalue = null;
+    if (inputFirstname != null && inputFirstname != "") {
+      const firstnamevalue = inputFirstname.value.trim();
+    } else {
+      formFirstname.className = 'form-control error';
+      errorFirstname.innerText = "Complete este campo.";
+      formIsValid = false;
+    }
+    const formFirstname = document.getElementById('form-firstname');
+    const errorFirstname = document.getElementById('smallFirstname');
+
+    if (firstnamevalue === "") {
+      formFirstname.className = 'form-control error';
+      errorFirstname.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(firstnamevalue))) {
+      formFirstname.className = 'form-control error';
+      errorFirstname.innerText = "Use solo letras.";
+      formIsValid = false;
+    } else {
+      formFirstname.classList.remove('error');
+    }
+
+    const lastnamevalue = inputLastname.value.trim();
+    const formLastname = document.getElementById('form-lastname');
+    const errorLastname = document.getElementById('smallLastname');
+
+    if (lastnamevalue === "") {
+      formLastname.className = 'form-control error';
+      errorLastname.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(lastnamevalue))) {
+      formLastname.className = 'form-control error';
+      errorLastname.innerText = "Use solo letras.";
+      formIsValid = false;
+    } else {
+      formLastname.classList.remove('error');
+    }
+
+    const emailvalue = inputEmail.value.trim();
+    const formEmail = document.getElementById('form-email')
+    const errorEmail = document.getElementById('smallEmail')
+
+    if (emailvalue === "") {
+      formEmail.className = 'form-control error';
+      errorEmail.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else if (!(/^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/.test(emailvalue))) {
+      formEmail.className = 'form-control error';
+      errorEmail.innerText = "Por favor ingrese un email válido";
+      formIsValid = false;
+    } else {
+      formEmail.classList.remove('error');
+    }
+
+    const passwordvalue = inputPassword.value.trim();
+    const formPassword = document.getElementById('form-password')
+    const errorPassword = document.getElementById('smallPassword')
+
+    if (passwordvalue === "") {
+      formPassword.className = 'form-control error';
+      errorPassword.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else if (!(/^^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(passwordvalue))) {
+      formPassword.className = 'form-control error';
+      errorPassword.innerText = "Use entre 8 y 20 caracteres. Mínimo una letra Mayúscula, una letra minúscula y un número";
+      formIsValid = false;
+    } else {
+      formPassword.classList.remove('error');
+    }  
+
+    const nationalityvalue = inputNationality.value.trim();
+    const formNationality = document.getElementById('form-nationality');
+    const errorNationality = document.getElementById('smallNationality');
+
+    if (nationalityvalue === "") {
+      formNationality.className = 'form-control error';
+      errorNationality.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else {
+      formPassword.classList.remove('error');
+    }
+
+    const phonenumbervalue = inputPhonenumber.value.trim();
+    const formPhonenumber = document.getElementById('form-phonenumber');
+    const errorPhonenumber = document.getElementById('smallPhonenumber');
+
+    if (phonenumbervalue === "") {
+      formPhonenumber.classList.remove('error');
+    } else if (!(/^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,6}$/im.test(phonenumbervalue))) {
+      formPhonenumber.className = 'form-control error';
+      errorPhonenumber.innerText = "Solo puedes ingresar números.";
+      formIsValid = false;
+    } else {
+      formPhonenumber.classList.remove('error');
+    }
+
+    const agevalue = inputAge.value.trim();
+    const ageintvalue = parseInt(agevalue)
+    const formAge = document.getElementById('form-age');
+    const errorAge = document.getElementById('smallAge');
+
+    if (ageintvalue === 0) {
+      formAge.className = 'form-control error';
+      errorAge.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else if (!(/^[1-9][0-9]{1}$|^99$/.test(ageintvalue))) {
+      formAge.className = 'form-control error';
+      errorAge.innerText = "Ingrese una edad válida"
+      formIsValid = false;
+    } else if (typeof(ageintvalue) === "string") { 
+      formAge.className = 'form-control error';
+      errorAge.innerText = "Solo puedes ingresar números."
+      formIsValid = false;
+    } else {
+      formAge.classList.remove('error');
+    }
+
+    const availabvalue = inputAvailability.value.trim();
+    const formAvailability = document.getElementById('form-availability')
+    const errorAvailability = document.getElementById('smallAvailability')
+    const selectfor = document.getElementById('inputAvailability');
+    const arrayoptions = []
+    for (var i = 0; i < selectfor.options.length; i++) {
+      arrayoptions.push(selectfor.options[i].value);
+    }
+
+    if (availabvalue === "") {
+      formAvailability.className = 'form-control error';
+      errorAvailability.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else if (!(arrayoptions.includes(availabvalue))) {
+      formAvailability.className = 'form-control error';
+      errorAvailability.innerText = "Ingrese una opcion del menú desplegable"
+      formIsValid = false;
+    } else {
+      formAvailability.classList.remove('error');
+    }
+
+    return formIsValid
   }
 
   return (
-    <div className="form-crear-estudiante">
+    <div className="container-profile-create-student">
       <div className="profile-title">
         <h1>Agregar estudiante</h1>
       </div>
-      <div className="form-div">
-        <form className="form-form" onSubmit={handleSubmit}>
-          <div className="form-group row">
-            <label htmlFor="inputFirstname" className="col-sm-1 col-form-label">
-              Nombre
-            </label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control"
-                id="inputFirstname"
-                name="firstname"
-                onChange={handleChange}
-                value={form.firstname}
-              />
+
+      <div className='container-form'>
+        <form className='form'>
+
+          <div className='form-control' id='form-firstname'>
+            <label htmlFor="inputFirstname">Nombre</label>
+            <div className='inputFormDiv'>
+              <input type="text" className="form-control" id="inputFirstname" name="firstname" onChange={handleChange} value={form.firstname} maxLength={45}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallFirstname'> Error message </small>
           </div>
 
-          <div className="form-group row">
-            <label htmlFor="inputLastname" className="col-sm-1 col-form-label">
-              Apellidos
-            </label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control"
-                id="inputLastname"
-                name="lastname"
-                onChange={handleChange}
-                value={form.lastname}
-              />
+          <div className='form-control' id='form-lastname'>
+            <label htmlFor="inputLastname">Apellidos</label>
+            <div className='inputFormDiv'>
+              <input type="text" className="form-control" id="inputLastname" name="lastname" onChange={handleChange} value={form.lastname} maxLength={45}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallLastname'> Error message </small>
           </div>
 
-          <div className="form-group row">
-            <label htmlFor="inputEmail" className="col-sm-1 col-form-label">
-              Email
-            </label>
-            <div className="col-sm-10">
-              <input
-                type="email"
-                className="form-control"
-                id="inputEmail"
-                name="email"
-                onChange={handleChange}
-                value={form.email}
-              />
+          <div className='form-control' id='form-email'>
+            <label htmlFor="inputEmail">Email</label>
+            <div className='inputFormDiv'>
+              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} maxLength={45}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallEmail'> Error message </small>
           </div>
 
-          <div className="form-group row">
-            <label htmlFor="inputPassword" className="col-sm-1 col-form-label">
-              Contraseña
-            </label>
-            <div className="col-sm-10">
-              <input
-                type="password"
-                className="form-control"
-                id="inputPassword"
-                name="password"
-                onChange={handleChange}
-                value={form.password}
-              />
+          <div className="form-control" id='form-password'>
+            <label htmlFor="inputPassword">Contraseña</label>
+            <div className="inputFormDiv">
+              <input type="password" className="form-control" id="inputPassword" name="password" onChange={handleChange} maxLength={20} value={form.password}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallPassword'> Error message </small>
           </div>
 
-          <div className="form-group row">
-            <label
-              htmlFor="inputPhonenumber"
-              className="col-sm-1 col-form-label"
-            >
-              Celular
-            </label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control"
-                id="inputPhonenumber"
-                name="phonenumber"
-                onChange={handleChange}
-                value={form.phonenumber}
-              />
+          <div className='form-control' id='form-phonenumber'>
+            <label htmlFor="inputPhonenumber">Celular</label>
+            <div className='inputFormDiv'>
+              <input type="tel" className="form-control" id="inputPhonenumber" name="phonenumber" onChange={handleChange} value={form.phonenumber} maxLength={15} />
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallPhonenumber'> Error message </small>
           </div>
 
-          <div className="form-group row">
-            <label htmlFor="inputAge" className="col-sm-1 col-form-label">
-              Edad
-            </label>
-            <div className="col-sm-10">
-              <input
-                type="number"
-                className="form-control"
-                id="inputAge"
-                min="1"
-                max="100"
-                name="age"
-                onChange={handleChange}
-                value={form.age}
-              />
+          <div className='form-control' id='form-age'>
+            <label htmlFor="inputAge">Edad</label>
+            <div className='inputFormDiv'>
+              <input type="tel" className="form-control" id="inputAge" name="age" maxLength={2} onChange={handleChange} value={form.age} />
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
             </div>
+            <small id='smallAge'> Error message </small>
           </div>
 
-          <InputCountry />
+          <div className='form-control' id='form-nationality'>
+            <label htmlFor="inputNationality">País</label>
+            <div className='inputFormDiv'>
+              <select className="form-control" id="inputNationality" onChange={handleChange} name="nationality" value={form.nationality}>
+                <option>{form.nationality}</option>
+                {Countries.map(data => {;
+                  return <option value={data.country}>{data.country}</option>;
+                })}
+              </select>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallNationality'> Error message </small>
+          </div>
 
-          <Availability />
+          <div className='form-control' id='form-availability'>
+            <label htmlFor="inputAvailability">Estado actual</label>
+            <div className='inputFormDiv'>
+              <select className="form-control" id="inputAvailability" onChange={handleChange} name="availability" value={form.availability}>
+                <option selected disabled hidden></option>
+                <option onClick={e => e.target.textarea}>Disponible a nuevas ofertas de trabajo</option>
+                <option onClick={e => e.target.textarea}>No tengo empleo</option>
+                <option onClick={e => e.target.textarea}>Estoy trabajando actualmente</option>
+                <option onClick={e => e.target.textarea}>No tengo ningún interés en un nuevo empleo</option>
+              </select>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallAvailability'> Error message </small>
+          </div>
 
-          <PresOrRemote />
+          <div className='form-control'>
+            <label htmlFor="inputPresOrRemote">Modo de trabajo de preferencia</label>
+            <div className='inputFormDiv'>
+              <select className="form-control" id="inputPresOrRemote" onChange={handleChange} name="pres_or_remot" value={form.pres_or_remot}>
+                <option selected disabled hidden></option>
+                <option value="Presencial">Presencial</option>
+                <option value="Remoto">Remoto</option>
+                <option value="Semi-presencial">Semi-presencial</option>
+              </select>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small> Error message </small>
+          </div>
 
           <div className="div-button-create-partner">
             <button
