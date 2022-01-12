@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 
+import { Login } from './Login/Paginas/Login';
+
+
 // Student imports
 import { LoginEstudiantes } from './Estudiantes/Paginas/LoginEstudiantes/LoginEstudiantes';
 import { PuestosDeTrabajoEstudiante } from "./Estudiantes/Paginas/PuestosDeTrabajoEstudiante/PuestosDeTrabajoEstudiante"
@@ -20,6 +23,7 @@ import { Postulantes } from './Empresas/Paginas/Postulantes/Postulantes';
 // Admin imports
 import { LoginAdmins } from './Admins/Paginas/LoginAdmins/LoginAdmins';
 import { PerfilAdmin } from './Admins/Paginas/Admins/AdminEditado/AdminEditado'
+import { TodasLosAdmins } from './Admins/Paginas/Admins/TodosLosAdmins/TodosLosAdmins';
 import { EmpresaEditada } from './Admins/Paginas/Empresas/EmpresaEditada/EmpresaEditada';
 import { TodasLasEmpresas } from './Admins/Paginas/Empresas/TodasLasEmpresas/TodasLasEmpresas';
 import { EmpresaCreada } from './Admins/Paginas/Empresas/EmpresaCreada/EmpresaCreada';
@@ -32,22 +36,28 @@ import { TodosLosTrabajos } from './Admins/Paginas/TodosLosTrabajos/TodosLosTrab
 import { PuestoAdminView } from './Admins/Paginas/TodosLosTrabajos/PuestoAdminView/PuestoAdminView';
 
 // Landing page import
-import { Landing } from './Landing/Paginas/Landing/Landing';
+import { Landing } from './Inicio/Paginas/Landing/Landing';
 
 // Not found 404 import
 import { NotFoundPage } from './NotFoundPage';
+import NotFoundUser from './Inicio/Componentes/NotFoundUser';
+
+
+
 
 function App() {
   return (
     <Router>
       <Switch>
+          <Route exact path="/login" component={Login}/>
+
+          <Route exact path="/NotFoundUser" component={NotFoundUser}/>
+
           <Route path="/login/estudiante" component={LoginEstudiantes}/>
           <Route exact path="/estudiante/puestos-de-trabajo" component={PuestosDeTrabajoEstudiante}/>
           <Route exact path="/estudiante/puestos-de-trabajo/partners/:PartnerId/jobs/:JobId" component={Puesto}/>
           <Route exact path="/estudiante/mis-postulaciones" component={MisPostulaciones}/>
           <Route exact path="/estudiante/perfil" component={PerfilEstudiante}/>
-
-
 
           <Route path="/login/empresa" component={LoginEmpresas}/>
           <Route exact path="/empresa/mis-puestos-de-trabajo" component={MisPuestosDeTrabajo}/>
@@ -57,10 +67,19 @@ function App() {
           <Route exact path="/empresa/nuevo-puesto-de-trabajo" component={NuevoPuestoDeTrabajo}/>
           <Route exact path="/empresa/perfil" component={PerfilEmpresa}/>
 
-
-
           <Route exact path="/login/admin" component={LoginAdmins}/>
           <Route exact path="/admin/perfil" component={PerfilAdmin}/>
+
+          <Route exact path="/admin/admins" component={TodasLosAdmins}/>
+          {
+            /*
+            <Route exact path="/admin/admins/admin-editado/:id" component={AdminEditado}/>
+            <Route exact path="/admin/admins/crear-admin" component={AdminCreado}/>
+            */
+          }
+          
+
+
 
           <Route exact path="/admin/empresas" component={TodasLasEmpresas}/>
           <Route exact path="/admin/empresas/empresa-editada/:id" component={EmpresaEditada}/>
@@ -75,12 +94,8 @@ function App() {
           <Route exact path="/admin/todos-los-trabajos" component={TodosLosTrabajos}/>
           <Route exact path="/admin/todos-los-trabajos/ver-trabajo/:PartnerId/:JobId" component={PuestoAdminView}/>
 
-
-
           <Route exact path="/" component={Landing}/>
           
-
-
           <Route path="/404" component={NotFoundPage}/>
           <Route path="*">
             <Redirect to="/404"/>

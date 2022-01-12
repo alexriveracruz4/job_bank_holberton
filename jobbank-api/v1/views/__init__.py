@@ -9,3 +9,4 @@ from v1.views.students import *
 from v1.views.partners import *
 from v1.views.jobs import *
 from v1.views.admins import *
+from v1.views.login import *

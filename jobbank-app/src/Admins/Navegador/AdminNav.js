@@ -4,6 +4,7 @@ import logo from "./ImagenesNav/holberton-logo.png";
 import UserIcon from "./ImagenesNav/user-icon.png";
 import { useHistory } from 'react-router-dom'; 
 import Cookies from 'universal-cookie';
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 const cookies = new Cookies();
@@ -23,6 +24,7 @@ function closeSessionEst() {
 
 // Function that contains the navigation bar of the page
 function AdminNav() {
+  const { logout } = useAuth0();
   let history = useHistory();
   return (
     <header className="Admin-nav">
@@ -31,6 +33,13 @@ function AdminNav() {
       </div>
       <nav>
         <div className="nav-button">
+          <div className="admin-admins-div">
+            <button 
+              className="admin-admins-button" 
+              onClick={ () => {history.push("/admin/admins")}}>
+              Admins
+            </button>
+          </div>
           <div className="admin-estudiantes-div">
             <button 
               className="admin-estudiantes-button" 
@@ -67,7 +76,7 @@ function AdminNav() {
       <div className="cerrarsesion">
         <button
           className="cerrarsesion-button"
-          onClick={closeSessionEst}>
+          onClick={() => { closeSessionEst(); logout();}}>
           Cerrar sesión
         </button>
       </div>

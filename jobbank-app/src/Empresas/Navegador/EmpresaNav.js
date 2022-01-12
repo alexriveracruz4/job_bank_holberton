@@ -4,6 +4,7 @@ import logo from "./ImagenesNav/holberton-logo.png";
 import UserIcon from "./ImagenesNav/user-icon.png";
 import { useHistory } from 'react-router-dom'; 
 import Cookies from 'universal-cookie';
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 const cookies = new Cookies();
@@ -32,6 +33,7 @@ function closeSessionEst() {
 }
 
 function EmpresaNav() {
+  const { logout } = useAuth0();
   let history = useHistory();
   return (
     <header className="Partner-nav">
@@ -70,7 +72,7 @@ function EmpresaNav() {
       <div className="cerrarsesion">
         <button
           className="cerrarsesion-button"
-          onClick={closeSessionEst}>
+          onClick={() => { closeSessionEst(); logout();}}>
           Cerrar sesión
         </button>
       </div>

@@ -5,11 +5,14 @@ import UserIcon from "./ImagenesNav/user-icon.png";
 import { useHistory } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import apiPath from "../../ApiPath";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 const cookies = new Cookies();
 
 // Function that removes cookies from the current session
 function closeSessionEst() {
+    
     cookies.remove("id", {path: "/"});
     cookies.remove("firstname", {path: "/"});
     cookies.remove("lastname", {path: "/"});
@@ -36,12 +39,13 @@ function closeSessionEst() {
     cookies.remove('cv_filename_logical', {path:"/"});
     cookies.remove('photo_filename_physical', {path:"/"});
     cookies.remove('photo_filename_logical', {path:"/"});
-    window.location.href="/login/estudiante";
+    //window.location.href="/login/estudiante";
 }
 
 // Navigator component
 function EstudianteNav() {
 
+  const { logout } = useAuth0();
   const [student, setStudent] = useState([2]);
 
   React.useEffect(() => {
@@ -101,7 +105,7 @@ function EstudianteNav() {
       <div className="cerrarsesion">
         <button
           className="cerrarsesion-button"
-          onClick={closeSessionEst}>
+          onClick={() => { closeSessionEst(); logout();}}>
           Cerrar sesión
         </button>
       </div>
