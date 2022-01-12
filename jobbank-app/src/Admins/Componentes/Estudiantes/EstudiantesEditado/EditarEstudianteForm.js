@@ -128,9 +128,10 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     const errorPassword = document.getElementById('smallPassword')
 
     if (passwordvalue === "") {
-      formPassword.className = 'form-control error';
+      /*formPassword.className = 'form-control error';
       errorPassword.innerText = "Complete este campo.";
-      formIsValid = false;
+      formIsValid = false;*/
+      formPassword.classList.remove('error');
     } else if (!(/^^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(passwordvalue))) {
       formPassword.className = 'form-control error';
       errorPassword.innerText = "Use entre 8 y 20 caracteres. Mínimo una letra Mayúscula, una letra minúscula y un número";
