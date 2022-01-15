@@ -12,8 +12,8 @@ from math import ceil
 import re
 from v1.views.countries import countries
 
-job_typeList = ["Tiempo completo", "Tiempo parcial", "Por horas"]
-pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial"]
+job_typeList = ["Por proyecto", "Tiempo completo", "Tiempo parcial", "Por horas"]
+pres_or_remotList = ["Sin preferencia", "Presencial", "Remoto", "Semi-presencial"]
 travel_availabilityList = ["Si", "No"]
 
 @app_views.route('/jobs', methods=['GET'], strict_slashes=False)
@@ -231,17 +231,25 @@ def post_job():
             else:
                 abort(400, description="Salary must contain a maximum of 45 characters")
         if key == "experience":
-            if len(value) <= 45:
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 45:
                 isvalid = True
             else:
                 abort(400, description="Experience must contain a maximum of 45 characters")
         if key == "age_min":
-            if re.match(r"^[1-9][0-9]?$|^100$", str(value)):
+            if value == None or value == "" or value == 0:
+                value = 0
+                isvalid = True
+            elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
                 isvalid = True
             else:
                 abort(400, description="Not a valid age")
         if key == "age_max":
-            if re.match(r"^[1-9][0-9]?$|^100$", str(value)):
+            if value == None or value == "" or value == 0:
+                value = 0
+                isvalid = True
+            elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
                 isvalid = True
             else:
                 abort(400, description="Not a valid age")
@@ -336,19 +344,21 @@ def put_job(partner_id, job_id):
                 else:
                     abort(400, description="Title must contain a maximum of 45 characters")
             if key == "experience":
-                if len(value) <= 45:
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 45:
                     isvalid = True
                 else:
                     abort(400, description="Experience must contain a maximum of 45 characters")
             if key == "age_min":
-                if value == None or value == "":
+                if value == None or value == "" or value == 0:
                     isvalid = True
                 elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
                     isvalid = True
                 else:
                     abort(400, description="Not a valid age")
             if key == "age_max":
-                if value == None or value == "":
+                if value == None or value == "" or value == 0:
                     isvalid = True
                 elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
                     isvalid = True

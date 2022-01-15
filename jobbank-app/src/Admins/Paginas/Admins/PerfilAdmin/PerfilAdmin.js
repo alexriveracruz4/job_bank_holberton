@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
 import axios from 'axios';
 import { helpHttp } from '../../../../helpers/helpHttp';
 import { AdminNav } from "../../../Navegador/AdminNav";
-import CrudForm from '../../../Componentes/Admins/AdminEditado/AdminEditado';
+import CrudForm from '../../../Componentes/Admins/PerfilAdmin/PerfilAdmin';
 import Cookies from 'universal-cookie';
 import apiPath from '../../../../ApiPath';
 
 
 const cookies = new Cookies();
 
-function AdminEditado() {
+function PerfilAdmin() {
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
@@ -19,8 +18,7 @@ function AdminEditado() {
     }
   });
 
-  const { id } = useParams();
-  const admin_id = id;
+  const AdminID = cookies.get("id")
 
   // Gets the Administrator data and saves it in dataToEdit
   const [db, setDb] = useState([]);
@@ -28,7 +26,7 @@ function AdminEditado() {
 
   useEffect(async () => {
     await axios
-      .get(`${apiPath}/admins/${admin_id}`)
+      .get(`${apiPath}/admins/${AdminID}`)
       .then((res) => setDataToEdit(res.data));
   }, []);
 
@@ -64,4 +62,4 @@ function AdminEditado() {
   );
 }
 
-export { AdminEditado };
+export { PerfilAdmin };

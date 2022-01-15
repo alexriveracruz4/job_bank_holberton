@@ -69,6 +69,7 @@ const CrudForm = ({ createData }) => {
   const inputLastname = document.getElementById('inputLastname');
   const inputEmail = document.getElementById('inputEmail');
   const inputPassword = document.getElementById('inputPassword');
+  const inputRepeatPassword = document.getElementById('inputRepeatPassword');
   const inputPhonenumber = document.getElementById('inputPhonenumber');
   const inputAge = document.getElementById('inputAge');
   const inputNationality = document.getElementById('inputNationality');
@@ -150,6 +151,18 @@ const CrudForm = ({ createData }) => {
     } else {
       formPassword.classList.remove('error');
     }  
+
+    const repeatpasswordvalue = inputRepeatPassword.value.trim();
+    const formRepeatPassword = document.getElementById('form-repeat-password')
+    const errorRepeatPassword = document.getElementById('smallRepeatPassword')
+
+    if (passwordvalue != repeatpasswordvalue) {
+      formRepeatPassword.className = 'form-control error';
+      errorRepeatPassword.innerText = "La contraseña no coincide";
+      formIsValid = false;
+    } else {
+      formRepeatPassword.classList.remove('error');
+    }
 
     const nationalityvalue = inputNationality.value.trim();
     const formNationality = document.getElementById('form-nationality');
@@ -271,6 +284,16 @@ const CrudForm = ({ createData }) => {
             <small id='smallPassword'> Error message </small>
           </div>
 
+          <div className="form-control" id='form-repeat-password'>
+            <label htmlFor="inputRepeatPassword">Repetir Contraseña</label>
+            <div className="inputFormDiv">
+              <input type="password" className="form-control" id="inputRepeatPassword" name="password" maxLength={20}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallRepeatPassword'> Error message </small>
+          </div>
+
           <div className='form-control' id='form-phonenumber'>
             <label htmlFor="inputPhonenumber">Celular</label>
             <div className='inputFormDiv'>
@@ -311,10 +334,8 @@ const CrudForm = ({ createData }) => {
             <div className='inputFormDiv'>
               <select className="form-control" id="inputAvailability" onChange={handleChange} name="availability" value={form.availability}>
                 <option selected disabled hidden></option>
-                <option onClick={e => e.target.textarea}>Disponible a nuevas ofertas de trabajo</option>
-                <option onClick={e => e.target.textarea}>No tengo empleo</option>
-                <option onClick={e => e.target.textarea}>Estoy trabajando actualmente</option>
-                <option onClick={e => e.target.textarea}>No tengo ningún interés en un nuevo empleo</option>
+                <option onClick={e => e.target.textarea}>Actualmente trabajando</option>
+                <option onClick={e => e.target.textarea}>En busca de ofertas laborales</option>
               </select>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
@@ -327,6 +348,7 @@ const CrudForm = ({ createData }) => {
             <div className='inputFormDiv'>
               <select className="form-control" id="inputPresOrRemote" onChange={handleChange} name="pres_or_remot" value={form.pres_or_remot}>
                 <option selected disabled hidden></option>
+                <option value="Sin preferencia">Sin preferencia</option>
                 <option value="Presencial">Presencial</option>
                 <option value="Remoto">Remoto</option>
                 <option value="Semi-presencial">Semi-presencial</option>

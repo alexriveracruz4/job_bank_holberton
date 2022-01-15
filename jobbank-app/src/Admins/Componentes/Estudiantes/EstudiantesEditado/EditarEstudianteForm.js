@@ -64,6 +64,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
   const inputLastname = document.getElementById('inputLastname');
   const inputEmail = document.getElementById('inputEmail');
   const inputPassword = document.getElementById('inputPassword');
+  const inputRepeatPassword = document.getElementById('inputRepeatPassword');
   const inputPhonenumber = document.getElementById('inputPhonenumber');
   const inputAge = document.getElementById('inputAge');
   const inputNationality = document.getElementById('inputNationality');
@@ -128,9 +129,6 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     const errorPassword = document.getElementById('smallPassword')
 
     if (passwordvalue === "") {
-      /*formPassword.className = 'form-control error';
-      errorPassword.innerText = "Complete este campo.";
-      formIsValid = false;*/
       formPassword.classList.remove('error');
     } else if (!(/^^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(passwordvalue))) {
       formPassword.className = 'form-control error';
@@ -140,14 +138,24 @@ const CrudForm = ({ updateData, dataToEdit }) => {
       formPassword.classList.remove('error');
     }  
 
+    const repeatpasswordvalue = inputRepeatPassword.value.trim();
+    const formRepeatPassword = document.getElementById('form-repeat-password')
+    const errorRepeatPassword = document.getElementById('smallRepeatPassword')
+
+    if (passwordvalue != repeatpasswordvalue) {
+      formRepeatPassword.className = 'form-control error';
+      errorRepeatPassword.innerText = "La contraseña no coincide";
+      formIsValid = false;
+    } else {
+      formRepeatPassword.classList.remove('error');
+    }
+
     const phonenumbervalue = inputPhonenumber.value.trim();
     const formPhonenumber = document.getElementById('form-phonenumber');
     const errorPhonenumber = document.getElementById('smallPhonenumber');
 
     if (phonenumbervalue === "") {
-      formPhonenumber.className = 'form-control error';
-      errorPhonenumber.innerText = "Complete este campo."
-      formIsValid = false;
+      formPhonenumber.classList.remove('error');
     } else if (!(/^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,6}$/im.test(phonenumbervalue))) {
       formPhonenumber.className = 'form-control error';
       errorPhonenumber.innerText = "Solo puedes ingresar números.";
@@ -250,6 +258,16 @@ const CrudForm = ({ updateData, dataToEdit }) => {
             <small id='smallPassword'> Error message </small>
           </div>
 
+          <div className="form-control" id='form-repeat-password'>
+            <label htmlFor="inputRepeatPassword">Repetir Contraseña</label>
+            <div className="inputFormDiv">
+              <input type="password" className="form-control" id="inputRepeatPassword" name="password" maxLength={20}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallRepeatPassword'> Error message </small>
+          </div>
+
           <div className='form-control' id='form-phonenumber'>
             <label htmlFor="inputPhonenumber">Celular</label>
             <div className='inputFormDiv'>
@@ -290,10 +308,8 @@ const CrudForm = ({ updateData, dataToEdit }) => {
             <div className='inputFormDiv'>
               <select className="form-control" id="inputAvailability" onChange={handleChange} name="availability" value={form.availability}>
                 <option selected disabled hidden></option>
-                <option onClick={e => e.target.textarea}>Disponible a nuevas ofertas de trabajo</option>
-                <option onClick={e => e.target.textarea}>No tengo empleo</option>
-                <option onClick={e => e.target.textarea}>Estoy trabajando actualmente</option>
-                <option onClick={e => e.target.textarea}>No tengo ningún interés en un nuevo empleo</option>
+                <option onClick={e => e.target.textarea}>En busca de ofertas laborales</option>
+                <option onClick={e => e.target.textarea}>Actualmente trabajando</option>
               </select>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
@@ -306,6 +322,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
             <div className='inputFormDiv'>
               <select className="form-control" id="inputPresOrRemote" onChange={handleChange} name="pres_or_remot" value={form.pres_or_remot}>
                 <option selected disabled hidden></option>
+                <option value="Sin preferencia">Sin preferencia</option>
                 <option value="Presencial">Presencial</option>
                 <option value="Remoto">Remoto</option>
                 <option value="Semi-presencial">Semi-presencial</option>

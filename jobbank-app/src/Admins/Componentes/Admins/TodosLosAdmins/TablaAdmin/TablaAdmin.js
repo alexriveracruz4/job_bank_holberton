@@ -50,8 +50,8 @@ function TablaAdmin() {
   // Sweetalert to confirm removal of partner
   const deleteData = (id, name, isDeleted) => {
     swal({
-      title: "ELIMINAR EMPRESA",
-      text: `¿Está seguro de eliminar los datos de la empresa "${name}"?`,
+      title: "ELIMINAR ADMINISTRADOR",
+      text: `¿Está seguro de eliminar los datos del administrador "${name}"?`,
       icon: "warning",
       dangerMode: true,
       buttons: true,
@@ -60,7 +60,7 @@ function TablaAdmin() {
         if (isDeleted === 1) {
           swal({
             title: "Error",
-            text: `La empresa ${name} ya está eliminado`,
+            text: `El administrador ${name} ya está eliminado`,
             icon: "warning",
           });
           return 0;
@@ -75,7 +75,7 @@ function TablaAdmin() {
             let newData = AllPartnersData.filter((el) => el.id !== id);
             setAllPartnersData(newData);
             setLoadingEliminate(false);
-            swal(`La empresa ${name} ha sido eliminado.`, {
+            swal(`La administrador ${name} ha sido eliminado.`, {
               timer:"1500"
             });
             setTimeout(() => {
@@ -85,7 +85,7 @@ function TablaAdmin() {
             setLoadingEliminate(false);
             swal({
               title: "ERROR",
-              text: `No se pudo elimiar la empresa'`,
+              text: `No se pudo eliminar al administrador'`,
               icon: "error",
             });
           }
@@ -102,27 +102,27 @@ function TablaAdmin() {
       <MaterialTable
         columns={columnas}
         data={AllPartnersData}
-        title="EMPRESAS"
+        title="ADMINISTRADORES"
 
         actions={[
           {
             icon: 'edit',
-            tooltip: 'Editar empresa',
+            tooltip: 'Editar administrador',
             onClick: (event, rowData) => {history.push(
               {
-                pathname:`/admin/empresas/empresa-editada/${rowData.id}`,
+                pathname:`/admin/admins/admin-editado/${rowData.id}`,
                 state: AllPartnersData.filter((trabajo)=> trabajo.id === rowData.id)
               })}
           },
           {
             icon: 'delete',
-            tooltip: 'Eliminar empresa',
+            tooltip: 'Eliminar admin',
             onClick: (event, rowData) => {deleteData(rowData.id, rowData.name, rowData.deleted)}
           },
           {
             icon: () => <AddCircleIcon fontSize="large"/>,
-            tooltip: "Crear una nueva empresa",
-            onClick: (e) => {history.push(`/admin/empresas/crear-empresa`)},
+            tooltip: "Crear un nuevo admin",
+            onClick: (e) => {history.push(`/admin/admins/crear-admin`)},
             isFreeAction:true
           }
         ]}

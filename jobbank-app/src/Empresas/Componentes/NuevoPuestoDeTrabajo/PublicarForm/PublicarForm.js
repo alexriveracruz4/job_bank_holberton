@@ -21,8 +21,8 @@ const CrudForm = ({ createData }) => {
     city:'',
     pres_or_remote: '',
     experience: '',
-    age_min: '',
-    age_max: '',
+    age_min: 0,
+    age_max: 0,
     job_type: '',
     pres_or_remote: '',
     salary: '',
@@ -146,14 +146,12 @@ const handleSubmit = (e) => {
     const errorExperience = document.getElementById('smallExperience');
 
     if (experiencevalue === "") {
-      formExperience.className = 'form-control error';
-      errorExperience.innerText = "Complete este campo.";
-      formIsValid = false;
+      formExperience.classList.remove('error');
     } else {
       formExperience.classList.remove('error');
     }
 
-    const AgeMinValue = inputAgeMin.value.trim();
+    /*const AgeMinValue = inputAgeMin.value.trim();
     const AgeMinIntValue = parseInt(AgeMinValue)
     const formAgeMin = document.getElementById('form-age_min');
     const errorAgeMin = document.getElementById('smallAgeMin');
@@ -193,7 +191,7 @@ const handleSubmit = (e) => {
       formIsValid = false;
     } else {
       formAgeMax.classList.remove('error');
-    }
+    }*/
 
     const JobTypeValue = inputJobType.value.trim();
     const formJobType = document.getElementById('form-job_type');
@@ -300,26 +298,6 @@ const handleSubmit = (e) => {
             <small id='smallExperience'> Error message </small>
           </div>
 
-          <div className="form-control" id='form-age_min'>
-            <label htmlFor="inputAgeMin">Edad mínima</label>
-            <div className="inputFormDiv">
-              <input type="tel" className="form-control" id="inputAgeMin" name="age_min" maxLength={2} onChange={handleChange} value={form.age_min} />
-              <i className="fas fa-check-circle" />
-              <i className="fas fa-exclamation-circle" />
-            </div>
-            <small id='smallAgeMin'> Error message </small>
-          </div>
-
-          <div className="form-control" id='form-age_max'>
-            <label htmlFor="inputAgeMax">Edad máxima</label>
-            <div className="inputFormDiv">
-              <input type="tel" className="form-control" id="inputAgeMax" name="age_max" maxLength={2} onChange={handleChange} value={form.age_max}/>
-              <i className="fas fa-check-circle" />
-              <i className="fas fa-exclamation-circle" />
-            </div>
-            <small id='smallAgeMax'> Error message </small>
-          </div>
-
           <div className="form-control" id='form-salary'>
             <label htmlFor="inputSalary">Salario</label>
             <div className="inputFormDiv">
@@ -338,6 +316,7 @@ const handleSubmit = (e) => {
                 <option value="Tiempo completo">Tiempo completo</option>
                 <option value="Tiempo parcial">Tiempo parcial</option>
                 <option value="Por horas">Por horas</option>
+                <option value="Por proyecto">Por proyecto</option>
               </select>
             </div>
             <small id='smallJobType'> Error message </small>
@@ -348,6 +327,7 @@ const handleSubmit = (e) => {
             <div className="inputFormDiv">
               <select className="form-control" id="inputPresOrRemote" onChange={handleChange} name="pres_or_remote" value={form.pres_or_remote}>
                 <option></option>
+                <option value="Sin preferencia">Sin preferencia</option>
                 <option value="Presencial">Presencial</option>
                 <option value="Remoto">Remoto</option>
                 <option value="Semi-presencial">Semi-presencial</option>

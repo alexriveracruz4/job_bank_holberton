@@ -348,10 +348,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <div className='inputFormDiv'>
               <select className="form-control" id="inputAvailability" onChange={handleChange} name="availability" value={form.availability}>
                 <option selected disabled hidden></option>
-                <option onClick={e => e.target.textarea}>Disponible a nuevas ofertas de trabajo</option>
-                <option onClick={e => e.target.textarea}>No tengo empleo</option>
-                <option onClick={e => e.target.textarea}>Estoy trabajando actualmente</option>
-                <option onClick={e => e.target.textarea}>No tengo ningún interés en un nuevo empleo</option>
+                <option onClick={e => e.target.textarea}>En busca de ofertas laborales</option>
+                <option onClick={e => e.target.textarea}>Actualmente trabajando</option>
               </select>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
@@ -364,6 +362,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <div className='inputFormDiv'>
               <select className="form-control" id="inputPresOrRemote" onChange={handleChange} name="pres_or_remot" value={form.pres_or_remot}>
                 <option selected disabled hidden></option>
+                <option value="Sin preferencia">Sin preferencia</option>
                 <option value="Presencial">Presencial</option>
                 <option value="Remoto">Remoto</option>
                 <option value="Semi-presencial">Semi-presencial</option>

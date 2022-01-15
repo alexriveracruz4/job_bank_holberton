@@ -22,7 +22,9 @@ import { Postulantes } from './Empresas/Paginas/Postulantes/Postulantes';
 
 // Admin imports
 import { LoginAdmins } from './Admins/Paginas/LoginAdmins/LoginAdmins';
-import { PerfilAdmin } from './Admins/Paginas/Admins/AdminEditado/AdminEditado'
+import { PerfilAdmin } from './Admins/Paginas/Admins/PerfilAdmin/PerfilAdmin'
+import { AdminEditado } from './Admins/Paginas/Admins/AdminEditado/AdminEditado'
+import { AdminCreado } from './Admins/Paginas/Admins/AdminCreado/AdminCreado';
 import { TodasLosAdmins } from './Admins/Paginas/Admins/TodosLosAdmins/TodosLosAdmins';
 import { EmpresaEditada } from './Admins/Paginas/Empresas/EmpresaEditada/EmpresaEditada';
 import { TodasLasEmpresas } from './Admins/Paginas/Empresas/TodasLasEmpresas/TodasLasEmpresas';
@@ -37,6 +39,9 @@ import { PuestoAdminView } from './Admins/Paginas/TodosLosTrabajos/PuestoAdminVi
 
 // Landing page import
 import { Landing } from './Inicio/Paginas/Landing/Landing';
+
+// Home Job Bank Holberton
+import { Home } from './Home/Paginas/Home';
 
 // Not found 404 import
 import { NotFoundPage } from './NotFoundPage';
@@ -71,12 +76,8 @@ function App() {
           <Route exact path="/admin/perfil" component={PerfilAdmin}/>
 
           <Route exact path="/admin/admins" component={TodasLosAdmins}/>
-          {
-            /*
-            <Route exact path="/admin/admins/admin-editado/:id" component={AdminEditado}/>
-            <Route exact path="/admin/admins/crear-admin" component={AdminCreado}/>
-            */
-          }
+          <Route exact path="/admin/admins/admin-editado/:id" component={AdminEditado}/>
+          <Route exact path="/admin/admins/crear-admin" component={AdminCreado}/>
           
 
 
@@ -93,6 +94,8 @@ function App() {
 
           <Route exact path="/admin/todos-los-trabajos" component={TodosLosTrabajos}/>
           <Route exact path="/admin/todos-los-trabajos/ver-trabajo/:PartnerId/:JobId" component={PuestoAdminView}/>
+
+          <Route exact path="/home" component={Home}/>
 
           <Route exact path="/" component={Landing}/>
           

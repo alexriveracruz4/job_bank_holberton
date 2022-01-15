@@ -64,6 +64,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const inputPhonenumber = document.getElementById('inputPhonenumber');
   const inputEmail = document.getElementById('inputEmail');
   const inputPassword = document.getElementById('inputPassword');
+  const inputRepeatPassword = document.getElementById('inputRepeatPassword');
   const inputWeb = document.getElementById('inputWeb');
 
   // Validate form inputs
@@ -155,6 +156,18 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     } else {
       formPassword.classList.remove('error');
     }
+
+    const repeatpasswordvalue = inputRepeatPassword.value.trim();
+    const formRepeatPassword = document.getElementById('form-repeat-password')
+    const errorRepeatPassword = document.getElementById('smallRepeatPassword')
+
+    if (passwordvalue != repeatpasswordvalue) {
+      formRepeatPassword.className = 'form-control error';
+      errorRepeatPassword.innerText = "La contraseña no coincide";
+      formIsValid = false;
+    } else {
+      formRepeatPassword.classList.remove('error');
+    }
   
     const webvalue = inputWeb.value.trim();
     const formWeb = document.getElementById('form-web')
@@ -242,6 +255,16 @@ const CrudForm = ({ updateData, dataToEdit}) => {
               <i className="fas fa-exclamation-circle" />
             </div>
             <small id='smallPassword'> Error message </small>
+          </div>
+
+          <div className="form-control" id='form-repeat-password'>
+            <label htmlFor="inputRepeatPassword">Repetir Contraseña</label>
+            <div className="inputFormDiv">
+              <input type="password" className="form-control" id="inputRepeatPassword" name="password" maxLength={20}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallRepeatPassword'> Error message </small>
           </div>
 
           <div className='form-control' id='form-web'>

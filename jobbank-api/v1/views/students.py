@@ -15,8 +15,8 @@ import re
 from v1.views.countries import countries
 import os
 
-availabilityList = ["Disponible a nuevas ofertas de trabajo", "No tengo empleo", "Estoy trabajando actualmente", "No tengo ningún interés en un nuevo empleo", ""]
-pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial", ""]
+availabilityList = ["Actualmente trabajando", "En busca de ofertas laborales", ""]
+pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial", "Sin preferencia", ""]
 disp_travelList = ["Disponible", "No disponible", ""]
 
 @app_views.route('/students', methods=['GET'], strict_slashes=False)

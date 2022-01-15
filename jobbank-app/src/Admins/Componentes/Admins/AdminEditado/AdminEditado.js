@@ -38,15 +38,15 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     e.preventDefault();
     if (validateInputs() === true) {
       swal({
-        title: "EDITAR ADMIN",
-        text: `¿Está seguro de guardar los nuevos cambios realizados en el admin "${dataToEdit.firstname} ${dataToEdit.lastname}"?`,
+        title: "EDITAR ADMINISTRADOR",
+        text: `¿Está seguro de guardar los nuevos cambios realizados en el administrador "${dataToEdit.firstname} ${dataToEdit.lastname}"?`,
         buttons: ["Cancelar", "Guardar"],
       }).then((willEdit) => {
         if (willEdit) {
           updateData(form);
           cookies.set('firstname', form.firstname, {path:"/"});
           cookies.set('lastname', form.lastname, {path:"/"});
-          swal("HAS EDITADO EXITOSAMENTE LOS DATOS DEL ADMIN", {
+          swal("HAS EDITADO EXITOSAMENTE LOS DATOS DEL ADMINISTRADOR", {
               timer:"1500"
           });
           setTimeout(() => {
@@ -63,6 +63,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const inputLastname = document.getElementById('inputLastname');
   const inputEmail = document.getElementById('inputEmail');
   const inputPassword = document.getElementById('inputPassword');
+  const inputRepeatPassword = document.getElementById('inputRepeatPassword');
 
  // Validate form inputs
  function validateInputs() {
@@ -130,6 +131,18 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     formPassword.classList.remove('error');
   }
 
+  const repeatpasswordvalue = inputRepeatPassword.value.trim();
+  const formRepeatPassword = document.getElementById('form-repeat-password')
+  const errorRepeatPassword = document.getElementById('smallRepeatPassword')
+
+  if (passwordvalue != repeatpasswordvalue) {
+    formRepeatPassword.className = 'form-control error';
+    errorRepeatPassword.innerText = "La contraseña no coincide";
+    formIsValid = false;
+  } else {
+    formRepeatPassword.classList.remove('error');
+  }
+
   return formIsValid
 }
 
@@ -180,6 +193,16 @@ const CrudForm = ({ updateData, dataToEdit}) => {
               <i className="fas fa-exclamation-circle" />
             </div>
             <small id='smallPassword'> Error message </small>
+          </div>
+
+          <div className="form-control" id='form-repeat-password'>
+            <label htmlFor="inputRepeatPassword">Repetir Contraseña</label>
+            <div className="inputFormDiv">
+              <input type="password" className="form-control" id="inputRepeatPassword" name="password" maxLength={20}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallRepeatPassword'> Error message </small>
           </div>
 
           <div className="div-button-edit-admin">
