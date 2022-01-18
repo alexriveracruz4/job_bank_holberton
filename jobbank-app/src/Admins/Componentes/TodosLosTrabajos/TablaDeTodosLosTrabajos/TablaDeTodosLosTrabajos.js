@@ -20,10 +20,10 @@ function TablaDeTodosLosTrabajos() {
 
   // Column name
   const columnas = [
-    { title:'ID_TRABAJO', field:'id', type:"numeri", textAlign:"center"},
-    { title:'ID_EMPRESA', field:'partner_id', type:"numeri", textAlign:"center"},
-    { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{"1":"Si", "0":"No"}},
-    { title:'TITULO', field:'title'}
+    { title:'ID_TRABAJO', field:'id', type:"numeri", textAlign:"center", filtering:false},
+    { title:'ID_EMPRESA', field:'partner_id', type:"numeri", textAlign:"center", filtering:false},
+    { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{"1":"Si", "0":"No"}, filtering:true},
+    { title:'TITULO', field:'title', filtering:false}
   ]
 
   // Get all the jobs data and save to AllJobs
@@ -97,6 +97,55 @@ function TablaDeTodosLosTrabajos() {
     });
   }
 
+  const restoreData = (data) => {
+    swal({
+      title: "RESTAURAR ESTUDIANTE",
+      text: `¿Está seguro de restaurar los datos del trabajo "${data.title}""?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willDelete) => {
+      if (willDelete) {   
+        if (data.deleted === 0) {
+          swal({
+            title: "Error",
+            text: `El trabajo ${data.title} está funcionando`,
+            icon: "warning",
+          });
+          return 0;
+        }
+        data.deleted = 0;
+        setLoadingEliminate(true);
+        let endpoint = `${apiPath}/partners/${data.partner_id}/jobs/${data.id}`;
+        let options = {
+          body: data,
+          headers: { "content-type": "application/json" },
+        };
+        api.put(endpoint, options).then((res) => {
+          if (!res.err) {
+            //let newData = AllPartnersData.map((el) => el.id === data.id ? data:el);
+            //setAllPartnersData(newData);
+            setLoadingEliminate(false);
+            swal(`El trabajo ${data.title} ha sido restaurado.`, {
+              timer:"1500"
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          } else {
+            setLoadingEliminate(false);
+            swal({
+              title: "ERROR",
+              text: `No se pudo restaurar el trabajo ${data.title}`,
+              icon: "error",
+            });
+          }
+        });
+      }
+    });
+  }
+
+
   return (
     <React.StrictMode>
       {error && <Message/>}
@@ -115,15 +164,21 @@ function TablaDeTodosLosTrabajos() {
                 state: {partner_id:rowData.partner_id}
               })}
           },
-          {
-            icon: 'delete',
-            tooltip: 'Eliminar trabajo',
-            onClick: (event, rowData) => {deleteData(rowData.partner_id, rowData.id, rowData.title, rowData.deleted)}
-          }
+          rowData => ({
+            icon: rowData.deleted ? 'restore' : 'delete',
+            tooltip: rowData.deleted ? 'Restaurar empleo' : 'Eliminar empleo',
+            onClick: (event, rowData) => {
+              rowData.deleted ?
+                restoreData(rowData)
+              :
+                deleteData(rowData.partner_id, rowData.id, rowData.title, rowData.deleted)
+            }
+          })
         ]}
         isLoading={loading}
         options={{
           loadingType: "overlay",
+          filtering:true,
           actionsColumnIndex: -1,
           cellStyle: {
             textAlign: "center"
@@ -133,7 +188,7 @@ function TablaDeTodosLosTrabajos() {
             backgroundColor: "#F1F2F2"
           },
           paging:true,
-          pageSize:10,       // make initial page size
+          pageSize:10,// make initial page size
           pageSizeOptions:[10,20,30,50],
         }}
         localization={{

@@ -20,12 +20,12 @@ function TablaEstudiante() {
 
   // Column name
   const columnas = [
-    { title:'ID', field:'id', type:"numeri", textAlign:"center"},
-    { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{"1":"Si", "0":"No"}},
-    { title:'NOMBRE', field:'firstname'},
-    { title:'APELLIDO', field:'lastname'},
-    { title:'EMAIL', field:'email' },
-    { title:'CELULAR', field:'phonenumber' }
+    { title:'ID', field:'id', type:"numeric", textAlign:"center", filtering:false},
+    { title:'ELIMINADO', field:'deleted', filtering:true,lookup:{"1":"Si", "0":"No"}},
+    { title:'NOMBRE', field:'firstname', filtering:false},
+    { title:'APELLIDO', field:'lastname', filtering:false},
+    { title:'EMAIL', field:'email', filtering:false },
+    { title:'CELULAR', field:'phonenumber' , filtering:false}
   ]
 
   // Get all student data and save to AllPartnersData
@@ -95,6 +95,55 @@ function TablaEstudiante() {
       } 
     });
   }
+  
+  const restoreData = (data) => {
+    swal({
+      title: "RESTAURAR ESTUDIANTE",
+      text: `¿Está seguro de restaurar los datos del estudiante "${data.firstname} ${data.lastname}"?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willDelete) => {
+      if (willDelete) {   
+        if (data.deleted === 0) {
+          swal({
+            title: "Error",
+            text: `El usuario ${data.firstname} ${data.lastname} está funcionando`,
+            icon: "warning",
+          });
+          return 0;
+        }
+        data.deleted = 0;
+        setLoadingEliminate(true);
+        let endpoint = `${url}/${data.id}`;
+        let options = {
+          body: data,
+          headers: { "content-type": "application/json" },
+        };
+        api.put(endpoint, options).then((res) => {
+          if (!res.err) {
+            let newData = AllPartnersData.map((el) => el.id === data.id ? data:el);
+            setAllPartnersData(newData);
+            setLoadingEliminate(false);
+            swal(`El usuario ${data.firstname} ${data.lastname} ha sido restaurada.`, {
+              timer:"1500"
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          } else {
+            setLoadingEliminate(false);
+            swal({
+              title: "ERROR",
+              text: `No se pudo restaurar al usuario ${data.firstname} ${data.lastname}"`,
+              icon: "error",
+            });
+          }
+        });
+      }
+    });
+  }
+
 
   return (
     <React.StrictMode>
@@ -114,11 +163,16 @@ function TablaEstudiante() {
                 state: AllPartnersData.filter((trabajo)=> trabajo.id === rowData.id)
               })}
           },
-          {
-            icon: 'delete',
-            tooltip: 'Eliminar estudiante',
-            onClick: (event, rowData) => {deleteData(rowData.id, rowData.firstname, rowData.lastname, rowData.deleted)}
-          },
+          rowData => ({
+            icon: rowData.deleted ? 'restore' : 'delete',
+            tooltip: rowData.deleted ? 'Restaurar estudiante' : 'Eliminar estudiante',
+            onClick: (event, rowData) => {
+              rowData.deleted ?
+                restoreData(rowData)
+              :
+                deleteData(rowData.id, rowData.firstname, rowData.lastname, rowData.deleted)
+            }
+          }),
           {
             icon:() => <AddCircleIcon fontSize="large"/>,
             tooltip: "Crear estudiante",
@@ -129,6 +183,7 @@ function TablaEstudiante() {
         isLoading={loading}
         options={{
           loadingType: "overlay",
+          filtering:true,
           actionsColumnIndex: -1,
           cellStyle: {
             textAlign: "center"
