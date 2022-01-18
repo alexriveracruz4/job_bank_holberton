@@ -1,11 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
-body {
-    font-family: "Roboto", sans-serif;
-    font-size: 15px;
-    letter-spacing: 1px;
-    background-color: #eee;
-    overflow-x: hidden;
-}
 
 img {
     max-width: 100%;
@@ -113,7 +106,7 @@ main {
     background: #fff;
 }
 
-header {
+.header-wrap {
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
@@ -121,11 +114,11 @@ header {
     padding: 25px 0;
 }
 
-header .container {
+.header-wrap .container {
     max-width: 1680px;
 }
 
-header .navbar {
+.header-wrap .navbar {
     border-radius: 30px;
     font-size: 15px;
     padding: 0 0;
@@ -198,6 +191,10 @@ header .navbar {
     padding: 0.5rem 0;
     margin: 0.5rem 0 0;
     border-radius: 5px;
+}
+
+.fixed-top {
+    transition: 200ms linear;
 }
 
 .scrolled {

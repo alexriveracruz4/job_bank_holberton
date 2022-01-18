@@ -1,11 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
-body {
-    font-family: "Roboto", sans-serif;
-    font-size: 15px;
-    letter-spacing: 1px;
-    background-color: #eee;
-    overflow-x: hidden;
-}
 
 img {
     max-width: 100%;
@@ -113,25 +106,6 @@ main {
     background: #fff;
 }
 
-header {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    background-color: transparent;
-    padding: 25px 0;
-}
-
-header .container {
-    max-width: 1680px;
-}
-
-header .navbar {
-    border-radius: 30px;
-    font-size: 15px;
-    padding: 0 0;
-    width: 100%;
-}
-
 .box-shadow {
     border: none;
     -webkit-box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.15);
@@ -200,11 +174,6 @@ header .navbar {
     border-radius: 5px;
 }
 
-.scrolled {
-    background: #1b0c61;
-    transition: 200ms linear;
-}
-
 .btn {
     border-radius: 5px;
     padding: 10px 30px;
@@ -263,10 +232,6 @@ header .navbar {
 #navbarHolberton .call .dropdown-menu a {
     padding: 0 10px;
     text-align: center;
-}
-
-.scrolled .call .dropdown-toggle {
-    color: #fff;
 }
 
 #slider {
@@ -2697,7 +2662,7 @@ footer ul.social-info li a {
 }
 
 @media screen and (min-width: 1920px) {
-    header,
+    .header-wrap,
     main,
     footer,
     #copyright {
@@ -2835,7 +2800,7 @@ footer ul.social-info li a {
 }
 
 @media screen and (max-width: 991px) {
-    header .container {
+    .header-wrap .container {
         max-width: 100%;
     }
     #why-us {

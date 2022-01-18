@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
 img {
     max-width: 100%;
 }
@@ -28,27 +30,80 @@ a:hover {
     width: 95%;
 }
 
-main {
-    background: #e1003c;
+.bg-degrade {
+    background-color: #e33b3a;
+    background: -moz-linear-gradient( top, rgba(255, 56, 55, 1) 0%, rgba(173, 44, 44, 1) 100%);
+    background: -webkit-gradient( left top, left bottom, color-stop(0%, rgba(255, 56, 55, 1)), color-stop(100%, rgba(173, 44, 44, 1)));
+    background: -webkit-linear-gradient( top, rgba(255, 56, 55, 1) 0%, rgba(173, 44, 44, 1) 100%);
+    background: -o-linear-gradient( top, rgba(255, 56, 55, 1) 0%, rgba(173, 44, 44, 1) 100%);
+    background: -ms-linear-gradient( top, rgba(255, 56, 55, 1) 0%, rgba(173, 44, 44, 1) 100%);
+    background: linear-gradient( to bottom, rgba(255, 56, 55, 1) 0%, rgba(173, 44, 44, 1) 100%);
+}
+
+.bg-purple {
+    background: #112959;
+}
+
+.text-red {
+    color: #e33b3a;
+}
+
+.text-purple {
+    color: #112959;
+}
+
+.bg-red {
+    background-color: #e33b3a;
+}
+
+.bg-tred {
+    background: #ff003c;
+}
+
+.btn-red {
+    border-color: #e33b3a;
+    background-color: #e33b3a;
+    color: #ffffff !important;
+}
+
+.btn-red:hover {
+    border-color: #e33b3a;
+    background-color: #ce3938;
+    color: #ffffff !important;
+}
+
+.btn-outline-red {
+    border-color: #e33b3a;
+    background-color: #ffffff;
+    color: #e33b3a !important;
+}
+
+.btn-outline-red:hover {
+    border-color: #e33b3a;
+    background-color: #e33b3a;
+    color: #ffffff !important;
+}
+
+.btn {
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+}
+
+.btn.focus,
+.btn:focus {
+    outline: 0;
+    box-shadow: none;
+}
+
+.call .btn-secondary:not(:disabled):not(.disabled).active,
+.call .btn-secondary:not(:disabled):not(.disabled):active,
+.call .show>.btn-secondary.dropdown-toggle {
+    background: #1b0c61;
+    box-shadow: none;
 }
 
 main {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    background-color: transparent;
-    padding: 25px 0;
-}
-
-main .container {
-    max-width: 1680px;
-}
-
-main .navbar {
-    border-radius: 30px;
-    font-size: 15px;
-    padding: 0 0;
-    width: 100%;
+    background: #fff;
 }
 
 .box-shadow {
@@ -61,16 +116,6 @@ main .navbar {
 .padding {
     padding-top: 80px;
     padding-bottom: 80px;
-}
-
-.padding-main {
-    background: #FF003C;
-    padding-top: 100px;
-    padding-bottom: 100px;
-}
-
-.padding-main .container .row {
-    background: #fff;
 }
 
 .navbar-brand {
@@ -120,10 +165,6 @@ main .navbar {
 .navbar-dark .navbar-nav .nav-link:hover,
 .navbar-dark .navbar-nav .nav-link.active {
     color: rgb(255 0 60);
-}
-
-#navbarMainHolberton {
-    background: #fff;
 }
 
 #navbarHolberton .dropdown-menu {
@@ -431,6 +472,10 @@ main .navbar {
     background: #1b0c61;
 }
 
+#copyright li a{
+  text-decoration: none;
+}
+
 #copyright.padding {
     padding-top: 20px;
     padding-bottom: 20px;
@@ -456,6 +501,15 @@ main .navbar {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.row>* {
+  flex-shrink: 0;
+  width: auto;
+  max-width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * .5);
+  padding-left: calc(var(--bs-gutter-x) * .5);
+  margin-top: var(--bs-gutter-y);
 }
 
 #methodology .nav-methodology .nav-tabs {
@@ -1015,22 +1069,6 @@ footer ul.social-info li a {
 
 .page #process {
     background: #f4fcff;
-}
-
-#process .head {
-    max-width: 45%;
-    margin: 0 auto 0;
-    padding-bottom: 80px;
-}
-
-#process .head h2 {
-    margin-bottom: 20px;
-}
-
-#process .head p {
-    font-size: 18px;
-    font-weight: 300;
-    margin-bottom: 0;
 }
 
 #need {

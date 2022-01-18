@@ -1,8 +1,45 @@
+import React, { useEffect } from 'react'
 import "./HomeNav.css"
 
+/*$(document).scroll(function() {
+  var $nav = $(".fixed-top");
+  $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+});
+
+$(document).scroll(function() {
+  let nav = document.querySelector("fixed-top");
+  nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+});*/
+
+
+
+
+
+
+/*window.onscroll = function() {
+  if(window.pageYOffset !== 0) {
+    headertop.className = 'header-wrap fixed-top scrolled';
+    
+  } else {
+    headertop.classList.remove('scrolled');
+  }
+};*/
+
 function HomeNav() {
+  useEffect(() => {
+    window.onscroll = function() {
+      const headertop = document.getElementById('header-top');
+      
+      if(window.pageYOffset !== 0) {
+        headertop.className = 'header-wrap fixed-top scrolled';
+        
+      } else {
+        headertop.classList.remove('scrolled');
+      }
+    };
+  })
   return (
-    <header className="header-wrap fixed-top scrolled">
+    <header className="header-wrap fixed-top scrolled" id="header-top">
       <div className="container">
         <div className="row">
           <nav className="navbar navbar-expand-lg navbar-dark">
@@ -17,7 +54,7 @@ function HomeNav() {
               <ul className="navbar-nav me-auto">
                 <li className="nav-item dropdown multi-level">
                   <a className="nav-link dropdown-toggle " href="https://holberton-peru.com/carreras" id="navbarDropdownPrimary2"
-                  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carreras
+                  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carrera
                     <i className="fas fa-chevron-down"></i>
                   </a>
       
@@ -81,20 +118,18 @@ function HomeNav() {
                 <button data-toggle="modal" data-target="#modalAplica" className="btn btn-danger">Aplica aquí</button>
                   <a href="https://apply.holbertonschool.com/auth/sign_in?country=pe" className="btn btn-light"
                       target="_blank">Iniciar sesión</a>
-                <div className="d-flex">
-                  <div className="dropdown">
-                    <button type="button" className="btn btn-secondary dropdown-toggle" id="lang"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        data-offset="10,20">
-                      <i className="fas fa-globe"></i> Es
-                      {/*<i className="fal fa-globe"></i> Es*/}
-                    </button>
-                    <div className="dropdown-menu" aria-labelledby="lang">
-                      <a className="dropdown-item" href="https://www.holbertonschool.com/"
-                          target="_blank">En</a>
-                    </div>
-                  </div>
-                </div>
+<div class="btn-group">
+  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Action
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="#">Separated link</a>
+  </div>
+</div>
               </div>
             </div>
           </nav>
