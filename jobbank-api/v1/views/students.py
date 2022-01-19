@@ -83,7 +83,7 @@ def get_app_student(student_id):
             if app.partner_id == job.partner_id and app.job_id == job.id:
                 apps.append(job.to_dict())
 
-    apps_ordenadas = sorted(apps, key=lambda d: d['created_at'])
+    apps_ordenadas = sorted(apps, key=lambda d: d['updated_at'])
     apps_ordenadas.reverse()
     try:
         page = int(page)
@@ -129,7 +129,6 @@ def delete_student(student_id):
     """
     Deletes a Student Object
     """
-
     student = storage.get(Student, student_id)
 
     if not student:
@@ -137,7 +136,7 @@ def delete_student(student_id):
 
     # storage.delete(student)
     setattr(student, "deleted", 1)
-    setattr(student, "deleted_at", datetime.utcnow())
+    setattr(student, "deleted_at", datetime.now())
     storage.save()
 
     return make_response(jsonify({}), 200)
@@ -270,7 +269,6 @@ def post_student():
                 isvalid = True
             else:
                 abort(400, description="Must contain a maximum of 1000 characters")
-
         if isvalid is True:
             instance = Student(**data)
     instance.save()
@@ -403,6 +401,8 @@ def put_student(student_id):
                     abort(400, description="Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
             if isvalid is True:
                 setattr(student, key, value)
+
+    setattr(student, "updated_at", datetime.now())
     storage.save()
 
     return make_response(jsonify(student.to_dict()), 200)
@@ -444,8 +444,8 @@ def fileUpload(student_id):
     if ext != ".pdf":
         abort(400, description="It is not a pdf file")
 
-    path = '/mnt/d/jbgithub/job_bank_holberton/curriculums/'
-    filename_new = student_id + '_' + datetime.utcnow().strftime('%Y%m%d%H%M%S') + ext
+    path = '/home/jhonatanjc/job_bank_holberton/curriculums/'
+    filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
     
@@ -456,10 +456,6 @@ def fileUpload(student_id):
 
     setattr(student, 'cv_filename_physical', filename)
     setattr(student, 'cv_filename_logical', filename_new)
-
-    storage.save()
-
-    return make_response(jsonify(student.to_dict()), 200)
 
 @app_views.route('/students/<student_id>/uploadphoto', methods=['POST'], strict_slashes=False)
 def fileUploadPhoto(student_id):
@@ -498,8 +494,8 @@ def fileUploadPhoto(student_id):
     if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
         abort(400, description="It is not a png or jpg file")
 
-    path = '/mnt/d/jbgithub/job_bank_holberton/student_photos/'
-    filename_new = student_id + '_' + datetime.utcnow().strftime('%Y%m%d%H%M%S') + ext
+    path = '/home/jhonatanjc/job_bank_holberton/student_photos/'
+    filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
     
@@ -515,20 +511,20 @@ def fileUploadPhoto(student_id):
 
     return make_response(jsonify(student.to_dict()), 200)
 
-
-
 @app_views.route('/downloadcv/<cv_filename_logical>', methods=['GET'], strict_slashes=False)
 def fileDownload(cv_filename_logical):
     """
     Download CV
     """
-    path = "/mnt/d/jbgithub/job_bank_holberton/curriculums/" + cv_filename_logical
+    path = "/home/jhonatanjc/job_bank_holberton/curriculums/" + cv_filename_logical
     return send_file(path)
+
 
 @app_views.route('/student_photos/<photo_filename_logical>', methods=['GET'], strict_slashes=False)
 def studentPhoto(photo_filename_logical):
     """
-    Photo
+    Student Photo
     """
-    path = "/mnt/d/jbgithub/job_bank_holberton/student_photos/" + photo_filename_logical
+    path = "/home/jhonatanjc/job_bank_holberton/student_photos/" + photo_filename_logical
     return send_file(path)
+

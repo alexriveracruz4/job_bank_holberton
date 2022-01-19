@@ -25,7 +25,7 @@ class Partner(BaseModel, Base):
     logo_filename_physical = Column(String(250), nullable=True)
     logo_filename_logical = Column(String(250), nullable=True)
     deleted = Column(TINYINT(1), default=0, nullable=False)
-    created_by = Column(Integer, ForeignKey("admins.id") ,nullable=True)
+    created_by = Column(Integer, ForeignKey("admins.id") ,nullable=False)
     updated_by = Column(Integer, nullable=True)
     deleted_by = Column(Integer, ForeignKey("admins.id"), nullable=True)
     token = Column(String(60), nullable=True)

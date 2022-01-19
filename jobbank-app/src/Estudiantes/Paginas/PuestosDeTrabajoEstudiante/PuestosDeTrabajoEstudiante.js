@@ -156,14 +156,16 @@ function PuestosDeTrabajoEstudiante() {
               {loadingPage && <Loader/>}
               {items.map(trabajo => (
                 <ItemJob
-                  key={trabajo.title}
+                  key={trabajo.code}
                   id_job={trabajo.id}
                   id_empresa={trabajo.partner_id}
                   title={trabajo.title}
                   description={trabajo.description}
                   city={trabajo.city}
                   country={trabajo.country}
-                  experience={trabajo.experience}
+                  updated_at={trabajo.updated_at}
+                  created_at={trabajo.created_at}
+                  pres_or_remote={trabajo.pres_or_remote}
                 />
               ))
             }

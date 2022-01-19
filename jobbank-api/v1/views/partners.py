@@ -65,7 +65,7 @@ def delete_partner(partner_id):
 
     # storage.delete(partner)
     setattr(partner, "deleted", 1)
-    setattr(partner, "deleted_at", datetime.utcnow())
+    setattr(partner, "deleted_at", datetime.now())
     storage.save()
 
     return make_response(jsonify({}), 200)
@@ -228,5 +228,71 @@ def put_partner(partner_id):
                     abort(400, description="Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
             if isvalid is True:
                 setattr(partner, key, value)
+    setattr(partner, "updated_at", datetime.now())
     storage.save()
     return make_response(jsonify(partner.to_dict()), 200)
+
+
+@app_views.route('/partners/<partner_id>/uploadphoto', methods=['POST'], strict_slashes=False)
+def PartnerFileUploadPhoto(partner_id):
+    """
+    Upload Partner Photo
+    """
+    partner = storage.get(Partner, partner_id)
+
+    if not partner:
+        abort(404)
+
+    file = request.files['file']
+
+    # This part is just to calculate the size of the file
+    file.seek(0, os.SEEK_END) # to count the size of the file
+    file_length = file.tell() # size of the file in Bytes
+    max_size = 2*10**6 # 4MB max
+    if int(file_length) > max_size:
+        abort(400, description="Maximum file size exceeded")
+
+    file.seek(0, 0)
+    # end file size count
+
+    #image_bytes = io.BytesIO(file.stream.read())
+    # save bytes in a buffer
+
+    #img = Image.open(image_bytes)
+    # produces a PIL Image object
+
+    #size = img.size
+    #print(size)
+    #print(file.__dict__)
+    #print(os.stat(file).st_size )
+    filename = file.filename #filename = secure_filename(file.filename)
+    ext = pathlib.Path(filename).suffix
+    if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
+        abort(400, description="It is not a png or jpg file")
+
+    path = '/home/jhonatanjc/job_bank_holberton/partner_photos/'
+    filename_new = partner_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
+
+    file.save(path + filename_new)
+    
+    new_list = [cv for cv in os.listdir(path) if cv.startswith(str(partner_id) + "_")]
+    for file_ in sorted(new_list)[:-1]:
+        os.remove(path + file_)
+
+
+    setattr(partner, 'photo_filename_physical', filename)
+    setattr(partner, 'photo_filename_logical', filename_new)
+
+    storage.save()
+
+    return make_response(jsonify(partner.to_dict()), 200)
+
+
+@app_views.route('/partner_photos/<photo_filename_logical>', methods=['GET'], strict_slashes=False)
+def partnertPhoto(photo_filename_logical):
+    """
+    Partner Photo
+    """
+    path = "/home/jhonatanjc/job_bank_holberton/partner_photos/" + photo_filename_logical
+    return send_file(path)
+

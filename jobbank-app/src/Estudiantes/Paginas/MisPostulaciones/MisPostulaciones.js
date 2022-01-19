@@ -149,7 +149,8 @@ function MisPostulaciones() {
                   title={trabajo.title}
                   description={trabajo.description}
                   city={trabajo.city}
-                  experience={trabajo.experience}
+                  country={trabajo.country}
+                  pres_or_remote={trabajo.pres_or_remote}
                   deleted={trabajo.deleted}
                   setCopia={setCopia}
                   paginaActual={paginaActual}

@@ -63,8 +63,8 @@ def delete_admin(admin_id):
         abort(404)
 
     storage.delete(admin)
-    # setattr(admin, "deleted", 1)
-    setattr(admin, "deleted_at", datetime.utcnow())
+    #setattr(admin, "deleted", 1)
+    setattr(admin, "deleted_at", datetime.now())
     storage.save()
 
     return make_response(jsonify({}), 200)
@@ -160,3 +160,67 @@ def put_admin(admin_id):
                 setattr(admin, key, value)
     storage.save()
     return make_response(jsonify(admin.to_dict()), 200)
+
+
+@app_views.route('/admins/<admin_id>/uploadphoto', methods=['POST'], strict_slashes=False)
+def AdminFileUploadPhoto(admin_id):
+    """
+    Upload Admin Photo
+    """
+    admin = storage.get(Admin, admin_id)
+
+    if not admin:
+        abort(404)
+
+    file = request.files['file']
+
+    # This part is just to calculate the size of the file
+    file.seek(0, os.SEEK_END) # to count the size of the file
+    file_length = file.tell() # size of the file in Bytes
+    max_size = 2*10**6 # 4MB max
+    if int(file_length) > max_size:
+        abort(400, description="Maximum file size exceeded")
+
+    file.seek(0, 0)
+    # end file size count
+
+    #image_bytes = io.BytesIO(file.stream.read())
+    # save bytes in a buffer
+
+    #img = Image.open(image_bytes)
+    # produces a PIL Image object
+
+    #size = img.size
+    #print(size)
+    #print(file.__dict__)
+    #print(os.stat(file).st_size )
+    filename = file.filename #filename = secure_filename(file.filename)
+    ext = pathlib.Path(filename).suffix
+    if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
+        abort(400, description="It is not a png or jpg file")
+
+    path = '/home/jhonatanjc/job_bank_holberton/admin_photos/'
+    filename_new = admin_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
+
+    file.save(path + filename_new)
+    
+    new_list = [cv for cv in os.listdir(path) if cv.startswith(str(admin_id) + "_")]
+    for file_ in sorted(new_list)[:-1]:
+        os.remove(path + file_)
+
+
+    setattr(admin, 'photo_filename_physical', filename)
+    setattr(admin, 'photo_filename_logical', filename_new)
+
+    storage.save()
+
+    return make_response(jsonify(admin.to_dict()), 200)
+
+
+@app_views.route('/admin_photos/<photo_filename_logical>', methods=['GET'], strict_slashes=False)
+def adminPhoto(photo_filename_logical):
+    """
+    Admin Photo
+    """
+    path = "/home/jhonatanjc/job_bank_holberton/admin_photos/" + photo_filename_logical
+    return send_file(path)

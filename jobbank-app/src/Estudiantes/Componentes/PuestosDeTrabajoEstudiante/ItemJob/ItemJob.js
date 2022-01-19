@@ -36,6 +36,37 @@ function ItemJob(props) {
   let PostulantesIDs = PostulantesData.map(postulante => postulante.id);
   let EstadoDePostulacion= PostulantesIDs.includes(parseInt(studentId),0); /*true== postulado; false== no postulado*/
 
+
+  let tiempoTranscurrido = (stringDate) =>{
+    let options = {  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+    let firstDate = new Date(stringDate)
+    let secondDate = new Date();
+    if ((secondDate-firstDate)/(1000) < 60 ) {
+      return "Hace unos segundos";
+    } else if ((secondDate-firstDate)/(1000*60) < 60) {
+        if (Math.round((secondDate-firstDate)/(1000*60)) === 1) {
+          return `Hace ${Math.round((secondDate-firstDate)/(1000*60))} minuto`;
+        } if (Math.round((secondDate-firstDate)/(1000*60)) === 60) {
+            return `Hace 1 hora`;
+        }
+        return `Hace ${Math.round((secondDate-firstDate)/(1000*60))} minutos`;
+    } else if ((secondDate-firstDate)/(1000*60*60) < 60) {
+        if (Math.round((secondDate-firstDate)/(1000*60*60)) === 1) {
+          return `Hace ${Math.round((secondDate-firstDate)/(1000*60*60))} hora`;
+        } if (Math.round((secondDate-firstDate)/(1000*60*60)) === 24) {
+            return `Ayer`;
+        }
+        return `Hace ${Math.round((secondDate-firstDate)/(1000*60*60))} horas`;
+    } else if ((secondDate-firstDate)/(1000*60*60*24) < 8) {
+        if (Math.round((secondDate-firstDate)/(1000*60*60*24)) === 1) {
+          return `Ayer`
+        } 
+        return `Hace ${Math.round((secondDate-firstDate)/(1000*60*60*24))} días`;
+    } else {
+      return firstDate.toLocaleDateString("es-ES", options);
+    }
+  } 
+
   return (
     <React.StrictMode>     
         <Link to={{ pathname:`/estudiante/puestos-de-trabajo/partners/${props.id_empresa}/jobs/${props.id_job}`, state: { EstadoDePostulacion: EstadoDePostulacion, DatosEmpresa: PartnerData } }} style={{ color: 'inherit', textDecoration: 'inherit'}}> 
@@ -47,9 +78,16 @@ function ItemJob(props) {
           :
             ""
           }
-          <h5>{props.city}, {props.country}</h5>
+          <h5>{PartnerData.name} - {props.city}, {props.country} </h5>
+          <p>Modalidad: {props.pres_or_remote}</p>
           <p>{props.description.slice(0, 250) + "..."}</p>
-          <p>Experiencia: {props.experience}</p>
+
+          {props.created_at !== props.updated_at 
+          ?
+            <h3> Actualizado: {tiempoTranscurrido(props.updated_at)} </h3>
+          :
+            <h3> Publicado: {tiempoTranscurrido(props.created_at)} </h3>
+          }
           </li>
         </Link>
     </React.StrictMode>

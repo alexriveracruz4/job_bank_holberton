@@ -59,9 +59,37 @@ function ItemJob(props) {
     });
   }
 
-  let createdDate = props.created_at.slice(0,10) + " at " + props.created_at.slice(11,19)
-  console.log("FECHA")
-  console.log(createdDate)
+  let tiempoTranscurrido = (stringDate) =>{
+    let options = {  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+    let firstDate = new Date(stringDate)
+    let secondDate = new Date();
+    if ((secondDate-firstDate)/(1000) < 60 ) {
+      return "Hace unos segundos";
+    } else if ((secondDate-firstDate)/(1000*60) < 60) {
+        if (Math.round((secondDate-firstDate)/(1000*60)) === 1) {
+          return `Hace ${Math.round((secondDate-firstDate)/(1000*60))} minuto`;
+        } if (Math.round((secondDate-firstDate)/(1000*60)) === 60) {
+            return `Hace 1 hora`;
+        }
+        return `Hace ${Math.round((secondDate-firstDate)/(1000*60))} minutos`;
+    } else if ((secondDate-firstDate)/(1000*60*60) < 60) {
+        if (Math.round((secondDate-firstDate)/(1000*60*60)) === 1) {
+          return `Hace ${Math.round((secondDate-firstDate)/(1000*60*60))} hora`;
+        } if (Math.round((secondDate-firstDate)/(1000*60*60)) === 24) {
+            return `Ayer`;
+        }
+        return `Hace ${Math.round((secondDate-firstDate)/(1000*60*60))} horas`;
+    } else if ((secondDate-firstDate)/(1000*60*60*24) < 8) {
+        if (Math.round((secondDate-firstDate)/(1000*60*60*24)) === 1) {
+          return `Ayer`
+        } 
+        return `Hace ${Math.round((secondDate-firstDate)/(1000*60*60*24))} días`;
+    } else {
+      return firstDate.toLocaleDateString("es-ES", options);
+    }
+  } 
+
+  
   return (
       <li className='MPDTOneJobeEmpresa'>
         {
@@ -69,9 +97,12 @@ function ItemJob(props) {
         }
         {loadingEliminate && <Loader/>}
         <h2>{props.title}</h2>
-        <p>Fecha de creación: {props.created_at}</p>
+        <p>Fecha de creación: {tiempoTranscurrido(props.created_at)}</p>
         {
-          props.deleted ? <p>Fecha de eliminacion: {props.deleted_at}</p> : ""
+          props.created_at !== props.updated_at ? <p>Última fecha de edición: {tiempoTranscurrido(props.updated_at)}</p> : ""
+        }
+        {
+          props.deleted ? <p>Fecha de eliminacion: {tiempoTranscurrido(props.deleted_at)}</p> : ""
         }
         <div class="MPDTGroupOfButtons">
           <Link to={{ pathname:`/empresa/mis-puestos-de-trabajo/${props.JobId}` }} style={{color: 'inherit', textDecoration: 'inherit'}}>

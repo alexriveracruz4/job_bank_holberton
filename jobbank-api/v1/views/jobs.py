@@ -39,7 +39,8 @@ def get_jobs():
     def filtro_de_eliminados(list_de_datos):
         nueva_lista=[]
         for i in list_de_datos:
-            if i.__dict__["deleted"] == 0:
+            partner = storage.get(Partner, i.__dict__["partner_id"])
+            if i.__dict__["deleted"] == 0 and partner.__dict__["deleted"] == 0:
                 nueva_lista.append(i)
         return nueva_lista
 
@@ -64,7 +65,7 @@ def get_jobs():
                                                     ]
         #print(datos_filtrados)
         number_of_pages = ceil(len(datos_filtrados)/limit)
-        datos_no_borrados_ordenados = sorted(datos_filtrados, key=lambda d: d['created_at']) 
+        datos_no_borrados_ordenados = sorted(datos_filtrados, key=lambda d: d['updated_at']) 
         datos_no_borrados_ordenados.reverse()
 
         part_of_jobs = datos_no_borrados_ordenados[limit*page:limit*(page+1)]
@@ -111,7 +112,7 @@ def get_partner_job(partner_id):
     jobs = []
     for job in partner.jobs:
         jobs.append(job.to_dict())
-    datos_ordenados = sorted(jobs, key=lambda d: d['created_at']) 
+    datos_ordenados = sorted(jobs, key=lambda d: d['updated_at']) 
     datos_ordenados.reverse()
     try:
         page = int(page)
@@ -167,7 +168,7 @@ def delete_job(partner_id, job_id):
 
     # storage.delete(job1)
     setattr(job1, "deleted", 1)
-    setattr(job1, "deleted_at", datetime.utcnow())
+    setattr(job1, "deleted_at", datetime.now())
     storage.save()
 
     return make_response(jsonify({}), 200)
@@ -402,5 +403,6 @@ def put_job(partner_id, job_id):
                     abort(400, description="Description must contain a maximum of 2000 characters")
             if isvalid is True:
                 setattr(job1, key, value)
+    setattr(job1, "updated_at", datetime.now())
     storage.save()
     return make_response(jsonify(job1.to_dict()), 200)

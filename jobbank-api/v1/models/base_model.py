@@ -18,9 +18,9 @@ Base = declarative_base()
 class BaseModel:
     """The BaseModel class from which future classes will be derived"""
 
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow)
-    deleted_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now)
+    deleted_at = Column(DateTime, default=None)
 
     def __init__(self, *args, **kwargs):
         """Initialization of the base model"""
@@ -31,14 +31,19 @@ class BaseModel:
             if kwargs.get("created_at", None) and type(self.created_at) is str:
                 self.created_at = datetime.strptime(kwargs["created_at"], time)
             else:
-                self.created_at = datetime.utcnow()
+                self.created_at = datetime.now()
             if kwargs.get("updated_at", None) and type(self.updated_at) is str:
                 self.updated_at = datetime.strptime(kwargs["updated_at"], time)
             else:
-                self.updated_at = datetime.utcnow()
+                self.updated_at = datetime.now()
+            if kwargs.get("deleted_at", None) and type(self.deleted_at) is str:
+                self.deleted_at = datetime.strptime(kwargs["deleted_at"], time)
+            else:
+                self.deleted_at = None
         else:
-            self.created_at = datetime.utcnow()
+            self.created_at = datetime.now()
             self.updated_at = self.created_at
+            self.deleted_at = None
 
     def __str__(self):
         """String representation of the BaseModel class"""
@@ -47,7 +52,7 @@ class BaseModel:
 
     def save(self):
         """updates the attribute 'updated_at' with the current datetime"""
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
         v1.models.storage.new(self)
         v1.models.storage.save()
 
@@ -58,6 +63,8 @@ class BaseModel:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
+        if "deleted_at" in new_dict and new_dict["deleted_at"] != None:
+            new_dict["deleted_at"] = new_dict["deleted_at"].strftime(time)
         new_dict["__class__"] = self.__class__.__name__
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
@@ -68,5 +75,5 @@ class BaseModel:
 
     def delete(self):
         """delete the current instance from the storage"""
-        self.deleted_at = datetime.utcnow()
+        self.deleted_at = datetime.now()
         v1.models.storage.delete(self)
