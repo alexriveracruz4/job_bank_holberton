@@ -133,9 +133,7 @@ function HomeNav() {
                     </div>
                   </div>
                   <i className="far fa-question-circle fa-lg mx-3" style={{color: "white"}}></i>
-                  <a href="https://apply.holbertonschool.com/auth/sign_in?country=pe" className="btn-link mx-3" target="_blank">
-                    <i className="fas fa-user-circle fa-lg" onClick={() => loginWithRedirect()} style={{color: "white"}} />
-                  </a>
+                  <i className="fas fa-user-circle fa-lg mx-3" onClick={() => loginWithRedirect()} style={{color: "white", cursor: "pointer"}} />
               </div>
             </div>
           </nav>
