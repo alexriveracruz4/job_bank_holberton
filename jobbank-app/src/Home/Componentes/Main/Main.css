@@ -37,7 +37,6 @@ main {
 
 main .container {
     display: grid;
-    max-height: 100vh;
     max-width: 1250px;
 }
 
