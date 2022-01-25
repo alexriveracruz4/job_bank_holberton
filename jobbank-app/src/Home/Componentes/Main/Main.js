@@ -12,11 +12,6 @@ function Main() {
         <div class="row">
           <nav class="navbar navbar-expand-lg navbar-dark">
             <div className="collapse navbar-collapse d-flex justify-content-center" id="navbarMainHolberton">
-              {/*<ul className="navbar-nav me-auto">
-                  <li class="nav-item dropdown multi-level"><a href="https://holberton-peru.com/carreras" id="navbarDropdownPrimary2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle ">Carreras
-                    <i class="far fa-chevron-down"></i></a>
-                  </li>
-                </ul>*/}
               <ul class="nav nav-filter">
                 <li class="nav-item d-flex align-items-center">
                   <a href="https://apply.holbertonschool.com/auth/sign_in?country=pe" className="nav-link d-flex align-items-center mx-3 my-3" target="_blank" id="button-search">

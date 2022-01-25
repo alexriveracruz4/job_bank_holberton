@@ -112,6 +112,19 @@ main .navbar {
     font-weight: 500;
 }
 
+.accordion .accordion-item .accordion-header .accordion-button:focus {
+    z-index: 3;
+    border-color: none;
+    outline: 0;
+    box-shadow: none;
+}
+
+.accordion .accordion-item .accordion-header .accordion-button:not(.collapsed) {
+    color: #000;
+    background-color: #fff;
+    box-shadow: none;
+}
+
 
 
 #button-search img {

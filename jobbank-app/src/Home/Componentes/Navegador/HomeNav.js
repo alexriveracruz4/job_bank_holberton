@@ -2,30 +2,6 @@ import React, { useEffect } from 'react'
 import { useAuth0 } from "@auth0/auth0-react";
 import "./HomeNav.css"
 
-/*$(document).scroll(function() {
-  var $nav = $(".fixed-top");
-  $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
-});
-
-$(document).scroll(function() {
-  let nav = document.querySelector("fixed-top");
-  nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
-});*/
-
-
-
-
-
-
-/*window.onscroll = function() {
-  if(window.pageYOffset !== 0) {
-    headertop.className = 'header-wrap fixed-top scrolled';
-    
-  } else {
-    headertop.classList.remove('scrolled');
-  }
-};*/
-
 function HomeNav() {
   useEffect(() => {
     window.onscroll = function() {
@@ -63,7 +39,6 @@ function HomeNav() {
                 <li className="nav-item dropdown multi-level">
                   <a className="nav-link dropdown-toggle " href="https://holberton-peru.com/carreras" id="navbarDropdownPrimary2"
                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carrera
-                    <i className="fas fa-chevron-down"></i>
                   </a>
       
                   <div className="dropdown-menu" aria-labelledby="navbarDropdownPrimary2">
