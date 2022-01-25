@@ -14,7 +14,7 @@ import Message from "../../../helpers/Message";
 
 
 const cookies = new Cookies();
-let copia = {PalabraClave:"", modalidad:"todas", tipoDeTrabajo:"todas", page:0}
+let copia = {PalabraClave:"", modalidad:"todas", tipoDeTrabajo:"todas", page:0, fecha:"Todo"}
 function PuestosDeTrabajoEstudiante() {
   const [searchJob, setSearchJob] = useState(copia); // Status to filter by 3 options
   
@@ -55,7 +55,7 @@ function PuestosDeTrabajoEstudiante() {
 
   useEffect(() => { 
     const getComments = async () => {
-      const url = `${apiPath}/jobs?_page=${copia.page}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}`
+      const url = `${apiPath}/jobs?_page=${copia.page}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}&_fecha=${copia.fecha}`
       setLoading(true);
       api.get(url).then((res) => {
         if (!res.err) {
@@ -75,7 +75,7 @@ function PuestosDeTrabajoEstudiante() {
     getComments();
   }, []);
   const fetchComments = async (currentPage) => {
-    const url = `${apiPath}/jobs?_page=${currentPage}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}`
+    const url = `${apiPath}/jobs?_page=${currentPage}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}&_fecha=${copia.fecha}`
       setLoadingPage(true);
       api.get(url).then((res) => {
         if (!res.err) {

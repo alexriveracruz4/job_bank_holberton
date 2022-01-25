@@ -14,6 +14,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
   const handleFilters = async () => {
     setCopia({...searchJob})
     fetchComments(0);
+
   };
 
   const handleKeyPress = (event) => {
@@ -21,6 +22,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
       handleFilters();
     }
   }
+
 
   return (
     <div className='FilterContainer'>
@@ -137,6 +139,124 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
           </div>
         </div>
       </div>
+
+      <div className="TypeRegion">
+        <h3> Fecha de publicación </h3>
+        <div className="OptionsRegion">
+          <div>
+            <input 
+              type='radio'
+              id='hoy'
+              name='fecha'
+              value="Hoy"
+              onChange={handleChange}
+              defaultChecked={"Hoy" === copia.fecha}
+            />
+            <label htmlFor="hoy">Hoy</label>
+          </div>
+          <div>
+            <input 
+              type='radio'
+              id='ayer'
+              name='fecha'
+              value="Ayer"
+              onChange={handleChange}
+              defaultChecked={"Ayer" === copia.fecha}
+            />
+            <label htmlFor="ayer">Ayer</label>
+          </div>
+          <div>
+            <input 
+              type='radio'
+              id='menor_a_3_dias'
+              name='fecha'
+              value="Menor a 3 dias"
+              onChange={handleChange}
+              defaultChecked={"Menor a 3 dias" === copia.fecha}
+            />
+            <label htmlFor="menor_a_3_dias">Menor a 3 días</label>
+          </div>
+          <div>
+            <input 
+              type='radio'
+              id='menor_a_4_dias'
+              name='fecha'
+              value="Menor a 4 dias"
+              onChange={handleChange}
+              defaultChecked={"Menor a 4 dias" === copia.fecha}
+            />
+            <label htmlFor="menor_a_4_dias">Menor a 4 días</label>
+          </div>
+          <div>
+            <input 
+              type='radio'
+              id='menor_a_5_dias'
+              name='fecha'
+              value="Menor a 5 dias"
+              onChange={handleChange}
+              defaultChecked={"Menor a 5 dias" === copia.fecha}
+            />
+            <label htmlFor="menor_a_5_dias">Menor a 5 días</label>
+          </div>
+          <div>
+            <input 
+              type='radio'
+              id='menor_a_1_semana'
+              name='fecha'
+              value="Menor a 1 semana"
+              onChange={handleChange}
+              defaultChecked={"Menor a 1 semana" === copia.fecha}
+            />
+            <label htmlFor="menor_a_1_semana">Menor a 1 semana</label>
+          </div>
+          <div>
+            <input 
+              type='radio'
+              id='menor_a_2_semanas'
+              name='fecha'
+              value="Menor a 2 semanas"
+              onChange={handleChange}
+              defaultChecked={"Menor a 2 semanas" === copia.fecha}
+            />
+            <label htmlFor="menor_a_2_semanas">Menor a 2 semanas</label>
+          </div>
+          <div>
+            <input 
+              type='radio'
+              id='menor_a_1_mes'
+              name='fecha'
+              value="Menor a 1 mes"
+              onChange={handleChange}
+              defaultChecked={"Menor a 1 mes" === copia.fecha}
+            />
+            <label htmlFor="menor_a_1_mes">Menor a 1 mes</label>
+          </div>
+          <div>
+            <input 
+              type='radio'
+              id='menor_a_2_meses'
+              name='fecha'
+              value="Menor a 2 meses"
+              onChange={handleChange}
+              defaultChecked={"Menor a 2 meses" === copia.fecha}
+            />
+            <label htmlFor="menor_a_2_meses">Menor a 2 meses</label>
+          </div>
+          <div>
+            <input 
+              type='radio'
+              id='todo'
+              name='fecha'
+              value="Todo"
+              onChange={handleChange}
+              defaultChecked={"Todo" === copia.fecha}
+            />
+            <label htmlFor="todo">Todo</label>
+          </div>
+        </div>
+      </div>
+
+
 
       <div className="ConfirmationButtons">
         <button 
