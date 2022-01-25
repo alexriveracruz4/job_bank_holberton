@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useAuth0 } from "@auth0/auth0-react";
 import "./HomeNav.css"
 
 /*$(document).scroll(function() {
@@ -38,9 +39,12 @@ function HomeNav() {
       }
     };
   })
+
+  const { loginWithRedirect } = useAuth0();
+
   return (
     <header className="header-wrap fixed-top scrolled" id="header-top">
-      <div className="container">
+      <div className="container d-flex justify-content-lg-around">
         <div className="row">
           <nav className="navbar navbar-expand-lg navbar-dark">
             <a className="navbar-brand" href="https://holberton-peru.com">
@@ -50,8 +54,12 @@ function HomeNav() {
                 aria-controls="navbarHolberton" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarHolberton">
+            <div className="collapse navbar-collapse ps-5" id="navbarHolberton">
               <ul className="navbar-nav me-auto">
+                <li className="nav-item">
+                    <a href="https://partners.holberton-peru.com/home" className="nav-link " target="_self"
+                    data-text="Home">Home</a>
+                </li>
                 <li className="nav-item dropdown multi-level">
                   <a className="nav-link dropdown-toggle " href="https://holberton-peru.com/carreras" id="navbarDropdownPrimary2"
                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carrera
@@ -97,39 +105,37 @@ function HomeNav() {
                   data-text="Admisiones">Admisiones</a>
                 </li>
                 <li className="nav-item">
-                  <a href="https://holberton-peru.com/becas" className="nav-link " target="_self"
-                  data-text="Becas">Becas</a>
+                  <a href="https://holberton-peru.com/faq" className="nav-link " target="_self"
+                  data-text="FAQs">FAQs</a>
                 </li>
                 <li className="nav-item">
                   <a href="https://holberton-peru.com/nosotros" className="nav-link " target="_self"
                   data-text="Nosotros">Nosotros</a>
                 </li>
                 <li className="nav-item">
-                  <a href="https://holberton-peru.com/events" className="nav-link " target="_self"
-                  data-text="Eventos">Eventos</a>
-                </li>
-                <li className="nav-item">
-                  <a href="https://holberton-peru.com/contrata-holbies" className="nav-link " target="_self"
-                  data-text="Contrata Holbies">Contrata Holbies</a>
+                  <a href="https://api.whatsapp.com/send/?phone=51923898366&text=Hola%2C+necesito+informaci%C3%B3n&app_absent=0" className="nav-link " target="_self"
+                  data-text="Contáctanos">Contáctanos</a>
       
                 </li>
               </ul>
               <div className="call">
-                <button data-toggle="modal" data-target="#modalAplica" className="btn btn-danger">Aplica aquí</button>
-                  <a href="https://apply.holbertonschool.com/auth/sign_in?country=pe" className="btn btn-light"
-                      target="_blank">Iniciar sesión</a>
-<div class="btn-group">
-  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Action
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="#">Separated link</a>
-  </div>
-</div>
+                <div className="d-flex mx-3">
+                    <div className="dropdown">
+                      <button type="button" className="btn btn-secondary dropdown-toggle" id="lang"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                          data-offset="10,20">
+                        <i className="fas fa-globe"></i> Español
+                      </button>
+                      <div className="dropdown-menu" aria-labelledby="lang">
+                        <a className="dropdown-item" href="https://www.holbertonschool.com/"
+                            target="_blank">English</a>
+                      </div>
+                    </div>
+                  </div>
+                  <i className="far fa-question-circle fa-lg mx-3" style={{color: "white"}}></i>
+                  <a href="https://apply.holbertonschool.com/auth/sign_in?country=pe" className="btn-link mx-3" target="_blank">
+                    <i className="fas fa-user-circle fa-lg" onClick={() => loginWithRedirect()} style={{color: "white"}} />
+                  </a>
               </div>
             </div>
           </nav>

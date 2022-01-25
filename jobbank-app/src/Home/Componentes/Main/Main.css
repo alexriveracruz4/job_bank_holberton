@@ -23,11 +23,6 @@ a:hover {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 
-.container {
-    max-width: 1440px;
-    width: 95%;
-}
-
 main {
     background: #e1003c;
 }
@@ -41,7 +36,9 @@ main {
 }
 
 main .container {
-    max-width: 1680px;
+    display: grid;
+    max-height: 100vh;
+    max-width: 1250px;
 }
 
 main .navbar {
@@ -71,10 +68,67 @@ main .navbar {
 
 .padding-main .container .row {
     background: #fff;
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x));
 }
 
 .navbar-brand {
     margin-right: 45px;
+}
+
+#button-search {
+    background: #ff0000;
+    width: 73px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-buttons {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.btn-group-vertical button {
+    border-radius: 15px;
+    padding: 10px 30px;
+    font-weight: 500;
+    font-size: 20px;
+    margin-right: 10px;
+    text-align: start;
+}
+
+
+
+#button-search img {
+    max-width: 56px;
+    transform: rotateY(180deg);
+}
+
+#navbarMainHolberton ul .nav-item a {
+    background: #ff0000;
+    height: 30px;
+    color: #fff;
+}
+
+#navbarMainHolberton ul .nav-item #fav-filter {
+    display: inline-block;
+    padding: 5px;
+    background: none;
+    font-weight: 500;
+    color: #000;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-decoration-color: #ff0000;
+    text-underline-position: under;
 }
 
 @media screen and (min-width: 991px) {
@@ -91,7 +145,7 @@ main .navbar {
     overflow: hidden;
     padding: 0 20px;
     letter-spacing: 0;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .navbar-dark .navbar-nav .nav-link>i {
@@ -110,10 +164,6 @@ main .navbar {
     color: #fff;
     text-decoration: none;
     background-color: #ff003b;
-}
-
-.navbar-dark .dropdown-toggle::after {
-    display: none;
 }
 
 .navbar-dark .navbar-nav .nav-link:focus,
@@ -145,11 +195,6 @@ main .navbar {
     background: #ff003c;
 }
 
-.btn-light {
-    background: #fff;
-    color: #ff003c;
-}
-
 .call {
     display: flex;
     flex-wrap: wrap;
@@ -176,7 +221,7 @@ main .navbar {
 
 .call .btn.dropdown-toggle {
     background: transparent;
-    color: #ff003c;
+    color: #fff;
     border: 0;
     padding: 8px 15px;
     margin-right: 0;

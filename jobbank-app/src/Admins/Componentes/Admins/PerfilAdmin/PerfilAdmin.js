@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./PerfilAdmin.css"
 import Cookies from "universal-cookie";
+import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
 import { useHistory } from "react-router";
 import swal from 'sweetalert';
+import apiPath from '../../../../ApiPath';
 
 const cookies = new Cookies();
 
@@ -31,8 +33,40 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     });
   };
 
+  // Get photoname
+  const [admin, setAdmin] = useState([2]);
+
+  React.useEffect(() => {
+    obtenerDatosDeAdmins();
+  }, []);
+
+  let admin_id = cookies.get('id')
+
+  const obtenerDatosDeAdmins = async () => {
+    const data = await fetch(`${apiPath}/admins/${admin_id}`);
+    const applications = await data.json();
+    setAdmin(applications);
+  }
+
+  useEffect(() => {
+  let photoname = "";
+
+  if (admin.photo_filename_physical != null && admin.photo_filename_physical != undefined){
+    photoname = admin.photo_filename_physical;
+  }
+
+  const PhotoId = document.getElementById('photo-id');
+
+  if (cookies.get('photo_filename_physical') !== 'null') {
+    PhotoId.innerText = photoname;
+  } else {
+    PhotoId.innerText = "Aún no se ha subido ninguna imagen";
+  }
+  });
+
   // Sweetalert to confirm when the user clicks in Guardar cambios
   const history = useHistory();
+  let uploadInputImage = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,9 +77,31 @@ const CrudForm = ({ updateData, dataToEdit}) => {
         buttons: ["Cancelar", "Guardar"],
       }).then((willEdit) => {
         if (willEdit) {
-          updateData(form);
+
+          // updateData function
+          async function updateForm() {
+            await updateData(form);
+          
+          setTimeout(() => {
+            if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
+              const data = new FormData();
+              data.append('file', uploadInputImage.files[0]);
+              const urlupload = `${apiPath}/admins/`+ cookies.get('id') + '/uploadphoto'
+  
+              fetch(urlupload, {
+                method: 'POST',
+                body: data,
+              }).then((response) => {
+                response.json().then((body) => {
+                  cookies.set('logo_filename_physical', body.logo_filename_physical);
+                });
+              })
+            }
+          }, 500);
+
           cookies.set('firstname', form.firstname, {path:"/"});
           cookies.set('lastname', form.lastname, {path:"/"});
+
           swal("HAS EDITADO EXITOSAMENTE LOS DATOS DEL ADMINISTRADOR", {
               timer:"1500"
           });
@@ -54,9 +110,18 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           }, 1000);
           window.scrollTo(0, 0);
         }
+        updateForm();
+        }
       });
-    };
-  };
+    } else {
+      swal({
+        title: "Se ha producido un error",
+        text: "Por favor revise que haya ingresado sus datos correctamente",
+        icon: "error",
+        button: "Aceptar"
+      });
+    }
+  }
 
   // Getting variables from html
   const inputFirstname = document.getElementById('inputFirstname');
@@ -146,6 +211,22 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   return formIsValid
 }
 
+  // See the chosen image
+  const uploadedImage = React.useRef(null);
+
+  const handleImageUploaded = e => {
+    const [file] = e.target.files;
+    if (file) {
+      const reader = new FileReader();
+      const {current} = uploadedImage;
+      current.file = file;
+      reader.onload = (e) => {
+          current.src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="container-profile-admin-edit">
       <div className="profile-title">
@@ -154,6 +235,30 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
       <div className='container-form'>
         <form className='form'>
+
+          <div className='form-control'>
+            <div className="form-Admin">
+              <div className="form-div">
+                <form className="form-form">
+                  <div className="photoform-div">
+                    <label htmlFor="inputPhoto" className="col-form-label">Foto de perfil</label>
+                    <div className='usericon-div'>
+                      <img src={ UserIcon } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
+                    </div>
+                    <small id="photoHelpInline" className="text-muted">Please upload a square-shaped picture. Max 2MB, Formats allowed: jpg, png.</small>
+                    <div className="container-selectFile">
+                      <div className="box-photo form-control">
+                        <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/*" onChange={handleImageUploaded} />
+                      </div>
+                      <div className="cv-photo">
+                        <a id='photo-id' value={cookies.get('photo_filename_logical')}>{cookies.get('photo_filename_physical')}</a>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
 
           <div className="form-control" id='form-firstname'>
             <label htmlFor="inputFirstname">Nombre</label>

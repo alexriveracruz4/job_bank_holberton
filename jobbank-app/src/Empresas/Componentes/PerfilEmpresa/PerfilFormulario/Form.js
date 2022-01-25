@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router';
 import Countries from "../../../data/country.json"
 import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
 import "./Form.css"
 import Cookies from 'universal-cookie';
 import swal from 'sweetalert';
+import apiPath from '../../../../ApiPath';
 
 const cookies = new Cookies();
 
@@ -35,8 +36,41 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     });
   };
 
+  // Get photoname
+  const [partner, setPartner] = useState([2]);
+
+  React.useEffect(() => {
+    obtenerDatosDePartners();
+  }, []);
+
+  let partner_id = cookies.get('id')
+
+  const obtenerDatosDePartners = async () => {
+    const data = await fetch(`${apiPath}/partners/${partner_id}`);
+    const applications = await data.json();
+    setPartner(applications);
+  }
+
+  useEffect(() => {
+  let photoname = "";
+
+  if (partner.photo_filename_physical != null && partner.photo_filename_physical != undefined){
+    photoname = partner.photo_filename_physical;
+  }
+
+  const PhotoId = document.getElementById('photo-id');
+
+  if (cookies.get('photo_filename_physical') !== 'null') {
+    PhotoId.innerText = photoname;
+  } else {
+    PhotoId.innerText = "Aún no se ha subido ninguna imagen";
+  }
+  });
+
   // Sweetalert to confirm when the user clicks in Guardar cambios
   const history = useHistory();
+  let uploadInputImage = useRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateInputs() === true) {
@@ -46,8 +80,30 @@ const CrudForm = ({ updateData, dataToEdit }) => {
         buttons: ["Cancelar", "Guardar"],
       }).then((willEdit) => {
         if (willEdit) {
-          updateData(form);
+
+          // updateData function
+          async function updateForm() {
+            await updateData(form);
+          
+          if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
+            setTimeout(() => {
+                const data = new FormData();
+                data.append('file', uploadInputImage.files[0]);
+                const urlupload = `${apiPath}/partners/`+ cookies.get('id') + '/uploadphoto'
+    
+                fetch(urlupload, {
+                  method: 'POST',
+                  body: data,
+                }).then((response) => {
+                  response.json().then((body) => {
+                    cookies.set('logo_filename_physical', body.logo_filename_physical);
+                  });
+                })
+            }, 500);
+          };
+
           cookies.set('name', form.name, {path:"/"});
+
           swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
               timer:"1500"
             });
@@ -55,10 +111,19 @@ const CrudForm = ({ updateData, dataToEdit }) => {
               history.go(0);
             }, 1000);
             window.scrollTo(0, 0);
+          }
+          updateForm();
         } 
       });
-    };
-  };
+    } else {
+      swal({
+        title: "Se ha producido un error",
+        text: "Por favor revise que haya ingresado sus datos correctamente",
+        icon: "error",
+        button: "Aceptar"
+      });
+    }
+  }
 
   // Getting variables from html
   const inputName = document.getElementById('inputName');
@@ -145,6 +210,22 @@ const CrudForm = ({ updateData, dataToEdit }) => {
   return formIsValid
 }
 
+  // See the chosen image
+  const uploadedImage = React.useRef(null);
+
+  const handleImageUploaded = e => {
+    const [file] = e.target.files;
+    if (file) {
+      const reader = new FileReader();
+      const {current} = uploadedImage;
+      current.file = file;
+      reader.onload = (e) => {
+          current.src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="container-profile-partner">
       <div className="profile-title">
@@ -154,7 +235,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
       <div className='container-form'>
         <form className='form'>
 
-          {/*<div className='form-control'>
+          <div className='form-control'>
             <div className="form-Estudiante">
               <div className="form-div">
                 <form className="form-form">
@@ -168,15 +249,15 @@ const CrudForm = ({ updateData, dataToEdit }) => {
                       <div className="box-photo form-control">
                         <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/*" onChange={handleImageUploaded} />
                       </div>
-                      <div className="cv-name">
-                        <a href={cookies.get("photo_filename_logical")}>{cookies.get('photo_filename_physical')}</a>
+                      <div className="cv-photo">
+                        <a id='photo-id' value={cookies.get('photo_filename_logical')}>{cookies.get('photo_filename_physical')}</a>
                       </div>
                     </div>
                   </div>
                 </form>
               </div>
             </div>
-          </div>*/}
+          </div>
 
           <div className="form-control" id='form-name'>
             <label htmlFor="inputName">Empresa</label>

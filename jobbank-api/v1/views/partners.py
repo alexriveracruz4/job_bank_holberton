@@ -3,11 +3,14 @@
 from v1.models.partner import Partner
 from v1.models import storage
 from v1.views import app_views
-from flask import abort, jsonify, make_response, request
+from flask import abort, jsonify, make_response, request, send_file
 import uuid
 from datetime import datetime
+import pathlib
 import re
+from math import ceil
 from v1.views.countries import countries
+import os
 
 
 @app_views.route('/partners', methods=['GET'], strict_slashes=False)
@@ -270,7 +273,7 @@ def PartnerFileUploadPhoto(partner_id):
     if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
         abort(400, description="It is not a png or jpg file")
 
-    path = '/home/jhonatanjc/job_bank_holberton/partner_photos/'
+    path = '/mnt/d/jbgithub/job_bank_holberton/partner_photos/'
     filename_new = partner_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -280,19 +283,19 @@ def PartnerFileUploadPhoto(partner_id):
         os.remove(path + file_)
 
 
-    setattr(partner, 'photo_filename_physical', filename)
-    setattr(partner, 'photo_filename_logical', filename_new)
+    setattr(partner, 'logo_filename_physical', filename)
+    setattr(partner, 'logo_filename_logical', filename_new)
 
     storage.save()
 
     return make_response(jsonify(partner.to_dict()), 200)
 
 
-@app_views.route('/partner_photos/<photo_filename_logical>', methods=['GET'], strict_slashes=False)
-def partnertPhoto(photo_filename_logical):
+@app_views.route('/partner_photos/<logo_filename_logical>', methods=['GET'], strict_slashes=False)
+def partnertPhoto(logo_filename_logical):
     """
     Partner Photo
     """
-    path = "/home/jhonatanjc/job_bank_holberton/partner_photos/" + photo_filename_logical
+    path = "/mnt/d/jbgithub/job_bank_holberton/partner_photos/" + logo_filename_logical
     return send_file(path)
 

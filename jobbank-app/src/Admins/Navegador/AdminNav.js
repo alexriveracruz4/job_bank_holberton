@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import './AdminNav.css';
 import logo from "./ImagenesNav/holberton-logo.png";
 import UserIcon from "./ImagenesNav/user-icon.png";
 import { useHistory } from 'react-router-dom'; 
 import Cookies from 'universal-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
+import apiPath from "../../ApiPath";
 
 
 const cookies = new Cookies();
@@ -25,7 +26,28 @@ function closeSessionEst() {
 // Function that contains the navigation bar of the page
 function AdminNav() {
   const { logout } = useAuth0();
+  const [admin, setAdmin] = useState([2]);
+
+  React.useEffect(() => {
+    obtenerDatosDeAdmins();
+  }, []);
+
+  let admin_id = cookies.get('id')
+
+  const obtenerDatosDeAdmins = async () => {
+    const data = await fetch(`${apiPath}/admins/${admin_id}`);
+    const applications = await data.json();
+    setAdmin(applications);
+  }
+
   let history = useHistory();
+
+  let photo = UserIcon;
+
+  if (admin.logo_filename_logical != null && admin.logo_filename_logical != undefined){
+    photo = `${apiPath}/admin_photos/${admin.logo_filename_logical}`;
+  }
+
   return (
     <header className="Admin-nav">
       <div className="logo-container">

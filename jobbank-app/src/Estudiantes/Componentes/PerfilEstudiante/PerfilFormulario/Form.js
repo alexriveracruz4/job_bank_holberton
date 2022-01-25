@@ -43,6 +43,52 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     });
   };
 
+  // Get photoname
+  const [student, setStudent] = useState([2]);
+
+  React.useEffect(() => {
+    obtenerDatosDeEstudiantes();
+  }, []);
+
+  let student_id = cookies.get('id')
+
+  const obtenerDatosDeEstudiantes = async () => {
+    const data = await fetch(`${apiPath}/students/${student_id}`);
+    const applications = await data.json();
+    setStudent(applications);
+  }
+
+  useEffect(() => {
+  let photoname = "";
+  let cvname = "";
+
+  if (student.photo_filename_physical != null && student.photo_filename_physical != undefined){
+    photoname = student.photo_filename_physical;
+  }
+
+  if (student.cv_filename_physical != null && student.cv_filename_physical != undefined){
+    cvname = student.cv_filename_physical;
+  }
+
+  const PhotoId = document.getElementById('photo-id');
+
+  if (student.photo_filename_physical !== 'null') {
+    PhotoId.innerText = photoname;
+  } else {
+    PhotoId.innerText = "Aún no se ha subido ninguna imagen";
+  }
+
+  const cvID = document.getElementById('cv-name');
+
+  if (student.cv_filename_physical !== 'null') {
+    console.log("hay")
+    cvID.innerText = cvname;
+  } else {
+    console.log("no hay")
+    cvID.innerText = "Aún no se ha subido ningun CV";
+  }
+  })
+
   // Sweetalert to confirm when the user clicks in Guardar Cambios
   const history = useHistory();
   let uploadInputImage = useRef();
@@ -61,38 +107,40 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
           // updateData function
           async function updateForm() {
-            const updata = await updateData(form);
+            await updateData(form);
 
-            if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
-              const data = new FormData();
-              data.append('file', uploadInputImage.files[0]);
-              const urlupload = `${apiPath}/students/`+ cookies.get('id') + '/uploadphoto'
-  
-              fetch(urlupload, {
-                method: 'POST',
-                body: data,
-              }).then((response) => {
-                response.json().then((body) => {
-                  cookies.set('photo_filename_physical', body.photo_filename_physical);
+            setTimeout(() => {
+              if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
+                const data = new FormData();
+                data.append('file', uploadInputImage.files[0]);
+                const urlupload = `${apiPath}/students/`+ cookies.get('id') + '/uploadphoto'
+    
+                fetch(urlupload, {
+                  method: 'POST',
+                  body: data,
+                }).then((response) => {
+                  response.json().then((body) => {
+                    cookies.set('photo_filename_physical', body.photo_filename_physical);
+                  });
+                })
+              }
+    
+              // Upload CV
+              if (uploadInputCV.files[0] != undefined) {
+                const cvData = new FormData();
+                cvData.append('file', uploadInputCV.files[0]);
+                const urlUploadCV = `${apiPath}/students/`+ cookies.get('id') + '/uploadcv'
+            
+                fetch(urlUploadCV, {
+                  method: 'POST',
+                  body: cvData,
+                }).then((response) => {
+                  response.json().then((body) => {
+                    cookies.set('cv_filename_physical', body.cv_filename_physical);
+                  });
                 });
-              })
-            }
-  
-            // Upload CV
-            if (uploadInputCV.files[0] != undefined) {
-              const cvData = new FormData();
-              cvData.append('file', uploadInputCV.files[0]);
-              const urlUploadCV = `${apiPath}/students/`+ cookies.get('id') + '/uploadcv'
-          
-              fetch(urlUploadCV, {
-                method: 'POST',
-                body: cvData,
-              }).then((response) => {
-                response.json().then((body) => {
-                  cookies.set('cv_filename_physical', body.cv_filename_physical);
-                });
-              });
-            }
+              }
+            }, 500);
   
             cookies.set('firstname', form.firstname, {path:"/"});
     
@@ -284,7 +332,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                         <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/*" onChange={handleImageUploaded} />
                       </div>
                       <div className="cv-photo">
-                        <a href={cookies.get("photo_filename_logical")}>{cookies.get('photo_filename_physical')}</a>
+                        <a id='photo-id' value={cookies.get('photo_filename_logical')}>{cookies.get('photo_filename_physical')}</a>
                       </div>
                     </div>
                   </div>
@@ -452,8 +500,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                       <div className="box-photo form-control">
                         <input ref={(ref) => { uploadInputCV = ref; }} type="file" accept="application/pdf" />
                       </div>
-                      <div className="cv-name">
-                        <a href={cookies.get("cv_filename_logical")}>{cookies.get('cv_filename_physical')}</a>
+                      <div className="cv-name-div">
+                        <a id='cv-name' value={cookies.get('cv_filename_physical')}>{cookies.get('cv_filename_physical')}</a>
                       </div>
                     </div>
                   </div>

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import './EmpresaNav.css';
 import logo from "./ImagenesNav/holberton-logo.png";
 import UserIcon from "./ImagenesNav/user-icon.png";
 import { useHistory } from 'react-router-dom'; 
 import Cookies from 'universal-cookie';
+import apiPath from "../../ApiPath";
 import { useAuth0 } from "@auth0/auth0-react";
 
 
@@ -34,7 +35,28 @@ function closeSessionEst() {
 
 function EmpresaNav() {
   const { logout } = useAuth0();
+  const [partner, setPartner] = useState([2]);
+
+  React.useEffect(() => {
+    obtenerDatosDePartners();
+  }, []);
+
+  let partner_id = cookies.get('id')
+
+  const obtenerDatosDePartners = async () => {
+    const data = await fetch(`${apiPath}/partners/${partner_id}`);
+    const applications = await data.json();
+    setPartner(applications);
+  }
+
   let history = useHistory();
+
+  let photo = UserIcon;
+
+  if (partner.logo_filename_logical != null && partner.logo_filename_logical != undefined){
+    photo = `${apiPath}/partner_photos/${partner.logo_filename_logical}`;
+  }
+
   return (
     <header className="Partner-nav">
       <div className="logo-container">
@@ -64,7 +86,7 @@ function EmpresaNav() {
             className="profile-button" 
             Puestos de Trabajo
             onClick={ () => {history.push("/empresa/perfil")}}>
-            <img src={ UserIcon } className="usericon" alt="imagen de usuario" />
+            <img src={ photo } className="usericon" alt="imagen de usuario" />
             <button className="name-button">{cookies.get('name')}</button>
           </div>
         </div>
