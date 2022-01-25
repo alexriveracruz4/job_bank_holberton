@@ -5,7 +5,7 @@ import mysvg from "../images/Magnifying_glass_icon.svg"
 function Main() {
   return (
     <main className="padding-main">
-      <div className="container padding">
+      <div className="container padding mt-3">
         <div class="row">
           <nav class="navbar navbar-expand-lg navbar-dark">
             <div className="collapse navbar-collapse d-flex justify-content-center" id="navbarMainHolberton">
