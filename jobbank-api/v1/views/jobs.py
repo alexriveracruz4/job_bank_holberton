@@ -27,12 +27,17 @@ def get_jobs():
     kind_of_job = request.args.get('_kind_of_job')
     modality = request.args.get('_modality')
 
+    fecha = request.args.get('_fecha')
+
+
     if kind_of_job is None:
         kind_of_job = "todas"
     if modality is None:
         modality = "todas"
     if filter_words is None:
         filter_words = ""
+    if fecha is None:
+        filter_words = "Todo"
 
     all_jobs = storage.all(Job).values()
 
@@ -46,15 +51,44 @@ def get_jobs():
 
     #print(list(all_jobs)[1].to_dict()) #same
     #print(type(list(all_jobs)[1].__dict__["created_at"])) #same
+
+    def fecha_de_publicacion(job, fecha):
+        fecha_actual=datetime.now()
+        cambio_a_datatime = datetime.strptime(job["updated_at"], "%Y-%m-%dT%H:%M:%S.%f")
+        diferencia = fecha_actual - cambio_a_datatime
+        total_seconds = diferencia.total_seconds()
         
+        valor_numerico = 1
+        if fecha == "Hoy":
+            valor_numerico = 86400
+        if fecha == "Ayer":
+            valor_numerico = 86400
+        if fecha == "Menor a 3 dias":
+            valor_numerico = 259200
+        if fecha == "Menor a 4 dias":
+            valor_numerico = 345600
+        if fecha == "Menor a 5 dias":
+            valor_numerico = 432000
+        if fecha == "Menor a 1 semana":
+            valor_numerico = 604800
+        if fecha == "Menor a 2 semanas":
+            valor_numerico = 1.21e+6
+        if fecha == "Menor a 1 mes":
+            valor_numerico = 2.628e+6
+        if fecha == "Menor a 2 meses":
+            valor_numerico = 5.256e+6
+        
+        if total_seconds < valor_numerico or fecha == "Todo":
+            return True
+        else:
+            return False
+
     list_jobs = []
     try:
         datos_no_borrados = filtro_de_eliminados(list(all_jobs))
 
         page = int(request.args.get('_page'))
         limit = int(request.args.get('_limit'))
-
-        
 
         for job in datos_no_borrados:
             list_jobs.append(job.to_dict())
@@ -63,6 +97,9 @@ def get_jobs():
                                                     (x['job_type'] == kind_of_job or kind_of_job == "todas") and 
                                                     (filter_words in x['title'].lower()+x["description"].lower()  or filter_words == "") 
                                                     ]
+        datos_filtrados_por_fecha = [ x for x in datos_filtrados if fecha_de_publicacion(x, fecha)]
+        
+        datos_filtrados = datos_filtrados_por_fecha
         #print(datos_filtrados)
         number_of_pages = ceil(len(datos_filtrados)/limit)
         datos_no_borrados_ordenados = sorted(datos_filtrados, key=lambda d: d['updated_at']) 
