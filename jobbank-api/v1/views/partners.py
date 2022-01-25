@@ -166,7 +166,8 @@ def put_partner(partner_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
 
-    ignore = ['id', 'created_at', 'updated_at', 'deleted_at', '__class__']
+    ignore = ['id', 'created_at', 'updated_at', 'deleted_at', '__class__', 
+    'logo_filename_logical', 'logo_filename_physical']
 
     isvalid = True
 

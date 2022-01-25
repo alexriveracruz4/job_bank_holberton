@@ -83,26 +83,24 @@ const CrudForm = ({ updateData, dataToEdit }) => {
 
           // updateData function
           async function updateForm() {
-            await updateData(form);
-          
-          if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
-            setTimeout(() => {
-                const data = new FormData();
-                data.append('file', uploadInputImage.files[0]);
-                const urlupload = `${apiPath}/partners/`+ cookies.get('id') + '/uploadphoto'
-    
-                fetch(urlupload, {
-                  method: 'POST',
-                  body: data,
-                }).then((response) => {
-                  response.json().then((body) => {
-                    cookies.set('logo_filename_physical', body.logo_filename_physical);
-                  });
-                })
-            }, 500);
-          };
+            const updata = await updateData(form);
 
-          cookies.set('name', form.name, {path:"/"});
+            if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
+              const data = new FormData();
+              data.append('file', uploadInputImage.files[0]);
+              const urlupload = `${apiPath}/partners/`+ cookies.get('id') + '/uploadphoto'
+
+              fetch(urlupload, {
+                method: 'POST',
+                body: data,
+              }).then((response) => {
+                response.json().then((body) => {
+                  cookies.set('logo_filename_physical', body.logo_filename_physical);
+                });
+              })
+            }
+
+            cookies.set('name', form.name, {path:"/"});
 
           swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
               timer:"1500"

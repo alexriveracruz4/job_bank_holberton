@@ -107,46 +107,44 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
           // updateData function
           async function updateForm() {
-            await updateData(form);
+            const updata = await updateData(form);
 
-            setTimeout(() => {
-              if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
-                const data = new FormData();
-                data.append('file', uploadInputImage.files[0]);
-                const urlupload = `${apiPath}/students/`+ cookies.get('id') + '/uploadphoto'
-    
-                fetch(urlupload, {
-                  method: 'POST',
-                  body: data,
-                }).then((response) => {
-                  response.json().then((body) => {
-                    cookies.set('photo_filename_physical', body.photo_filename_physical);
-                  });
-                })
-              }
-    
-              // Upload CV
-              if (uploadInputCV.files[0] != undefined) {
-                const cvData = new FormData();
-                cvData.append('file', uploadInputCV.files[0]);
-                const urlUploadCV = `${apiPath}/students/`+ cookies.get('id') + '/uploadcv'
-            
-                fetch(urlUploadCV, {
-                  method: 'POST',
-                  body: cvData,
-                }).then((response) => {
-                  response.json().then((body) => {
-                    cookies.set('cv_filename_physical', body.cv_filename_physical);
-                  });
+            if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
+              const data = new FormData();
+              data.append('file', uploadInputImage.files[0]);
+              const urlupload = `${apiPath}/students/`+ cookies.get('id') + '/uploadphoto'
+
+              fetch(urlupload, {
+                method: 'POST',
+                body: data,
+              }).then((response) => {
+                response.json().then((body) => {
+                  cookies.set('photo_filename_physical', body.photo_filename_physical);
                 });
-              }
-            }, 500);
-  
+              })
+            }
+
+            // Upload CV
+            if (uploadInputCV.files[0] != undefined) {
+              const cvData = new FormData();
+              cvData.append('file', uploadInputCV.files[0]);
+              const urlUploadCV = `${apiPath}/students/`+ cookies.get('id') + '/uploadcv'
+
+              fetch(urlUploadCV, {
+                method: 'POST',
+                body: cvData,
+              }).then((response) => {
+                response.json().then((body) => {
+                  cookies.set('cv_filename_physical', body.cv_filename_physical);
+                });
+              });
+            }
+
             cookies.set('firstname', form.firstname, {path:"/"});
-    
+
             cookies.set('lastname', form.lastname, {path:"/"});
-    
-            swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
+
+          swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
                 timer:"1500"
             });
             setTimeout(() => {

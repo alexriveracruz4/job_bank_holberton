@@ -287,7 +287,9 @@ def put_student(student_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
 
-    ignore = ['id', 'created_at', 'updated_at', 'deleted_at', '__class__']
+    ignore = ['id', 'created_at', 'updated_at', 'deleted_at', '__class__', 
+    'cv_filename_logical', 'cv_filename_physical', 'photo_filename_logical',
+    'photo_filename_physical']
 
     isvalid = True
 
@@ -299,16 +301,19 @@ def put_student(student_id):
                 if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
                     isvalid = True
                 else:
+                    print("Not a valid firstname")
                     abort(400, description="Not a valid firstname")
             if key == "lastname":
                 if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
                     isvalid = True
                 else:
+                    print("Not a valid lastname")
                     abort(400, description="Not a valid lastname")
             if key == "email":
                 if re.match(r"^(?=.{4,45}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
                     isvalid = True
                 else:
+                    print("Not a valid email")
                     abort(400, description="Not a valid email")
             if key == "phonenumber":
                 if value == None or value == "":
@@ -316,6 +321,7 @@ def put_student(student_id):
                 elif re.match(r"^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,9}$", value):
                     isvalid = True
                 else:
+                    print("Not a valid phonenumber")
                     abort(400, description="Not a valid phonenumber")
             if key == "age":
                 if value == None or value == "":
@@ -323,6 +329,7 @@ def put_student(student_id):
                 elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
                     isvalid = True
                 else:
+                    print("Not a valid age")
                     abort(400, description="Not a valid age")
             if key == "availability":
                 if value == None or value == "":
@@ -331,8 +338,10 @@ def put_student(student_id):
                     if value in availabilityList:
                         isvalid = True
                     else:
+                        print("Not a valid option in availability")
                         abort(400, description="Not a valid option in availability")
                 else:
+                    print("Must contain a maximum of 60 characters")
                     abort(400, description="Must contain a maximum of 60 characters")
             if key == "pres_or_remot":
                 if value == None or value == "":
@@ -341,8 +350,10 @@ def put_student(student_id):
                     if value in pres_or_remotList:
                         isvalid = True
                     else:
+                        print("Not a valid option in pres_or_remot")
                         abort(400, description="Not a valid option in pres_or_remot")
                 else:
+                    print("Must contain a maximum of 60 characters")
                     abort(400, description="Must contain a maximum of 60 characters")
             if key == "nationality":
                 if value == None or value == "":
@@ -353,8 +364,10 @@ def put_student(student_id):
                             break
                         isvalid = True
                     else:
+                        print("Country not found")
                         abort(400, description="Country not found")
                 else:
+                    print("Must contain a maximum of 45 characters")
                     abort(400, description="Must contain a maximum of 45 characters")
             if key == "disp_travel":
                 if value == None or value == "":
@@ -363,8 +376,10 @@ def put_student(student_id):
                     if value in disp_travelList:
                         isvalid = True
                     else:
+                        print("Not a valid option in disp_travel")
                         abort(400, description="Not a valid option in disp_travel")
                 else:
+                    print("Must contain a maximum of 45 characters")
                     abort(400, description="Must contain a maximum of 45 characters")
             if key == "linkedin":
                 if value == None or value == "":
@@ -372,6 +387,7 @@ def put_student(student_id):
                 elif len(value) <= 70:
                     isvalid = True
                 else:
+                    print("Must contain a maximum of 70 characters")
                     abort(400, description="Must contain a maximum of 70 characters")
             if key == "github":
                 if value == None or value == "":
@@ -379,6 +395,7 @@ def put_student(student_id):
                 elif len(value) <= 70:
                     isvalid = True
                 else:
+                    print("Must contain a maximum of 70 characters")
                     abort(400, description="Must contain a maximum of 70 characters")
             if key == "twitter":
                 if value == None or value == "":
@@ -386,6 +403,7 @@ def put_student(student_id):
                 elif len(value) <= 70:
                     isvalid = True
                 else:
+                    print("Must contain a maximum of 70 characters")
                     abort(400, description="Must contain a maximum of 70 characters")
             if key == "description":
                 if value == None or value == "":
@@ -393,11 +411,13 @@ def put_student(student_id):
                 elif len(value) <= 1000:
                     isvalid = True
                 else:
+                    print("Must contain a maximum of 1000 characters")
                     abort(400, description="Must contain a maximum of 1000 characters")
             if key == "password":
                 if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
                     isvalid = True
                 else:
+                    print("Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
                     abort(400, description="Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
             if isvalid is True:
                 setattr(student, key, value)
