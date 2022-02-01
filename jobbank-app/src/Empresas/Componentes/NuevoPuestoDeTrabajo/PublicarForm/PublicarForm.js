@@ -289,7 +289,7 @@ const handleSubmit = (e) => {
           </div>
 
           <div className="form-control" id='form-experience'>
-            <label htmlFor="inputExperience">Experiencia</label>
+            <label htmlFor="inputExperience">Tiempo de experiencia</label>
             <div className="inputFormDiv">
               <input type="text" className="form-control" id="inputExperience" maxLength={45} name="experience" onChange={handleChange} value={form.experience}/>
               <i className="fas fa-check-circle" />
