@@ -65,6 +65,7 @@ function Puesto() {
             JobData = {JobData}
             PartnerName={DatosEmpresa.name}
             PartnerEmail={DatosEmpresa.email}
+            logo={DatosEmpresa.logo_filename_logical}
             EstadoDePostulacion={EstadoDePostulacion}
           />
         }

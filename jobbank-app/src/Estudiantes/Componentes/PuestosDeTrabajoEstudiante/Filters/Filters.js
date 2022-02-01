@@ -1,5 +1,16 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Filters.css';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+
+
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
 
 // Filters component
 function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, copia, handleClean} ) {
@@ -14,7 +25,6 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
   const handleFilters = async () => {
     setCopia({...searchJob})
     fetchComments(0);
-
   };
 
   const handleKeyPress = (event) => {
@@ -24,11 +34,99 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
   }
 
 
+  const inputRefmodalidad = useRef(null)
+  const inputReftipoDeTrabajo = useRef(null)
+  const inputReffecha = useRef(null)
+
+  const handleDeletePalabraClave = () => {
+    setCopia({...searchJob, PalabraClave: ""})
+    setSearchJob({...searchJob, PalabraClave: ""})
+    fetchComments(0);
+  }
+  const handleDeletemodalidad = () => {
+    setCopia({...searchJob, modalidad: "todas"})
+    setSearchJob({...searchJob, modalidad: "todas"})
+    inputRefmodalidad.current.click()
+    fetchComments(0);
+  }
+  const handleDeletetipoDeTrabajo = () => {
+    setCopia({...searchJob, tipoDeTrabajo: "todas"})
+    setSearchJob({...searchJob, tipoDeTrabajo: "todas"})
+    inputReftipoDeTrabajo.current.click()
+    fetchComments(0);
+  }
+  const handleDeletefecha = () => {
+    setCopia({...searchJob, fecha: "Todo"})
+    setSearchJob({...searchJob, fecha: "Todo"})
+    inputReffecha.current.click()
+    fetchComments(0);
+  }
+  const [showResultsTipo, setShowResultsTipo] = React.useState('Noshow')
+  const [showResultsModalidad, setShowResultsModalidad] = React.useState('Noshow')
+  const [showResultsFecha, setShowResultsFecha] = React.useState('Noshow')
+  const onClick = () => {
+    if (showResultsTipo === 'Noshow'){
+      setShowResultsTipo('OptionsJob')
+    } else {
+      setShowResultsTipo('Noshow')
+    }
+  }
+
+  const onClick2 = () => {
+    if (showResultsModalidad === 'Noshow'){
+      setShowResultsModalidad('OptionsRegion')
+    } else {
+      setShowResultsModalidad('Noshow')
+    }
+  }
+
+  const onClick3 = () => {
+    if (showResultsFecha === 'Noshow'){
+      setShowResultsFecha('OptionsRegion')
+    } else {
+      setShowResultsFecha('Noshow')
+    }
+  }
+
   return (
     <div className='FilterContainer'>
       <div className="TitleContainer">
-        <h2> FILTROS </h2>  
+        <h2> FILTROS </h2>
+        <div>
+          <Stack
+            direction="column"
+            justifyContent="center"
+            alignItems="center"
+            spacing={0.5}
+          >
+          {
+            copia.PalabraClave === "" ? 
+              ""
+            :
+              <Chip label={copia.PalabraClave} color="info" onDelete={handleDeletePalabraClave} />
+          }
+          {
+            copia.modalidad === "todas" ? 
+              ""
+            :
+            <Chip label={copia.modalidad} color="info" onDelete={handleDeletemodalidad} />
+          }
+          {
+            copia.tipoDeTrabajo === "todas" ? 
+              ""
+            :
+              <Chip label={copia.tipoDeTrabajo} color="info" onDelete={handleDeletetipoDeTrabajo} />
+          }
+          {
+            copia.fecha === "Todo" ? 
+              ""
+            :
+              <Chip label={copia.fecha} color="info" onDelete={handleDeletefecha} />
+          }
+          </Stack>
+          </div>
       </div>
+
       <div className="KeyWord">
         <h3> Palabras clave </h3>
         <input 
@@ -42,8 +140,8 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
         />
       </div>
       <div className="TypeJob">
-        <h3> Tipo de trabajo </h3>
-        <div className="OptionsJob">
+        <button onClick={onClick}> Tipo de trabajo </button>
+        <div className={showResultsTipo}>
           <div>
             <input 
               type='radio'
@@ -51,7 +149,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
               name='tipoDeTrabajo'
               value="Tiempo completo"
               onChange={handleChange}
-              defaultChecked={"Tiempo completo" === copia.tipoDeTrabajo}
+              defaultChecked={"Tiempo completo" === searchJob.tipoDeTrabajo}
             />
             <label htmlFor="tiempo_completo">Tiempo completo</label>
           </div>
@@ -79,6 +177,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
           </div>
           <div>
             <input 
+              ref={inputReftipoDeTrabajo}
               type='radio'
               id='todas'
               name='tipoDeTrabajo'
@@ -91,8 +190,8 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
         </div>
       </div>
       <div className="TypeRegion">
-        <h3> Modalidad de trabajo </h3>
-        <div className="OptionsRegion">
+        <button  onClick={onClick2}> Modalidad de trabajo </button>
+        <div className={showResultsModalidad}>
           <div>
             <input 
               type='radio'
@@ -127,7 +226,8 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
             <label htmlFor="semi-presencial">Semi-presencial</label>
           </div>
           <div>
-            <input 
+            <input
+              ref={inputRefmodalidad}
               type='radio'
               id='all'
               name='modalidad'
@@ -141,8 +241,9 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
       </div>
 
       <div className="TypeRegion">
-        <h3> Fecha de publicación </h3>
-        <div className="OptionsRegion">
+        <button onClick={onClick3} > Fecha de publicación </button>
+
+        <div className={showResultsFecha}>
           <div>
             <input 
               type='radio'
@@ -243,7 +344,8 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
             <label htmlFor="menor_a_2_meses">Menor a 2 meses</label>
           </div>
           <div>
-            <input 
+            <input
+              ref={inputReffecha}
               type='radio'
               id='todo'
               name='fecha'
@@ -259,7 +361,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
 
 
       <div className="ConfirmationButtons">
-        <button 
+        <button
           onClick={handleFilters}> 
           Filtrar 
         </button>

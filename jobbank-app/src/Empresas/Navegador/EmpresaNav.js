@@ -30,7 +30,7 @@ function closeSessionEst() {
     cookies.remove('deleted', {path:"/"});
     cookies.remove('logo_filename_physical', {path:"/"});
     cookies.remove('logo_filename_logical', {path:"/"});
-    window.location.href="/login/empresa";
+    window.location.href="/home";
 }
 
 function EmpresaNav() {
@@ -72,7 +72,7 @@ function EmpresaNav() {
             </button>
           </div>
           <div className="postulaciones-div">
-            <button 
+            <button
               className="postulaciones-button" 
               onClick={ () => {history.push("/empresa/nuevo-puesto-de-trabajo")}}>
               Agregar puesto de trabajo

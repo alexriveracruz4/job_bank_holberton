@@ -11,9 +11,14 @@
   margin-bottom: 8px;
 }
 
+
+
+
+
 .TitleContainer {
   border-bottom: 2px solid black;
   text-align: center;
+  padding-bottom: 10px;
 }
 
 /*Palabra clave*/
@@ -64,9 +69,17 @@
   margin-bottom: 5px;
 }
 
-.OptionsJob div {
+.OptionsJob {
   margin-top: 5px;
   margin-bottom: 5px;
+  transition: 1s;
+  overflow: hidden;
+  display: inline;
+  -webkit-transition: height 1s ease-in-out 0s;
+}
+
+.Noshow {
+  display: None;
 }
 
 .OptionsJob input {

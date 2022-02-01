@@ -39,7 +39,7 @@ function closeSessionEst() {
     cookies.remove('cv_filename_logical', {path:"/"});
     cookies.remove('photo_filename_physical', {path:"/"});
     cookies.remove('photo_filename_logical', {path:"/"});
-    //window.location.href="/login/estudiante";
+    window.location.href="/home";
 }
 
 // Navigator component

@@ -73,7 +73,7 @@ function PuestosDeTrabajoEstudiante() {
       })
     };
     getComments();
-  }, []);
+  }, [copia]);
   const fetchComments = async (currentPage) => {
     const url = `${apiPath}/jobs?_page=${currentPage}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}&_fecha=${copia.fecha}`
       setLoadingPage(true);
@@ -84,7 +84,7 @@ function PuestosDeTrabajoEstudiante() {
           setDatosTotales(totalPages)
           setpageCount(Math.ceil(totalPages / limit));
           setItems(jobs_data);
-          setErrorPage(null)
+          setErrorPage(null);
         } else {
           setItems(null);
           setErrorPage(res);
@@ -92,7 +92,6 @@ function PuestosDeTrabajoEstudiante() {
         setLoadingPage(false);
       })
   };
-
 
   const handlePageClick = async ({selected: selectedPage}) => {
     let currentPage = selectedPage;

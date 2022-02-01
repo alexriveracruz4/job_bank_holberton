@@ -21,6 +21,12 @@ function PartnerInfo(props) {
       setPartnerData(partner);
     }
 
+    let photo = partnerlogo;
+
+    if (PartnerData.logo_filename_logical != null && PartnerData.logo_filename_logical != undefined){
+    photo = `${apiPath}/partner_photos/${PartnerData.logo_filename_logical}`;
+    }
+
     return (
         <div className="body-container">
             <div className="title-container">
@@ -35,7 +41,7 @@ function PartnerInfo(props) {
             </div>
             <div className="half-page">
                 <div className="partner">
-                    <img src={ partnerlogo } className="partnerlogopng" alt="logo de la empresa"/>
+                    <img src={ photo } className="partnerlogopng" alt="logo de la empresa"/>
                 </div>
                 <div className="partner-name">
                     <p>{PartnerData.name}</p>

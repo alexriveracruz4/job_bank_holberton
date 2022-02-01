@@ -22,6 +22,13 @@ function PartnerInfo(props) {
     const [db, setDb] = useState([]);
     let api = helpHttp();
 
+
+    let photo = partnerlogo;
+
+    if (props.logo != null && props.logo != undefined){
+      photo = `${apiPath}/partner_photos/${props.logo}`;
+    }
+
     // Sweetalert to confirm when the user clicks in Postula Aquí
 
     const sendEmail = (title) => {
@@ -97,7 +104,7 @@ function PartnerInfo(props) {
             {loading && <Loader/>}
             <div className="half-page">
                 <div className="partner">
-                    <img src={ partnerlogo } className="partnerlogopng" alt="logo de la empresa"/>
+                    <img src={ photo } className="partnerlogopng" alt="Logo"/>
                 </div>
                 <div className="partner-name">
                     <p>{props.PartnerName}</p>

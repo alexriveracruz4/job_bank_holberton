@@ -50,7 +50,7 @@ function ItemJob(props) {
             return `Hace 1 hora`;
         }
         return `Hace ${Math.round((secondDate-firstDate)/(1000*60))} minutos`;
-    } else if ((secondDate-firstDate)/(1000*60*60) < 60) {
+    } else if ((secondDate-firstDate)/(1000*60*60) < 24) {
         if (Math.round((secondDate-firstDate)/(1000*60*60)) === 1) {
           return `Hace ${Math.round((secondDate-firstDate)/(1000*60*60))} hora`;
         } if (Math.round((secondDate-firstDate)/(1000*60*60)) === 24) {
