@@ -50,10 +50,9 @@ function FiltersStudent(props) {
         <Stack direction="row-reverse" spacing={2} justifyContent="flex-start">
         <Button variant="outlined" color="primary"
           onClick={()=> {
-            let url = `/home?` + props.creadorURLs(props.parameters);
-            history.push({
-              pathname: url,
-              });
+            props.parameters.page = 1;
+            let url = `/home?` + props.creadorURLs(props.parameters);  
+            history.push(url);
             abrirCerrarModal();
             window.location.reload();
           }}
@@ -103,6 +102,16 @@ function FiltersStudent(props) {
                     });
                 }}
               class="nav-link" href="#" id="fav-filter">Favoritos
+            </button>
+          </li>
+          <li class="nav-item mx-3 my-3">
+            <button 
+              onClick={()=> {
+                let url = `/home`
+                history.push(url);
+                window.location.reload();
+              }}
+              class="nav-link d-flex align-items-center" href="#">Limpiar filtros
             </button>
           </li>
         </ul>

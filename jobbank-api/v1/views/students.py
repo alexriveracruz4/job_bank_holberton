@@ -28,7 +28,7 @@ def get_students():
     
     if page is None:
         page = 0
-    limit = 10
+    limit = 4
     skills = request.args.get('skills')
     if skills is None:
         skills = ""
@@ -57,7 +57,10 @@ def get_students():
             return string
 
     try:
-        page = int(page)
+        if page != 0: 
+            page = int(page) - 1
+        else:
+            page = 0
     except:
         page = 0;
     else:
@@ -68,9 +71,9 @@ def get_students():
 
         datos_filtrados = [x for x in list_students if (PalabraClave.lower() in toNoneStrings(x["description"]).lower()) or (PalabraClave == "")]
         number_of_pages = ceil(len(datos_filtrados)/limit)
-        datos_no_borrados_ordenados = random.sample(datos_filtrados, len(datos_filtrados))
+        #datos_no_borrados_ordenados = random.sample(datos_filtrados, len(datos_filtrados))
  
-        part_of_jobs = datos_no_borrados_ordenados[limit*page:limit*(page+1)]
+        part_of_jobs = datos_filtrados[limit*(page):limit*(page + 1)]
  
         data = {"data":part_of_jobs,
                 "len_not_deleted_data":len(datos_no_borrados),

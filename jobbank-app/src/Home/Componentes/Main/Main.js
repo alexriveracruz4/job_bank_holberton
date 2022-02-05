@@ -10,25 +10,39 @@ import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import SvgIcon from '@mui/material/SvgIcon';
 import LinesEllipsis from "react-lines-ellipsis";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect, useState } from "react";
 import apiPath from "../../../ApiPath";
 import { ListStudents } from "./ListStudents";
 import { ItemStudent } from "./ItemStudent";
 import FiltersStudent from "./FiltersStudent";
+import ReactPaginate from "react-paginate";
+import { helpHttp } from "../../../helpers/helpHttp";
+import Loader from "../../../helpers/Loader";
+import Message from "../../../helpers/Message";
 
 
 function Main() {
 
+  let api = helpHttp();
+  let limit = 4;
+
+  let history = useHistory()
+
   let { search } = useLocation();
   let query = new URLSearchParams(search);
 
-  let page = query.get("page")
+  let page = query.get("page");
+
+  if (page === null){
+    page = 1;
+  }
+
   let skills = query.get("skills")
   let english = query.get("english")
   let PalabraClave = query.get("PalabraClave")
 
-  const [parameters, setParameters] = useState({PalabraClave:PalabraClave, skills:skills, english:english, page:page});
+  const [parameters, setParameters] = useState({PalabraClave:PalabraClave, skills:skills, english:english, page: parseInt(page)});
 
   const creadorURLs = (parametros) =>{
     let url = ``
@@ -41,17 +55,23 @@ function Main() {
       }
       counter = counter + 1;
     }
+    console.log(url)
     return url.slice(0, -1);
   }
 
   const [students, setStudents] = useState([]);
+  const [pageCount, setpageCount] = useState(0);
+  const [datosTotales, setDatosTotales] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+/*
   const obtenerEstudiantes = async () => {
     const data = await fetch(`${apiPath}/students?` + creadorURLs(parameters));
     const estudiantes = await data.json();
     setStudents(estudiantes.data);
   }
-
+*/
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
@@ -62,7 +82,42 @@ function Main() {
     window.sessionStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
+  /*
   useEffect(() => {
+    obtenerEstudiantes();
+  }, []);
+  */
+  const obtenerEstudiantes = async () => {
+    const url = `${apiPath}/students?` + creadorURLs(parameters)
+    console.log(url)
+    setLoading(true);
+    api.get(url).then((res) => {
+      if (!res.err) {
+        const students_data = res.data;
+        const totalPages = res.len_filter_data;
+        setDatosTotales(totalPages)
+        setpageCount(Math.ceil(totalPages / limit));
+        setStudents(students_data);
+        setError(null)
+      } 
+      else {
+        setStudents(null);
+        setError(res);
+      }
+      setLoading(false);
+    })
+  };
+
+  const handlePageClick = async ({selected: selectedPage}) => {
+    let currentPage = selectedPage;
+    parameters.page = currentPage + 1;
+    let url = `/home?` + creadorURLs(parameters);
+    console.log(url);
+    history.push(url);
+    obtenerEstudiantes();
+  };
+
+  useEffect(() => {    
     obtenerEstudiantes();
   }, []);
 
@@ -78,21 +133,80 @@ function Main() {
             setFavorites={setFavorites}
           />
         </div>
+        
+        {students &&
+          <ReactPaginate
+            previousLabel={"<"}
+            nextLabel={">"}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            forcePage={parameters.page -1}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item "}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+            renderOnZeroPageCount={null}
+          />
+        }
 
-
+          {datosTotales=== 1?
+            <h2 className="PDTENumeroDeEmpleos">UN ESTUDIANTE DISPONIBLE</h2>
+            :
+            <h2 className="PDTENumeroDeEmpleos">{datosTotales} ESTUDIANTES DISPONIBLES</h2>
+          }
+        {(error) && <Message/>}
         <div className="StudentsContainer">
-          <ListStudents>
+          {loading && <Loader/>}
+          
+          {students &&
+            <ListStudents>
               {students.map(student => (
                 <ItemStudent
                   key={student.id}
                   student={student}
                   favorites={favorites}
                   setFavorites={setFavorites}
-                />
+               />
                ))
               }
-          </ListStudents> 
+            </ListStudents> 
+          }
         </div>
+        
+        {students &&
+          <ReactPaginate
+            previousLabel={"<"}
+            nextLabel={">"}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            forcePage={parameters.page-1}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item "}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+            renderOnZeroPageCount={null}
+          />
+        }
+
+
 
         <div className="title-buttons">
           Preguntas frecuentes sobre contratar un desarrollador
