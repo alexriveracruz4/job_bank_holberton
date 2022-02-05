@@ -46,8 +46,7 @@ import { Home } from './Home/Paginas/Home';
 // Not found 404 import
 import { NotFoundPage } from './NotFoundPage';
 import NotFoundUser from './Inicio/Componentes/NotFoundUser';
-
-
+import { Favoritos } from './Home/Paginas/Favoritos';
 
 
 function App() {
@@ -96,6 +95,7 @@ function App() {
           <Route exact path="/admin/todos-los-trabajos/ver-trabajo/:PartnerId/:JobId" component={PuestoAdminView}/>
 
           <Route exact path="/home" component={Home}/>
+          <Route exact path="/home/favoritos" component={Favoritos}/>
 
           <Route exact path="/" component={Landing}/>
           

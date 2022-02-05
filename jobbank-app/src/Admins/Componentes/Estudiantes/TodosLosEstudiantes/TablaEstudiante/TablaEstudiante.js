@@ -36,7 +36,7 @@ function TablaEstudiante() {
       //setLoading(true);
       api.get(url).then((res) => {
         if (!res.err) {
-          setAllPartnersData(res);
+          setAllPartnersData(res.data);
           setError(null)
         } else {
           setAllPartnersData(null);

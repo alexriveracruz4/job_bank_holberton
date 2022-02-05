@@ -9,16 +9,16 @@ import Grid from '@material-ui/core/Grid';
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import SvgIcon from '@mui/material/SvgIcon';
-import mysvg from "../images/Magnifying_glass_icon.svg";
 import LinesEllipsis from "react-lines-ellipsis";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect, useState } from "react";
 import apiPath from "../../../ApiPath";
 import { ListStudents } from "./ListStudents";
 import { ItemStudent } from "./ItemStudent";
+import FiltersStudent from "./FiltersStudent";
+
 
 function Main() {
-
 
   let { search } = useLocation();
   let query = new URLSearchParams(search);
@@ -27,55 +27,67 @@ function Main() {
   let skills = query.get("skills")
   let english = query.get("english")
   let PalabraClave = query.get("PalabraClave")
-  useEffect(() => {
-    obtenerEstudiantes();
-  }, []);
 
   const [parameters, setParameters] = useState({PalabraClave:PalabraClave, skills:skills, english:english, page:page});
 
-  const [students, setStudents] = useState([]);
-  const obtenerEstudiantes = async () => {
-    const data = await fetch(`${apiPath}/students?skills=${parameters.skills}&english=${parameters.english}&page=${parameters.page}&PalabraClave=${parameters.PalabraClave}`);
-    const estudiantes = await data.json();
-    setStudents(estudiantes);
+  const creadorURLs = (parametros) =>{
+    let url = ``
+    let array_string = [`skills=${parametros.skills}`, `english=${parametros.english}`, `page=${parametros.page}`, `PalabraClave=${parametros.PalabraClave}`]
+    let array = [parametros.skills, parametros.english, parametros.page, parametros.PalabraClave]
+    let counter = 0;
+    for (let element of array) {
+      if (element !== null && element !== "") {
+        url += array_string[counter] + "&";
+      }
+      counter = counter + 1;
+    }
+    return url.slice(0, -1);
   }
+
+  const [students, setStudents] = useState([]);
+
+  const obtenerEstudiantes = async () => {
+    const data = await fetch(`${apiPath}/students?` + creadorURLs(parameters));
+    const estudiantes = await data.json();
+    setStudents(estudiantes.data);
+  }
+
+  const [favorites, setFavorites] = useState([]);
+
+  useEffect(() => {
+    setFavorites(JSON.parse(window.sessionStorage.getItem("favorites")));
+  }, []);
+
+  useEffect(() => {
+    window.sessionStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
+  useEffect(() => {
+    obtenerEstudiantes();
+  }, []);
 
   return (
     <main className="padding-main">
       <div className="container padding mt-3">
         <div class="row">
-          <nav class="navbar navbar-expand-lg navbar-dark">
-            <div className="collapse navbar-collapse d-flex justify-content-center" id="navbarMainHolberton">
-              <ul class="nav nav-filter">
-                <li class="nav-item d-flex align-items-center">
-                  <a href="https://apply.holbertonschool.com/auth/sign_in?country=pe" className="nav-link d-flex align-items-center mx-3 my-3" target="_blank" id="button-search">
-                    <img src={mysvg} className="nav-link" href="#"/>
-                  </a>
-                </li>
-                <li class="nav-item mx-3 my-3">
-                  <a class="nav-link d-flex align-items-center" href="#">Habilidades</a>
-                </li>
-                <li class="nav-item mx-3 my-3">
-                  <a class="nav-link d-flex align-items-center" href="#">Nivel de inglés</a>
-                </li>
-                <li class="nav-item mx-3 my-3">
-                  <i class="far fa-heart"></i>
-                  <a class="nav-link" href="#" id="fav-filter">Favoritos</a>
-                </li>
-              </ul>
-            </div>
-          </nav>
+          <FiltersStudent
+            parameters={parameters}
+            setParameters={setParameters}
+            creadorURLs={creadorURLs}
+            favorites={favorites}
+            setFavorites={setFavorites}
+          />
         </div>
-        
+
 
         <div className="StudentsContainer">
           <ListStudents>
-              {students.map(trabajo => (
+              {students.map(student => (
                 <ItemStudent
-                  key={trabajo.id}
-                  firstname={trabajo.firstname}
-                  lastname={trabajo.lastname}
-                  photo={trabajo.photo_filename_logical}
+                  key={student.id}
+                  student={student}
+                  favorites={favorites}
+                  setFavorites={setFavorites}
                 />
                ))
               }

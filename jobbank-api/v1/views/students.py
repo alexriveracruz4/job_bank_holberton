@@ -14,7 +14,7 @@ from math import ceil
 import re
 from v1.views.countries import countries
 import os
-
+import random 
 availabilityList = ["Actualmente trabajando", "En busca de ofertas laborales", ""]
 pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial", "Sin preferencia", ""]
 disp_travelList = ["Disponible", "No disponible", ""]
@@ -24,11 +24,137 @@ def get_students():
     """
     Retrieves a list of all students
     """
+    page = request.args.get('page')
+    
+    if page is None:
+        page = 0
+    limit = 10
+    skills = request.args.get('skills')
+    if skills is None:
+        skills = ""
+    english = request.args.get('english')
+    if english is None:
+        english = ""
+    PalabraClave = request.args.get('PalabraClave')
+    if PalabraClave is None:
+        PalabraClave = ""
+    
     all_students = storage.all(Student).values()
+
+    def filtro_de_eliminados(list_de_datos):
+        nueva_lista=[]
+        for i in list_de_datos:
+            if i.__dict__["deleted"] == 0:
+                nueva_lista.append(i)
+        return nueva_lista
+
     list_students = []
-    for student in all_students:
-        list_students.append(student.to_dict())
-    return jsonify(list_students)
+    
+    def toNoneStrings(string):
+        if string is None:
+            return ""
+        else:
+            return string
+
+    try:
+        page = int(page)
+    except:
+        page = 0;
+    else:
+        datos_no_borrados = filtro_de_eliminados(list(all_students))
+ 
+        for student in datos_no_borrados:
+            list_students.append(student.to_dict())
+
+        datos_filtrados = [x for x in list_students if (PalabraClave.lower() in toNoneStrings(x["description"]).lower()) or (PalabraClave == "")]
+        number_of_pages = ceil(len(datos_filtrados)/limit)
+        datos_no_borrados_ordenados = random.sample(datos_filtrados, len(datos_filtrados))
+ 
+        part_of_jobs = datos_no_borrados_ordenados[limit*page:limit*(page+1)]
+ 
+        data = {"data":part_of_jobs,
+                "len_not_deleted_data":len(datos_no_borrados),
+                "len_total_data":len(all_students),
+                "len_filter_data":len(datos_filtrados)
+               }
+        out = jsonify(data)
+        return out
+
+@app_views.route('/students/favorites', methods=['GET'], strict_slashes=False)
+def get_favorite_students():
+    """
+    Retrieves a list of the favorites students
+    """
+    fav_students = request.args.get('fav_students')
+    
+    if fav_students is None:
+        fav_students = ''
+    favorites_array = fav_students.split(',')
+    if favorites_array == ['']:
+        favorites_array = []
+
+    page = request.args.get('page')
+    
+    if page is None:
+        page = 0
+    limit = 10
+    skills = request.args.get('skills')
+    if skills is None:
+        skills = ""
+    english = request.args.get('english')
+    if english is None:
+        english = ""
+    PalabraClave = request.args.get('PalabraClave')
+    if PalabraClave is None:
+        PalabraClave = ""
+    
+    all_students = []
+    for student_id in favorites_array:
+        student = storage.get(Student, int(student_id))
+        all_students.append(student)
+    #all_students = storage.all(Student).values()
+    #print(type(all_students))
+
+    def filtro_de_eliminados(list_de_datos):
+        nueva_lista=[]
+        for i in list_de_datos:
+            if i.__dict__["deleted"] == 0:
+                nueva_lista.append(i)
+        return nueva_lista
+
+    list_students = []
+    
+    def toNoneStrings(string):
+        if string is None:
+            return ""
+        else:
+            return string
+
+    try:
+        page = int(page)
+    except:
+        page = 0;
+    else:
+        datos_no_borrados = filtro_de_eliminados(list(all_students))
+ 
+        for student in datos_no_borrados:
+            list_students.append(student.to_dict())
+
+        datos_filtrados = [x for x in list_students if (PalabraClave.lower() in toNoneStrings(x["description"]).lower()) or (PalabraClave == "")]
+        number_of_pages = ceil(len(datos_filtrados)/limit)
+ 
+        part_of_jobs = datos_filtrados[limit*page:limit*(page+1)]
+ 
+        data = {"data":part_of_jobs,
+                "len_not_deleted_data":len(datos_no_borrados),
+                "len_total_data":len(all_students),
+                "len_filter_data":len(datos_filtrados)
+               }
+        out = jsonify(data)
+        return out
+
+
+
 
 @app_views.route('/students/<student_id>', methods=['GET'], strict_slashes=False)
 def get_student(student_id):
@@ -464,7 +590,7 @@ def fileUpload(student_id):
     if ext != ".pdf":
         abort(400, description="It is not a pdf file")
 
-    path = '/mnt/d/jbgithub/job_bank_holberton/curriculums/'
+    path = '/home/jhonatanjc/job_bank_holberton/curriculums/'
     filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -518,7 +644,7 @@ def fileUploadPhoto(student_id):
     if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
         abort(400, description="It is not a png or jpg file")
 
-    path = '/mnt/d/jbgithub/job_bank_holberton/student_photos/'
+    path = '/home/jhonatanjc/job_bank_holberton/student_photos/'
     filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -540,7 +666,7 @@ def fileDownload(cv_filename_logical):
     """
     Download CV
     """
-    path = "/mnt/d/jbgithub/job_bank_holberton/curriculums/" + cv_filename_logical
+    path = "/home/jhonatanjc/job_bank_holberton/curriculums/" + cv_filename_logical
     return send_file(path)
 
 
@@ -549,6 +675,6 @@ def studentPhoto(photo_filename_logical):
     """
     Student Photo
     """
-    path = "/mnt/d/jbgithub/job_bank_holberton/student_photos/" + photo_filename_logical
+    path = "/home/jhonatanjc/job_bank_holberton/student_photos/" + photo_filename_logical
     return send_file(path)
 
