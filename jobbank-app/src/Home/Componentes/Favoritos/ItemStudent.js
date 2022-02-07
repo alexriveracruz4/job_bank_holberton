@@ -109,14 +109,14 @@ marginRight: '25px'}}>
                               console.log("chau")
                               console.log(props.favorites)
                               if (props.favorites !== null) {
-                                if (props.favorites.includes(props.student.id)) {
-                                  props.setFavorites(props.favorites.filter(item => item !== props.student.id))
+                                if (props.favorites.includes(props.student.student_id)) {
+                                  props.setFavorites(props.favorites.filter(item => item !== props.student.student_id))
                                   
                                 } else {
-                                  props.setFavorites([...props.favorites, props.student.id])
+                                  props.setFavorites([...props.favorites, props.student.student_id])
                                 }
                               } else {
-                                props.setFavorites([props.student.id])
+                                props.setFavorites([props.student.student_id])
                               }
                             }}
                             class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true" style={{ fill: 'currentcolor', width: '1em', height: '1em', display: 'inline-block', fontSize: '1.5rem', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none', color: 'inherit', textAlign: 'center', WebkitTapHighlightColor: 'transparent' }}>

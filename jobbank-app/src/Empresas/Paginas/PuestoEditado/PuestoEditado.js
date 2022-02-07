@@ -14,12 +14,12 @@ function PuestoEditado() {
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
-	  if (!cookies.get('id')){
+	  if (!cookies.get('partner_id')){
       window.location.href="/login/empresa";
 	  }
   });
 
-  const PartnerId = cookies.get("id")
+  const PartnerId = cookies.get("partner_id")
 
   // Get the data of a job
   const { JobId } = useParams();

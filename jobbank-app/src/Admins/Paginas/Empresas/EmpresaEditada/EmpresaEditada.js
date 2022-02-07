@@ -13,7 +13,7 @@ function EmpresaEditada() {
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
-    if (!cookies.get('id')){
+    if (!cookies.get('admin_id')){
         window.location.href="/login/admin";
     }
   });
@@ -37,7 +37,7 @@ function EmpresaEditada() {
 
   // Update the partner data with the updateData arrow function
   const updateData = (data) => {
-    let endpoint = `${url}/${data.id}`;
+    let endpoint = `${url}/${data.partner_id}`;
 
     let options = {
       body: data,
@@ -45,7 +45,7 @@ function EmpresaEditada() {
     };
 
     api.put(endpoint, options).then((res) => {
-      let newData = db.map((el) => (el.id === data.id ? data : el));
+      let newData = db.map((el) => (el.partner_id === data.partner_id ? data : el));
       setDb(newData);
     });
   }

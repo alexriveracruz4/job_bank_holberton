@@ -13,7 +13,7 @@ const cookies = new Cookies();
 // Function that removes cookies from the current session
 function closeSessionEst() {
     
-    cookies.remove("id", {path: "/"});
+    cookies.remove("student_id", {path: "/"});
     cookies.remove("firstname", {path: "/"});
     cookies.remove("lastname", {path: "/"});
     cookies.remove("email", {path: "/"});
@@ -27,6 +27,13 @@ function closeSessionEst() {
     cookies.remove('disp_travel', {path:"/"});
     cookies.remove('linkedin', {path:"/"});
     cookies.remove('twitter', {path:"/"});
+    cookies.remove('province', {path:"/"});
+    cookies.remove('developer_type', {path:"/"});
+    cookies.remove('english_level', {path:"/"});
+    cookies.remove('video_link', {path:"/"});
+    cookies.remove('portfolio', {path:"/"});
+    cookies.remove('is_public', {path:"/"});
+    cookies.remove('student_skills', {path:"/"});
     cookies.remove('token', {path:"/"});
     cookies.remove('created_at', {path:"/"});
     cookies.remove('updated_at', {path:"/"});
@@ -52,7 +59,7 @@ function EstudianteNav() {
     obtenerDatosDeEstudiantes();
   }, []);
 
-  let student_id = cookies.get('id')
+  let student_id = cookies.get('student_id')
 
   const obtenerDatosDeEstudiantes = async () => {
     const data = await fetch(`${apiPath}/students/${student_id}`);

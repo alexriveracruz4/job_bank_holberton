@@ -18,7 +18,7 @@ import Message from '../../../helpers/Message';
 const cookies = new Cookies();
 function Postulantes(props) {
   const { JobId } = useParams();
-  const partner_id= cookies.get("id"); //string variable
+  const partner_id= cookies.get("partner_id"); //string variable
   const location = useLocation();
   const titleJob = location.state.titleJob;
 
@@ -49,7 +49,7 @@ function Postulantes(props) {
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
-      if (!cookies.get('id')){
+      if (!cookies.get('partner_id')){
           window.location.href="/login/empresa";
       }
   });
@@ -71,7 +71,7 @@ function Postulantes(props) {
           {AllStudentsApplicated.map(estudiante => (
             <ItemJob 
               key={estudiante.token}
-              id={estudiante.id}
+              student_id={estudiante.student_id}
               firstname={estudiante.firstname}
               lastname={estudiante.lastname}
               age={estudiante.age}

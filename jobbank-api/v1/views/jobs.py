@@ -182,7 +182,7 @@ def get_job_students(partner_id, job_id):
     postulantes = []
     for app in list_applications:
         for student in all_students:
-            if app.student_id == student.id:
+            if app.student_id == student.student_id:
                 postulantes.append(student.to_dict())
 
     return jsonify(postulantes)
@@ -241,18 +241,21 @@ def post_job():
             if re.match(r"^[0-9]+_+[0-9]+$", value):
                 isvalid = True
             else:
+                print("Invalid format, please use number_number. Example: 2_10")
                 abort(400, description='''Invalid format, please use number_number. Example: 2_10''')
 
             for job in jobs:
                 if value in job.code:
+                    print("This job code exists")
                     abort(400, description="This job code exists")
                 else:
                     isvalid = True
         if key == "title":
-            if len(value) <= 70:
+            if len(value) <= 100:
                 isvalid = True
             else:
-                abort(400, description="Title must contain a maximum of 45 characters")
+                print("Title must contain a maximum of 100 characters")
+                abort(400, description="Title must contain a maximum of 100 characters")
         if key == "country":
             if len(value) <= 45:
                 for country in countries:
@@ -260,73 +263,69 @@ def post_job():
                         break
                     isvalid = True
                 else:
+                    print("Country option not found in country.values()")
                     abort(400, description="Country option not found")
             else:
+                print("Country must contain a maximum of 45 characters")
                 abort(400, description="Country must contain a maximum of 45 characters")
         if key == "city":
             if len(value) <= 45:
                 isvalid = True
             else:
-                abort(400, description="Salary must contain a maximum of 45 characters")
+                print("City must contain a maximum of 45 characters")
+                abort(400, description="City must contain a maximum of 45 characters")
         if key == "experience":
             if value == None or value == "":
                 isvalid = True
             elif len(value) <= 45:
                 isvalid = True
             else:
+                print("Experience must contain a maximum of 45 characters")
                 abort(400, description="Experience must contain a maximum of 45 characters")
-        if key == "age_min":
-            if value == None or value == "" or value == 0:
-                value = 0
-                isvalid = True
-            elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
-                isvalid = True
-            else:
-                abort(400, description="Not a valid age")
-        if key == "age_max":
-            if value == None or value == "" or value == 0:
-                value = 0
-                isvalid = True
-            elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
-                isvalid = True
-            else:
-                abort(400, description="Not a valid age")
         if key == "salary":
             if value == None or value == "":
                 isvalid = True
             elif len(value) <= 45:
                 isvalid = True
             else:
+                print("Salary must contain a maximum of 45 characters")
                 abort(400, description="Salary must contain a maximum of 45 characters")
         if key == "job_type":
             if len(value) <= 45:
                 if value in job_typeList:
                     isvalid = True
                 else:
+                    print("Not a valid option in availability")
                     abort(400, description="Not a valid option in availability")
             else:
+                print("Job_type must contain a maximum of 45 characters")
                 abort(400, description="Job_type must contain a maximum of 45 characters")
         if key == "pres_or_remote":
             if len(value) <= 45:
                 if value in pres_or_remotList:
                     isvalid = True
                 else:
+                    print("Not a valid option in pres_or_remot")
                     abort(400, description="Not a valid option in pres_or_remot")
             else:
+                print("Pres_or_remote must contain a maximum of 45 characters")
                 abort(400, description="Pres_or_remote must contain a maximum of 45 characters")
         if key == "travel_availability":
             if len(value) <= 45:
                 if value in travel_availabilityList:
                     isvalid = True
                 else:
+                    print("Not a valid option in disp_travel")
                     abort(400, description="Not a valid option in disp_travel")
             else:
+                print("Travel_availability must contain a maximum of 45 characters")
                 abort(400, description="Travel_availability must contain a maximum of 45 characters")
         if key == "description":
-            if len(value) <= 2000:
+            if len(value) <= 3000:
                 isvalid = True
             else:
-                abort(400, description="Description must contain a maximum of 2000 characters")
+                print("Description must contain a maximum of 3000 characters")
+                abort(400, description="Description must contain a maximum of 3000 characters")
         if isvalid is True:
             instance = Job(**data)
     instance.save()
@@ -360,10 +359,11 @@ def put_job(partner_id, job_id):
         if key not in ignore:
             # Form validation
             if key == "title":
-                if len(value) <= 70:
+                if len(value) <= 100:
                     isvalid = True
                 else:
-                    abort(400, description="Title must contain a maximum of 45 characters")
+                    print("Title must contain a maximum of 100 characters")
+                    abort(400, description="Title must contain a maximum of 100 characters")
             if key == "country":
                 if len(value) <= 45:
                     for country in countries:
@@ -371,8 +371,10 @@ def put_job(partner_id, job_id):
                             break
                         isvalid = True
                     else:
+                        print("Country option not found")
                         abort(400, description="Country option not found")
                 else:
+                    print("Country must contain a maximum of 45 characters")
                     abort(400, description="Country must contain a maximum of 45 characters")
             if key == "city":
                 if value == None or value == "":
@@ -380,6 +382,7 @@ def put_job(partner_id, job_id):
                 elif len(value) <= 45:
                     isvalid = True
                 else:
+                    print("Title must contain a maximum of 45 characters")
                     abort(400, description="Title must contain a maximum of 45 characters")
             if key == "experience":
                 if value == None or value == "":
@@ -387,57 +390,52 @@ def put_job(partner_id, job_id):
                 elif len(value) <= 45:
                     isvalid = True
                 else:
+                    print("Experience must contain a maximum of 45 characters")
                     abort(400, description="Experience must contain a maximum of 45 characters")
-            if key == "age_min":
-                if value == None or value == "" or value == 0:
-                    isvalid = True
-                elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
-                    isvalid = True
-                else:
-                    abort(400, description="Not a valid age")
-            if key == "age_max":
-                if value == None or value == "" or value == 0:
-                    isvalid = True
-                elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
-                    isvalid = True
-                else:
-                    abort(400, description="Not a valid age")
             if key == "salary":
                 if value == None or value == "":
                     isvalid = True
                 elif len(value) <= 45:
                     isvalid = True
                 else:
+                    print("Salary must contain a maximum of 45 characters")
                     abort(400, description="Salary must contain a maximum of 45 characters")
             if key == "job_type":
                 if len(value) <= 45:
                     if value in job_typeList:
                         isvalid = True
                     else:
+                        print("Not a valid option in availability")
                         abort(400, description="Not a valid option in availability")
                 else:
+                    print("Job_type must contain a maximum of 45 characters")
                     abort(400, description="Job_type must contain a maximum of 45 characters")
             if key == "pres_or_remote":
                 if len(value) <= 45:
                     if value in pres_or_remotList:
                         isvalid = True
                     else:
+                        print("Not a valid option in pres_or_remot")
                         abort(400, description="Not a valid option in pres_or_remot")
                 else:
+                    print("Pres_or_remote must contain a maximum of 45 characters")
                     abort(400, description="Pres_or_remote must contain a maximum of 45 characters")
             if key == "travel_availability":
                 if len(value) <= 45:
                     if value in travel_availabilityList:
                         isvalid = True
                     else:
+                        print("Not a valid option in disp_travel")
                         abort(400, description="Not a valid option in disp_travel")
                 else:
+                    print("Travel_availability must contain a maximum of 45 characters")
                     abort(400, description="Travel_availability must contain a maximum of 45 characters")
             if key == "description":
-                if len(value) <= 2000:
+                if len(value) <= 3000:
                     isvalid = True
                 else:
-                    abort(400, description="Description must contain a maximum of 2000 characters")
+                    print("Description must contain a maximum of 3000 characters")
+                    abort(400, description="Description must contain a maximum of 3000 characters")
             if isvalid is True:
                 setattr(job1, key, value)
     setattr(job1, "updated_at", datetime.now())

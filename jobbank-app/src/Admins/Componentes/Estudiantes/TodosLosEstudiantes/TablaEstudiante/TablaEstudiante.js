@@ -20,7 +20,7 @@ function TablaEstudiante() {
 
   // Column name
   const columnas = [
-    { title:'ID', field:'id', type:"numeric", textAlign:"center", filtering:false},
+    { title:'ID', field:'student_id', type:"numeric", textAlign:"center", filtering:false},
     { title:'ELIMINADO', field:'deleted', filtering:true,lookup:{"1":"Si", "0":"No"}},
     { title:'NOMBRE', field:'firstname', filtering:false},
     { title:'APELLIDO', field:'lastname', filtering:false},
@@ -86,7 +86,7 @@ function TablaEstudiante() {
             setLoadingEliminate(false);
             swal({
               title: "ERROR",
-              text: `No se pudo elimiar al estudiante'`,
+              text: `No se pudo eliminar al estudiante'`,
               icon: "error",
             });
           }
@@ -159,8 +159,8 @@ function TablaEstudiante() {
             tooltip: 'Editar estudiante',
             onClick: (event, rowData) => {history.push(
               {
-                pathname:`/admin/estudiantes/estudiante-editado/${rowData.id}`,
-                state: AllPartnersData.filter((trabajo)=> trabajo.id === rowData.id)
+                pathname:`/admin/estudiantes/estudiante-editado/${rowData.student_id}`,
+                state: AllPartnersData.filter((el)=> el.student_id === rowData.student_id)
               })}
           },
           rowData => ({
@@ -170,7 +170,7 @@ function TablaEstudiante() {
               rowData.deleted ?
                 restoreData(rowData)
               :
-                deleteData(rowData.id, rowData.firstname, rowData.lastname, rowData.deleted)
+                deleteData(rowData.student_id, rowData.firstname, rowData.lastname, rowData.deleted)
             }
           }),
           {

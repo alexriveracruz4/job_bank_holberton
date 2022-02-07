@@ -11,7 +11,7 @@ class Application(BaseModel, Base):
 
     partner_id = Column(Integer, primary_key=True, nullable=False, autoincrement=False)
     job_id = Column(Integer, primary_key=True, nullable=False, autoincrement=False)
-    student_id = Column(Integer, ForeignKey("students.id"), primary_key=True, nullable=False, autoincrement=False)
+    student_id = Column(Integer, ForeignKey("students.student_id"), primary_key=True, nullable=False, autoincrement=False)
     __table_args__ = (
         ForeignKeyConstraint(['partner_id', 'job_id'], ['jobs.partner_id', 'jobs.id']),
     )

@@ -13,21 +13,21 @@ import uuid
 class Partner(BaseModel, Base):
     """ inherits from BaseModel and Base """
     __tablename__ = 'partners'
-    id = Column(Integer, primary_key=True, nullable=False)
-    name = Column(String(45), nullable=False)
+    partner_id = Column(Integer, primary_key=True, nullable=False)
+    name = Column(String(60), nullable=False)
     phonenumber = Column(String(15), nullable=True)
     nation = Column(String(45), nullable=True)
     region = Column(String(45), nullable=True)
     description = Column(String(1000), nullable=True)
-    email = Column(String(45), nullable=False)
-    web = Column(String(70), nullable=True)
+    email = Column(String(60), nullable=False)
+    web = Column(String(100), nullable=True)
     password = Column(String(255), nullable=False)
     logo_filename_physical = Column(String(250), nullable=True)
     logo_filename_logical = Column(String(250), nullable=True)
     deleted = Column(TINYINT(1), default=0, nullable=False)
-    created_by = Column(Integer, ForeignKey("admins.id") ,nullable=False)
+    created_by = Column(Integer, ForeignKey("admins.admin_id") ,nullable=False)
     updated_by = Column(Integer, nullable=True)
-    deleted_by = Column(Integer, ForeignKey("admins.id"), nullable=True)
+    deleted_by = Column(Integer, ForeignKey("admins.admin_id"), nullable=True)
     token = Column(String(60), nullable=True)
     jobs = relationship('Job', backref='partner')
 

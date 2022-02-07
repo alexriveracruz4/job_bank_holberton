@@ -15,12 +15,12 @@ const cookies = new Cookies();
 let copia = 0;
 function MisPuestosDeTrabajo() {
 
-  const PartnerId= cookies.get("id"); //string variable
+  const PartnerId= cookies.get("partner_id"); //string variable
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
-    if (!cookies.get('id')){
-        window.location.href="/login/estudiante";
+    if (!cookies.get('partner_id')){
+        window.location.href="/login/empresa";
     }
   });
 

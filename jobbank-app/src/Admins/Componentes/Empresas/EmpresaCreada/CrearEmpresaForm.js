@@ -3,8 +3,13 @@ import "./CrearEmpresaForm.css"
 import Countries from "../data/country.json"
 import swal from 'sweetalert';
 import { useHistory } from "react-router";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 // Form with empty string start
+const AdminID = cookies.get("admin_id");
+
 const initailForm = {
   name: "",
   description:"",
@@ -13,7 +18,9 @@ const initailForm = {
   phonenumber: "",
   region: "",
   web: "",
-  password: ""
+  password: "",
+  created_by: parseInt(AdminID),
+  updated_by: parseInt(AdminID),
 };
 
 const CrudForm = ({ createData }) => {
@@ -159,9 +166,9 @@ const CrudForm = ({ createData }) => {
     const formWeb = document.getElementById('form-web')
     const errorWeb = document.getElementById('smallWeb')
   
-    if (!(/^(?=.{0,70}$)\S*$/.test(webvalue))){
+    if (!(/^(?=.{0,100}$)\S*$/.test(webvalue))){
       formWeb.className = 'form-control error';
-      errorWeb.innerText = "Por favor ingrese máximo 70 caracteres";
+      errorWeb.innerText = "Por favor ingrese máximo 100 caracteres";
     } else {
       formWeb.classList.remove('error');
     }
@@ -193,7 +200,7 @@ const CrudForm = ({ createData }) => {
           <div className="form-control" id='form-name'>
             <label htmlFor="inputName">Empresa</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputName" name="name" onChange={handleChange} maxLength={45} value={form.name}/>
+              <input type="text" className="form-control" id="inputName" name="name" onChange={handleChange} maxLength={60} value={form.name}/>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -238,7 +245,7 @@ const CrudForm = ({ createData }) => {
           <div className='form-control' id='form-email'>
             <label htmlFor="inputEmail">Email</label>
             <div className="inputFormDiv">
-              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} maxLength={45} value={form.email} />
+              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} maxLength={60} value={form.email} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -268,7 +275,7 @@ const CrudForm = ({ createData }) => {
           <div className='form-control' id='form-web'>
             <label htmlFor="inputWeb">Web</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputWeb" name="web" onChange={handleChange} maxLength={70} value={form.web} />
+              <input type="text" className="form-control" id="inputWeb" name="web" onChange={handleChange} maxLength={100} value={form.web} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

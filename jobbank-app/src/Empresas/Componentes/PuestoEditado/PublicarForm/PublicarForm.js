@@ -123,48 +123,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
         formExperience.classList.remove('error');
       }
   
-      /*const AgeMinValue = inputAgeMin.value.trim();
-      const AgeMinIntValue = parseInt(AgeMinValue)
-      const formAgeMin = document.getElementById('form-age_min');
-      const errorAgeMin = document.getElementById('smallAgeMin');
-  
-      if (AgeMinIntValue === 0) {
-        formAgeMin.className = 'form-control error';
-        errorAgeMin.innerText = "Complete este campo.";
-        formIsValid = false;
-      } else if (!(/^[1-9][0-9]{1}$|^99$/.test(AgeMinIntValue))) {
-        formAgeMin.className = 'form-control error';
-        errorAgeMin.innerText = "Ingrese una edad válida"
-        formIsValid = false;
-      } else if (typeof(AgeMinIntValue) === "string") { 
-        formAgeMin.className = 'form-control error';
-        errorAgeMin.innerText = "Solo puedes ingresar números."
-        formIsValid = false;
-      } else {
-        formAgeMin.classList.remove('error');
-      }
-  
-      const AgeMaxValue = inputAgeMax.value.trim();
-      const AgeMaxIntValue = parseInt(AgeMaxValue)
-      const formAgeMax = document.getElementById('form-age_max');
-      const errorAgeMax = document.getElementById('smallAgeMax');
-  
-      if (AgeMaxIntValue === 0) {
-        formAgeMax.className = 'form-control error';
-        errorAgeMax.innerText = "Complete este campo.";
-        formIsValid = false;
-      } else if (!(/^[1-9][0-9]{1}$|^99$/.test(AgeMaxIntValue))) {
-        formAgeMax.className = 'form-control error';
-        errorAgeMax.innerText = "Ingrese una edad válida"
-        formIsValid = false;
-      } else if (typeof(AgeMaxIntValue) === "string") { 
-        formAgeMax.className = 'form-control error';
-        errorAgeMax.innerText = "Solo puedes ingresar números."
-        formIsValid = false;
-      } else {
-        formAgeMax.classList.remove('error');
-      }*/
-  
       const JobTypeValue = inputJobType.value.trim();
       const formJobType = document.getElementById('form-job_type');
       const errorJobType = document.getElementById('smallJobType');
@@ -228,7 +186,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className="form-control" id='form-title'>
             <label htmlFor="inputTitle">Título</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputTitle" name="title" maxLength={40} onChange={handleChange} value={form.title}/>
+              <input type="text" className="form-control" id="inputTitle" name="title" maxLength={100} onChange={handleChange} value={form.title}/>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -323,7 +281,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className='form-control' id='form-description'>
             <label htmlFor="inputDescription">Descripción</label>
             <div className='inputFormDiv'>
-              <textarea className="form-control" id="inputDescription" rows="10" maxLength={2000} name="description" onChange={ handleChange } value={form.description} />
+              <textarea className="form-control" id="inputDescription" rows="10" maxLength={3000} name="description" onChange={ handleChange } value={form.description} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

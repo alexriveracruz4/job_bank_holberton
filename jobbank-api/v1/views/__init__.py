@@ -10,3 +10,4 @@ from v1.views.partners import *
 from v1.views.jobs import *
 from v1.views.admins import *
 from v1.views.login import *
+from v1.views.skills import *

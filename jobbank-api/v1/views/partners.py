@@ -49,7 +49,7 @@ def get_login_partner():
     for i in range (0, len(list_partners)):
         if data["username"] == list_partners[i]["email"]:
             if data["password"] == list_partners[i]["password"]:
-                partner =  storage.get(Partner, list_partners[i]["id"])
+                partner =  storage.get(Partner, list_partners[i]["partner_id"])
                 setattr(partner, "token", token)
                 storage.save()
                 return jsonify(partner.to_dict(save_fs="No"))
@@ -93,10 +93,10 @@ def post_partner():
 
     for key, value in data.items():
         if key == "name":
-            if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+            if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,60}$", value):
                 isvalid = True
             else:
-                abort(400, description="Not a valid name, max 45 characters")
+                abort(400, description="Not a valid name, max 60 characters")
         if key == "nation":
             if value == None or value == "":
                     isvalid = True
@@ -124,10 +124,10 @@ def post_partner():
             else:
                 abort(400, description="Enter a valid phonenumber, max 15 characters")
         if key == "email":
-            if re.match(r"^(?=.{4,45}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
+            if re.match(r"^(?=.{4,60}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
                 isvalid = True
             else:
-                abort(400, description="Enter a valid email, max 45 characters")
+                abort(400, description="Enter a valid email, max 60 characters")
         if key == "password":
             if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
                 isvalid = True
@@ -136,10 +136,10 @@ def post_partner():
         if key == "web":
             if value == None or value == "":
                     isvalid = True
-            elif re.match(r"(?=.{0,70}$)\S*$", value):
+            elif re.match(r"(?=.{0,100}$)\S*$", value):
                 isvalid = True
             else:
-                abort(400, description="Enter a valid web, max 70 characters")
+                abort(400, description="Enter a valid web, max 100 characters")
         if key == "description":
             if value == None or value == "":
                     isvalid = True
@@ -176,7 +176,7 @@ def put_partner(partner_id):
         if key not in ignore:
             # Form validation
             if key == "name":
-                if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+                if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,60}$", value):
                     isvalid = True
                 else:
                     abort(400, description="Not a valid name")
@@ -207,14 +207,14 @@ def put_partner(partner_id):
                 else:
                     abort(400, description="Enter a valid phonenumber")
             if key == "email":
-                if re.match(r"^(?=.{4,45}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
+                if re.match(r"^(?=.{4,60}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
                     isvalid = True
                 else:
                     abort(400, description="Enter a valid email")
             if key == "web":
                 if value == None or value == "":
                     isvalid = True
-                elif re.match(r"(?=.{0,70}$)\S*$", value):
+                elif re.match(r"(?=.{0,100}$)\S*$", value):
                     isvalid = True
                 else:
                     abort(400, description="Enter a valid web")

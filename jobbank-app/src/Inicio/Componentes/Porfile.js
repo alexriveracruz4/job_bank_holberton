@@ -31,7 +31,7 @@ const Profile = () => {
             if (result.deleted === 0) { //setting cookies when the user logged in
                const token = result.token;
                let respuesta=result;
-               cookies.set('id', respuesta.id, {path:"/"});
+               cookies.set('student_id', respuesta.id, {path:"/"});
                cookies.set('firstname', respuesta.firstname, {path:"/"});
                cookies.set('lastname', respuesta.lastname, {path:"/"});
                cookies.set('email', respuesta.email, {path:"/"});
@@ -45,6 +45,13 @@ const Profile = () => {
                cookies.set('disp_travel', respuesta.disp_travel, {path:"/"});
                cookies.set('linkedin', respuesta.linkedin, {path:"/"});
                cookies.set('twitter', respuesta.twitter, {path:"/"});
+               cookies.set('province', respuesta.province, {path:"/"});
+               cookies.set('developer_type', respuesta.developer_type, {path:"/"});
+               cookies.set('english_level', respuesta.english_level, {path:"/"});
+               cookies.set('video_link', respuesta.video_link, {path:"/"});
+               cookies.set('portfolio', respuesta.portfolio, {path:"/"});
+               cookies.set('is_public', respuesta.is_public, {path:"/"});
+               cookies.set('student_skills', respuesta.student_skills, {path:"/"});
                cookies.set('token', respuesta.token, {path:"/"});
                cookies.set('created_at', respuesta.created_at, {path:"/"});
                cookies.set('updated_at', respuesta.updated_at, {path:"/"});
@@ -83,7 +90,7 @@ const Profile = () => {
               if (result.deleted === 0) { // //setting cookies when the user logged in
                 const token = result.token;
                 let respuesta=result;
-                cookies.set('id', respuesta.id, {path:"/"});
+                cookies.set('partner_id', respuesta.id, {path:"/"});
                 cookies.set('name', respuesta.name, {path:"/"});
                 cookies.set('email', respuesta.email, {path:"/"});
                 cookies.set('nation', respuesta.nation, {path:"/"});
@@ -123,13 +130,19 @@ const Profile = () => {
                   history.push('/NotFoundUser');
                 }
           } else if (result.__class__ === "Admin") {
-              if (result.id) { // Setting cookies when the user logged in
+              if (result.admin_id) { // Setting cookies when the user logged in
                 const token = result.token;
                 let respuesta=result;
-                cookies.set('id', respuesta.id, {path:"/"});
+                cookies.set('admin_id', respuesta.id, {path:"/"});
                 cookies.set('firstname', respuesta.firstname, {path:"/"});
                 cookies.set('lastname', respuesta.lastname, {path:"/"});
                 cookies.set('email', respuesta.email, {path:"/"});
+                cookies.set('created_by', respuesta.created_by, {path:"/"});
+                cookies.set('updated_by', respuesta.updated_by, {path:"/"});
+                cookies.set('deleted_by', respuesta.deleted_by, {path:"/"});
+                cookies.set('photo_filename_physical', respuesta.photo_filename_physical, {path:"/"});
+                cookies.set('photo_filename_logical', respuesta.photo_filename_logical, {path:"/"});
+                cookies.set('deleted', respuesta.deleted, {path:"/"});
                 cookies.set('token', respuesta.token, {path:"/"});
                 cookies.set('created_at', respuesta.created_at, {path:"/"});
                 cookies.set('updated_at', respuesta.updated_at, {path:"/"});

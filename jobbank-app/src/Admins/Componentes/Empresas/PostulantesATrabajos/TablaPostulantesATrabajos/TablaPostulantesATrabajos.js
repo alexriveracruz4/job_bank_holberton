@@ -22,7 +22,7 @@ function PostulantesATrabajos() {
 
   // Columns name
   const columnas = [
-    { title:'ID', field:'id', type:"numeri", textAlign:"center"},
+    { title:'ID', field:'student_id', type:"numeri", textAlign:"center"},
     { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{"1":"Si", "0":"No"}},
     { title:'NOMBRE', field:'firstname'},
     { title:'APELLIDO', field:'lastname'},

@@ -17,11 +17,11 @@ const cookies = new Cookies();
 let copia = 0;
 function MisPostulaciones() {
   // Obtains the data of the jobs to which the student has applied and saves them in AllMyApplications
-  const user_id = cookies.get("id");
+  const user_id = cookies.get("student_id");
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
-      if (!cookies.get('id')){
+      if (!cookies.get('student_id')){
           window.location.href="/login/estudiante";
       }
   });

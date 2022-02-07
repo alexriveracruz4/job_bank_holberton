@@ -10,7 +10,7 @@ const cookies = new Cookies();
   
 const CrudForm = ({ createData }) => {
   const history = useHistory();
-  const PartnerId = cookies.get("id"); //string variable
+  const PartnerId = cookies.get("partner_id"); //string variable
 
   // Form with empty string and with the id of the partner who will create it
   const initailForm = {
@@ -151,48 +151,6 @@ const handleSubmit = (e) => {
       formExperience.classList.remove('error');
     }
 
-    /*const AgeMinValue = inputAgeMin.value.trim();
-    const AgeMinIntValue = parseInt(AgeMinValue)
-    const formAgeMin = document.getElementById('form-age_min');
-    const errorAgeMin = document.getElementById('smallAgeMin');
-
-    if (AgeMinIntValue === 0) {
-      formAgeMin.className = 'form-control error';
-      errorAgeMin.innerText = "Complete este campo.";
-      formIsValid = false;
-    } else if (!(/^[1-9][0-9]{1}$|^99$/.test(AgeMinIntValue))) {
-      formAgeMin.className = 'form-control error';
-      errorAgeMin.innerText = "Ingrese una edad válida"
-      formIsValid = false;
-    } else if (typeof(AgeMinIntValue) === "string") { 
-      formAgeMin.className = 'form-control error';
-      errorAgeMin.innerText = "Solo puedes ingresar números."
-      formIsValid = false;
-    } else {
-      formAgeMin.classList.remove('error');
-    }
-
-    const AgeMaxValue = inputAgeMax.value.trim();
-    const AgeMaxIntValue = parseInt(AgeMaxValue)
-    const formAgeMax = document.getElementById('form-age_max');
-    const errorAgeMax = document.getElementById('smallAgeMax');
-
-    if (AgeMaxIntValue === 0) {
-      formAgeMax.className = 'form-control error';
-      errorAgeMax.innerText = "Complete este campo.";
-      formIsValid = false;
-    } else if (!(/^[1-9][0-9]{1}$|^99$/.test(AgeMaxIntValue))) {
-      formAgeMax.className = 'form-control error';
-      errorAgeMax.innerText = "Ingrese una edad válida"
-      formIsValid = false;
-    } else if (typeof(AgeMaxIntValue) === "string") { 
-      formAgeMax.className = 'form-control error';
-      errorAgeMax.innerText = "Solo puedes ingresar números."
-      formIsValid = false;
-    } else {
-      formAgeMax.classList.remove('error');
-    }*/
-
     const JobTypeValue = inputJobType.value.trim();
     const formJobType = document.getElementById('form-job_type');
     const errorJobType = document.getElementById('smallJobType');
@@ -256,7 +214,7 @@ const handleSubmit = (e) => {
           <div className="form-control" id='form-title'>
             <label htmlFor="inputTitle">Título</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputTitle" maxLength={40} name="title" onChange={handleChange} value={form.title}/>
+              <input type="text" className="form-control" id="inputTitle" maxLength={100} name="title" onChange={handleChange} value={form.title}/>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -351,7 +309,7 @@ const handleSubmit = (e) => {
           <div className='form-control' id='form-description'>
             <label htmlFor="inputDescription">Descripción</label>
             <div className='inputFormDiv'>
-              <textarea className="form-control" id="inputDescription" rows="10" maxLength={2000} name="description" onChange={ handleChange } value={form.description} />
+              <textarea className="form-control" id="inputDescription" rows="10" maxLength={3000} name="description" onChange={ handleChange } value={form.description} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

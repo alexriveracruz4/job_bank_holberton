@@ -12,7 +12,7 @@ import Loader from "../../../../helpers/Loader";
 
 const cookies = new Cookies();
 function PartnerInfo(props) {
-    const studentId = cookies.get("id"); //string variable
+    const studentId = cookies.get("student_id"); //string variable
     let history = useHistory();
     const { PartnerId, JobId } = useParams();
     const datos = props.JobData[0];

@@ -171,7 +171,7 @@ function Main() {
             <ListStudents>
               {students.map(student => (
                 <ItemStudent
-                  key={student.id}
+                  key={student.student_id}
                   student={student}
                   favorites={favorites}
                   setFavorites={setFavorites}

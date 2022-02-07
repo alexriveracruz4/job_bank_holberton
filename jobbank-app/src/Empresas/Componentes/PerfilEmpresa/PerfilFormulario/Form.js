@@ -43,7 +43,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     obtenerDatosDePartners();
   }, []);
 
-  let partner_id = cookies.get('id')
+  let partner_id = cookies.get('partner_id')
 
   const obtenerDatosDePartners = async () => {
     const data = await fetch(`${apiPath}/partners/${partner_id}`);
@@ -88,7 +88,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
             if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
               const data = new FormData();
               data.append('file', uploadInputImage.files[0]);
-              const urlupload = `${apiPath}/partners/`+ cookies.get('id') + '/uploadphoto'
+              const urlupload = `${apiPath}/partners/`+ cookies.get('partner_id') + '/uploadphoto'
 
               fetch(urlupload, {
                 method: 'POST',
@@ -198,9 +198,9 @@ const CrudForm = ({ updateData, dataToEdit }) => {
   const formWeb = document.getElementById('form-web')
   const errorWeb = document.getElementById('smallWeb')
 
-  if (!(/^(?=.{0,70}$)\S*$/.test(webvalue))){
+  if (!(/^(?=.{0,100}$)\S*$/.test(webvalue))){
     formWeb.className = 'form-control error';
-    errorWeb.innerText = "Por favor ingrese máximo 70 caracteres";
+    errorWeb.innerText = "Por favor ingrese máximo 100 caracteres";
   } else {
     formWeb.classList.remove('error');
   }
@@ -260,7 +260,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           <div className="form-control" id='form-name'>
             <label htmlFor="inputName">Empresa</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputName" name="name" onChange={handleChange} maxLength={45} value={form.name}/>
+              <input type="text" className="form-control" id="inputName" name="name" onChange={handleChange} maxLength={60} value={form.name}/>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -305,7 +305,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           <div className='form-control' id='form-email'>
             <label htmlFor="inputEmail">Email</label>
             <div className="inputFormDiv">
-              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} maxLength={45} value={form.email} />
+              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} maxLength={60} value={form.email} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -315,7 +315,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           <div className='form-control' id='form-web'>
             <label htmlFor="inputWeb">Web</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputWeb" name="web" onChange={handleChange} maxLength={70} value={form.web} />
+              <input type="text" className="form-control" id="inputWeb" name="web" onChange={handleChange} maxLength={100} value={form.web} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

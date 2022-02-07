@@ -12,10 +12,16 @@ const cookies = new Cookies();
 
 // Function that removes cookies from the current session
 function closeSessionEst() {
-    cookies.remove("id", {path: "/"});
+    cookies.remove("admin_id", {path: "/"});
     cookies.remove("firstname", {path: "/"});
     cookies.remove("lastname", {path: "/"});
     cookies.remove("email", {path: "/"});
+    cookies.remove('created_by', {path:"/"});
+    cookies.remove('updated_by', {path:"/"});
+    cookies.remove('deleted_by', {path:"/"});
+    cookies.remove('photo_filename_physical', {path:"/"});
+    cookies.remove('photo_filename_logical', {path:"/"});
+    cookies.remove('deleted', {path:"/"});
     cookies.remove('token', {path:"/"});
     cookies.remove('created_at', {path:"/"});
     cookies.remove('updated_at', {path:"/"});
@@ -32,7 +38,7 @@ function AdminNav() {
     obtenerDatosDeAdmins();
   }, []);
 
-  let admin_id = cookies.get('id')
+  let admin_id = cookies.get('admin_id')
 
   const obtenerDatosDeAdmins = async () => {
     const data = await fetch(`${apiPath}/admins/${admin_id}`);

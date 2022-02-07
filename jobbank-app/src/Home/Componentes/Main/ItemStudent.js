@@ -98,19 +98,19 @@ marginRight: '25px'}}>
                           </span>Contactar</span>
                           <span class="MuiTouchRipple-root"></span></Button>
                       </Box>
-                      <Button className="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit" tabindex="0" id="favorite" style={{ marginRight: '-7px', color: 'inherit', flex: '0 0 auto', padding: '12px', overflow: 'visible', fontSize: '1.5rem', textAlign: 'center', transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', borderRadius: '50%', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', backgroundColor: 'transparent', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                      <Button className="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit" tabindex="0" id="favorite" style={{ marginRight: '-7px', color: 'inherit', flex: '0 0 auto', padding: '12px', overflow: 'visible', fontSize: '1.5rem', textAlign: 'center', transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', borderRadius: '50%', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', backgroundColor: 'transparent', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent', minWidth: '0'}}>
                         <span class="MuiIconButton-label" style={{ width: '100%', display: 'flex', alignItems: 'inherit', justifyContent: 'inherit', color: 'inherit', fontSize: '1.5rem', textAlign: 'center', userSelect: 'none', WebkitTapHighlightColor: 'transparent'}}>
                           <svg 
                             onClick={()=>{
                               if (props.favorites !== null) {
-                                if (props.favorites.includes(props.student.id)) {
-                                  props.setFavorites(props.favorites.filter(item => item !== props.student.id))
+                                if (props.favorites.includes(props.student.student_id)) {
+                                  props.setFavorites(props.favorites.filter(item => item !== props.student.student_id))
                                   
                                 } else {
-                                  props.setFavorites([...props.favorites, props.student.id])
+                                  props.setFavorites([...props.favorites, props.student.student_id])
                                 }
                               } else {
-                                props.setFavorites([props.student.id])
+                                props.setFavorites([props.student.student_id])
                               }
                             }}
                             class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true" style={{ fill: 'currentcolor', width: '1em', height: '1em', display: 'inline-block', fontSize: '1.5rem', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none', color: 'inherit', textAlign: 'center', WebkitTapHighlightColor: 'transparent' }}>

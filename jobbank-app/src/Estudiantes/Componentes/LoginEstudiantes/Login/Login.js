@@ -35,7 +35,7 @@ class LoginComponent extends React.Component {
 		if (result.deleted === 0) { //setting cookies when the user logged in
 		    const token = result.token;
 		    var respuesta=result;
-		    cookies.set('id', respuesta.id, {path:"/"});
+		    cookies.set('student_id', respuesta.student_id, {path:"/"});
 		    cookies.set('firstname', respuesta.firstname, {path:"/"});
 		    cookies.set('lastname', respuesta.lastname, {path:"/"});
 		    cookies.set('email', respuesta.email, {path:"/"});
@@ -49,6 +49,13 @@ class LoginComponent extends React.Component {
 		    cookies.set('disp_travel', respuesta.disp_travel, {path:"/"});
 		    cookies.set('linkedin', respuesta.linkedin, {path:"/"});
 		    cookies.set('twitter', respuesta.twitter, {path:"/"});
+				cookies.set('province', respuesta.province, {path:"/"});
+				cookies.set('developer_type', respuesta.developer_type, {path:"/"});
+				cookies.set('english_level', respuesta.english_level, {path:"/"});
+				cookies.set('video_link', respuesta.video_link, {path:"/"});
+				cookies.set('portfolio', respuesta.portfolio, {path:"/"});
+				cookies.set('is_public', respuesta.is_public, {path:"/"});
+				cookies.set('student_skills', respuesta.student_skills, {path:"/"});
 		    cookies.set('token', respuesta.token, {path:"/"});
 		    cookies.set('created_at', respuesta.created_at, {path:"/"});
 		    cookies.set('updated_at', respuesta.updated_at, {path:"/"});
@@ -97,7 +104,7 @@ class LoginComponent extends React.Component {
     }
 
     componentDidMount() {
-        if(cookies.get('id')){
+        if(cookies.get('student_id')){
             this.props.history.push("/estudiante/puestos-de-trabajo");
         }
     }

@@ -178,7 +178,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className="form-control" id='form-email'>
             <label htmlFor="inputEmail">Email</label>
             <div className="inputFormDiv">
-              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} maxLength={45} value={form.email} />
+              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} maxLength={60} value={form.email} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

@@ -39,7 +39,7 @@ class LoginComponent extends React.Component {
 					if (result.deleted === 0) { // //setting cookies when the user logged in
 		  	  	const token = result.token;
 		  	  	var respuesta=result;
-		  	  	cookies.set('id', respuesta.id, {path:"/"});
+		  	  	cookies.set('partner_id', respuesta.partner_id, {path:"/"});
 		  	  	cookies.set('name', respuesta.name, {path:"/"});
 		  	  	cookies.set('email', respuesta.email, {path:"/"});
 		  	  	cookies.set('nation', respuesta.nation, {path:"/"});

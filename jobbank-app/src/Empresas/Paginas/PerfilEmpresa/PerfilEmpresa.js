@@ -10,14 +10,14 @@ const cookies = new Cookies();
 
 function PerfilEmpresa() {
 
-  const partner_id= cookies.get("id"); //string variable
+  const PartnerID= cookies.get("partner_id"); //string variable
 
   // Gets the partner data and saves it in dataToEdit
   const [db, setDb] = useState([]);
   const [dataToEdit, setDataToEdit] = useState({});
 
   useEffect(async ()=>{
-    await axios.get(`${apiPath}/partners/${partner_id}`)
+    await axios.get(`${apiPath}/partners/${PartnerID}`)
         .then(res => setDataToEdit(res.data))
   }, []);
 
@@ -26,7 +26,7 @@ function PerfilEmpresa() {
   let url = `${apiPath}/partners`;
 
   const updateData = (data) => {
-    let endpoint = `${url}/${data.id}`;
+    let endpoint = `${url}/${data.partner_id}`;
 
     let options = {
       body: data,
@@ -34,14 +34,14 @@ function PerfilEmpresa() {
     };
 
     api.put(endpoint, options).then((res) => {
-      let newData = db.map((el) => (el.id === data.id ? data : el));
+      let newData = db.map((el) => (el.partner_id === data.partner_id ? data : el));
       setDb(newData);
     });
   }
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
-      if (!cookies.get('id')){
+      if (!cookies.get('partner_id')){
           window.location.href="/login/empresa";
       }
   });

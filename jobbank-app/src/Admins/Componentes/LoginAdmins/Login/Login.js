@@ -32,13 +32,19 @@ class LoginComponent extends React.Component {
 		.then(res => res.json())
 		.then(
 		  (result) => {
-				if (result.id) { // Setting cookies when the user logged in
+				if (result.admin_id) { // Setting cookies when the user logged in
 			    const token = result.token;
 			    var respuesta=result;
-			    cookies.set('id', respuesta.id, {path:"/"});
+			    cookies.set('admin_id', respuesta.admin_id, {path:"/"});
 			    cookies.set('firstname', respuesta.firstname, {path:"/"});
 			    cookies.set('lastname', respuesta.lastname, {path:"/"});
 			    cookies.set('email', respuesta.email, {path:"/"});
+					cookies.set('created_by', respuesta.created_by, {path:"/"});
+					cookies.set('updated_by', respuesta.updated_by, {path:"/"});
+					cookies.set('deleted_by', respuesta.deleted_by, {path:"/"});
+					cookies.set('photo_filename_physical', respuesta.photo_filename_physical, {path:"/"});
+					cookies.set('photo_filename_logical', respuesta.photo_filename_logical, {path:"/"});
+					cookies.set('deleted', respuesta.deleted, {path:"/"});
 			    cookies.set('token', respuesta.token, {path:"/"});
 			    cookies.set('created_at', respuesta.created_at, {path:"/"});
 			    cookies.set('updated_at', respuesta.updated_at, {path:"/"});
@@ -74,7 +80,7 @@ class LoginComponent extends React.Component {
     }
 
     componentDidMount() {
-			if(cookies.get('id')){
+			if(cookies.get('admin_id')){
 	    	this.props.history.push("/admin/empresas");
 			}
     }

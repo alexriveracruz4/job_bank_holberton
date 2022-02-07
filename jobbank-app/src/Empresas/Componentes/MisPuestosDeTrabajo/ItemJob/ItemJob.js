@@ -14,7 +14,7 @@ const cookies = new Cookies();
 function ItemJob(props) {
   props.setCopia(props.paginaActual);
   // Gets the Jobs data and saves it in AllmyJobs
-  const PartnerId= cookies.get("id"); //string variable
+  const PartnerId= cookies.get("partner_id"); //string variable
   const history = useHistory();
   let api = helpHttp();
   let url = `${apiPath}/partners/${PartnerId}/jobs`;

@@ -15,7 +15,7 @@ function PartnerInfo(props) {
         obtenerDatosDePartners();
     }, []);
     
-    let partner_id = cookies.get('id')
+    let partner_id = cookies.get('partner_id')
     
     const obtenerDatosDePartners = async () => {
         const data = await fetch(`${apiPath}/partners/${partner_id}`);

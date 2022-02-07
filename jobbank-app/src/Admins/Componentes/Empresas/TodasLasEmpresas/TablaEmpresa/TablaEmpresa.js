@@ -20,7 +20,7 @@ function TablaEmpresa() {
   const [loadingEliminate, setLoadingEliminate] = useState(false);
   // Columns name
   const columnas = [
-    { title:'ID', field:'id', type:"numeric", textAlign:"center", filtering:false},
+    { title:'ID', field:'partner_id', type:"numeric", textAlign:"center", filtering:false},
     { title:'ELIMINADO', field:'deleted', filtering:true,lookup:{1:"Si", 0:"No"},defaultFilter:false},
     { title:'EMPRESA', field:'name', filtering:false},
     { title:'EMAIL', field:'email' , filtering:false}
@@ -85,7 +85,7 @@ function TablaEmpresa() {
             setLoadingEliminate(false);
             swal({
               title: "ERROR",
-              text: `No se pudo elimiar la empresa'`,
+              text: `No se pudo eliminar la empresa'`,
               icon: "error",
             });
           }
@@ -114,7 +114,7 @@ function TablaEmpresa() {
         }
         data.deleted = 0;
         setLoadingEliminate(true);
-        let endpoint = `${url}/${data.id}`;
+        let endpoint = `${url}/${data.partner_id}`;
         let options = {
           body: data,
           headers: { "content-type": "application/json" },
@@ -158,8 +158,8 @@ function TablaEmpresa() {
             tooltip: 'Editar empresa',
             onClick: (event, rowData) => {history.push(
               {
-                pathname:`/admin/empresas/empresa-editada/${rowData.id}`,
-                state: AllPartnersData.filter((trabajo)=> trabajo.id === rowData.id)
+                pathname:`/admin/empresas/empresa-editada/${rowData.partner_id}`,
+                state: AllPartnersData.filter((trabajo)=> trabajo.partner_id === rowData.partner_id)
               })}
           },
           rowData => ({
@@ -169,7 +169,7 @@ function TablaEmpresa() {
               rowData.deleted ?
                 restoreData(rowData)
               :
-                deleteData(rowData.id, rowData.name, rowData.deleted)
+                deleteData(rowData.partner_id, rowData.name, rowData.deleted)
             }
           }),
           {

@@ -50,7 +50,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     obtenerDatosDeEstudiantes();
   }, []);
 
-  let student_id = cookies.get('id')
+  let student_id = cookies.get('student_id')
 
   const obtenerDatosDeEstudiantes = async () => {
     const data = await fetch(`${apiPath}/students/${student_id}`);
@@ -81,10 +81,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const cvID = document.getElementById('cv-name');
 
   if (student.cv_filename_physical !== 'null') {
-    console.log("hay")
     cvID.innerText = cvname;
   } else {
-    console.log("no hay")
     cvID.innerText = "Aún no se ha subido ningun CV";
   }
   })
@@ -112,7 +110,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
               const data = new FormData();
               data.append('file', uploadInputImage.files[0]);
-              const urlupload = `${apiPath}/students/`+ cookies.get('id') + '/uploadphoto'
+              const urlupload = `${apiPath}/students/`+ cookies.get('student_id') + '/uploadphoto'
 
               fetch(urlupload, {
                 method: 'POST',
@@ -128,7 +126,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             if (uploadInputCV.files[0] != undefined) {
               const cvData = new FormData();
               cvData.append('file', uploadInputCV.files[0]);
-              const urlUploadCV = `${apiPath}/students/`+ cookies.get('id') + '/uploadcv'
+              const urlUploadCV = `${apiPath}/students/`+ cookies.get('student_id') + '/uploadcv'
 
               fetch(urlUploadCV, {
                 method: 'POST',
@@ -362,7 +360,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className='form-control' id='form-email'>
             <label htmlFor="inputEmail">Email</label>
             <div className='inputFormDiv'>
-              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} maxLength={45}/>
+              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} maxLength={60}/>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

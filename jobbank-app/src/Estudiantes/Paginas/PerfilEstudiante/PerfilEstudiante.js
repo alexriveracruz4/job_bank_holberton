@@ -12,13 +12,13 @@ function PerfilEstudiante() {
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
-    if (!cookies.get("id")) {
+    if (!cookies.get("student_id")) {
       window.location.href = "/login/estudiante";
     }
   });
 
   // Obtains the student's data and saves it in dataToEdit
-  const student_id = cookies.get("id");
+  const student_id = cookies.get("student_id");
 
   const [db, setDb] = useState([]);
   const [dataToEdit, setDataToEdit] = useState({});
@@ -34,7 +34,7 @@ function PerfilEstudiante() {
   let url = `${apiPath}/students`;
 
   const updateData = (data) => {
-    let endpoint = `${url}/${data.id}`;
+    let endpoint = `${url}/${data.student_id}`;
 
     let options = {
       body: data,
@@ -42,7 +42,7 @@ function PerfilEstudiante() {
     };
 
     api.put(endpoint, options).then((res) => {
-      let newData = db.map((el) => (el.id === data.id ? data : el));
+      let newData = db.map((el) => (el.student_id === data.student_id ? data : el));
       setDb(newData);
     });
   };

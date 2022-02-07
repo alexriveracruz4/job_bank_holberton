@@ -7,7 +7,7 @@ import apiPath from '../../../../ApiPath';
 const cookies = new Cookies();
 
 function ItemJob(props) {
-  const studentId= cookies.get("id"); //string variable
+  const studentId= cookies.get("student_id"); //string variable
 
   // Obtains the data of the applicants for a job and saves them in PostulantesData
   const [PostulantesData, setPostulantesData] = React.useState([2]);
@@ -33,7 +33,7 @@ function ItemJob(props) {
 
 
   // Jobs to be displayed upon login
-  let PostulantesIDs = PostulantesData.map(postulante => postulante.id);
+  let PostulantesIDs = PostulantesData.map(postulante => postulante.student_id);
   let EstadoDePostulacion= PostulantesIDs.includes(parseInt(studentId),0); /*true== postulado; false== no postulado*/
 
 

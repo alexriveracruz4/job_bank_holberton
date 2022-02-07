@@ -19,7 +19,7 @@ function TablaAdmin() {
   const [loadingEliminate, setLoadingEliminate] = useState(false);
   // Columns name
   const columnas = [
-    { title:'ID', field:'id', type:"numeri", textAlign:"center"},
+    { title:'ID', field:'admin_id', type:"numeri", textAlign:"center"},
     { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{"1":"Si", "0":"No"}},
     { title:'NOMBRE', field:'firstname'},
     { title:'APELLIDO', field:'lastname'},
@@ -110,14 +110,14 @@ function TablaAdmin() {
             tooltip: 'Editar administrador',
             onClick: (event, rowData) => {history.push(
               {
-                pathname:`/admin/admins/admin-editado/${rowData.id}`,
-                state: AllPartnersData.filter((trabajo)=> trabajo.id === rowData.id)
+                pathname:`/admin/admins/admin-editado/${rowData.admin_id}`,
+                state: AllPartnersData.filter((el)=> el.admin_id === rowData.admin_id)
               })}
           },
           {
             icon: 'delete',
             tooltip: 'Eliminar admin',
-            onClick: (event, rowData) => {deleteData(rowData.id, rowData.name, rowData.deleted)}
+            onClick: (event, rowData) => {deleteData(rowData.admin_id, rowData.name, rowData.deleted)}
           },
           {
             icon: () => <AddCircleIcon fontSize="large"/>,

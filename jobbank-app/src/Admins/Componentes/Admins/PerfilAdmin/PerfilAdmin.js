@@ -40,7 +40,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     obtenerDatosDeAdmins();
   }, []);
 
-  let admin_id = cookies.get('id')
+  let admin_id = cookies.get('admin_id')
 
   const obtenerDatosDeAdmins = async () => {
     const data = await fetch(`${apiPath}/admins/${admin_id}`);
@@ -86,7 +86,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
               const data = new FormData();
               data.append('file', uploadInputImage.files[0]);
-              const urlupload = `${apiPath}/admins/`+ cookies.get('id') + '/uploadphoto'
+              const urlupload = `${apiPath}/admins/`+ cookies.get('admin_id') + '/uploadphoto'
   
               fetch(urlupload, {
                 method: 'POST',
@@ -283,7 +283,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className="form-control" id='form-email'>
             <label htmlFor="inputEmail">Email</label>
             <div className="inputFormDiv">
-              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} maxLength={45} value={form.email} />
+              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} maxLength={60} value={form.email} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

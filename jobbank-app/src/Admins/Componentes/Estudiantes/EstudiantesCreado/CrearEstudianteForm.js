@@ -12,7 +12,7 @@ const CrudForm = ({ createData }) => {
 
   // Declaring variables to use useHistory and admin cookies
   const history = useHistory();
-  const AdminID = cookies.get("id");
+  const AdminID = cookies.get("admin_id");
 
   // Form with empty string and with the id of the admin who will create it
   const initailForm = {
@@ -267,7 +267,7 @@ const CrudForm = ({ createData }) => {
           <div className='form-control' id='form-email'>
             <label htmlFor="inputEmail">Email</label>
             <div className='inputFormDiv'>
-              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} maxLength={45}/>
+              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} maxLength={60}/>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

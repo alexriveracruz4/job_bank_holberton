@@ -2,6 +2,8 @@
 """ objects that handles all default RestFul API actions for Students"""
 from v1.models.student import Student
 from v1.models.application import Application
+from v1.models.student_skill import StudentSkill
+from v1.models.skill import Skill
 from v1.models.job import Job
 from v1.models import storage
 from v1.views import app_views
@@ -62,7 +64,7 @@ def get_students():
         else:
             page = 0
     except:
-        page = 0;
+        page = 0
     else:
         datos_no_borrados = filtro_de_eliminados(list(all_students))
  
@@ -82,6 +84,56 @@ def get_students():
                }
         out = jsonify(data)
         return out
+
+@app_views.route('/students/<student_id>', methods=['GET'], strict_slashes=False)
+def get_student(student_id):
+    """ Retrieves a specific Student """
+    student = storage.get(Student, student_id)
+    stdskill = storage.all(StudentSkill).values()
+    skill = storage.all(Skill).values()
+    skillsid = []
+
+    ignore = ['created_at', 'updated_at', 'deleted_at', '__class__']
+
+    list_of_skills = []
+
+    for studentid in stdskill:
+        if studentid.student_id == int(student_id):
+            skillsid.append(studentid.skill_id)
+    for obj in skill:
+        if obj.id in skillsid:
+            list_of_skills.append(obj.to_dict())
+            for j in list_of_skills:
+                for key in j.copy():
+                    if key in ignore:
+                        del j[key]
+    data = str(list_of_skills)
+    setattr(student, 'student_skills', data)
+    storage.save()
+
+    if not student:
+        abort(404)
+
+    return jsonify(student.to_dict())
+
+@app_views.route('/students/<student_id>/skills', methods=['GET'], strict_slashes=False)
+def get_skill_student(student_id):
+    """
+    Retrieve a list of all skills with that student
+    """
+    skills_of_student = storage.get_skills_of_student(Student, student_id)
+
+    if not skills_of_student:
+        abort(404)
+
+    new_list = []
+    if len(skills_of_student) > 0:
+        for i in range(len(skills_of_student)):
+            if(hasattr(skills_of_student[i],'__dict__')):
+                new_list.append(skills_of_student[i].to_dict())
+    else:
+        return jsonify({'data': new_list})
+    return jsonify(new_list)
 
 @app_views.route('/students/favorites', methods=['GET'], strict_slashes=False)
 def get_favorite_students():
@@ -136,7 +188,7 @@ def get_favorite_students():
     try:
         page = int(page)
     except:
-        page = 0;
+        page = 0
     else:
         datos_no_borrados = filtro_de_eliminados(list(all_students))
  
@@ -156,18 +208,6 @@ def get_favorite_students():
         out = jsonify(data)
         return out
 
-
-
-
-@app_views.route('/students/<student_id>', methods=['GET'], strict_slashes=False)
-def get_student(student_id):
-    """ Retrieves a specific Student """
-    student = storage.get(Student, student_id)
-    if not student:
-        abort(404)
-
-    return jsonify(student.to_dict())
-
 @app_views.route('/students/applications',
                  methods=['POST'], strict_slashes=False)
 def post_app_student():
@@ -186,6 +226,29 @@ def post_app_student():
 
     data = request.get_json()
     instance = Application(**data)
+    instance.save()
+
+    # TODO: RUBEN add send email API call
+
+    return make_response(jsonify(instance.to_dict()), 201)
+
+@app_views.route('/students/skills',
+                 methods=['POST'], strict_slashes=False)
+def post_skill_student():
+    """
+    Add a skill for the student
+    """
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+
+    if 'student_id' not in request.get_json():
+        abort(400, description="Missing student_id")
+    if 'skill_id' not in request.get_json():
+        abort(400, description="Missing skill_id")
+
+    data = request.get_json()
+    instance = StudentSkill(**data)
+    print(instance)
     instance.save()
 
     # TODO: RUBEN add send email API call
@@ -247,7 +310,7 @@ def get_login_student():
     for i in range (0, len(list_students)):
         if data["username"] == list_students[i]["email"]:
             if data["password"] == list_students[i]["password"]:
-                student =  storage.get(Student, list_students[i]["id"])
+                student =  storage.get(Student, list_students[i]["student_id"])
                 setattr(student, "token", token)
                 storage.save()
                 return jsonify(student.to_dict(save_fs="No"))
@@ -305,7 +368,7 @@ def post_student():
             else:
                 abort(400, description="Enter a valid lastname, max 45 characters")
         if key == "email":
-            if re.match(r"^(?=.{4,45}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
+            if re.match(r"^(?=.{4,60}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
                 isvalid = True
             else:
                 abort(400, description="Enter a valid email, max 45 characters")
@@ -416,7 +479,7 @@ def put_student(student_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
 
-    ignore = ['id', 'created_at', 'updated_at', 'deleted_at', '__class__', 
+    ignore = ['student_id', 'created_at', 'updated_at', 'deleted_at', '__class__', 
     'cv_filename_logical', 'cv_filename_physical', 'photo_filename_logical',
     'photo_filename_physical']
 
@@ -439,7 +502,7 @@ def put_student(student_id):
                     print("Not a valid lastname")
                     abort(400, description="Not a valid lastname")
             if key == "email":
-                if re.match(r"^(?=.{4,45}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
+                if re.match(r"^(?=.{4,60}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
                     isvalid = True
                 else:
                     print("Not a valid email")
@@ -593,7 +656,7 @@ def fileUpload(student_id):
     if ext != ".pdf":
         abort(400, description="It is not a pdf file")
 
-    path = '/home/jhonatanjc/job_bank_holberton/curriculums/'
+    path = '/mnt/d/jbgithub/job_bank_holberton/curriculums/'
     filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -647,7 +710,7 @@ def fileUploadPhoto(student_id):
     if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
         abort(400, description="It is not a png or jpg file")
 
-    path = '/home/jhonatanjc/job_bank_holberton/student_photos/'
+    path = '/mnt/d/jbgithub/job_bank_holberton/student_photos/'
     filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -669,7 +732,7 @@ def fileDownload(cv_filename_logical):
     """
     Download CV
     """
-    path = "/home/jhonatanjc/job_bank_holberton/curriculums/" + cv_filename_logical
+    path = "/mnt/d/jbgithub/job_bank_holberton/curriculums/" + cv_filename_logical
     return send_file(path)
 
 
@@ -678,6 +741,6 @@ def studentPhoto(photo_filename_logical):
     """
     Student Photo
     """
-    path = "/home/jhonatanjc/job_bank_holberton/student_photos/" + photo_filename_logical
+    path = "/mnt/d/jbgithub/job_bank_holberton/student_photos/" + photo_filename_logical
     return send_file(path)
 

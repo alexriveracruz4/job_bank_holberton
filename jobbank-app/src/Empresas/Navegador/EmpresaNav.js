@@ -12,7 +12,7 @@ const cookies = new Cookies();
 
 // Function that removes cookies from the current session
 function closeSessionEst() {
-    cookies.remove('id', {path: "/"});
+    cookies.remove('partner_id', {path: "/"});
     cookies.remove('name', {path: "/"});
     cookies.remove('email', {path: "/"});
     cookies.remove('nation', {path: "/"});
@@ -41,7 +41,7 @@ function EmpresaNav() {
     obtenerDatosDePartners();
   }, []);
 
-  let partner_id = cookies.get('id')
+  let partner_id = cookies.get('partner_id')
 
   const obtenerDatosDePartners = async () => {
     const data = await fetch(`${apiPath}/partners/${partner_id}`);

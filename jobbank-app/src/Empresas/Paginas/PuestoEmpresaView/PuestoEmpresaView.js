@@ -16,7 +16,7 @@ const cookies = new Cookies();
 function PuestoEmpresaView() {
 
   // Obtains the data of a job and stores it in AllAJobData
-  const partner_id= cookies.get("id"); //string variable
+  const partner_id= cookies.get("partner_id"); //string variable
 
   const { JobId } = useParams();
   const [JobData, setJobData] = useState(null);
@@ -52,7 +52,7 @@ function PuestoEmpresaView() {
   */
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
-      if (!cookies.get('id')){
+      if (!cookies.get('partner_id')){
           window.location.href="/login/empresa";
       }
   });

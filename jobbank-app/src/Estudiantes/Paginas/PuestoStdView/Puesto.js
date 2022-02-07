@@ -48,7 +48,7 @@ function Puesto() {
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
-      if (!cookies.get('id')){
+      if (!cookies.get('student_id')){
           window.location.href="/login/estudiante";
       }
   });

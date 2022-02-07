@@ -38,11 +38,11 @@ def login():
         if data["username"] == list_all_users[i]["email"]:
             if data["password"] == list_all_users[i]["password"]:
                 if list_all_users[i]["__class__"] == "Student":
-                    user =  storage.get(Student, list_all_users[i]["id"])
+                    user =  storage.get(Student, list_all_users[i]["student_id"])
                 if list_all_users[i]["__class__"] == "Partner":
-                    user =  storage.get(Partner, list_all_users[i]["id"])
+                    user =  storage.get(Partner, list_all_users[i]["partner_id"])
                 if list_all_users[i]["__class__"] == "Admin":
-                    user =  storage.get(Admin, list_all_users[i]["id"])
+                    user =  storage.get(Admin, list_all_users[i]["admin_id"])
                 setattr(user, "token", token)
                 storage.save()
                 return jsonify(user.to_dict(save_fs="No"))
@@ -70,11 +70,11 @@ def login2():
     for i in range (0, len(list_all_users)):
         if data["username"] == list_all_users[i]["email"]:
             if list_all_users[i]["__class__"] == "Student":
-                user =  storage.get(Student, list_all_users[i]["id"])
+                user =  storage.get(Student, list_all_users[i]["student_id"])
             if list_all_users[i]["__class__"] == "Partner":
-                user =  storage.get(Partner, list_all_users[i]["id"])
+                user =  storage.get(Partner, list_all_users[i]["partner_id"])
             if list_all_users[i]["__class__"] == "Admin":
-                user =  storage.get(Admin, list_all_users[i]["id"])
+                user =  storage.get(Admin, list_all_users[i]["admin_id"])
             setattr(user, "token", token)
             storage.save()
             return jsonify(user.to_dict(save_fs="No"))

@@ -48,7 +48,7 @@ def get_login_admin():
     for i in range (0, len(list_admins)):
         if data["username"] == list_admins[i]["email"]:
             if data["password"] == list_admins[i]["password"]:
-                admin =  storage.get(Admin, list_admins[i]["id"])
+                admin =  storage.get(Admin, list_admins[i]["admin_id"])
                 setattr(admin, "token", token)
                 storage.save()
                 return jsonify(admin.to_dict(save_fs="No"))
@@ -60,7 +60,7 @@ def delete_admin(admin_id):
     Deletes a Admin Object
     """
 
-    admin = storage.get(Admin, partner_id)
+    admin = storage.get(Admin, admin_id)
 
     if not admin:
         abort(404)
@@ -104,7 +104,7 @@ def post_admin():
             else:
                 abort(400, description="Enter a valid lastname, max 45 characters")
         if key == "email":
-            if re.match(r"^(?=.{4,45}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
+            if re.match(r"^(?=.{4,60}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
                 isvalid = True
             else:
                 abort(400, description="Enter a valid email, max 45 characters")
@@ -150,7 +150,7 @@ def put_admin(admin_id):
                 else:
                     abort(400, description="Enter a valid lastname, max 45 characters")
             if key == "email":
-                if re.match(r"^(?=.{4,45}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
+                if re.match(r"^(?=.{4,60}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
                     isvalid = True
                 else:
                     abort(400, description="Enter a valid email, max 45 characters")

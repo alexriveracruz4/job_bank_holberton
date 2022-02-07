@@ -13,12 +13,12 @@ function EstudianteEditado() {
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
-    if (!cookies.get("id")) {
+    if (!cookies.get("admin_id")) {
       window.location.href = "/login/admin";
     }
   });
 
-  const AdminID = cookies.get("id")
+  const AdminID = cookies.get("admin_id")
 
   // Gets the student data and saves it in dataToEdit
   const { id } = useParams();
@@ -38,7 +38,7 @@ function EstudianteEditado() {
   let url = `${apiPath}/students`;
 
   const updateData = (data) => {
-    let endpoint = `${url}/${data.id}`;
+    let endpoint = `${url}/${data.student_id}`;
 
     data.updated_by = parseInt(AdminID);
 
@@ -48,7 +48,7 @@ function EstudianteEditado() {
     };
 
     api.put(endpoint, options).then((res) => {
-      let newData = db.map((el) => (el.id === data.id ? data : el));
+      let newData = db.map((el) => (el.student_id === data.student_id ? data : el));
       setDb(newData);
     });
   };
