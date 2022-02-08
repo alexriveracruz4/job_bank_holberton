@@ -9,7 +9,13 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
 import SvgIcon from '@mui/material/SvgIcon';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import LanguageIcon from '@mui/icons-material/Language';
+import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import mysvg from "../images/Magnifying_glass_icon.svg";
 import LinesEllipsis from "react-lines-ellipsis";
 import apiPath from '../../../ApiPath';
@@ -25,7 +31,7 @@ function ItemStudent(props) {
 
   return (
     <React.StrictMode>     
-          <Card elevation={4} sx={{ width: '100%', height: 320, maxWidth: 1170, my: '15px', display: 'flex', borderRadius: '8px' }}>
+          <Card elevation={4} sx={{ width: '100%', height: 320, maxWidth: 1170, my: '15px', display: 'flex', borderRadius: '160px', padding: '30px' }}>
             <Box
               sx={{
                 width: '100%',
@@ -44,49 +50,77 @@ function ItemStudent(props) {
                         display: 'flex',
                       }}
                     >
-                      <a rel="noopener" title="" href="" style={{display: 'block', textDecoration: 'none', color: 'inherit', width: '80px', cursor: 'pointer', height: '80px', maxWidth: '80px', minWidth: '80px', maxHeight: '80px', minHeight: '80px',
-marginRight: '25px'}}>
+                      <a rel="noopener" title="" href="" style={{display: 'block', textDecoration: 'none', color: 'inherit', width: '80px', cursor: 'pointer', height: '80px', maxWidth: '80px', minWidth: '80px', maxHeight: '80px', minHeight: '80px', marginRight: '25px'}}>
                         <img src={ photo } alt="Profile" style={{display: 'block', width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} />
                       </a>
                       <Box
                       >
                         <a class="MuiTypography-root MuiTypography-h6 MuiTypography-alignLeft" style={{color: 'inherit', display: 'block', textDecoration: 'none', cursor: 'pointer', lineHeight: '1.7rem', marginBottom: '0.3rem', textAlign: 'left', fontSize: '1.25rem', fontWeight: '500'}} rel="noopener" href=""> {props.student.firstname} {props.student.lastname}</a>
-                        <a class="MuiTypography-root jss86 jss127 jss125 MuiTypography-body2 MuiTypography-alignLeft" rel="noopener" href="" style={{color: 'inherit', display: 'block', textDecoration: 'none', textAlign: 'left', fontSize: '1rem', fontWeight: '400', lineHeight: '1.43', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: '1', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book'}}>FULL STACK</a>
+                        <a class="MuiTypography-root jss86 jss127 jss125 MuiTypography-body2 MuiTypography-alignLeft" rel="noopener" href="" style={{color: 'inherit', display: 'block', textDecoration: 'none', textAlign: 'left', fontSize: '1rem', fontWeight: '400', lineHeight: '1.43', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: '1', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book'}}>{props.student.developer_type}</a>
                         <a rel="noopener" href="" style={{color: 'inherit', margin: '4px 0px 4px -4px', display: 'flex', textDecoration: 'none'}}>
                           <svg class="MuiSvgIcon-root" style={{fill: 'currentColor', width: '1em', height: '1em', display: 'inline-block', fontSize: '1.25rem', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none', marginRight: '5px', color: 'inherit', textDecoration: 'none'}} focusable="false" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.88-2.88 7.19-5 9.88C9.92 16.21 7 11.85 7 9z"></path>
                             <circle cx="12" cy="9" r="2.5"></circle>
                           </svg>
-                          <p class="MuiTypography-root MuiTypography-body1" style={{height: '23px', display: '-webkit-box', overflow: 'hidden', fontSize: '14px', marginTop: '1px', textAlign: 'left', WebkitBoxOrient: 'vertical', WebkitLineClamp: '1', fontWeight: '400', lineHeight: '1.5', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book'}}>Buenos Aires - Argentina</p>
+                          <p class="MuiTypography-root MuiTypography-body1" style={{height: '23px', display: '-webkit-box', overflow: 'hidden', fontSize: '14px', marginTop: '1px', textAlign: 'left', WebkitBoxOrient: 'vertical', WebkitLineClamp: '1', fontWeight: '400', lineHeight: '1.5', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book'}}>{props.student.province} - {props.student.nationality}</p>
                         </a>
                       </Box>
                     </Box>
-                    <Box sx={{display: 'flex', marginTop: '40px'}}>
-                      <div class="LinesEllipsis LinesEllipsis--clamped " id="Ellipsis"><div>
-                          <p id="skill" class="button-skill-gray">JavaScript
-                          </p>
-                          <p id="skill" class="button-skill-gray">HTML
-                          </p>
-                          <p id="skill" class="button-skill-gray">CSS
-                          </p>
-                          <p id="skill" class="button-skill-gray">React.js
-                          </p>
-                          <p id="skill" class="button-skill-gray">Redux
-                          </p>
-                          <p id="skill" class="button-skill">Sass</p>
-                          <p id="skill" class="button-skill">Styled-Components</p>
-                          <p id="skill" class="button-skill">Analytical</p>
-                          <p id="skill" class="button-skill">
-                            <span class="LinesEllipsis-unit">M</span>
-                          </p>
-                          <span>
-                            <p class="LinesEllipsis-ellipsis"><a>...</a></p>
-                          </span>
-                        </div>
-                      </div>
+                    <Box sx={{display: 'flex', marginTop: '40px', width: '95%', height: '76px', overflow: 'hidden'}}>
+                      <Stack
+                        direction="row"
+                        divider={<Divider style={{height: '30px'}} orientation="vertical" flexItem />}
+                        spacing={2}
+                      >
+                        {JSON.parse(props.student.student_skills.replace(/'/g, '"')).map(skill => <p id="skill">{skill.name}</p>)}
+                      </Stack>
                     </Box>
                   </Grid>
                   <Grid style={{width: '60%'}}>
+                    <Box style={{width: 'max-content', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                      <Box style={{ display: 'flex', flexGrow: 1}}>
+                          <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                            <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
+                              <GitHubIcon style={{marginRight: '10px'}} />Github
+                            </span>
+                            <span class="MuiTouchRipple-root"></span></Button>
+                        </Box>
+                        <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
+                          <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                            <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
+                              <LinkedInIcon style={{marginRight: '10px'}} />
+                              Linkedin
+                            </span>
+                            <span class="MuiTouchRipple-root"></span></Button>
+                        </Box>
+                        <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
+                          <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                            <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
+                              <WorkOutlineIcon style={{marginRight: '10px'}} />
+                              portafolio
+                            </span>
+                            <span class="MuiTouchRipple-root"></span></Button>
+                        </Box>
+                        <Box style={{ display: 'flex', marginRight: '20px', marginLeft: '20px', borderLeft: '1px solid #D7D7D7', paddingLeft: '20px', flexGrow: 1}}>
+                          <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                            <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
+                              <LanguageIcon style={{marginRight: '10px'}} />
+                              Inglés-{props.student.english_level}
+                            </span>
+                            <span class="MuiTouchRipple-root"></span></Button>
+                        </Box>
+                    </Box>
+                    <Box>
+                      <Typography color='textPrimary' align='left' style={{fontSize: '14px', marginTop: '10px', minHeight: '64px', marginBottom: '10px'}}>
+                      <LinesEllipsis
+                        text={String(props.student.description)}
+                        maxLine='5'
+                        ellipsis='...'
+                        trimRight
+                        basedOn='letters'
+                      />
+                      </Typography>
+                    </Box>
                     <Box style={{width: 'max-content', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                       <Box style={{ display: 'flex', flexGrow: 1}}>
                         <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>

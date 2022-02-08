@@ -270,6 +270,29 @@ def post_skill_student():
     print(instance)
     instance.save()
 
+    student = storage.get(Student, int(data['student_id']))
+    stdskill = storage.all(StudentSkill).values()
+    skill = storage.all(Skill).values()
+    skillsid = []
+
+    ignore = ['created_at', 'updated_at', 'deleted_at', '__class__']
+
+    list_of_skills = []
+
+    for studentid in stdskill:
+        if studentid.student_id == int(data['student_id']):
+            skillsid.append(studentid.skill_id)
+    for obj in skill:
+        if obj.id in skillsid:
+            list_of_skills.append(obj.to_dict())
+            for skill_dict in list_of_skills:
+                for key in skill_dict.copy():
+                    if key in ignore:
+                        del skill_dict[key]
+    skills_of_student = str(list_of_skills)
+    setattr(student, 'student_skills', skills_of_student)
+    storage.save()
+
     # TODO: RUBEN add send email API call
 
     return make_response(jsonify(instance.to_dict()), 201)
