@@ -115,14 +115,14 @@ function TablaEstudiante() {
         }
         data.deleted = 0;
         setLoadingEliminate(true);
-        let endpoint = `${url}/${data.id}`;
+        let endpoint = `${url}/${data.student_id}`;
         let options = {
           body: data,
           headers: { "content-type": "application/json" },
         };
         api.put(endpoint, options).then((res) => {
           if (!res.err) {
-            let newData = AllPartnersData.map((el) => el.id === data.id ? data:el);
+            let newData = AllPartnersData.map((el) => el.student_id === data.student_id ? data:el);
             setAllPartnersData(newData);
             setLoadingEliminate(false);
             swal(`El usuario ${data.firstname} ${data.lastname} ha sido restaurada.`, {

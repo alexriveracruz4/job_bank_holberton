@@ -121,7 +121,7 @@ function TablaEmpresa() {
         };
         api.put(endpoint, options).then((res) => {
           if (!res.err) {
-            let newData = AllPartnersData.map((el) => el.id === data.id ? data:el);
+            let newData = AllPartnersData.map((el) => el.partner_id === data.partner_id ? data:el);
             setAllPartnersData(newData);
             setLoadingEliminate(false);
             swal(`La empresa ${data.name} ha sido restaurada.`, {

@@ -28,8 +28,6 @@ def get_students():
     """
     page = request.args.get('page')
     
-    if page is None:
-        page = 0
     limit = 4
     skills = request.args.get('skills')
     if skills is None:
@@ -43,6 +41,21 @@ def get_students():
     
     all_students = storage.all(Student).values()
 
+    def filtro_de_ingles(student, rango):
+        if rango == "":
+            return True
+        limite_inferior = int(rango[0])
+        limite_superior = int(rango[2])
+        niveles_ingles = {0:"No ingles", 1:"A1", 2:"A2", 3:"B1", 4:"B2", 5:"C1", 6:"C2"}
+
+        for i in range(limite_inferior, limite_superior + 1):
+            for key, value in niveles_ingles.items():
+                if key == i and value == student["english_level"]:
+                    return True
+        return False
+
+
+
     def filtro_de_eliminados(list_de_datos):
         nueva_lista=[]
         for i in list_de_datos:
@@ -51,7 +64,7 @@ def get_students():
         return nueva_lista
 
     list_students = []
-    
+
     def toNoneStrings(string):
         if string is None:
             return ""
@@ -59,19 +72,16 @@ def get_students():
             return string
 
     try:
-        if page != 0: 
-            page = int(page) - 1
-        else:
+        page = int(page) - 1
+        if page == -1:
             page = 0
-    except:
-        page = 0
-    else:
         datos_no_borrados = filtro_de_eliminados(list(all_students))
  
         for student in datos_no_borrados:
             list_students.append(student.to_dict())
 
-        datos_filtrados = [x for x in list_students if (PalabraClave.lower() in toNoneStrings(x["description"]).lower()) or (PalabraClave == "")]
+        datos_filtrados = [x for x in list_students if ((PalabraClave.lower() in toNoneStrings(x["description"]).lower()) or (PalabraClave == "")) and 
+                                                        (filtro_de_ingles(x, english))]
         number_of_pages = ceil(len(datos_filtrados)/limit)
         #datos_no_borrados_ordenados = random.sample(datos_filtrados, len(datos_filtrados))
  
@@ -84,7 +94,15 @@ def get_students():
                }
         out = jsonify(data)
         return out
-
+    except:
+        for student in all_students:
+            list_students.append(student.to_dict())
+        #newlist = sorted(list_jobs, key=lambda d: d['created_at'])
+        #newlist.reverse()
+        data = {"data":list_students, "len_not_deleted_data":len(list_students), "len_total_data":len(list_students)}
+        out = jsonify(data)
+        return out
+        
 @app_views.route('/students/<student_id>', methods=['GET'], strict_slashes=False)
 def get_student(student_id):
     """ Retrieves a specific Student """
@@ -123,10 +141,11 @@ def get_skill_student(student_id):
     """
     skills_of_student = storage.get_skills_of_student(Student, student_id)
 
-    if not skills_of_student:
-        abort(404)
-
     new_list = []
+
+    if not skills_of_student:
+        return jsonify(new_list)
+
     if len(skills_of_student) > 0:
         for i in range(len(skills_of_student)):
             if(hasattr(skills_of_student[i],'__dict__')):
@@ -656,7 +675,7 @@ def fileUpload(student_id):
     if ext != ".pdf":
         abort(400, description="It is not a pdf file")
 
-    path = '/mnt/d/jbgithub/job_bank_holberton/curriculums/'
+    path = '/home/jhonatanjc/job_bank_holberton/curriculums/'
     filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -710,7 +729,7 @@ def fileUploadPhoto(student_id):
     if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
         abort(400, description="It is not a png or jpg file")
 
-    path = '/mnt/d/jbgithub/job_bank_holberton/student_photos/'
+    path = '/home/jhonatanjc/job_bank_holberton/student_photos/'
     filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -732,7 +751,7 @@ def fileDownload(cv_filename_logical):
     """
     Download CV
     """
-    path = "/mnt/d/jbgithub/job_bank_holberton/curriculums/" + cv_filename_logical
+    path = "/home/jhonatanjc/job_bank_holberton/curriculums/" + cv_filename_logical
     return send_file(path)
 
 
@@ -741,6 +760,6 @@ def studentPhoto(photo_filename_logical):
     """
     Student Photo
     """
-    path = "/mnt/d/jbgithub/job_bank_holberton/student_photos/" + photo_filename_logical
+    path = "/home/jhonatanjc/job_bank_holberton/student_photos/" + photo_filename_logical
     return send_file(path)
 

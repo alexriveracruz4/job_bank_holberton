@@ -40,6 +40,7 @@ function Main() {
 
   let skills = query.get("skills")
   let english = query.get("english")
+
   let PalabraClave = query.get("PalabraClave")
 
   const [parameters, setParameters] = useState({PalabraClave:PalabraClave, skills:skills, english:english, page: parseInt(page)});
