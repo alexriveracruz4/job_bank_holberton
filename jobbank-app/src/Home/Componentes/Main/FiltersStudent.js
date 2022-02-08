@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import mysvg from "../images/Magnifying_glass_icon.svg";
 import {Modal, TextField} from '@material-ui/core';
 import {makeStyles} from  '@material-ui/core/styles';
@@ -10,6 +10,9 @@ import { useHistory } from "react-router-dom";
 import Slider from '@mui/material/Slider';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
+import apiPath from '../../../ApiPath';
+import { helpHttp } from '../../../helpers/helpHttp';
+import Chip from '@mui/material/Chip';
 
 const useStyles = makeStyles(() => ({
   modal:{
@@ -100,7 +103,7 @@ function FiltersStudent(props) {
     </div>
   )
 
-  const [value, setValue] = React.useState(() => {
+  const [value, setValue] = useState(() => {
     if (props.parameters.english === null) {
       return [0,6];
     } else {
@@ -209,7 +212,37 @@ function FiltersStudent(props) {
       </div>
     </div>
   )
+  const [allSkills, setAllSkills] = useState(null);
 
+  let api = helpHttp();
+
+  useEffect(() => { 
+    const getComments = async () => {
+      const url = `${apiPath}/skills`
+      api.get(url).then((res) => {
+        if (!res.err) {
+          setAllSkills(res);
+        } else {
+          setAllSkills(null);
+        }
+      })
+    };
+    getComments();
+  }, []);
+ 
+  function RenderAllSkillsList(props) {
+    const skills = props.allSkills;
+    const techSkills = skills.filter((obj)=> obj.type === props.tipo)
+    return (
+      <div>
+        {techSkills.map((skill) => (
+            <Chip sx={{ m: 0.3 }} label={skill.name} />
+        ))}
+      </div>
+    );
+  }
+
+  console.log(allSkills)
   const skillsBody=(
     <div className={styles.modal3}>
       <Stack direction="row" spacing={1} justifyContent="flex-end">
@@ -223,8 +256,18 @@ function FiltersStudent(props) {
           defaultValue={props.parameters.PalabraClave}
         />
       </Stack>
-
-
+      
+      <Box
+        sx={{
+          width: 900,
+          height: 100,
+          display: 'flex',
+          flexWrap: 'nowrap',
+          border: '1px solid grey',
+        }}
+      >
+        <Chip sx={{ m: 0.3 }} label='Hola'/>
+      </Box>
       <br/>
       <div align="center">
         <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2} justifyContent="space-around">
@@ -236,10 +279,12 @@ function FiltersStudent(props) {
               sx={{
                 width: 300,
                 height: 300,
-                backgroundColor: 'primary.dark',
-                
+                display: 'flex',
+                flexWrap: 'nowrap',
               }}
-            />
+            >
+              <RenderAllSkillsList allSkills={allSkills} tipo={"tech"}/>
+            </Box>
           </Stack>
           <Stack direction="column"  spacing={2} >
             <Typography variant="h6" gutterBottom component="div">
@@ -249,10 +294,12 @@ function FiltersStudent(props) {
               sx={{
                 width: 300,
                 height: 300,
-                backgroundColor: 'primary.dark',
-                
+                display: 'flex',
+                flexWrap: 'nowrap',
               }}
-            />
+            >
+              <RenderAllSkillsList allSkills={allSkills} tipo={"soft"}/>
+            </Box>
           </Stack>
           <Stack direction="column" spacing={2} >
             <Typography variant="h6" gutterBottom component="div">
@@ -263,10 +310,12 @@ function FiltersStudent(props) {
               sx={{
                 width: 300,
                 height: 300,
-                backgroundColor: 'primary.dark',
-                
+                display: 'flex',
+                flexWrap: 'nowrap',
               }}
-            />
+            >
+              <RenderAllSkillsList allSkills={allSkills} tipo={"other"}/>
+            </Box>
           </Stack>
         </Stack>
       </div>
