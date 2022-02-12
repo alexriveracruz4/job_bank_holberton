@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import apiPath from '../../../ApiPath';
 import { helpHttp } from '../../../helpers/helpHttp';
 import Chip from '@mui/material/Chip';
+import allSkillsArray from '../../../skills';
 
 const useStyles = makeStyles(() => ({
   modal:{
@@ -212,44 +213,179 @@ function FiltersStudent(props) {
       </div>
     </div>
   )
-  const [allSkills, setAllSkills] = useState(null);
+
+  const todasHabilidades = allSkillsArray;
+
+
+  const [allSkills, setAllSkills] = useState(todasHabilidades);
+  //
+  //const [selectSkills, setSelectSkills] = useState([]);
 
   let api = helpHttp();
 
+  //const [favorites, setFavorites] = useState([]);
+/*
+  useEffect(() => {
+    setAllSkills(JSON.parse(window.sessionStorage.getItem("allSkills")));
+  }, []);
+
+  useEffect(() => {
+    window.sessionStorage.setItem("allSkills", JSON.stringify(allSkills));
+  }, [allSkills]);
+
   useEffect(() => { 
+
     const getComments = async () => {
-      const url = `${apiPath}/skills`
+      const url = `${apiPath}/skills`;
       api.get(url).then((res) => {
         if (!res.err) {
-          setAllSkills(res);
+          setAllSkills(res);  
         } else {
-          setAllSkills(null);
+          setAllSkills([]);
         }
+      }).then(()=>{
+        setSelectSkills(allSkills);
+        console.log('a');
       })
     };
     getComments();
   }, []);
- 
+*/
+
+  const handleRemoveItem = (data,setData, id) => {
+    setData(data.filter(item => item.id !== id))
+  }
+
+  const initializationSelectSkills = () => {
+    const newArray = [];
+    if (props.parameters.skills === null) {
+      return newArray;
+    }
+    const arrayOfSkills = props.parameters.skills.split(",");
+    console.log("Array to skills");
+    console.log(arrayOfSkills);
+    console.log(allSkills);
+
+    for (let i of arrayOfSkills) {
+      for (let j of allSkills) {
+        if (i === j.name) {
+          newArray.push(j);
+          console.log("Inicio");
+          console.log(allSkills);
+          break;
+        }
+      }
+    }
+    
+    /*
+    for (let j of newArray) {
+      handleRemoveItem(allSkills, setAllSkills, j.id)
+    }
+    */
+    return newArray;
+  }
+
+  const [selectSkills, setSelectSkills] = useState(()=>{
+    const newArray = [];
+    if (props.parameters.skills === null) {
+      return newArray;
+    }
+    const arrayOfSkills = props.parameters.skills.split(",");
+    console.log("Array to skills");
+    console.log(arrayOfSkills);
+    console.log(allSkills);
+
+    for (let i of arrayOfSkills) {
+      for (let j of allSkills) {
+        if (i === j.name) {
+          newArray.push(j);
+          //handleRemoveItem(allSkills, setAllSkills, j.id);
+          console.log("Inicio");
+          console.log(allSkills);
+          break;
+        }
+      }
+    }
+
+    /*
+    for (let j of newArray) {
+      handleRemoveItem(allSkills, setAllSkills, j.id)
+    }
+    */
+    return newArray;
+  });
+  console.log("Array to skills");
+  console.log(allSkills);
+  console.log(selectSkills);
+
   function RenderAllSkillsList(props) {
     const skills = props.allSkills;
-    const techSkills = skills.filter((obj)=> obj.type === props.tipo)
+    const HabilidadesSeleccionadas = props.selectSkills;
+    //setAllSkills([...allSkills, {}]);
+    const newArraySkills = skills.filter(item => !HabilidadesSeleccionadas.includes(item));
+    let uniqueItems = [...new Set(newArraySkills)]
+    console.log("AAAAAAAAAAAAAAAAAA");
+    console.log(allSkills);
+    console.log(selectSkills);
+    const techSkills = uniqueItems.filter((obj)=> obj.type === props.tipo || props.tipo === "all")
     return (
       <div>
         {techSkills.map((skill) => (
-            <Chip sx={{ m: 0.3 }} label={skill.name} />
+            <Chip
+              key={skill.id}
+              onClick={() => {
+                setSelectSkills([...selectSkills, skill]);
+                handleRemoveItem(allSkills,setAllSkills, skill.id);
+              }}
+              sx={{ m: 0.3 }}
+              label={skill.name} />
         ))}
       </div>
     );
   }
 
+  
+  function RenderSelectedSkillsList(props) {
+    const skills = props.selectSkills;
+    return (
+      <div>
+        {skills.map((skill) => (
+            <Chip 
+              key={skill.id}
+              onDelete={() => {
+                handleRemoveItem(selectSkills, setSelectSkills, skill.id);
+                setAllSkills([...allSkills, skill]);
+                
+              }} 
+              sx={{ m: 0.3 }}
+              label={skill.name}
+            />
+        ))}
+      </div>
+    );
+  }
+  
+
   console.log(allSkills)
+  console.log("SLEECTES");
+  console.log(selectSkills);
+
+  const ObjToString = (Array) => {
+    let array = [];
+    for (let i of Array) {
+      array.push(i.name)
+    }
+    return array.toString()
+  }
+
+
   const skillsBody=(
     <div className={styles.modal3}>
       <Stack direction="row" spacing={1} justifyContent="flex-end">
-        <TextField 
-          fullWidth 
-          label="Palabra clave" 
-          id="fullWidth" 
+        <TextField
+          fullWidth
+          label="Palabra clave"
+          id="fullWidth"
           onChange={(e) => {
             props.setParameters({...props.parameters, PalabraClave: e.target.value});
           }}
@@ -266,7 +402,7 @@ function FiltersStudent(props) {
           border: '1px solid grey',
         }}
       >
-        <Chip sx={{ m: 0.3 }} label='Hola'/>
+        <RenderSelectedSkillsList selectSkills={selectSkills} tipo={"tech"}/>
       </Box>
       <br/>
       <div align="center">
@@ -283,7 +419,7 @@ function FiltersStudent(props) {
                 flexWrap: 'nowrap',
               }}
             >
-              <RenderAllSkillsList allSkills={allSkills} tipo={"tech"}/>
+              <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"tech"}/>
             </Box>
           </Stack>
           <Stack direction="column"  spacing={2} >
@@ -298,7 +434,7 @@ function FiltersStudent(props) {
                 flexWrap: 'nowrap',
               }}
             >
-              <RenderAllSkillsList allSkills={allSkills} tipo={"soft"}/>
+              <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"soft"}/>
             </Box>
           </Stack>
           <Stack direction="column" spacing={2} >
@@ -314,7 +450,7 @@ function FiltersStudent(props) {
                 flexWrap: 'nowrap',
               }}
             >
-              <RenderAllSkillsList allSkills={allSkills} tipo={"other"}/>
+              <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"other"}/>
             </Box>
           </Stack>
         </Stack>
@@ -327,6 +463,7 @@ function FiltersStudent(props) {
         <Button variant="outlined" color="primary"
           onClick={()=> {
             props.parameters.page = 1;
+            props.parameters.skills = ObjToString(selectSkills);
             let url = `/home?` + props.creadorURLs(props.parameters);  
             history.push(url);
             abrirCerrarSkillsModal();
@@ -345,11 +482,6 @@ function FiltersStudent(props) {
     </div>
   )
 
-
-
-
-  console.log("NIVEL DE INGLES");
-  console.log(value);
   return (
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div className="collapse navbar-collapse d-flex justify-content-center" id="navbarMainHolberton">

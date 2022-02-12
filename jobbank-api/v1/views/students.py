@@ -54,6 +54,16 @@ def get_students():
                     return True
         return False
 
+    def filtro_de_habilidades(student, string_skills):
+        if string_skills == "":
+            return True
+
+        array_skills = string_skills.split(",")
+        retorno_tmp = True
+        for skill in array_skills:
+            if skill not in student["student_skills"]:
+                retorno_tmp = False
+        return retorno_tmp
 
 
     def filtro_de_eliminados(list_de_datos):
@@ -81,7 +91,7 @@ def get_students():
             list_students.append(student.to_dict())
 
         datos_filtrados = [x for x in list_students if ((PalabraClave.lower() in toNoneStrings(x["description"]).lower()) or (PalabraClave == "")) and 
-                                                        (filtro_de_ingles(x, english))]
+                                                        (filtro_de_ingles(x, english)) and (filtro_de_habilidades(x, skills))]
         number_of_pages = ceil(len(datos_filtrados)/limit)
         #datos_no_borrados_ordenados = random.sample(datos_filtrados, len(datos_filtrados))
  

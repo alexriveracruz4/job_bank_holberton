@@ -122,6 +122,9 @@ function Main() {
     obtenerEstudiantes();
   }, []);
 
+
+  
+
   return (
     <main className="padding-main">
       <div className="container padding mt-3">
