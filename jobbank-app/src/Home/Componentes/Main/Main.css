@@ -60,7 +60,12 @@ main .navbar {
 }
 
 .padding-main {
-    background: #FF003C;
+    background: url(../images/fondoholberton.jpeg) no-repeat; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow: hidden;
 }
 
 .padding-main .container .row {

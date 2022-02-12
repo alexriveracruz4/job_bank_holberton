@@ -18,9 +18,14 @@ const initailForm = {
   phonenumber: '',
   age: '',
   nationality: '',
+  province: '',
+  developer_type: "",
+  english_level: "",
   availability: '',
   pres_or_remot: '',
   disp_travel: '',
+  portfolio: '',
+  video_link: '',
   linkedin: '',
   github: '',
   twitter: '',
@@ -45,9 +50,11 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
   // Get photoname
   const [student, setStudent] = useState([2]);
+  const [skill, setSkill] = useState([2]);
 
   React.useEffect(() => {
     obtenerDatosDeEstudiantes();
+    obtenerDatosDeSkills();
   }, []);
 
   let student_id = cookies.get('student_id')
@@ -56,6 +63,11 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     const data = await fetch(`${apiPath}/students/${student_id}`);
     const applications = await data.json();
     setStudent(applications);
+  }
+
+  const obtenerDatosDeSkills = async () => {
+    const data = await fetch(`${apiPath}/skills`);
+    setSkill(await data.json());
   }
 
   useEffect(() => {
@@ -338,7 +350,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           </div>
 
           <div className='form-control' id='form-firstname'>
-            <label htmlFor="inputFirstname">Nombre</label>
+            <label htmlFor="inputFirstname">Nombre (*obligatorio)</label>
             <div className='inputFormDiv'>
               <input type="text" className="form-control" id="inputFirstname" name="firstname" onChange={handleChange} value={form.firstname} maxLength={45}/>
               <i className="fas fa-check-circle" />
@@ -348,7 +360,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           </div>
 
           <div className='form-control' id='form-lastname'>
-            <label htmlFor="inputLastname">Apellidos</label>
+            <label htmlFor="inputLastname">Apellidos (*obligatorio)</label>
             <div className='inputFormDiv'>
               <input type="text" className="form-control" id="inputLastname" name="lastname" onChange={handleChange} value={form.lastname} maxLength={45}/>
               <i className="fas fa-check-circle" />
@@ -358,7 +370,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           </div>
 
           <div className='form-control' id='form-email'>
-            <label htmlFor="inputEmail">Email</label>
+            <label htmlFor="inputEmail">Email (*obligatorio)</label>
             <div className='inputFormDiv'>
               <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} maxLength={60}/>
               <i className="fas fa-check-circle" />
@@ -368,7 +380,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           </div>
 
           <div className='form-control' id='form-cellphone'>
-            <label htmlFor="inputCellphone">Celular</label>
+            <label htmlFor="inputCellphone">Celular (*obligatorio)</label>
             <div className='inputFormDiv'>
               <input type="tel" className="form-control" id="inputCellphone" name="phonenumber" onChange={handleChange} value={form.phonenumber} maxLength={15} />
               <i className="fas fa-check-circle" />
@@ -378,7 +390,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           </div>
 
           <div className='form-control' id='form-age'>
-            <label htmlFor="inputAge">Edad</label>
+            <label htmlFor="inputAge">Edad (*obligatorio)</label>
             <div className='inputFormDiv'>
               <input type="tel" className="form-control" id="inputAge" name="age" maxLength={2} onChange={handleChange} value={form.age} />
               <i className="fas fa-check-circle" />
@@ -388,7 +400,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           </div>
 
           <div className='form-control' id='form-availability'>
-            <label htmlFor="inputAvailability">Estado actual</label>
+            <label htmlFor="inputAvailability">Estado actual (*obligatorio)</label>
             <div className='inputFormDiv'>
               <select className="form-control" id="inputAvailability" onChange={handleChange} name="availability" value={form.availability}>
                 <option selected disabled hidden></option>
@@ -418,7 +430,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           </div>
 
           <div className='form-control'>
-            <label htmlFor="inputNationality">País</label>
+            <label htmlFor="inputNationality">País (*obligatorio)</label>
             <div className='inputFormDiv'>
               <select className="form-control" id="inputNationality" onChange={handleChange} name="nationality" value={form.nationality}>
                 <option>{form.nationality}</option>
@@ -431,6 +443,77 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             </div>
             <small> Error message </small>
           </div>
+
+          
+          <div className='form-control' id='form-province'>
+            <label htmlFor="inputProvine">Ciudad (*obligatorio)</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputProvince" name="province" onChange={handleChange} maxLength={45} value={form.province}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallProvince'> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-developer_type'>
+            <label htmlFor="inputDeveloperType">Tipo de desarrollador (*obligatorio)</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputDeveloperType" name="developer_type" onChange={handleChange} maxLength={45} value={form.developer_type}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallDeveloperType'> Error message </small>
+          </div>
+
+          <div className='form-control'>
+            <label htmlFor="inputNationality">Habilidades (*obligatorio)</label>
+            <div className='inputFormDiv'>
+            <button type="button" style={{width: '100%'}}>Seleccionar habilidades</button>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-english_level'>
+            <label htmlFor="inputEnglishLevel">Nivel de ingles (*obligatorio)</label>
+            <div className='inputFormDiv'>
+              <select className="form-control" id="inputEnglishLevel" onChange={handleChange} name="english_level" value={form.english_level}>
+                <option selected disabled hidden></option>
+                <option onClick={e => e.target.textarea}>No ingles</option>
+                <option onClick={e => e.target.textarea}>A1</option>
+                <option onClick={e => e.target.textarea}>A2</option>
+                <option onClick={e => e.target.textarea}>B1</option>
+                <option onClick={e => e.target.textarea}>B2</option>
+                <option onClick={e => e.target.textarea}>C1</option>
+                <option onClick={e => e.target.textarea}>C2</option>
+              </select>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallEnglishLevel'> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-portfolio'>
+            <label htmlFor="inputPortfolio">Enlace a portafolio</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputPortfolio" name="portfolio" onChange={handleChange} maxLength={45} value={form.portfolio}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallVideoLink'> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-video_link'>
+            <label htmlFor="inputVideoLink">Video de portafolio</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputVideoLink" name="video_link" onChange={handleChange} maxLength={45} value={form.video_link}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallVideoLink'> Error message </small>
+          </div>
+
 
           <div className='form-control'>
             <label htmlFor="inputDisptravel">Disponibilidad para viajar</label>

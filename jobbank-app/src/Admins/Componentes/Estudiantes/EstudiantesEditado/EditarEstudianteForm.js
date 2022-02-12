@@ -16,6 +16,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     phonenumber: "",
     age: "",
     nationality: "",
+    province: '',
     availability: "",
     pres_or_remot: "",
     description: "",
@@ -301,6 +302,16 @@ const CrudForm = ({ updateData, dataToEdit }) => {
               <i className="fas fa-exclamation-circle" />
             </div>
             <small id='smallNationality'> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-province'>
+            <label htmlFor="inputProvine">Ciudad</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputProvince" name="province" onChange={handleChange} maxLength={45} value={form.province}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallProvince'> Error message </small>
           </div>
 
           <div className='form-control' id='form-availability'>

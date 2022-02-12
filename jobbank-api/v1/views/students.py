@@ -20,6 +20,7 @@ import random
 availabilityList = ["Actualmente trabajando", "En busca de ofertas laborales", ""]
 pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial", "Sin preferencia", ""]
 disp_travelList = ["Disponible", "No disponible", ""]
+english_levelList = ["No ingles", "A1", "A2", "B1", "B2", "C1", "C2"]
 
 @app_views.route('/students', methods=['GET'], strict_slashes=False)
 def get_students():
@@ -413,28 +414,33 @@ def post_student():
             if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
                 isvalid = True
             else:
+                print("Enter a valid firstname, max 45 characters")
                 abort(400, description="Enter a valid firstname, max 45 characters")
         if key == "lastname":
             if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
                 isvalid = True
             else:
+                print("Enter a valid lastname, max 45 characters")
                 abort(400, description="Enter a valid lastname, max 45 characters")
         if key == "email":
             if re.match(r"^(?=.{4,60}$)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$", value):
                 isvalid = True
             else:
-                abort(400, description="Enter a valid email, max 45 characters")
+                print("Enter a valid email, max 60 characters")
+                abort(400, description="Enter a valid email, max 60 characters")
         if key == "password":
             if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
                 isvalid = True
             else:
-                abort(400, description="Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
+                print("password: Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
+                abort(400, description="password: Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
         if key == "phonenumber":
             if value == None or value == "":
                 isvalid = True
             elif re.match(r"^\+?\(?\d{1,3}\)?[\s.-]?\d{3}[\s.-]?\d{3,9}$", value):
                 isvalid = True
             else:
+                print("Not a valid phonenumber, use numbers and max 15 characters")
                 abort(400, description="Not a valid phonenumber, use numbers and max 15 characters")
         if key == "age":
             if value == None or value == "":
@@ -442,6 +448,7 @@ def post_student():
             elif re.match(r"^[1-9][0-9]?$|^100$", str(value)):
                 isvalid = True
             else:
+                print("Not a valid age")
                 abort(400, description="Not a valid age")
         if key == "nationality":
             if value == None or value == "":
@@ -452,9 +459,55 @@ def post_student():
                         break
                     isvalid = True
                 else:
+                    print("Country not found")
                     abort(400, description="Country not found")
             else:
-                abort(400, description="Must contain a maximum of 45 characters")
+                print("nationality must contain a maximum of 45 characters")
+                abort(400, description="nationality must contain a maximum of 45 characters")
+        if key == "province":
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 45:
+                isvalid = True
+            else:
+                print("province must contain a maximum of 45 character")
+                abort(400, description="province must contain a maximum of 45 characters")
+        if key == "developer_type":
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 45:
+                isvalid = True
+            else:
+                print("developer_type must contain a maximum of 45 characters")
+                abort(400, description="developer_type must contain a maximum of 45 characters")
+        if key == "english_level":
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 45:
+                if value in english_levelList:
+                    isvalid = True
+                else:
+                    print("Not a valid option in english_level")
+                    abort(400, description="Not a valid option in english_level")
+            else:
+                print("english_level must contain a maximum of 45 characters")
+                abort(400, description="english_level must contain a maximum of 45 characters")
+        if key == "portfolio":
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 100:
+                isvalid = True
+            else:
+                print("portfolio must contain a maximum of 100 characters")
+                abort(400, description="portfolio must contain a maximum of 100 characters")
+        if key == "video_link":
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 45:
+                isvalid = True
+            else:
+                print("video_link must contain a maximum of 45 characters")
+                abort(400, description="video_link must contain a maximum of 45 characters")
         if key == "availability":
             if value == None or value == "":
                 isvalid = True
@@ -462,9 +515,11 @@ def post_student():
                 if value in availabilityList:
                     isvalid = True
                 else:
+                    print("Not a valid option in availability")
                     abort(400, description="Not a valid option in availability")
             else:
-                abort(400, description="Must contain a maximum of 60 characters")
+                print("availability must contain a maximum of 60 characters")
+                abort(400, description="availability must contain a maximum of 60 characters")
         if key == "pres_or_remot":
             if value == None or value == "":
                 isvalid = True
@@ -472,9 +527,11 @@ def post_student():
                 if value in pres_or_remotList:
                     isvalid = True
                 else:
+                    print("Not a valid option in pres_or_remot")
                     abort(400, description="Not a valid option in pres_or_remot")
             else:
-                abort(400, description="Must contain a maximum of 60 characters")
+                print("pres_or_remot must contain a maximum of 60 characters")
+                abort(400, description="pres_or_remot must contain a maximum of 60 characters")
         if key == "disp_travel":
             if value == None or value == "":
                 isvalid = True
@@ -484,35 +541,48 @@ def post_student():
                 else:
                     abort(400, description="Not a valid option in disp_travel")
             else:
-                abort(400, description="Must contain a maximum of 45 characters")
+                print("disp_travel must contain a maximum of 45 characters")
+                abort(400, description="disp_travel must contain a maximum of 45 characters")
         if key == "linkedin":
             if value == None or value == "":
                 isvalid = True
             elif len(value) <= 70:
                 isvalid = True
             else:
-                abort(400, description="Must contain a maximum of 70 characters")
-        if key == "github" or value == "":
-            if value == None:
+                print("linkedin must contain a maximum of 70 characters")
+                abort(400, description="linkedin must contain a maximum of 70 characters")
+        if key == "github":
+            if value == None or value == "":
                 isvalid = True
             elif len(value) <= 70:
                 isvalid = True
             else:
-                abort(400, description="Must contain a maximum of 70 characters")
-        if key == "twitter" or value == "":
-            if value == None:
+                print("github must contain a maximum of 70 characters")
+                abort(400, description="github must contain a maximum of 70 characters")
+        if key == "twitter":
+            if value == None or value == "":
                 isvalid = True
             elif len(value) <= 70:
                 isvalid = True
             else:
-                abort(400, description="Must contain a maximum of 70 characters")
+                print("twitter must contain a maximum of 70 characters")
+                abort(400, description="twitter must contain a maximum of 70 characters")
+        if key == "is_public":
+            if value == 0 or value == 1:
+                isvalid = True
+            elif len(value) <= 1:
+                isvalid = True
+            else:
+                print("is_public must contain a maximum of 1 characters, 0 or 1")
+                abort(400, description="is_public must contain a maximum of 1 characters, 0 or 1")
         if key == "description":
             if value == None or value == "":
                 isvalid = True
             elif len(value) <= 1000:
                 isvalid = True
             else:
-                abort(400, description="Must contain a maximum of 1000 characters")
+                print("description must contain a maximum of 1000 characters")
+                abort(400, description="description must contain a maximum of 1000 characters")
         if isvalid is True:
             instance = Student(**data)
     instance.save()
@@ -613,6 +683,50 @@ def put_student(student_id):
                 else:
                     print("Must contain a maximum of 45 characters")
                     abort(400, description="Must contain a maximum of 45 characters")
+            if key == "province":
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 45:
+                    isvalid = True
+                else:
+                    print("province must contain a maximum of 45 character")
+                    abort(400, description="province must contain a maximum of 45 characters")
+            if key == "developer_type":
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 45:
+                    isvalid = True
+                else:
+                    print("developer_type must contain a maximum of 45 characters")
+                    abort(400, description="developer_type must contain a maximum of 45 characters")
+            if key == "english_level":
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 45:
+                    if value in english_levelList:
+                        isvalid = True
+                    else:
+                        print("Not a valid option in english_level")
+                        abort(400, description="Not a valid option in english_level")
+                else:
+                    print("english_level must contain a maximum of 45 characters")
+                    abort(400, description="english_level must contain a maximum of 45 characters")
+            if key == "portfolio":
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 100:
+                    isvalid = True
+                else:
+                    print("portfolio must contain a maximum of 100 characters")
+                    abort(400, description="portfolio must contain a maximum of 100 characters")
+            if key == "video_link":
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 45:
+                    isvalid = True
+                else:
+                    print("video_link must contain a maximum of 45 characters")
+                    abort(400, description="video_link must contain a maximum of 45 characters")
             if key == "disp_travel":
                 if value == None or value == "":
                     isvalid = True
@@ -649,6 +763,14 @@ def put_student(student_id):
                 else:
                     print("Must contain a maximum of 70 characters")
                     abort(400, description="Must contain a maximum of 70 characters")
+            if key == "is_public":
+                if value == 0 or value == 1:
+                    isvalid = True
+                elif len(value) <= 1:
+                    isvalid = True
+                else:
+                    print("is_public must contain a maximum of 1 characters, 0 or 1")
+                    abort(400, description="is_public must contain a maximum of 1 characters, 0 or 1")
             if key == "description":
                 if value == None or value == "":
                     isvalid = True
@@ -708,7 +830,7 @@ def fileUpload(student_id):
     if ext != ".pdf":
         abort(400, description="It is not a pdf file")
 
-    path = '/home/jhonatanjc/job_bank_holberton/curriculums/'
+    path = '/mnt/d/jbgithub/job_bank_holberton/curriculums/'
     filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -762,7 +884,7 @@ def fileUploadPhoto(student_id):
     if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
         abort(400, description="It is not a png or jpg file")
 
-    path = '/home/jhonatanjc/job_bank_holberton/student_photos/'
+    path = '/mnt/d/jbgithub/job_bank_holberton/student_photos/'
     filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -784,7 +906,7 @@ def fileDownload(cv_filename_logical):
     """
     Download CV
     """
-    path = "/home/jhonatanjc/job_bank_holberton/curriculums/" + cv_filename_logical
+    path = "/mnt/d/jbgithub/job_bank_holberton/curriculums/" + cv_filename_logical
     return send_file(path)
 
 
@@ -793,6 +915,5 @@ def studentPhoto(photo_filename_logical):
     """
     Student Photo
     """
-    path = "/home/jhonatanjc/job_bank_holberton/student_photos/" + photo_filename_logical
+    path = "/mnt/d/jbgithub/job_bank_holberton/student_photos/" + photo_filename_logical
     return send_file(path)
-
