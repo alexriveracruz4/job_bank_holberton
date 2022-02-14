@@ -7,6 +7,18 @@ import "./Form.css"
 import swal from 'sweetalert';
 import apiPath from '../../../../ApiPath';
 
+/////
+import {makeStyles} from '@material-ui/core/styles';
+import {Modal, TextField} from '@material-ui/core';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import allSkillsArray from '../../../../skills';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
+
+
 const cookies = new Cookies();
 
 // Form with empty string at the beginning
@@ -31,6 +43,20 @@ const initailForm = {
   twitter: '',
   description: '',
 };
+
+
+const useStyles = makeStyles(() => ({
+  modal3:{
+    position: 'absolute',
+    width: 1000,
+    borderRadius: "30px",
+    backgroundColor: ' #f7f9f9 ',
+    padding: "16px 32px 24px",
+    top:'50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  }
+}))
 
 // Update the student with the updateData arrow function
 const CrudForm = ({ updateData, dataToEdit}) => {
@@ -314,6 +340,184 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       reader.readAsDataURL(file);
     }
   };
+  ///////////////////////////////////
+  const todasHabilidades = allSkillsArray;
+
+  const [allSkills, setAllSkills] = useState(todasHabilidades);
+
+  const [selectSkills, setSelectSkills] = useState(allSkills)
+
+  const handleRemoveItem = (data,setData, id) => {
+    setData(data.filter(item => item.id !== id))
+  }
+
+  const styles = useStyles();
+  const [searchValue, setSearchValue] = useState('')
+
+  const abrirCerrarSkillsModal = () => {
+    setSkillsModal(!skillsModal);
+  }
+  const [skillsModal, setSkillsModal] = useState(false)
+
+  function RenderAllSkillsList(props) {
+    const skills = props.allSkills;
+    const HabilidadesSeleccionadas = props.selectSkills;
+    //setAllSkills([...allSkills, {}]);
+    const newArraySkills = skills.filter(item => !HabilidadesSeleccionadas.includes(item));
+    let uniqueItems = [...new Set(newArraySkills)]
+    console.log("AAAAAAAAAAAAAAAAAA");
+    console.log(allSkills);
+    console.log(selectSkills);
+
+    const filterSkills = uniqueItems.filter(item => {
+      if (item.name.toLowerCase().includes(searchValue)) {
+        return true;
+      }
+    })
+
+    const techSkills = filterSkills.filter((obj)=> obj.type === props.tipo || props.tipo === "all")
+    return (
+      <div>
+        {techSkills.map((skill) => (
+            <Chip
+              key={skill.id}
+              onClick={() => {
+                setSelectSkills([...selectSkills, skill]);
+                handleRemoveItem(allSkills,setAllSkills, skill.id);
+              }}
+              sx={{ m: 0.3 }}
+              label={skill.name} />
+        ))}
+      </div>
+    );
+  }
+  
+
+  function RenderSelectedSkillsList(props) {
+    const skills = props.selectSkills;
+    return (
+      <div>
+        {skills.map((skill) => (
+            <Chip 
+              key={skill.id}
+              onDelete={() => {
+                handleRemoveItem(selectSkills, setSelectSkills, skill.id);
+                setAllSkills([...allSkills, skill]);
+                
+              }} 
+              sx={{ m: 0.3 }}
+              label={skill.name}
+            />
+        ))}
+      </div>
+    );
+  }
+
+  const skillsBody=(
+    <div className={styles.modal3}>
+      <Stack direction="row" spacing={1} justifyContent="flex-end">
+        <TextField
+          fullWidth
+          label="Palabra clave"
+          id="fullWidth"
+          onChange={e => setSearchValue(e.target.value)} 
+        />
+      </Stack>
+      <br/>
+      {
+        (selectSkills.length !== 0)
+        ?
+        <Box
+        sx={{
+          width: 900,
+          height: 80,
+          display: 'flex',
+          flexWrap: 'nowrap',
+        }}
+        >
+        <RenderSelectedSkillsList selectSkills={selectSkills} tipo={"tech"}/>
+        </Box>
+        :
+        ""
+      }
+      <br/>
+      <div align="center">
+        <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2} justifyContent="space-around">
+          <Stack direction="column"  spacing={2} >
+            <Typography variant="h6" gutterBottom component="div">
+              Habilidades técnicas
+            </Typography>
+            <Box
+              sx={{
+                width: 300,
+                height: 300,
+                display: 'flex',
+                flexWrap: 'nowrap',
+              }}
+            >
+              <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"tech"}/>
+            </Box>
+          </Stack>
+          <Stack direction="column"  spacing={2} >
+            <Typography variant="h6" gutterBottom component="div">
+              Habilidades blandas
+            </Typography>
+            <Box
+              sx={{
+                width: 300,
+                height: 300,
+                display: 'flex',
+                flexWrap: 'nowrap',
+              }}
+            >
+              <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"soft"}/>
+            </Box>
+          </Stack>
+          <Stack direction="column" spacing={2} >
+            <Typography variant="h6" gutterBottom component="div">
+              Otras habilidades
+            </Typography>
+
+            <Box
+              sx={{
+                width: 300,
+                height: 300,
+                display: 'flex',
+                flexWrap: 'nowrap',
+              }}
+            >
+              <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"other"}/>
+            </Box>
+          </Stack>
+        </Stack>
+      </div>
+      <br/>
+
+
+      <div align="right">
+        <Stack direction="row-reverse" spacing={2} justifyContent="flex-start" >
+        <Button variant="outlined" color="primary"
+          onClick={()=> {
+            //props.parameters.page = 1;
+            //props.parameters.skills = ObjToString(selectSkills);
+            //let url = `/home?` + props.creadorURLs(props.parameters);
+            //history.push(url);
+            abrirCerrarSkillsModal();
+            window.location.reload();
+          }}
+        >
+          Confirmar
+        </Button>
+        <Button variant="outlined" color="error"
+          onClick={()=> abrirCerrarSkillsModal()}
+        >
+          Cancelar
+        </Button>
+        </Stack>
+      </div>
+    </div>
+  )
+
 
   return (
     <div className="container-profile">
@@ -468,7 +672,25 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className='form-control'>
             <label htmlFor="inputNationality">Habilidades (*obligatorio)</label>
             <div className='inputFormDiv'>
-            <button type="button" style={{width: '100%'}}>Seleccionar habilidades</button>
+            <button
+
+              onClick={()=> abrirCerrarSkillsModal()}
+
+
+
+
+
+              type="button" 
+              style={{width: '100%'}}
+            >
+              Seleccionar habilidades
+            </button>
+            <Modal
+              open={skillsModal}
+              onClose={abrirCerrarSkillsModal}
+            >
+              {skillsBody}
+            </Modal>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

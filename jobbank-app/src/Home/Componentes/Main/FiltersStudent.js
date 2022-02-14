@@ -318,6 +318,9 @@ function FiltersStudent(props) {
   console.log(allSkills);
   console.log(selectSkills);
 
+  const [searchValue, setSearchValue] = useState('')
+
+
   function RenderAllSkillsList(props) {
     const skills = props.allSkills;
     const HabilidadesSeleccionadas = props.selectSkills;
@@ -327,7 +330,14 @@ function FiltersStudent(props) {
     console.log("AAAAAAAAAAAAAAAAAA");
     console.log(allSkills);
     console.log(selectSkills);
-    const techSkills = uniqueItems.filter((obj)=> obj.type === props.tipo || props.tipo === "all")
+
+    const filterSkills = uniqueItems.filter(item => {
+      if (item.name.toLowerCase().includes(searchValue)) {
+        return true;
+      }
+    })
+
+    const techSkills = filterSkills.filter((obj)=> obj.type === props.tipo || props.tipo === "all")
     return (
       <div>
         {techSkills.map((skill) => (
@@ -343,7 +353,6 @@ function FiltersStudent(props) {
       </div>
     );
   }
-
   
   function RenderSelectedSkillsList(props) {
     const skills = props.selectSkills;
@@ -379,6 +388,7 @@ function FiltersStudent(props) {
   }
 
 
+
   const skillsBody=(
     <div className={styles.modal3}>
       <Stack direction="row" spacing={1} justifyContent="flex-end">
@@ -386,24 +396,26 @@ function FiltersStudent(props) {
           fullWidth
           label="Palabra clave"
           id="fullWidth"
-          onChange={(e) => {
-            props.setParameters({...props.parameters, PalabraClave: e.target.value});
-          }}
-          defaultValue={props.parameters.PalabraClave}
+          onChange={e => setSearchValue(e.target.value)} 
         />
       </Stack>
-      
-      <Box
+      <br/>
+      {
+        (selectSkills.length !== 0)
+        ?
+        <Box
         sx={{
           width: 900,
-          height: 100,
+          height: 80,
           display: 'flex',
           flexWrap: 'nowrap',
-          border: '1px solid grey',
         }}
-      >
+        >
         <RenderSelectedSkillsList selectSkills={selectSkills} tipo={"tech"}/>
-      </Box>
+        </Box>
+        :
+        ""
+      }
       <br/>
       <div align="center">
         <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2} justifyContent="space-around">
@@ -464,7 +476,7 @@ function FiltersStudent(props) {
           onClick={()=> {
             props.parameters.page = 1;
             props.parameters.skills = ObjToString(selectSkills);
-            let url = `/home?` + props.creadorURLs(props.parameters);  
+            let url = `/home?` + props.creadorURLs(props.parameters);
             history.push(url);
             abrirCerrarSkillsModal();
             window.location.reload();
