@@ -554,7 +554,7 @@ def post_student():
         if key == "video_link":
             if value == None or value == "":
                 isvalid = True
-            elif len(value) <= 45:
+            elif len(value) <= 100:
                 isvalid = True
             else:
                 print("video_link must contain a maximum of 45 characters")

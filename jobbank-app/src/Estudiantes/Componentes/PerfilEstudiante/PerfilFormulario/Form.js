@@ -751,13 +751,13 @@ const CrudForm = ({ updateData, dataToEdit}) => {
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
-            <small id='smallVideoLink'> Error message </small>
+            <small id='smallPortfolio'> Error message </small>
           </div>
 
           <div className='form-control' id='form-video_link'>
             <label htmlFor="inputVideoLink">Video de portafolio</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputVideoLink" name="video_link" onChange={handleChange} maxLength={45} value={form.video_link}/>
+              <input type="text" className="form-control" id="inputVideoLink" name="video_link" onChange={handleChange} maxLength={100} value={form.video_link}/>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
