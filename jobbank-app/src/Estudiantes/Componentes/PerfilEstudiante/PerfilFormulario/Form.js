@@ -76,11 +76,13 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
   // Get photoname
   const [student, setStudent] = useState([2]);
-  const [skill, setSkill] = useState([2]);
+  const [stdskills, setStdskills] = useState([]);
+  //const [skill, setSkill] = useState([2]);
 
   React.useEffect(() => {
     obtenerDatosDeEstudiantes();
-    obtenerDatosDeSkills();
+    //obtenerDatosDeSkills();
+    obtenerSkillsDeStudiante();
   }, []);
 
   let student_id = cookies.get('student_id')
@@ -91,9 +93,14 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     setStudent(applications);
   }
 
-  const obtenerDatosDeSkills = async () => {
+  /*const obtenerDatosDeSkills = async () => {
     const data = await fetch(`${apiPath}/skills`);
     setSkill(await data.json());
+  }*/
+
+  const obtenerSkillsDeStudiante = async () => {
+    const data = await fetch(`${apiPath}/students/${student_id}/skills`);
+    setStdskills(await data.json());
   }
 
   useEffect(() => {
@@ -145,6 +152,27 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           async function updateForm() {
             const updata = await updateData(form);
 
+            // Upload Skills
+            if (selectSkills != undefined || selectSkills != null) {
+              const dictSkills = {}
+              const urlUploadSkills =  `${apiPath}/students/`+ cookies.get('student_id') + '/skills'
+              const skillsdata = selectSkills.map(obj => obj.id);
+              dictSkills['skill_id'] = skillsdata.toString()
+              
+              fetch(urlUploadSkills, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dictSkills),
+              }).then((response) => {
+                response.json().then((body) => {
+                  console.log(body);
+                });
+              })
+            }
+
+            //Upload Profile photo
             if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
               const data = new FormData();
               data.append('file', uploadInputImage.files[0]);
@@ -341,11 +369,26 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     }
   };
   ///////////////////////////////////
-  const todasHabilidades = allSkillsArray;
+  //const todasHabilidades = allSkillsArray;
 
-  const [allSkills, setAllSkills] = useState(todasHabilidades);
+  const [allSkills, setAllSkills] = useState([]);
 
-  const [selectSkills, setSelectSkills] = useState(allSkills)
+  const [selectSkills, setSelectSkills] = useState([])
+
+  React.useEffect(() => {
+    obtenerDatosDeSkills();
+    obtenerSkillsDeEstudiante();
+  }, []);
+
+  const obtenerDatosDeSkills = async () => {
+    const data = await fetch(`${apiPath}/skills`);
+    setAllSkills(await data.json());
+  }
+
+  const obtenerSkillsDeEstudiante = async () => {
+    const data = await fetch(`${apiPath}/students/${student_id}/skills`);
+    setSelectSkills(await data.json());
+  }
 
   const handleRemoveItem = (data,setData, id) => {
     setData(data.filter(item => item.id !== id))
@@ -365,9 +408,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     //setAllSkills([...allSkills, {}]);
     const newArraySkills = skills.filter(item => !HabilidadesSeleccionadas.includes(item));
     let uniqueItems = [...new Set(newArraySkills)]
-    console.log("AAAAAAAAAAAAAAAAAA");
-    console.log(allSkills);
-    console.log(selectSkills);
 
     const filterSkills = uniqueItems.filter(item => {
       if (item.name.toLowerCase().includes(searchValue)) {
@@ -496,22 +536,10 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
       <div align="right">
         <Stack direction="row-reverse" spacing={2} justifyContent="flex-start" >
-        <Button variant="outlined" color="primary"
-          onClick={()=> {
-            //props.parameters.page = 1;
-            //props.parameters.skills = ObjToString(selectSkills);
-            //let url = `/home?` + props.creadorURLs(props.parameters);
-            //history.push(url);
-            abrirCerrarSkillsModal();
-            window.location.reload();
-          }}
-        >
-          Confirmar
-        </Button>
         <Button variant="outlined" color="error"
           onClick={()=> abrirCerrarSkillsModal()}
         >
-          Cancelar
+          Cerrar
         </Button>
         </Stack>
       </div>

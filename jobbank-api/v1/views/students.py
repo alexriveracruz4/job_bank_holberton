@@ -308,6 +308,57 @@ def post_skill_student():
 
     return make_response(jsonify(instance.to_dict()), 201)
 
+@app_views.route('/students/<student_id>/skills',
+                 methods=['POST'], strict_slashes=False)
+def post_skills_student(student_id):
+    """
+    Add skills for the student
+    """
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+
+    if 'skill_id' not in request.get_json():
+        abort(400, description="Missing skill_id")
+
+    ignore = ['created_at', 'updated_at', 'deleted_at', '__class__']
+
+    skills = storage.all(Skill).values()
+    student = storage.get(Student, student_id)
+    data = request.get_json()
+    list_of_skills = []
+    list_ids = []
+    list_ids = data['skill_id'].split(',')
+    list_ids = list(map(int, list_ids))
+    print('esto es data', list_ids)
+    student.skills.clear()
+    for j in skills:
+        if int(j.id) in list_ids:
+            student.skills.append(j)
+            list_of_skills.append(j.to_dict())
+            for skill_dict in list_of_skills:
+                for key in skill_dict.copy():
+                    if key in ignore:
+                        del skill_dict[key]
+
+    print('------------------')
+    print('este es student skills', student.skills, 'este es  el tipo de dato de student skills:', type(student.skills))
+    print('--------------------')
+    print('este es student skills [0]', student.skills[0])
+    print('--------------------')
+    """instancedos = student.skills.extend(list_of_skills)"""
+    storage.new(student)
+    storage.save()
+    skills_of_student = str(list_of_skills)
+    setattr(student, 'student_skills', skills_of_student)
+    print('acaboooo de guardar')
+    print('--------------------')
+    print(student.skills)
+    print('--------------------')
+
+    # TODO: RUBEN add send email API call
+
+    return make_response(jsonify(student.student_skills), 201)
+
 @app_views.route('/students/<student_id>/applications', methods=['GET'], strict_slashes=False)
 def get_app_student(student_id):
     page = request.args.get('_page')
