@@ -47,6 +47,7 @@ import { Home } from './Home/Paginas/Home';
 import { NotFoundPage } from './NotFoundPage';
 import NotFoundUser from './Inicio/Componentes/NotFoundUser';
 import { Favoritos } from './Home/Paginas/Favoritos';
+import { DescripcionEstudiante } from './Home/Paginas/DescripcionEstudiante';
 
 
 function App() {
@@ -96,13 +97,18 @@ function App() {
 
           <Route exact path="/home" component={Home}/>
           <Route exact path="/home/favoritos" component={Favoritos}/>
+          <Route exact path="/home/candidate/:StudentId" component={DescripcionEstudiante}/>
 
           <Route exact path="/" component={Landing}/>
-          
+          {
+          /*
           <Route path="/404" component={NotFoundPage}/>
           <Route path="*">
             <Redirect to="/404"/>
           </Route>
+          */
+          }
+          
       </Switch>
     </Router>
   );

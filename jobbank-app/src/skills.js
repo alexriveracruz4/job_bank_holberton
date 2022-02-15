@@ -7,7 +7,7 @@ const allSkillsArray = [
     "name": "MySQL", 
     "type": "tech", 
     "updated_at": "2022-02-07T23:56:44.000000"
-  }, 
+  },
   {
     "__class__": "Skill", 
     "created_at": "2022-02-08T01:16:21.000000", 
@@ -16,7 +16,7 @@ const allSkillsArray = [
     "name": "Collaborative", 
     "type": "soft", 
     "updated_at": "2022-02-08T01:16:21.000000"
-  }, 
+  },
   {
     "__class__": "Skill", 
     "created_at": "2022-02-08T01:17:40.000000", 
@@ -25,7 +25,7 @@ const allSkillsArray = [
     "name": "French", 
     "type": "other", 
     "updated_at": "2022-02-08T01:17:40.000000"
-  }, 
+  },
   {
     "__class__": "Skill", 
     "created_at": "2022-02-08T13:57:51.000000", 
@@ -34,7 +34,7 @@ const allSkillsArray = [
     "name": "Python", 
     "type": "tech", 
     "updated_at": "2022-02-08T13:57:51.000000"
-  }, 
+  },
   {
     "__class__": "Skill", 
     "created_at": "2022-02-08T13:57:59.000000", 

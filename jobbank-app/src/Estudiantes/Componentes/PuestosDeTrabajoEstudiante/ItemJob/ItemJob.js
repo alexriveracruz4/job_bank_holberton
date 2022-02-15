@@ -72,7 +72,7 @@ function ItemJob(props) {
         <Link to={{ pathname:`/estudiante/puestos-de-trabajo/partners/${props.id_empresa}/jobs/${props.id_job}`, state: { EstadoDePostulacion: EstadoDePostulacion, DatosEmpresa: PartnerData } }} style={{ color: 'inherit', textDecoration: 'inherit'}}> 
           <li className='PDTEOneJob'>
           <h2>{props.title}</h2>
-          {EstadoDePostulacion === true 
+          {EstadoDePostulacion === true
           ?
             <h3 className="EstadoDePostulación" > Trabajo postulado </h3>
           :

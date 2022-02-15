@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Accordion from 'react-bootstrap/Accordion'
 import Button from '@mui/material/Button';
 import ButtonBase from '@mui/material/ButtonBase';
@@ -23,6 +23,7 @@ import student_avatar from "./student_avatar.png"
 
 function ItemStudent(props) {
 
+  const history = useHistory();
   let photo = student_avatar;
 
   if (props.student.photo_filename_logical != null && props.student.photo_filename_logical != undefined) {
@@ -201,7 +202,12 @@ function ItemStudent(props) {
                           </span>
                           <span class="MuiTouchRipple-root" style={{top: '0', left: '0', right: '0', bottom: '0', zIndex: '0', overflow: 'hidden', position: 'absolute', borderRadius: 'inherit', pointerEvents: 'none', fontSize: '1.5rem', textAlign: 'center', userSelect: 'none', WebkitTapHighlightColor: 'transparent'}}></span>
                       </Button>
-                      <a class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit" tabindex="0" role="button" aria-disabled="false" id="expand" href="" title="Ver más" style={{ marginRight: '-7px', color: 'inherit', flex: '0 0 auto', padding: '12px', overflow: 'visible', fontSize: '1.5rem', textAlign: 'center', transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', borderRadius: '50%', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', backgroundColor: 'transparent', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                      <button
+                        onClick={()=>{
+                          let url = `home/candidate/${props.student.student_id}`;
+                          history.push(url);
+                        }}
+                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit" tabindex="0" role="button" aria-disabled="false" id="expand" title="Ver más" style={{ marginRight: '-7px', color: 'inherit', flex: '0 0 auto', padding: '12px', overflow: 'visible', fontSize: '1.5rem', textAlign: 'center', transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', borderRadius: '50%', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', backgroundColor: 'transparent', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
                         <span class="MuiIconButton-label" style={{ width: '100%', display: 'flex', alignItems: 'inherit', justifyContent: 'inherit', color: 'inherit', fontSize: '1.5rem', textAlign: 'center', userSelect: 'none', WebkitTapHighlightColor: 'transparent' }}>
                           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000" class="MuiSvgIcon-root material-icons" focusable="false" aria-hidden="true" id="targetExpand" style={{ fill: 'currentcolor', width: '1em', height: '1em', display: 'inline-block', fontSize: '1.4rem', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none', color: 'inherit', textAlign: 'center', WebkitTapHighlightColor: 'transparent' }}>
                             <path d="M0 0h24v24H0V0z" fill="none"></path>
@@ -209,7 +215,7 @@ function ItemStudent(props) {
                           </svg>
                         </span>
                         <span class="MuiTouchRipple-root" style={{top: '0', left: '0', right: '0', bottom: '0', zIndex: '0', overflow: 'hidden', position: 'absolute', borderRadius: 'inherit', pointerEvents: 'none', fontSize: '1.5rem', textAlign: 'center', userSelect: 'none', WebkitTapHighlightColor: 'transparent'}}></span>
-                      </a>
+                      </button>
                     </Box>
                   </Grid>
                 </Box>

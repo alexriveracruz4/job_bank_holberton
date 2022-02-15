@@ -1,0 +1,378 @@
+import "./MainEstudiante.css"
+import Accordion from 'react-bootstrap/Accordion'
+import { useEffect, useState } from "react";
+import apiPath from "../../../ApiPath";
+import { helpHttp } from "../../../helpers/helpHttp";
+import Loader from "../../../helpers/Loader";
+import Message from "../../../helpers/Message";
+import { useParams } from "react-router-dom";
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useHistory } from "react-router-dom";
+import student_avatar from "./student_avatar.png"
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip'
+import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+
+
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import LanguageIcon from '@mui/icons-material/Language';
+import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+
+import LinesEllipsis from "react-lines-ellipsis";
+import Typography from "@material-ui/core/Typography";
+
+
+function MainEstudiante() {
+
+  let api = helpHttp();
+  const { StudentId } = useParams();
+  let history = useHistory();
+  
+
+  const [studentData, setStudentData] = useState(null);
+  const [studentSkills, setStudentSkills] = useState(null);
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [loadingSkills, setLoadingSkills] = useState(false);
+  const [errorSkills, setErrorSkills] = useState(null);
+
+  const obtenerDatosEstudiante = async () => {
+    const url = `${apiPath}/students/${StudentId}`;
+    console.log(url)
+    setLoading(true);
+    api.get(url).then((res) => {
+      if (!res.err) {
+        const student_data = res;
+        setStudentData(student_data);
+        setError(null)
+      } 
+      else {
+        setStudentData(null);
+        setError(res);
+      }
+      setLoading(false);
+    })
+  };
+
+  const obtenerSkillsEstudiante = async () => {
+    const url = `${apiPath}/students/${StudentId}/skills`;
+    setLoadingSkills(true);
+    api.get(url).then((res) => {
+      if (!res.err) {
+        const student_skills = res;
+        setStudentSkills(student_skills);
+        setErrorSkills(null)
+      } 
+      else {
+        setStudentSkills(null);
+        setErrorSkills(res);
+      }
+      setLoadingSkills(false);
+    })
+  };
+
+  useEffect(() => {    
+    obtenerDatosEstudiante();
+    obtenerSkillsEstudiante();
+  }, []);
+  console.log("object");
+  console.log(studentSkills)
+
+  let photo = student_avatar;
+
+  if (studentData !== null && studentData.photo_filename_logical != null && studentData.photo_filename_logical != undefined  ) {
+    photo = `${apiPath}/student_photos/${studentData.photo_filename_logical}`;
+  }
+
+  function EmptyArraySkills(array, typeSkill) {
+    if (array === null) {
+      array = [];
+    }
+    const techSkills = array.filter((obj)=> obj.type === typeSkill)
+    if (techSkills.length != 0) {
+      return 1;
+    } else {
+      return null;
+    }
+  }
+  console.log("Prueba")
+  console.log(EmptyArraySkills(studentSkills, "tech"));
+  console.log(EmptyArraySkills(studentSkills, "soft"));
+  console.log(EmptyArraySkills(studentSkills, "other"));
+
+  function RenderAllSkillsList(props) {
+    let skills = props.studentSkills;
+    if (skills === null) {
+      skills = [];
+    }
+    const techSkills = skills.filter((obj)=> obj.type === props.tipo || props.tipo === "all")
+    return (
+      <div>
+        {techSkills.map((skill) => (
+            <Chip
+              key={skill.id}
+              sx={{ m: 0.3 }}
+              label={skill.name} />
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <main className="padding-main">
+      <div className="container padding mt-3">
+        <div className="BackButton">
+        <Tooltip title="Atrás"  placement="right" >
+            <ArrowBackIcon 
+              onClick={() => {
+                history.goBack()
+              }}
+              sx={{
+                background: "transparent",
+                height:40,
+                width:40,
+                fontSize:"small",
+                '&:hover': {
+                  height:40,
+                  fontSize: "large",
+                  width:40,
+                  cursor:'pointer',
+                  background: "white",
+                  borderRadius: "50%",
+                },  
+              }}/>
+        </Tooltip>
+        </div>
+        
+        {(error) && <Message/>}
+        <div className="StudentsContainer">
+          {loading && <Loader/>}
+          
+          {studentData &&
+            <Stack direction="row"  spacing={5} >
+            <Box
+              sx={{
+                minWidth: 850,
+                minHeight: 400,
+                display: 'flex',
+                flexWrap: 'nowrap',
+                backgroundColor: 'white',
+                borderRadius: 5,
+              }}
+            >
+              <div className="DescriptionContainer">
+                <div className="NameAndButtonContainer">
+                  <div className="NameContainer">
+                    <Box
+                      sx={{
+                        display: 'flex',
+                      }}
+                    >
+                      <a rel="noopener" title="" href="" style={{display: 'block', textDecoration: 'none', color: 'inherit', width: '80px', cursor: 'pointer', height: '80px', maxWidth: '80px', minWidth: '80px', maxHeight: '80px', minHeight: '80px', marginRight: '25px'}}>
+                        <img src={ photo } alt="Profile" style={{display: 'block', width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} />
+                      </a>
+                      <Box
+                      >
+                        <a class="MuiTypography-root MuiTypography-h6 MuiTypography-alignLeft" style={{color: 'inherit', display: 'block', textDecoration: 'none', cursor: 'pointer', lineHeight: '1.7rem', marginBottom: '0.3rem', textAlign: 'left', fontSize: '1.25rem', fontWeight: '500'}} rel="noopener" href=""> {studentData.firstname} {studentData.lastname}</a>
+                        <a class="MuiTypography-root jss86 jss127 jss125 MuiTypography-body2 MuiTypography-alignLeft" rel="noopener" href="" style={{color: 'inherit', display: 'block', textDecoration: 'none', textAlign: 'left', fontSize: '1rem', fontWeight: '400', lineHeight: '1.43', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: '1', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book'}}>{studentData.developer_type}</a>
+                        <a rel="noopener" href="" style={{color: 'inherit', margin: '4px 0px 4px -4px', display: 'flex', textDecoration: 'none'}}>
+                          <svg class="MuiSvgIcon-root" style={{fill: 'currentColor', width: '1em', height: '1em', display: 'inline-block', fontSize: '1.25rem', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none', marginRight: '5px', color: 'inherit', textDecoration: 'none'}} focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.88-2.88 7.19-5 9.88C9.92 16.21 7 11.85 7 9z"></path>
+                            <circle cx="12" cy="9" r="2.5"></circle>
+                          </svg>
+                          <p class="MuiTypography-root MuiTypography-body1" style={{height: '23px', display: '-webkit-box', overflow: 'hidden', fontSize: '14px', marginTop: '1px', textAlign: 'left', WebkitBoxOrient: 'vertical', WebkitLineClamp: '1', fontWeight: '500', lineHeight: '1.5', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book'}}>{studentData.province} - {studentData.nationality}</p>
+                        </a>
+                      </Box>
+                    </Box>
+                  </div>
+                  <div className="ButtonContainer">
+                    <Button class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit" tabindex="0" type="button" id="shared" style={{ marginRight: '-7px', color: 'inherit', flex: '0 0 auto', padding: '12px', overflow: 'visible', fontSize: '1.5rem', textAlign: 'center', transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', borderRadius: '50%', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', backgroundColor: 'transparent', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                          <span class="MuiIconButton-label" style={{ width: '100%', display: 'flex', alignItems: 'inherit', justifyContent: 'inherit', color: 'inherit', fontSize: '1.5rem', textAlign: 'center', userSelect: 'none', WebkitTapHighlightColor: 'transparent' }}>
+                            <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true" style={{ fill: 'currentcolor', width: '1em', height: '1em', display: 'inline-block', fontSize: '1.5rem', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none', color: 'inherit', textAlign: 'center', WebkitTapHighlightColor: 'transparent' }}>
+                              <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z" style={{ boxSizing: 'inherit', fill: 'currentcolor', width: '1em', height: '1em', display: 'inline-block', fontSize: '1.5rem', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none'}}></path>
+                            </svg>
+                          </span>
+                          <span class="MuiTouchRipple-root" style={{top: '0', left: '0', right: '0', bottom: '0', zIndex: '0', overflow: 'hidden', position: 'absolute', borderRadius: 'inherit', pointerEvents: 'none', fontSize: '1.5rem', textAlign: 'center', userSelect: 'none', WebkitTapHighlightColor: 'transparent'}}></span>
+                    </Button>  
+                  </div>
+                </div>
+                <div className="ButtonsContainer">
+                <Box id="box-buttons" style={{width: 'max-content', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                      <Box style={{ display: 'flex', flexGrow: 1}}>
+                        <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                          <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
+                            <span class="MuiButton-startIcon MuiButton-iconSizeMedium" style={{ display: 'inherit', marginLeft: '-4px', marginRight: '8px', textTransform: 'none' }}>
+                            <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true" style={{ fontSize: '20px', fill: 'currentcolor', width: '1em', height: '1em', display: 'inline-block', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none' }}>
+                              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"></path>
+                            </svg>
+                          </span>Contactar</span>
+                          <span class="MuiTouchRipple-root"></span></Button>
+                      </Box>
+                      {studentData.github &&
+                      <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
+                        <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" id="github-button" value={studentData.github} tabindex="0" type="button" href={studentData.github} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                          <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
+                            <GitHubIcon style={{marginRight: '10px'}} />Github
+                          </span>
+                          <span class="MuiTouchRipple-root"></span></Button>
+                      </Box>
+                      }
+                      {studentData.linkedin &&
+                      <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
+                        <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" id="linkedin-button" value={studentData.linkedin} tabindex="0" type="button" href={studentData.linkedin} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                          <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
+                            <LinkedInIcon style={{marginRight: '10px'}} />
+                            Linkedin
+                          </span>
+                          <span class="MuiTouchRipple-root"></span></Button>
+                      </Box>
+                      }
+                      {studentData.portfolio &&
+                      <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
+                        <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" id="portfolio-button" value={studentData.portfolio} tabindex="0" type="button" href={studentData.portfolio} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                          <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
+                            <WorkOutlineIcon style={{marginRight: '10px'}} />
+                            portafolio
+                          </span>
+                          <span class="MuiTouchRipple-root"></span></Button>
+                      </Box>
+                      }
+                      {studentData.english_level &&
+                      <Box style={{ display: 'flex', marginRight: '20px', marginLeft: '20px', borderLeft: '2px solid #D7D7D7', paddingLeft: '20px', flexGrow: 1}}>
+                        <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" id="english-button" value={studentData.english_level} tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                          <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
+                            <LanguageIcon style={{marginRight: '10px'}} />
+                            Inglés-{studentData.english_level}
+                          </span>
+                          <span class="MuiTouchRipple-root"></span></Button>
+                      </Box>
+                      }
+                    </Box>
+                </div>
+                <div className="AllDescriptionContainer">
+                  <Box>
+                    <Typography color='textPrimary' align='left' style={{fontSize: '14px', marginTop: '10px', minHeight: '64px', marginBottom: '10px'}}>
+                      {String(studentData.description)}
+                    </Typography>
+                  </Box>
+                </div>
+              </div>
+            </Box>
+            <Box
+              sx={{
+                minWidth: 300,
+                minHeight: 400,
+                display: 'flex',
+                flexWrap: 'nowrap',
+                backgroundColor: 'white',
+                borderRadius: 5,
+              }}
+            >
+              <div className="SkillsContainer"> 
+                <div className="TechSkillsContainer">
+                  {EmptyArraySkills(studentSkills, "tech") &&
+                    <Box>
+                      <Typography color='textPrimary' align='left' style={{borderLeft:"4px solid #000", fontSize: '18px', paddingLeft: '7px', marginTop: '10px', minHeight: '5px', marginBottom: '10px'}}>
+                        Habilidades Técnicas
+                      </Typography>
+                      <RenderAllSkillsList studentSkills={studentSkills} tipo={"tech"}/>
+                    </Box> 
+                  }             
+                </div>
+                <div className="SoftSkillsContainer">
+                  {EmptyArraySkills(studentSkills, "soft") &&
+                    <Box>
+                      <Typography color='textPrimary' align='left' style={{borderLeft:"4px solid #000", fontSize: '18px', paddingLeft: '7px', marginTop: '10px', minHeight: '5px', marginBottom: '10px'}}>
+                        Habilidades Blandas
+                      </Typography>
+                      <RenderAllSkillsList studentSkills={studentSkills} tipo={"soft"}/>
+                    </Box> 
+                  }
+                </div>
+                <div className="OtherSkillsContainer">
+                  {EmptyArraySkills(studentSkills, "other") &&
+                    <Box>
+                      <Typography color='textPrimary' align='left' style={{borderLeft:"4px solid #000", fontSize: '18px', paddingLeft: '7px', marginTop: '10px', minHeight: '5px', marginBottom: '2px'}}>
+                        Otras Habilidades
+                      </Typography>
+                      <RenderAllSkillsList studentSkills={studentSkills} tipo={"other"}/>
+                    </Box> 
+                  }
+                </div>
+              </div>
+            </Box>
+            </Stack>
+          }
+        </div>
+
+        <div className="title-buttons">
+          Preguntas frecuentes sobre contratar un desarrollador
+        </div>
+        <div className="Accordion-FAQ">
+          <Accordion>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>¿Cómo contratar el mejor programador?</Accordion.Header>
+              <Accordion.Body>
+                Con Holberton podrás obtener acceso a nuestra base de graduados e incorporar
+                a la persona adecuada a tu proyecto, de manera inmediata y con cero costo.
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="1">
+              <Accordion.Header>¿Dónde puedo contratar programadores?</Accordion.Header>
+              <Accordion.Body>
+              En Holberton ofrecemos los mejores programadores de LATAM, listos para sumarse a tu equipo. 
+              Nuestros graduados fueron entrenados en diversas habilidades técnicas y blandas y están 
+              preparados para desempeñarse en distintos roles y áreas.
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="2">
+              <Accordion.Header>¿Cómo contactar a un programador?</Accordion.Header>
+              <Accordion.Body>
+              Es muy sencillo. Para contactar a un programador desde nuestra plataforma, 
+              solo tienes que clickear el botón “Contactar” en el perfil del candidato que 
+              te haya interesado. Podrás enviarle un correo electrónico y realizarle una 
+              propuesta directamente.
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="3">
+              <Accordion.Header>¿Cómo encontrar desarrolladores?</Accordion.Header>
+              <Accordion.Body>
+              Nuestra plataforma te permite acceder al mejor talento y realizarles una oferta directa. 
+              En su perfil podrás obtener información sobre las tecnologías que domina, su background, 
+              intereses y proyectos. Puedes encontrar al candidato ideal según su ubicación, 
+              habilidades o nivel de inglés.
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="4">
+              <Accordion.Header>¿Dónde encontrar programadores freelance?</Accordion.Header>
+              <Accordion.Body>
+              En Holberton se encuentra disponible todo nuestro talento, listo para sumarse a tu equipo. 
+              Contacta al candidato ideal para contarle tu proyecto y contrata de inmediato, 
+              sin intermediarios.
+              </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="5">
+              <Accordion.Header>¿Qué es Holberton?</Accordion.Header>
+              <Accordion.Body>
+              Holberton es una escuela de programación creada en el 2016 en Silicon Valley, 
+              con el propósito de insertar rápidamente a los estudiantes al mercado laboral como 
+              desarrolladores full stack. Holberton, elimina las barreras económicas de acceso a 
+              educación de calidad y además prepara en 9 meses (a diferencia de institutos o 
+              universidades que demoran 3 a 5 años) a los alumnos para que puedan trabajar.
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+        </div>
+      </div>
+    </main>
+  );
+};
+
+export default MainEstudiante;
