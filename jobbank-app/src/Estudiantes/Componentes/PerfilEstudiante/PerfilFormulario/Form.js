@@ -405,11 +405,38 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   function RenderAllSkillsList(props) {
     const skills = props.allSkills;
     const HabilidadesSeleccionadas = props.selectSkills;
+    console.log("BBBBBBBBBBB-");
+    console.log(skills);
+    console.log(HabilidadesSeleccionadas);
     //setAllSkills([...allSkills, {}]);
-    const newArraySkills = skills.filter(item => !HabilidadesSeleccionadas.includes(item));
-    let uniqueItems = [...new Set(newArraySkills)]
+    const copySelectedSkills = skills.filter((item) => {
+      for (let i of HabilidadesSeleccionadas) {
+        if (item.id === i.id){
+          return true;
+        }
+      }
+    });
 
-    const filterSkills = uniqueItems.filter(item => {
+    console.log("Copia");
+    console.log(copySelectedSkills);
+    const newArraySkills = skills.filter((item) => !copySelectedSkills.includes(item));
+    
+    console.log(newArraySkills);
+    //const uniqueItemss = [...new Set(newArraySkills)]
+
+    const uniqueItemss = newArraySkills.reduce((acc, current) => {
+      const x = acc.find(item => item.id === current.id);
+      if (!x) {
+        return acc.concat([current]);
+      } else {
+        return acc;
+      }
+    }, []);
+
+    console.log("AAAAAAAAAAAAAAAAAA");
+    console.log(uniqueItemss);
+    console.log(selectSkills);
+    const filterSkills = uniqueItemss.filter(item => {
       if (item.name.toLowerCase().includes(searchValue)) {
         return true;
       }

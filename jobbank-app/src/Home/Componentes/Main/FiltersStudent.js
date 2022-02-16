@@ -328,8 +328,7 @@ function FiltersStudent(props) {
     const newArraySkills = skills.filter(item => !HabilidadesSeleccionadas.includes(item));
     let uniqueItems = [...new Set(newArraySkills)]
     console.log("AAAAAAAAAAAAAAAAAA");
-    console.log(allSkills);
-    console.log(selectSkills);
+    console.log(newArraySkills);
 
     const filterSkills = uniqueItems.filter(item => {
       if (item.name.toLowerCase().includes(searchValue)) {
