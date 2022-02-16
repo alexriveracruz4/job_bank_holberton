@@ -93,7 +93,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                 body: data,
               }).then((response) => {
                 response.json().then((body) => {
-                  cookies.set('logo_filename_physical', body.logo_filename_physical);
+                  cookies.set('photo_filename_physical', body.photo_filename_physical);
                 });
               })
             }
