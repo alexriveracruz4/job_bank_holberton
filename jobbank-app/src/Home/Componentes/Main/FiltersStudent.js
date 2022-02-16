@@ -3,9 +3,13 @@ import mysvg from "../images/Magnifying_glass_icon.svg";
 import {Modal, TextField} from '@material-ui/core';
 import {makeStyles} from  '@material-ui/core/styles';
 import Box from '@mui/material/Box';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
 import Stack from '@mui/material/Stack';
+import { styled, createTheme, ThemeProvider } from '@mui/system';
 import Button from '@mui/material/Button';
+import TouchRipple from '@material-ui/core/ButtonBase/TouchRipple';
 import { useHistory } from "react-router-dom";
 import Slider from '@mui/material/Slider';
 import Divider from '@mui/material/Divider';
@@ -217,7 +221,16 @@ function FiltersStudent(props) {
   const todasHabilidades = allSkillsArray;
 
 
-  const [allSkills, setAllSkills] = useState(todasHabilidades);
+  const [allSkills, setAllSkills] = useState([]);
+
+  React.useEffect(() => {
+    obtenerDatosDeSkills();
+  }, []);
+
+  const obtenerDatosDeSkills = async () => {
+    const data = await fetch(`${apiPath}/skills`);
+    setAllSkills(await data.json());
+  }
   //
   //const [selectSkills, setSelectSkills] = useState([]);
 
@@ -493,14 +506,24 @@ function FiltersStudent(props) {
     </div>
   )
 
+  const StyledButton = styled(Button)`
+  background-color: #DF003C;
+  color: #fff;
+  padding: 6px 12px;
+  &:hover {
+    background-color: #1B0C61;
+  }
+`;
+
   return (
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div className="collapse navbar-collapse d-flex justify-content-center" id="navbarMainHolberton">
         <ul class="nav nav-filter">
-          <li class="nav-item d-flex align-items-center">
-            <button onClick={()=> abrirCerrarModal()} href="https://apply.holbertonschool.com/auth/sign_in?country=pe" className="nav-link d-flex align-items-center mx-3 my-3" target="_blank" id="button-search">
-              <img src={mysvg} className="nav-link" href="#"/>
-            </button>
+          <li class="nav-item mx-3 my-3">
+            <StyledButton variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize", width: "70px"}} onClick={()=> abrirCerrarModal()} >
+              <SearchIcon />
+              <span class="MuiTouchRipple-root"></span>
+            </StyledButton>
             <Modal
               open={modal}
               onClose={abrirCerrarModal}
@@ -509,11 +532,11 @@ function FiltersStudent(props) {
             </Modal>
           </li>
           <li class="nav-item mx-3 my-3">
-            <button
-              onClick={()=> abrirCerrarSkillsModal()}
-              class="nav-link d-flex align-items-center" href="#">
+            <StyledButton variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> abrirCerrarSkillsModal()}
+              >
               Habilidades
-            </button>
+              <span class="MuiTouchRipple-root"></span>
+            </StyledButton>
             <Modal
               open={skillsModal}
               onClose={abrirCerrarSkillsModal}
@@ -522,12 +545,11 @@ function FiltersStudent(props) {
             </Modal>
           </li>
           <li class="nav-item mx-3 my-3">
-            <button 
-              onClick={()=> abrirCerrarEnglishModal()} 
-              class="nav-link d-flex align-items-center" href="#">
-              Nivel de inglés
-            </button>
-              <Modal
+            <StyledButton variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> abrirCerrarEnglishModal()}>
+              Nivel de Inglés
+              <span class="MuiTouchRipple-root"></span>
+            </StyledButton>
+            <Modal
                 open={englishModal}
                 onClose={abrirCerrarEnglishModal}
               >
@@ -535,27 +557,27 @@ function FiltersStudent(props) {
               </Modal>
           </li>
           <li class="nav-item mx-3 my-3">
-            <i class="far fa-heart"></i>
-            <button 
-              onClick={()=> {
+            <StyledButton variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> {
                   let url = `/home/favoritos`
                   history.push({
                     pathname: url,
                     state: props.favorites,
                     });
-                }}
-              class="nav-link" href="#" id="fav-filter">Favoritos
-            </button>
+                }}>
+              <FavoriteBorderIcon />
+              &nbsp;Favoritos
+              <span class="MuiTouchRipple-root"></span>
+            </StyledButton>
           </li>
           <li class="nav-item mx-3 my-3">
-            <button 
-              onClick={()=> {
+            <StyledButton variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> {
                 let url = `/home`
                 history.push(url);
                 window.location.reload();
-              }}
-              class="nav-link d-flex align-items-center" href="#">Limpiar filtros
-            </button>
+              }}>
+              Limpiar filtros
+              <span class="MuiTouchRipple-root"></span>
+            </StyledButton>
           </li>
         </ul>
       </div>

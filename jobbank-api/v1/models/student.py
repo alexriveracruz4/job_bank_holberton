@@ -27,7 +27,7 @@ class Student(BaseModel, Base):
     province = Column(String(45), nullable=True)
     developer_type = Column(String(45), nullable=True)
     english_level = Column(String(45), nullable=True)
-    video_link = Column(String(45), nullable=True)
+    video_link = Column(String(100), nullable=True)
     description = Column(String(1000), nullable=True)
     disp_travel = Column(String(45), nullable=True)
     portfolio = Column(String(100), nullable=True)

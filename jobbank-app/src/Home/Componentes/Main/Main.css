@@ -60,7 +60,7 @@ main .navbar {
 }
 
 .padding-main {
-    background: url(../images/fondoholberton.jpeg) no-repeat; 
+    background: url(../images/holbertonbackground.png) no-repeat; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
