@@ -19,11 +19,11 @@ function TablaAdmin() {
   const [loadingEliminate, setLoadingEliminate] = useState(false);
   // Columns name
   const columnas = [
-    { title:'ID', field:'admin_id', type:"numeri", textAlign:"center"},
-    { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{"1":"Si", "0":"No"}},
-    { title:'NOMBRE', field:'firstname'},
-    { title:'APELLIDO', field:'lastname'},
-    { title:'EMAIL', field:'email' }
+    { title:'ID', field:'admin_id', type:"numeri", textAlign:"center", filtering:false},
+    { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{"1":"Si", "0":"No"}, filtering:true},
+    { title:'NOMBRE', field:'firstname', filtering:false},
+    { title:'APELLIDO', field:'lastname', filtering:false},
+    { title:'EMAIL', field:'email', filtering:false}
   ]
 
   // Get partners data and save to AllPartnersData
@@ -129,6 +129,7 @@ function TablaAdmin() {
         isLoading={loading}
         options={{
           loadingType: "overlay",
+          filtering:true,
           actionsColumnIndex: -1,
           cellStyle: {
             textAlign: "center"

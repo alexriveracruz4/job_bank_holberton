@@ -172,7 +172,9 @@ def get_partner_job(partner_id):
 @app_views.route('/jobs/<partner_id>/<job_id>/students', methods=['GET'],
                  strict_slashes=False)
 def get_job_students(partner_id, job_id):
-
+    page = request.args.get('_page')
+    limit = request.args.get('_limit')
+    
     all_students = storage.all(Student).values()
     all_applications = storage.all(Application).values()
     list_applications = []
@@ -184,8 +186,22 @@ def get_job_students(partner_id, job_id):
         for student in all_students:
             if app.student_id == student.student_id:
                 postulantes.append(student.to_dict())
+    try:
+        page = int(page)
+        limit = int(limit)
 
-    return jsonify(postulantes)
+        number_of_pages = ceil(len(postulantes)/limit)
+        part_of_student = postulantes[limit*page:limit*(page+1)]
+
+        data = {"data":part_of_students,
+               "len_total_data":len(postulantes),
+               }
+        out = jsonify(data)
+        return out
+    except:
+        data = {"data":postulantes, "len_total_data":len(postulantes)}
+        out = jsonify(data)
+        return out
 
 @app_views.route('/partners/<partner_id>/jobs/<job_id>', methods=['DELETE'],
                  strict_slashes=False)

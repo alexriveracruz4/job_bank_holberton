@@ -177,7 +177,7 @@ function TablaEmpresa() {
             tooltip: 'Trabajos publicados',
             onClick: (event, rowData) => {history.push(
               {
-                pathname:`/admin/empresas/trabajos/${rowData.id}`,
+                pathname:`/admin/empresas/trabajos/${rowData.partner_id}`,
                 state: {PartnerName:rowData.name}
               }
             )}

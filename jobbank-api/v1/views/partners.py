@@ -274,7 +274,7 @@ def PartnerFileUploadPhoto(partner_id):
     if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
         abort(400, description="It is not a png or jpg file")
 
-    path = '/mnt/d/jbgithub/job_bank_holberton/partner_photos/'
+    path = '/home/jhonatanjc/job_bank_holberton/partner_photos/'
     filename_new = partner_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -297,6 +297,6 @@ def partnertPhoto(logo_filename_logical):
     """
     Partner Photo
     """
-    path = "/mnt/d/jbgithub/job_bank_holberton/partner_photos/" + logo_filename_logical
+    path = "/home/jhonatanjc/job_bank_holberton/partner_photos/" + logo_filename_logical
     return send_file(path)
 

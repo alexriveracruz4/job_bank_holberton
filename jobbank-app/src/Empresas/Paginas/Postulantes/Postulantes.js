@@ -7,6 +7,7 @@ import { ItemJob } from "../../Componentes/Postulantes/ItemJob/ItemJob";
 
 import { useLocation, useParams } from 'react-router';
 import Cookies from 'universal-cookie';
+import ReactPaginate from "react-paginate";
 
 import apiPath from '../../../ApiPath';
 import { helpHttp } from '../../../helpers/helpHttp';
@@ -16,25 +17,52 @@ import Message from '../../../helpers/Message';
 
 // Get the data of all applicants for a job
 const cookies = new Cookies();
+let copia = 0;
 function Postulantes(props) {
+
+    // If the cookies are not found, then the page will return to the login page
+  useEffect(() => {
+    if (!cookies.get('partner_id')){
+      window.location.href="/login/empresa";
+    }
+  });
+
   const { JobId } = useParams();
   const partner_id= cookies.get("partner_id"); //string variable
   const location = useLocation();
   const titleJob = location.state.titleJob;
 
+
   const [AllStudentsApplicated, setAllStudentsApplicated] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const [pageCount, setpageCount] = useState(0);
+
+  const [datosTotales, setDatosTotales] = useState(0);
+
+  const [paginaActual, setPaginaActual] = useState(copia);
+
+  const [errorPage, setErrorPage] = useState(null);
+
+  const [loadingPage, setLoadingPage] = useState(false);
+
+  const setCopia = (data) => {
+    copia = data
+  }
+
+  let limit = 4;
+
   let api = helpHttp();
 
+  /*
   React.useEffect(() => {
     const obtenerDatosDeEstudiantes = async () => {
-      const url = `${apiPath}/jobs/${partner_id}/${JobId}/students`
+      const url = `${apiPath}/jobs/${partner_id}/${JobId}/students?_page=${paginaActual}&_limit=${limit}`
       setLoading(true);
       api.get(url).then((res) => {
         if (!res.err) {
-          setAllStudentsApplicated(res);
+          setAllStudentsApplicated(res.data);
           setError(null)
         } else {
           setAllStudentsApplicated(null);
@@ -46,13 +74,57 @@ function Postulantes(props) {
     obtenerDatosDeEstudiantes();
   }, []);
 
+*/
 
-  // If the cookies are not found, then the page will return to the login page
-  useEffect(() => {
-      if (!cookies.get('partner_id')){
-          window.location.href="/login/empresa";
-      }
-  });
+
+  useEffect(() => { 
+    const getComments = async () => {
+      const url = `${apiPath}/jobs/${partner_id}/${JobId}/students?_page=${paginaActual}&_limit=${limit}`
+      setLoading(true);
+      api.get(url).then((res) => {
+        if (!res.err) {
+          const jobs_data = res.data;
+          const totalPages = res.len_total_data;
+          setDatosTotales(totalPages)
+          setpageCount(Math.ceil(totalPages / limit));
+          setAllStudentsApplicated(jobs_data);
+          setError(null)
+        } else {
+          setAllStudentsApplicated(null);
+          setError(res);
+        }
+        setLoading(false);
+      })
+    };
+    getComments();
+  }, [limit]);
+
+  const fetchComments = async (currentPage) => {
+    const url = `${apiPath}/jobs/${partner_id}/${JobId}/students?_page=${paginaActual}&_limit=${limit}`
+      setLoadingPage(true);
+      api.get(url).then((res) => {
+        if (!res.err) {
+          const jobs_data = res.data;
+          const totalPages = res.len_total_data;
+          setDatosTotales(totalPages)
+          setpageCount(Math.ceil(totalPages / limit));
+          setAllStudentsApplicated(jobs_data);
+          setErrorPage(null)
+        } else {
+          setAllStudentsApplicated(null);
+          setErrorPage(res);
+        }
+        setLoadingPage(false);
+      })
+  };
+
+  const handlePageClick = async (data) => {
+    let currentPage = data.selected;
+    setPaginaActual(currentPage);
+    window.scrollTo(0, 0);
+    fetchComments(currentPage);
+  };
+
 
   return (
     <div className='PostulantesContainer'>
@@ -62,36 +134,90 @@ function Postulantes(props) {
       <div className='PTitleContainer'>
         <h2>{titleJob}</h2>
         <h3>Postulantes:</h3>
-        {loading && <Loader/>}
       </div>
-      
-      {error && <Message/>}
-      {(AllStudentsApplicated) &&
-        <ListJobs>
-          {AllStudentsApplicated.map(estudiante => (
-            <ItemJob 
-              key={estudiante.token}
-              student_id={estudiante.student_id}
-              firstname={estudiante.firstname}
-              lastname={estudiante.lastname}
-              age={estudiante.age}
-              email={estudiante.email}
-              availability={estudiante.availability}
-              linkedin={estudiante.linkedin}
-              github={estudiante.github}
-              twitter={estudiante.twitter}
-              disp_travel={estudiante.disp_travel}
-              description={estudiante.description}
-              nationality={estudiante.nationality}
-              phonenumber={estudiante.phonenumber}
-              photo_filename_logical={estudiante.photo_filename_logical}
-              pres_or_remot={estudiante.pres_or_remot}
-              deleted={estudiante.deleted}
-	            cv_filename_logical={estudiante.cv_filename_logical}
-            />
-          ))}
-        </ListJobs>
-      }
+        {datosTotales === 1?
+            <h2 className="NumeroDeEmpleos">Se encontró 1 postulante</h2>
+          :
+            <h2 className="NumeroDeEmpleos">Se encontraron {datosTotales} postulantes</h2> 
+          }
+          {loading 
+          ?
+            <div>
+              <Loader/>
+            </div>  
+          :
+          <>
+            {(AllStudentsApplicated) &&
+              <ReactPaginate
+                previousLabel={"<"}
+                nextLabel={">"}
+                breakLabel={"..."}
+                pageCount={pageCount}
+                forcePage={paginaActual}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                pageClassName={"page-item"}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item "}
+                nextLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                activeClassName={"active"}
+                renderOnZeroPageCount={null}
+              />
+            }
+            {(error|| errorPage) && <Message/>}
+            {(AllStudentsApplicated) &&
+            
+              <ListJobs>
+                {loadingPage 
+                ?
+                  <div>
+                    <Loader/>
+                  </div>  
+                :
+                <>
+                  {AllStudentsApplicated.map(estudiante => (
+                    <ItemJob
+                      key={estudiante.student_id}
+                      student={estudiante}
+                      setCopia={setCopia}
+                      paginaActual={paginaActual}
+                    />
+                  ))}
+                </>
+                }
+              </ListJobs>
+            }
+            {(AllStudentsApplicated && !loadingPage) &&
+              <ReactPaginate
+                previousLabel={"<"}
+                nextLabel={">"}
+                breakLabel={"..."}
+                pageCount={pageCount}
+                forcePage={paginaActual}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                pageClassName={"page-item"}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item "}
+                nextLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                activeClassName={"active"}
+                renderOnZeroPageCount={null}
+              />
+            }
+          </>
+          }
     </div>
   );
 }

@@ -6,7 +6,21 @@ import { useHistory } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { useAuth0 } from "@auth0/auth0-react";
 import apiPath from "../../ApiPath";
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
 
+const pages = ['Administradores', 'Estudiantes', 'Empresas', 'Trabajos'];
+const settings = ['Editar Perfil', 'Cerrar Sesión'];
 
 const cookies = new Cookies();
 
@@ -50,65 +64,167 @@ function AdminNav() {
 
   let photo = UserIcon;
 
-  if (admin.logo_filename_logical != null && admin.logo_filename_logical != undefined){
-    photo = `${apiPath}/admin_photos/${admin.logo_filename_logical}`;
+  if (admin.photo_filename_logical != null && admin.photo_filename_logical != undefined){
+    photo = `${apiPath}/admin_photos/${admin.photo_filename_logical}`;
   }
 
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = (page) => {
+    setAnchorElNav(null);
+    if (page === 'Administradores'){
+      history.push("/admin/admins");
+    } 
+    if (page === 'Estudiantes'){
+      history.push("/admin/estudiantes");
+    }
+    if (page === 'Empresas'){
+      history.push("/admin/empresas");
+    }
+    if (page === 'Trabajos'){
+      history.push("/admin/todos-los-trabajos");
+    }
+  };
+
+  const handleCloseUserMenu = (setting) => {
+    setAnchorElUser(null);
+    if (setting === 'Editar Perfil'){
+      history.push("/admin/perfil");
+    } 
+    if (setting === 'Cerrar Sesión'){
+      closeSessionEst(); 
+      logout();
+    }
+  };
+
+
   return (
-    <header className="Admin-nav">
-      <div className="logo-container">
-        <img src={ logo } className="logo" alt="logo holberton" />
-      </div>
-      <nav>
-        <div className="nav-button">
-          <div className="admin-admins-div">
-            <button 
-              className="admin-admins-button" 
-              onClick={ () => {history.push("/admin/admins")}}>
-              Admins
-            </button>
-          </div>
-          <div className="admin-estudiantes-div">
-            <button 
-              className="admin-estudiantes-button" 
-              onClick={ () => {history.push("/admin/estudiantes")}}>
-              Estudiantes
-            </button>
-          </div>
-          <div className="admin-partners-div">
-            <button 
-              className="admin-partners-button" 
-              onClick={ () => {history.push("/admin/empresas")}}>
-              Empresas
-            </button>
-          </div>
-          <div className="admin-puestos-div">
-            <button 
-              className="admin-puestos-button" 
-              onClick={ () => {history.push("/admin/todos-los-trabajos")}}>
-              Todos los Puestos de trabajo
-            </button>
-          </div>
-        </div>
-      </nav>
-      <div className="userprofilecontainer">
-        <div className="userprofile">
-          <div 
-            className="profile-button" 
-            onClick={ () => {history.push("/admin/perfil")}}>
-            <img src={ UserIcon } className="usericon" alt="imagen de usuario" />
-            <button className="name-button">{cookies.get('firstname')} {cookies.get('lastname')}</button>
-          </div>
-        </div>
-      </div>
-      <div className="cerrarsesion">
-        <button
-          className="cerrarsesion-button"
-          onClick={() => { closeSessionEst(); logout();}}>
-          Cerrar sesión
-        </button>
-      </div>
-    </header>
+    <AppBar sx={{ bgcolor: "#1b0c61"}} position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+          >
+            <Avatar
+              alt="Remy Sharp"
+              src={ logo }
+              sx={{ width: 40, height: 40 }}
+            />
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none'},
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+          >
+            <Avatar
+              alt="Remy Sharp"
+              src={ logo }
+              sx={{ width: 40, height: 40 }}
+            />
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={() => handleCloseNavMenu(page)}
+                sx={{ 
+                  m: 2,
+                  textTransform: "none",
+                  fontSize: "20px",
+                  fontWeight: 400,
+                  color: 'white', 
+                  display: 'block', 
+                  '&:hover': {
+                    color: '#ce3938',
+                  },
+                }}
+              >
+                {page}
+              </Button>
+            ))}
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Configuraciones">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src={photo} />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 }
 

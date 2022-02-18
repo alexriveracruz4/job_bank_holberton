@@ -22,7 +22,7 @@ function ItemJob(props) {
   const obtenerPostulantesDatos = async () => {
     const data = await fetch(`${apiPath}/jobs/${props.id_empresa}/${props.id_job}/students`);
     const postulantes = await data.json();
-    setPostulantesData(postulantes);
+    setPostulantesData(postulantes.data);
   }
 
   const obtenerParnertDatos = async () => {

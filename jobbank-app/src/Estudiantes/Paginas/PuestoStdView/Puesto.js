@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import { helpHttp } from "../../../helpers/helpHttp";
 import Loader from "../../../helpers/Loader";
 import Message from "../../../helpers/Message";
+import { JobDescriptionStudentView } from "../../Componentes/PuestoStdView/JobDescriptionStudentView";
 
 
 
@@ -56,12 +57,24 @@ function Puesto() {
   return (
     <React.Fragment>
         <EstudianteNav />
-        <BackButton/>
+        {JobData &&
+        <JobDescriptionStudentView
+          datos={JobData}
+          DatosEmpresa={DatosEmpresa}
+          EstadoDePostulacion={EstadoDePostulacion}
+        />
+        }
+        
+    </React.Fragment>
+  );
+}
+/*
+<BackButton/>
 
         {loading && <Loader/>}
         {error && <Message/>}
         {JobData &&
-          <PartnerInfo 
+          <PartnerInfo
             JobData = {JobData}
             PartnerName={DatosEmpresa.name}
             PartnerEmail={DatosEmpresa.email}
@@ -74,7 +87,5 @@ function Puesto() {
             JobData = {JobData}
           />
         }
-    </React.Fragment>
-  );
-}
+*/
 export { Puesto };

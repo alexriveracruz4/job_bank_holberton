@@ -80,8 +80,6 @@ function App() {
           <Route exact path="/admin/admins/crear-admin" component={AdminCreado}/>
           
 
-
-
           <Route exact path="/admin/empresas" component={TodasLasEmpresas}/>
           <Route exact path="/admin/empresas/empresa-editada/:id" component={EmpresaEditada}/>
           <Route exact path="/admin/empresas/crear-empresa" component={EmpresaCreada}/>

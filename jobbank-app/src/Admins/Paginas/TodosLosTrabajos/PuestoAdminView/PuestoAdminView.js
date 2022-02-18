@@ -6,6 +6,7 @@ import { PartnerInfo } from "../../../Componentes/TodosLosTrabajos/PuestoAdminVi
 import { useParams } from "react-router";
 import Cookies from 'universal-cookie';
 import apiPath from "../../../../ApiPath";
+import { JobDescriptionAdminView } from "../../../Componentes/TodosLosTrabajos/PuestoAdminView/JobDescriptionAdminView";
 
 
 const cookies = new Cookies();
@@ -34,14 +35,15 @@ function PuestoAdminView() {
   return (
     <React.Fragment>
       <AdminNav />
-      <PartnerInfo 
-        datos = {AllAJobData}
-      />
-      <PuestoInfo 
-        datos = {AllAJobData}
-      />
+      {AllAJobData &&
+        <JobDescriptionAdminView
+          datos={AllAJobData}
+          PartnerId={PartnerId}
+        />
+      }
     </React.Fragment>
   );
 }
+
 
 export { PuestoAdminView };

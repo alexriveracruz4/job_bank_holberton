@@ -1,7 +1,7 @@
 .PListJob {
   width: 100%;
   display: flex;
-  padding-left: 100px;
+  justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
 }

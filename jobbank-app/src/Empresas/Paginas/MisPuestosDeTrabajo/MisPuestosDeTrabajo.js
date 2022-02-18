@@ -103,14 +103,20 @@ function MisPuestosDeTrabajo() {
         <EmpresaNav />
       </div>
       <div className='MPDTBodyContainer'>
-        <div className='MPDTFiltersContainer'>      
-        </div>
+        
         <div className='MPDTJobsContainer'>
-          {datosTotales.length === 1?
-            <h2 className="NumeroDeEmpleos">HAS PUBLICADO A UN EMPLEO</h2>
+          {datosTotales === 1?
+            <h2 className="NumeroDeEmpleos">Se ha publicado 1 empleo</h2>
           :
-            <h2 className="NumeroDeEmpleos">HAS PUBLICADO A {datosTotales} EMPLEOS</h2> 
+            <h2 className="NumeroDeEmpleos">Se han publicado {datosTotales} empleos</h2> 
           }
+          {loading 
+          ?
+            <div>
+              <Loader/>
+            </div>  
+          :
+          <>
           {(items) &&
             <ReactPaginate
               previousLabel={"<"}
@@ -134,29 +140,38 @@ function MisPuestosDeTrabajo() {
               renderOnZeroPageCount={null}
             />
           }
-          {loading && <Loader/>}
+          
           {(error|| errorPage) && <Message/>}
           {(items) &&
 
           <ListJobs>
-            {loadingPage && <Loader/>}
-            {items.map(trabajo => (   
-              <ItemJob 
-                key={trabajo.token}
-                JobId={trabajo.id}
-                title={trabajo.title}
-                deleted={trabajo.deleted}
-                created_at={trabajo.created_at}
-                deleted_at={trabajo.deleted_at}
-                updated_at={trabajo.updated_at}
-                setCopia={setCopia}
-                paginaActual={paginaActual}
-              />
-              ))
+            {loadingPage 
+            ?
+              <div>
+                <Loader/>
+              </div>  
+            :
+            <>
+              {items.map(trabajo => (   
+                <ItemJob 
+                  key={trabajo.token}
+                  JobId={trabajo.id}
+                  title={trabajo.title}
+                  deleted={trabajo.deleted}
+                  created_at={trabajo.created_at}
+                  deleted_at={trabajo.deleted_at}
+                  updated_at={trabajo.updated_at}
+                  setCopia={setCopia}
+                  paginaActual={paginaActual}
+                />
+                ))
+              }
+            </>
             }
           </ListJobs>
           }
-          {items &&
+          
+          {(items && !loadingPage) &&
             <ReactPaginate
               previousLabel={"<"}
               nextLabel={">"}
@@ -179,6 +194,8 @@ function MisPuestosDeTrabajo() {
               renderOnZeroPageCount={null}
             />
           }
+        </>
+        }
         </div>
       </div>
     </div>

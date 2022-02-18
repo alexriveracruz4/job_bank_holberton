@@ -38,7 +38,7 @@ function PostulantesATrabajos() {
       //setLoading(true);
       api.get(url).then((res) => {
         if (!res.err) {
-          setAllPartnerJobs(res);
+          setAllPartnerJobs(res.data);
           setError(null)
         } else {
           setAllPartnerJobs(null);
@@ -50,6 +50,7 @@ function PostulantesATrabajos() {
     obtenerDatos();
   }, []);
 
+  console.log(AllPartnerJobs);
   return (
     <React.StrictMode>
       {error && <Message/>}

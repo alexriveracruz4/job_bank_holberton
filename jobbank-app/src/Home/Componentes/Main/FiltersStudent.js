@@ -221,19 +221,21 @@ function FiltersStudent(props) {
   const todasHabilidades = allSkillsArray;
 
 
-  const [allSkills, setAllSkills] = useState([]);
+  const [allSkills, setAllSkills] = useState(todasHabilidades);
 
+  /*
   React.useEffect(() => {
     obtenerDatosDeSkills();
   }, []);
 
+  
   const obtenerDatosDeSkills = async () => {
     const data = await fetch(`${apiPath}/skills`);
     setAllSkills(await data.json());
   }
   //
   //const [selectSkills, setSelectSkills] = useState([]);
-
+  */
   let api = helpHttp();
 
   //const [favorites, setFavorites] = useState([]);

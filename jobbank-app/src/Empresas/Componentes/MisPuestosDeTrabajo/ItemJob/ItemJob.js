@@ -8,6 +8,14 @@ import swal from 'sweetalert';
 import apiPath from '../../../../ApiPath';
 import Loader from '../../../../helpers/Loader';
 import Message from '../../../../helpers/Message';
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
+import Stack from '@mui/material/Stack';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
+import PeopleIcon from '@mui/icons-material/People';
+import Card from "@mui/material/Card";
 
 
 const cookies = new Cookies();
@@ -72,7 +80,7 @@ function ItemJob(props) {
             return `Hace 1 hora`;
         }
         return `Hace ${Math.round((secondDate-firstDate)/(1000*60))} minutos`;
-    } else if ((secondDate-firstDate)/(1000*60*60) < 60) {
+    } else if ((secondDate-firstDate)/(1000*60*60) < 24) {
         if (Math.round((secondDate-firstDate)/(1000*60*60)) === 1) {
           return `Hace ${Math.round((secondDate-firstDate)/(1000*60*60))} hora`;
         } if (Math.round((secondDate-firstDate)/(1000*60*60)) === 24) {
@@ -89,54 +97,62 @@ function ItemJob(props) {
     }
   } 
 
-  
   return (
+    <Card elevation={4} sx={{ width: '100%', height: 320, maxWidth: 1170, my: '15px', display: 'flex', borderRadius: '160px', padding: '30px' }}>
       <li className='MPDTOneJobeEmpresa'>
         {
-          props.deleted ? <b className="MPDTNoDisponible"> EMPLEO ELIMINADO </b> : <b className="MPDTDisponible"> DISPONIBLE </b>     
+          props.deleted ? <b className="MPDTNoDisponible"> ELIMINADO </b> : <b className="MPDTDisponible"> DISPONIBLE </b>     
         }
         {loadingEliminate && <Loader/>}
         <h2>{props.title}</h2>
         <p>Fecha de creación: {tiempoTranscurrido(props.created_at)}</p>
         {
-          props.created_at !== props.updated_at ? <p>Última fecha de edición: {tiempoTranscurrido(props.updated_at)}</p> : ""
+          props.created_at !== props.updated_at && props.deleted !== 1? <p>Última fecha de edición: {tiempoTranscurrido(props.updated_at)}</p> : ""
         }
         {
           props.deleted ? <p>Fecha de eliminacion: {tiempoTranscurrido(props.deleted_at)}</p> : ""
         }
         <div class="MPDTGroupOfButtons">
-          <Link to={{ pathname:`/empresa/mis-puestos-de-trabajo/${props.JobId}` }} style={{color: 'inherit', textDecoration: 'inherit'}}>
-          <button className="MPDTVerButton">
-              Ver    
-          </button>
-          </Link>
-          {
-            props.deleted ? 
-            "" : 
-            <Link to={`/empresa/mis-puestos-de-trabajo/`} style={{color: 'inherit', textDecoration: 'inherit'}}>
-              <button className="MPDTEliminarButton"
-                onClick = {() => deleteData(props.JobId, props.title)}
-              >
-                Eliminar
-              </button>
+        <Stack direction="row" justifyContent="space-between" spacing={0}>
+          <Stack direction="row" spacing={1}>
+            <Link to={{ pathname:`/empresa/mis-puestos-de-trabajo/${props.JobId}`}} style={{color: 'inherit', textDecoration: 'inherit'}}>
+              <Button variant="contained" sx={{ textTransform: 'none', backgroundColor: "#251086"}} startIcon={<VisibilityIcon />}>
+                Ver
+              </Button>
             </Link>
-          }
-          {
+            {
             props.deleted ? 
             "" : 
             <Link to={`/empresa/mis-puestos-de-trabajo/${props.JobId}/puesto-editado`} style={{color: 'inherit', textDecoration: 'inherit'}}>
-              <button className="MPDTEditarButton">
+              <Button variant="contained" sx={{ textTransform: 'none', backgroundColor: "#251086"}} startIcon={<EditIcon />}>
                 Editar
-              </button>
+              </Button>
             </Link>
-          }
-          <Link to={{ pathname:`/empresa/mis-puestos-de-trabajo/${props.JobId}/postulantes`, state: { titleJob: props.title } }} style={{color: 'inherit', textDecoration: 'inherit'}}>
-              <button className="MPDTPostulantesButton">
-              Ver postulantes
-              </button>
-          </Link>
+            }
+            <Link to={{ pathname:`/empresa/mis-puestos-de-trabajo/${props.JobId}/postulantes`, state: { titleJob: props.title } }} style={{color: 'inherit', textDecoration: 'inherit'}}>
+              <Button variant="contained" sx={{ textTransform: 'none', backgroundColor: "#251086"}} startIcon={<PeopleIcon />}>
+                Ver postulantes
+              </Button>
+            </Link>
+            
+            </Stack>
+              {
+                props.deleted ? 
+                "" : 
+                <Link to={`/empresa/mis-puestos-de-trabajo/`} style={{color: 'inherit', textDecoration: 'inherit'}}>
+                  
+                  <Button 
+                    onClick = {() => deleteData(props.JobId, props.title)}
+                    variant="contained" color= "error" startIcon={<DeleteIcon />}>
+                    Eliminar
+                  </Button>
+                </Link>
+              }
+            </Stack>
+          
         </div>
       </li>
+      </Card>
   );
 }
 

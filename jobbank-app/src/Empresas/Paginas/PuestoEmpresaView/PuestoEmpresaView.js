@@ -9,6 +9,7 @@ import { BackButton } from "../../../helpers/BackButton";
 import { helpHttp } from "../../../helpers/helpHttp";
 import Loader from "../../../helpers/Loader";
 import Message from "../../../helpers/Message";
+import { JobDescription } from "../../Componentes/PuestoEmpresaView/JobDescription.js";
 
 
 
@@ -17,6 +18,7 @@ function PuestoEmpresaView() {
 
   // Obtains the data of a job and stores it in AllAJobData
   const partner_id= cookies.get("partner_id"); //string variable
+
 
   const { JobId } = useParams();
   const [JobData, setJobData] = useState(null);
@@ -56,11 +58,21 @@ function PuestoEmpresaView() {
           window.location.href="/login/empresa";
       }
   });
-
+  console.log(JobData);
   return (
     <React.Fragment>
       <EmpresaNav />
-      <BackButton/>
+      {JobData &&
+        <JobDescription
+          datos={JobData}
+        />
+      }
+    </React.Fragment>
+  );
+}
+
+/*
+<BackButton/>
       {loading && <Loader/>}
         {error && <Message/>}
         {JobData &&
@@ -73,8 +85,5 @@ function PuestoEmpresaView() {
         datos = {JobData}
       />
         }
-    </React.Fragment>
-  );
-}
-
+*/
 export { PuestoEmpresaView };
