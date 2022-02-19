@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import apiPath from '../../../../ApiPath';
 import Button from '@mui/material/Button';
 import Box from "@material-ui/core/Box";
 import Card from "@mui/material/Card";
@@ -7,15 +8,19 @@ import Container from '@material-ui/core/Container';
 import Divider from '@mui/material/Divider';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Grid from '@material-ui/core/Grid';
-import Typography from "@material-ui/core/Typography";
-import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import icoStudent from './user-icon.png';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import LanguageIcon from '@mui/icons-material/Language';
-import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import LinesEllipsis from "react-lines-ellipsis";
-import icoStudent from './user-icon.png';
-import apiPath from '../../../../ApiPath';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import Stack from '@mui/material/Stack';
 import swal from 'sweetalert';
+import Typography from "@material-ui/core/Typography";
+import UnfoldMoreOutlinedIcon from '@mui/icons-material/UnfoldMoreOutlined';
+import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 function ItemJob(props) {
   // Card with information of each applicant
@@ -43,182 +48,120 @@ function ItemJob(props) {
     photo = `${apiPath}/student_photos/${props.student.photo_filename_logical}`;
   }
 
-  useEffect(function () {
-  const boxbutton = document.getElementById('box-buttons');
-  const buttonstudent = document.getElementById('github-button');
-  const linkedinbutton = document.getElementById('linkedin-button');
-  const portfoliobutton = document.getElementById('portfolio-button');
-  const englishbutton = document.getElementById('english-button');
-
-  if (props.student.github != null) {
-
-  }
-
-  if (buttonstudent.value == null || buttonstudent.value == "") {
-    buttonstudent.style.display = 'none';
-  }
-  if (linkedinbutton.value == null || linkedinbutton.value == "") {
-    linkedinbutton.style.display = 'none';
-  }
-  if (portfoliobutton.value == null || portfoliobutton.value == "") {
-    portfoliobutton.style.display = 'none';
-  }
-  if (englishbutton.value == null || englishbutton.value == "") {
-    englishbutton.style.display = 'none';
-  }
-
-  if (buttonstudent.style.display && linkedinbutton.style.display && portfoliobutton.style.display == 'none') {
-    boxbutton.style.display = 'none';
-  }
-});
-
   return (
     <React.StrictMode>     
-          <Card elevation={4} sx={{ width: '100%', height: 320, maxWidth: 1170, my: '15px', display: 'flex', borderRadius: '160px', padding: '30px' }}>
+      <Card elevation={4} sx={{ width: '100%', height: 320, maxWidth: 1170, my: '15px', display: 'flex', borderRadius: '160px', padding: '30px' }}>
+        <Box
+          sx={{
+            width: '100%',
+            padding: '33px 20px 30px',
+          }}
+        >
+          <Container maxWidth="lg">
             <Box
               sx={{
-                width: '100%',
-                padding: '33px 20px 30px',
+                display: 'flex',
               }}
             >
-              <Container maxWidth="lg">
+              <Grid style={{width: '40%'}} container direction="column" justifyContent="space-between">
                 <Box
                   sx={{
-                    display: 'flex',
+                    display: 'flex', marginBottom: '40px'
                   }}
                 >
-                  <Grid style={{width: '40%'}}>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                      }}
-                    >
-                      <a rel="noopener" title="" href="" style={{display: 'block', textDecoration: 'none', color: 'inherit', width: '80px', cursor: 'pointer', height: '80px', maxWidth: '80px', minWidth: '80px', maxHeight: '80px', minHeight: '80px', marginRight: '25px'}}>
-                        <img src={ photo } alt="Profile" style={{display: 'block', width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} />
-                      </a>
-                      <Box
-                      >
-                        <a class="MuiTypography-root MuiTypography-h6 MuiTypography-alignLeft" style={{color: 'inherit', display: 'block', textDecoration: 'none', cursor: 'pointer', lineHeight: '1.7rem', marginBottom: '0.3rem', textAlign: 'left', fontSize: '1.25rem', fontWeight: '500'}} rel="noopener" href=""> {props.student.firstname} {props.student.lastname}</a>
-                        <a class="MuiTypography-root jss86 jss127 jss125 MuiTypography-body2 MuiTypography-alignLeft" rel="noopener" href="" style={{color: 'inherit', display: 'block', textDecoration: 'none', textAlign: 'left', fontSize: '1rem', fontWeight: '400', lineHeight: '1.43', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: '1', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book'}}>{props.student.developer_type}</a>
-                        <a rel="noopener" href="" style={{color: 'inherit', margin: '4px 0px 4px -4px', display: 'flex', textDecoration: 'none'}}>
-                          <svg class="MuiSvgIcon-root" style={{fill: 'currentColor', width: '1em', height: '1em', display: 'inline-block', fontSize: '1.25rem', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none', marginRight: '5px', color: 'inherit', textDecoration: 'none'}} focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.88-2.88 7.19-5 9.88C9.92 16.21 7 11.85 7 9z"></path>
-                            <circle cx="12" cy="9" r="2.5"></circle>
-                          </svg>
-                          <p class="MuiTypography-root MuiTypography-body1" style={{height: '23px', display: '-webkit-box', overflow: 'hidden', fontSize: '14px', marginTop: '1px', textAlign: 'left', WebkitBoxOrient: 'vertical', WebkitLineClamp: '1', fontWeight: '500', lineHeight: '1.5', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book'}}>{props.student.province} - {props.student.nationality}</p>
-                        </a>
-                      </Box>
-                    </Box>
-                    {/*<Box sx={{display: 'flex', marginTop: '40px', width: '95%', height: '76px', overflow: 'hidden'}}>
-                      <Stack
-                        direction="row"
-                        divider={<Divider style={{height: '30px'}} orientation="vertical" flexItem />}
-                        spacing={2}
-                        style={{flexWrap: 'wrap'}}
-                      >
-                        {JSON.parse(props.student.student_skills.replace(/'/g, '"')).map(skill => <p id="skill">{skill.name}</p>)}
-                      </Stack>
-                    </Box>*/}
-                    <Grid item>
-                      <Stack
-                          direction="row"
-                          divider={<Divider style={{height: '30px'}} orientation="vertical" flexItem />}
-                          spacing={2}
-                        >
-                          {JSON.parse(props.student.student_skills.replace(/'/g, '"')).map(skill => <p id="skill">{skill.name}</p>)}
-                        </Stack>
-                    </Grid>
-                  </Grid>
-                  <Grid container direction="column" justifyContent="space-between" alignItems="baseline" style={{width: '60%', borderLeft: '2px solid #D7D7D7', paddingLeft: '20px'}}>
-                    <Box id="box-buttons" style={{width: 'max-content', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                      <Box style={{ display: 'flex', flexGrow: 1}}>
-                        <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" id="github-button" value={props.student.github} tabindex="0" type="button" href={props.student.github} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
-                          <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
-                            <GitHubIcon style={{marginRight: '10px'}} />Github
-                          </span>
-                          <span class="MuiTouchRipple-root"></span></Button>
-                      </Box>
-                      <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
-                        <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" id="linkedin-button" value={props.student.linkedin} tabindex="0" type="button" href={props.student.linkedin} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
-                          <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
-                            <LinkedInIcon style={{marginRight: '10px'}} />
-                            Linkedin
-                          </span>
-                          <span class="MuiTouchRipple-root"></span></Button>
-                      </Box>
-                      <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
-                        <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" id="portfolio-button" value={props.student.portfolio} tabindex="0" type="button" href={props.student.portfolio} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
-                          <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
-                            <WorkOutlineIcon style={{marginRight: '10px'}} />
-                            portafolio
-                          </span>
-                          <span class="MuiTouchRipple-root"></span></Button>
-                      </Box>
-                      <Box style={{ display: 'flex', marginRight: '20px', marginLeft: '20px', borderLeft: '2px solid #D7D7D7', paddingLeft: '20px', flexGrow: 1}}>
-                        <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" id="english-button" value={props.student.english_level} tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
-                          <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
-                            <LanguageIcon style={{marginRight: '10px'}} />
-                            Inglés-{props.student.english_level}
-                          </span>
-                          <span class="MuiTouchRipple-root"></span></Button>
-                      </Box>
-                    </Box>
-                    <Box>
-                      <Typography color='textPrimary' align='left' style={{fontSize: '14px', marginTop: '10px', minHeight: '64px', marginBottom: '10px'}}>
-                      <LinesEllipsis
-                        text={String(props.student.description)}
-                        maxLine='5'
-                        ellipsis='...'
-                        trimRight
-                        basedOn='letters'
-                      />
-                      </Typography>
-                    </Box>
-                    <Box style={{width: 'max-content', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                      <Box style={{ display: 'flex', flexGrow: 1}}>
-                        <Button class="MuiButtonBase-root MuiButton-root MuiButton-contained" tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
-                          <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
-                            <span class="MuiButton-startIcon MuiButton-iconSizeMedium" style={{ display: 'inherit', marginLeft: '-4px', marginRight: '8px', textTransform: 'none' }}>
-                            <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true" style={{ fontSize: '20px', fill: 'currentcolor', width: '1em', height: '1em', display: 'inline-block', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none' }}>
-                              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"></path>
-                            </svg>
-                          </span>Contactar</span>
-                          <span class="MuiTouchRipple-root"></span></Button>
-                      </Box>
-                      <Box style={{ display: 'flex', flexGrow: 1}}>
-                        <Button 
-                          onClick={() => Downloadcv(props.student.cv_filename_logical, props.student.firstname, props.student.lastname)} 
-                          class="MuiButtonBase-root MuiButton-root MuiButton-contained" tabindex="0" type="button" style={{ minWidth: 'max-content',marginLeft: '10px', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
-                          <span class="MuiButton-label" style={{ textTransform: 'none', width: '100%', display: 'inherit', alignItems: 'inherit', justifyContent: 'center', fontSize: '0.875rem', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', fontWeight: '500', lineHeight: '1.75' }}>
-                            <span class="MuiButton-startIcon MuiButton-iconSizeMedium" style={{ display: 'inherit', marginLeft: '-4px', marginRight: '8px', textTransform: 'none' }}
-                        >
-                            
-                          </span>Ver CV</span>
-                          <span class="MuiTouchRipple-root"></span>
-                        </Button>
-                      </Box>
-                      <button
-                        onClick={()=>{
-                          let url = `/home/candidate/${props.student.student_id}`;
-                          //history.push(url);
-                          const win = window.open(url, "_blank");
-                          win.focus();
-                        }}
-                        class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit" tabindex="0" role="button" aria-disabled="false" id="expand" title="Ver más" style={{ marginRight: '-7px', color: 'inherit', flex: '0 0 auto', padding: '12px', overflow: 'visible', fontSize: '1.5rem', textAlign: 'center', transition: 'background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', borderRadius: '50%', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', backgroundColor: 'transparent', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
-                        <span class="MuiIconButton-label" style={{ width: '100%', display: 'flex', alignItems: 'inherit', justifyContent: 'inherit', color: 'inherit', fontSize: '1.5rem', textAlign: 'center', userSelect: 'none', WebkitTapHighlightColor: 'transparent' }}>
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000" class="MuiSvgIcon-root material-icons" focusable="false" aria-hidden="true" id="targetExpand" style={{ fill: 'currentcolor', width: '1em', height: '1em', display: 'inline-block', fontSize: '1.4rem', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none', color: 'inherit', textAlign: 'center', WebkitTapHighlightColor: 'transparent' }}>
-                            <path d="M0 0h24v24H0V0z" fill="none"></path>
-                            <path d="M12 5.83L15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"></path>
-                          </svg>
-                        </span>
-                        <span class="MuiTouchRipple-root" style={{top: '0', left: '0', right: '0', bottom: '0', zIndex: '0', overflow: 'hidden', position: 'absolute', borderRadius: 'inherit', pointerEvents: 'none', fontSize: '1.5rem', textAlign: 'center', userSelect: 'none', WebkitTapHighlightColor: 'transparent'}}></span>
-                      </button>
-                    </Box>
-                  </Grid>
+                  <a rel="noopener" title="" href="" style={{display: 'block', textDecoration: 'none', color: 'inherit', width: '80px', cursor: 'pointer', height: '80px', maxWidth: '80px', minWidth: '80px', maxHeight: '80px', minHeight: '80px', marginRight: '25px'}}>
+                    <img src={ photo } alt="Profile" style={{display: 'block', width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} />
+                  </a>
+                  <Box
+                  >
+                    <a class="MuiTypography-root MuiTypography-h6 MuiTypography-alignLeft" style={{color: 'inherit', display: 'block', textDecoration: 'none', cursor: 'pointer', lineHeight: '1.7rem', marginBottom: '0.3rem', textAlign: 'left', fontSize: '1.25rem', fontWeight: '500'}} rel="noopener" href=""> {props.student.firstname} {props.student.lastname}</a>
+                    <a class="MuiTypography-root jss86 jss127 jss125 MuiTypography-body2 MuiTypography-alignLeft" rel="noopener" href="" style={{color: 'inherit', display: 'block', textDecoration: 'none', textAlign: 'left', fontSize: '1rem', fontWeight: '400', lineHeight: '1.43', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: '1', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book'}}>{props.student.developer_type}</a>
+                    <a rel="noopener" href="" style={{color: 'inherit', margin: '4px 0px 4px -4px', display: 'flex', textDecoration: 'none'}}>
+                      <svg class="MuiSvgIcon-root" style={{fill: 'currentColor', width: '1em', height: '1em', display: 'inline-block', fontSize: '1.25rem', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none', marginRight: '5px', color: 'inherit', textDecoration: 'none'}} focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.88-2.88 7.19-5 9.88C9.92 16.21 7 11.85 7 9z"></path>
+                        <circle cx="12" cy="9" r="2.5"></circle>
+                      </svg>
+                      <p class="MuiTypography-root MuiTypography-body1" style={{height: '23px', display: '-webkit-box', overflow: 'hidden', fontSize: '14px', marginTop: '1px', textAlign: 'left', WebkitBoxOrient: 'vertical', WebkitLineClamp: '1', fontWeight: '500', lineHeight: '1.5', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book'}}>{props.student.province} - {props.student.nationality}</p>
+                    </a>
+                  </Box>
                 </Box>
-              </Container>
+                <Grid item>
+                  <Stack
+                      direction="row"
+                      divider={<Divider style={{height: '30px'}} orientation="vertical" flexItem />}
+                      spacing={2}
+                      style={{display: 'flex',flexWrap: 'wrap', alignItems: 'baseline', justifyContent: 'center'}}
+                    >
+                      {JSON.parse(props.student.student_skills.replace(/'/g, '"')).slice(0, 7).map(skill => <p id="skill">{skill.name}</p>)}
+                    </Stack>
+                </Grid>
+              </Grid>
+              <Grid container direction="column" justifyContent="space-between" alignItems="baseline" style={{width: '60%', borderLeft: '2px solid #D7D7D7', paddingLeft: '20px'}}>
+                <Stack direction="row" divider={<Divider />} spacing={2}>
+                  {props.student.github
+                    ? <Button variant="contained" startIcon={<GitHubIcon style={{fontSize: '25px'}} />} id="github-button" value={props.student.github} tabindex="0" type="button" href={props.student.github} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                        Github
+                        <span class="MuiTouchRipple-root"></span>
+                      </Button>
+                    : null}
+                  {props.student.linkedin
+                    ? <Button variant="contained" startIcon={<LinkedInIcon style={{fontSize: '25px'}} />} id="linkedin-button" value={props.student.linkedin} tabindex="0" type="button" href={props.student.linkedin} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                        Linkedin
+                        <span class="MuiTouchRipple-root"></span>
+                      </Button>
+                    : null}
+                  {props.student.portfolio
+                    ?  <Button variant="contained" startIcon={<WorkOutlineIcon style={{fontSize: '25px'}} />} id="portfolio-button" value={props.student.portfolio} tabindex="0" type="button" href={props.student.portfolio} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                        portafolio
+                        <span class="MuiTouchRipple-root"></span>
+                      </Button>
+                    : null}
+                  {props.student.github !== null || props.student.linkedin !== null || props.student.portfolio !== null
+                    ? <Divider style={{height: '35px'}} orientation="vertical" />
+                    : null}
+                  {props.student.english_level 
+                    ? <Box>
+                        <Button variant="contained" startIcon={<LanguageIcon style={{fontSize: '25px'}} />} id="english-button" value={props.student.english_level} tabindex="0" type="button" style={{ cursor: 'default', minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                          Inglés-{props.student.english_level}
+                          <span class="MuiTouchRipple-root"></span></Button>
+                      </Box>
+                    : null}
+                </Stack>
+                <Box>
+                  <Typography color='textPrimary' align='left' style={{fontSize: '14px', marginTop: '10px', minHeight: '64px', marginBottom: '10px'}}>
+                  <LinesEllipsis
+                    text={String(props.student.description)}
+                    maxLine='5'
+                    ellipsis='...'
+                    trimRight
+                    basedOn='letters'
+                  />
+                  </Typography>
+                </Box>
+                <Stack direction="row" divider={<Divider />} spacing={2}>
+                  <Button variant="contained" startIcon={<MailOutlineIcon style={{fontSize: '25px'}} />} tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                    Contactar
+                    <span class="MuiTouchRipple-root"></span>
+                  </Button>
+                  <Button variant="contained" startIcon={<VisibilityIcon style={{fontSize: '25px'}} />} tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}
+                    onClick={() => Downloadcv(props.student.cv_filename_logical, props.student.firstname, props.student.lastname)} >
+                      Ver CV
+                    <span class="MuiTouchRipple-root"></span>
+                  </Button>
+                  <IconButton color="inherit" id="copyIcon" aria-label="share" title="Copiar enlace del perfil" onClick={() => {
+                      navigator.clipboard.writeText(`${window.location.origin}/home/candidate/${props.student.student_id}`)
+                    }}>
+                    <ShareOutlinedIcon />
+                  </IconButton>
+                  <IconButton href={`/home/candidate/${props.student.student_id}`} color="inherit" aria-label="view more" title="Ver más">
+                    <UnfoldMoreOutlinedIcon style={{color: "#000"}}/>
+                  </IconButton>
+                </Stack>
+              </Grid>
             </Box>
-        </Card>
+          </Container>
+        </Box>
+    </Card>
     </React.StrictMode>
   );
 }
