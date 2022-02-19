@@ -238,6 +238,10 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const inputCellphone = document.getElementById('inputCellphone');
   const inputAge = document.getElementById('inputAge');
   const inputAvailability = document.getElementById('inputAvailability');
+  const inputPresOrRemote = document.getElementById('inputPresOrRemote');
+  const inputProvince = document.getElementById('inputProvince');
+  const inputDeveloperType = document.getElementById('inputDeveloperType');
+  const inputEnglishLevel = document.getElementById('inputEnglishLevel');
 
   // Validate form inputs
 
@@ -348,6 +352,80 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       formIsValid = false;
     } else {
       formAvailability.classList.remove('error');
+    }
+
+    const pres_or_remoteValue = inputPresOrRemote.value.trim();
+    const formPresOrRemote = document.getElementById('form-pres_or_remot')
+    const errorPresOrRemote = document.getElementById('smallPresOrRemote')
+    const selectforPresOrRemote = document.getElementById('inputPresOrRemote');
+    const arrayoptionsPresOrRemote = []
+    for (var i = 0; i < selectforPresOrRemote.options.length; i++) {
+      arrayoptionsPresOrRemote.push(selectforPresOrRemote.options[i].value);
+    }
+
+    if (pres_or_remoteValue === "") {
+      formPresOrRemote.className = 'form-control error';
+      errorPresOrRemote.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else if (!(arrayoptionsPresOrRemote.includes(pres_or_remoteValue))) {
+      formPresOrRemote.className = 'form-control error';
+      errorPresOrRemote.innerText = "Ingrese una opcion del menú desplegable"
+      formIsValid = false;
+    } else {
+      formPresOrRemote.classList.remove('error');
+    }
+
+    const provincevalue = inputProvince.value.trim();
+    const formProvince = document.getElementById('form-province');
+    const errorProvince = document.getElementById('smallProvince');
+
+    if (provincevalue === "") {
+      formProvince.className = 'form-control error';
+      errorProvince.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(provincevalue))) {
+      formProvince.className = 'form-control error';
+      errorProvince.innerText = "Use solo letras.";
+      formIsValid = false;
+    } else {
+      formProvince.classList.remove('error');
+    }
+
+    const developertypeValue = inputDeveloperType.value.trim();
+    const formDeveloperType = document.getElementById('form-developer_type');
+    const errorDeveloperType = document.getElementById('smallDeveloperType');
+
+    if (developertypeValue === "") {
+      formDeveloperType.className = 'form-control error';
+      errorDeveloperType.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(developertypeValue))) {
+      formDeveloperType.className = 'form-control error';
+      errorDeveloperType.innerText = "Use solo letras.";
+      formIsValid = false;
+    } else {
+      formDeveloperType.classList.remove('error');
+    }
+
+    const english_levelValue = inputEnglishLevel.value.trim();
+    const formEnglishLevel = document.getElementById('form-english_level')
+    const errorEnglishLevel = document.getElementById('smallEnglishLevel')
+    const selectforEnglishLevel = document.getElementById('inputEnglishLevel');
+    const arrayoptionsEnglishLevel = []
+    for (var i = 0; i < selectforEnglishLevel.options.length; i++) {
+      arrayoptionsEnglishLevel.push(selectforEnglishLevel.options[i].value);
+    }
+
+    if (english_levelValue === "") {
+      formEnglishLevel.className = 'form-control error';
+      errorEnglishLevel.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else if (!(arrayoptionsEnglishLevel.includes(english_levelValue))) {
+      formEnglishLevel.className = 'form-control error';
+      errorEnglishLevel.innerText = "Ingrese una opcion del menú desplegable"
+      formIsValid = false;
+    } else {
+      formEnglishLevel.classList.remove('error');
     }
 
     return formIsValid
@@ -672,8 +750,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <small id='smallAvailability'> Error message </small>
           </div>
 
-          <div className='form-control'>
-            <label htmlFor="inputPresOrRemote">Modo de trabajo de preferencia</label>
+          <div className='form-control' id='form-pres_or_remot'>
+            <label htmlFor="inputPresOrRemote">Modo de trabajo de preferencia (*obligatorio)</label>
             <div className='inputFormDiv'>
               <select className="form-control" id="inputPresOrRemote" onChange={handleChange} name="pres_or_remot" value={form.pres_or_remot}>
                 <option selected disabled hidden></option>
@@ -685,7 +763,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
-            <small> Error message </small>
+            <small id='smallPresOrRemote'> Error message </small>
           </div>
 
           <div className='form-control'>
@@ -705,7 +783,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
           
           <div className='form-control' id='form-province'>
-            <label htmlFor="inputProvine">Ciudad (*obligatorio)</label>
+            <label htmlFor="inputProvince">Ciudad (*obligatorio)</label>
             <div className="inputFormDiv">
               <input type="text" className="form-control" id="inputProvince" name="province" onChange={handleChange} maxLength={45} value={form.province}/>
               <i className="fas fa-check-circle" />

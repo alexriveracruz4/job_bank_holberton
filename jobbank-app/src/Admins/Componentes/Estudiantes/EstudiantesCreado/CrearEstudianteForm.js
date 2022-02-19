@@ -75,6 +75,7 @@ const CrudForm = ({ createData }) => {
   const inputAge = document.getElementById('inputAge');
   const inputNationality = document.getElementById('inputNationality');
   const inputAvailability = document.getElementById('inputAvailability');
+  const inputProvince = document.getElementById('inputProvince');
 
   // Validate form inputs
 
@@ -161,6 +162,10 @@ const CrudForm = ({ createData }) => {
       formRepeatPassword.className = 'form-control error';
       errorRepeatPassword.innerText = "La contraseña no coincide";
       formIsValid = false;
+    } else if (repeatpasswordvalue === "") {
+      formRepeatPassword.className = 'form-control error';
+      errorRepeatPassword.innerText = "Complete este campo.";
+      formIsValid = false;
     } else {
       formRepeatPassword.classList.remove('error');
     }
@@ -174,7 +179,7 @@ const CrudForm = ({ createData }) => {
       errorNationality.innerText = "Complete este campo.";
       formIsValid = false;
     } else {
-      formPassword.classList.remove('error');
+      formNationality.classList.remove('error');
     }
 
     const phonenumbervalue = inputPhonenumber.value.trim();
@@ -231,6 +236,22 @@ const CrudForm = ({ createData }) => {
       formIsValid = false;
     } else {
       formAvailability.classList.remove('error');
+    }
+
+    const provincevalue = inputProvince.value.trim();
+    const formProvince = document.getElementById('form-province');
+    const errorProvince = document.getElementById('smallProvince');
+
+    if (provincevalue === "") {
+      formProvince.className = 'form-control error';
+      errorProvince.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(provincevalue))) {
+      formProvince.className = 'form-control error';
+      errorProvince.innerText = "Use solo letras.";
+      formIsValid = false;
+    } else {
+      formProvince.classList.remove('error');
     }
 
     return formIsValid
@@ -331,7 +352,7 @@ const CrudForm = ({ createData }) => {
           </div>
 
           <div className='form-control' id='form-province'>
-            <label htmlFor="inputProvine">Ciudad</label>
+            <label htmlFor="inputProvince">Ciudad (*obligatorio)</label>
             <div className="inputFormDiv">
               <input type="text" className="form-control" id="inputProvince" name="province" onChange={handleChange} maxLength={45} value={form.province}/>
               <i className="fas fa-check-circle" />
