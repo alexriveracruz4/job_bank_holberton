@@ -125,6 +125,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
 
   // Getting variables from html
   const inputName = document.getElementById('inputName');
+  const inputNation = document.getElementById('inputNation');
   const inputRegion = document.getElementById('inputRegion');
   const inputPhonenumber = document.getElementById('inputPhonenumber');
   const inputEmail = document.getElementById('inputEmail');
@@ -148,6 +149,18 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     formIsValid = false;
   } else {
     formName.classList.remove('error');
+  }
+
+  const nationvalue = inputNation.value.trim();
+  const formNation = document.getElementById('form-nation');
+  const errorNation = document.getElementById('smallNation');
+
+  if (nationvalue === "") {
+    formNation.className = 'form-control error';
+    errorNation.innerText = "Complete este campo.";
+    formIsValid = false;
+  } else {
+    formNation.classList.remove('error');
   }
 
   const regionvalue = inputRegion.value.trim();
@@ -258,7 +271,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           </div>
 
           <div className="form-control" id='form-name'>
-            <label htmlFor="inputName">Empresa</label>
+            <label htmlFor="inputName">Empresa (*obligatorio)</label>
             <div className="inputFormDiv">
               <input type="text" className="form-control" id="inputName" name="name" onChange={handleChange} maxLength={60} value={form.name}/>
               <i className="fas fa-check-circle" />
@@ -268,7 +281,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           </div>
 
           <div className='form-control'>
-            <label htmlFor="inputNation">País</label>
+            <label htmlFor="inputNation">País (*obligatorio)</label>
             <div className='inputFormDiv'>
               <select className="form-control" id="inputNation" onChange={handleChange} name="nation" value={form.nation}>
                 <option>{form.nation}</option>
@@ -279,11 +292,11 @@ const CrudForm = ({ updateData, dataToEdit }) => {
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
-            <small> Error message </small>
+            <small id='smallNation'> Error message </small>
           </div>
 
           <div className='form-control' id='form-region'>
-            <label htmlFor="inputRegion">Ciudad</label>
+            <label htmlFor="inputRegion">Ciudad (*obligatorio)</label>
             <div className="inputFormDiv">
               <input type="text" className="form-control" id="inputRegion" name="region" onChange={handleChange} maxLength={45} value={form.region}/>
               <i className="fas fa-check-circle" />
@@ -303,7 +316,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           </div>
 
           <div className='form-control' id='form-email'>
-            <label htmlFor="inputEmail">Email</label>
+            <label htmlFor="inputEmail">Email (*obligatorio)</label>
             <div className="inputFormDiv">
               <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} maxLength={60} value={form.email} />
               <i className="fas fa-check-circle" />

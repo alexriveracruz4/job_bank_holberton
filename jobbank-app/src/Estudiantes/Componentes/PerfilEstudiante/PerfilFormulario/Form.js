@@ -74,14 +74,11 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     });
   };
 
-  // Get photoname
   const [student, setStudent] = useState([2]);
   const [stdskills, setStdskills] = useState([]);
-  //const [skill, setSkill] = useState([2]);
 
   React.useEffect(() => {
     obtenerDatosDeEstudiantes();
-    //obtenerDatosDeSkills();
     obtenerSkillsDeStudiante();
   }, []);
 
@@ -93,15 +90,12 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     setStudent(applications);
   }
 
-  /*const obtenerDatosDeSkills = async () => {
-    const data = await fetch(`${apiPath}/skills`);
-    setSkill(await data.json());
-  }*/
-
   const obtenerSkillsDeStudiante = async () => {
     const data = await fetch(`${apiPath}/students/${student_id}/skills`);
     setStdskills(await data.json());
   }
+
+    // Get photoname
 
   useEffect(() => {
   let photoname = "";
@@ -446,8 +440,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       reader.readAsDataURL(file);
     }
   };
-  ///////////////////////////////////
-  //const todasHabilidades = allSkillsArray;
 
   const [allSkills, setAllSkills] = useState([]);
 
@@ -483,10 +475,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   function RenderAllSkillsList(props) {
     const skills = props.allSkills;
     const HabilidadesSeleccionadas = props.selectSkills;
-    console.log("BBBBBBBBBBB-");
-    console.log(skills);
-    console.log(HabilidadesSeleccionadas);
-    //setAllSkills([...allSkills, {}]);
     const copySelectedSkills = skills.filter((item) => {
       for (let i of HabilidadesSeleccionadas) {
         if (item.id === i.id){
@@ -495,11 +483,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       }
     });
 
-    console.log("Copia");
-    console.log(copySelectedSkills);
     const newArraySkills = skills.filter((item) => !copySelectedSkills.includes(item));
     
-    console.log(newArraySkills);
     //const uniqueItemss = [...new Set(newArraySkills)]
 
     const uniqueItemss = newArraySkills.reduce((acc, current) => {
@@ -511,9 +496,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       }
     }, []);
 
-    console.log("AAAAAAAAAAAAAAAAAA");
-    console.log(uniqueItemss);
-    console.log(selectSkills);
     const filterSkills = uniqueItemss.filter(item => {
       if (item.name.toLowerCase().includes(searchValue)) {
         return true;
@@ -806,13 +788,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <label htmlFor="inputNationality">Habilidades (*obligatorio)</label>
             <div className='inputFormDiv'>
             <button
-
               onClick={()=> abrirCerrarSkillsModal()}
-
-
-
-
-
               type="button" 
               style={{width: '100%'}}
             >

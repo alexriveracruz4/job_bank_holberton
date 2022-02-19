@@ -65,7 +65,7 @@ function AdminNav() {
   let photo = UserIcon;
 
   if (admin.photo_filename_logical != null && admin.photo_filename_logical != undefined){
-    photo = `${apiPath}/admin_photos/${admin.photo_filename_logical}`;
+    const photo = `${apiPath}/admin_photos/${admin.photo_filename_logical}`;
   }
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -107,7 +107,7 @@ function AdminNav() {
 
 
   return (
-    <AppBar sx={{ bgcolor: "#1b0c61"}} position="static">
+    <AppBar  style={{backgroundColor: "#1b0c61", color: "#fff"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           
@@ -177,7 +177,6 @@ function AdminNav() {
                 key={page}
                 onClick={() => handleCloseNavMenu(page)}
                 sx={{ 
-                  m: 2,
                   textTransform: "none",
                   fontSize: "20px",
                   fontWeight: 400,
@@ -187,6 +186,7 @@ function AdminNav() {
                     color: '#ce3938',
                   },
                 }}
+                style={{margin: '16px', padding: '6px 8px'}}
               >
                 {page}
               </Button>
@@ -196,7 +196,7 @@ function AdminNav() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Configuraciones">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={photo} />
+                <Avatar alt={admin.firstname} src={photo} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -216,7 +216,7 @@ function AdminNav() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
+                <MenuItem style={{display: 'flex', padding: '6px 16px'}} key={setting} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

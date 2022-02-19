@@ -198,7 +198,7 @@ const CrudForm = ({ createData }) => {
         <form className='form'>
 
           <div className="form-control" id='form-name'>
-            <label htmlFor="inputName">Empresa</label>
+            <label htmlFor="inputName">Empresa (*obligatorio)</label>
             <div className="inputFormDiv">
               <input type="text" className="form-control" id="inputName" name="name" onChange={handleChange} maxLength={60} value={form.name}/>
               <i className="fas fa-check-circle" />
@@ -208,7 +208,7 @@ const CrudForm = ({ createData }) => {
           </div>
 
           <div className="form-control" id='form-nation'>
-            <label htmlFor="inputNation">País</label>
+            <label htmlFor="inputNation">País (*obligatorio)</label>
             <div className='inputFormDiv'>
               <select className="form-control" id="inputNation" onChange={handleChange} name="nation" value={form.nation}>
                 <option>{form.nation}</option>
@@ -243,7 +243,7 @@ const CrudForm = ({ createData }) => {
           </div>
 
           <div className='form-control' id='form-email'>
-            <label htmlFor="inputEmail">Email</label>
+            <label htmlFor="inputEmail">Email (*obligatorio)</label>
             <div className="inputFormDiv">
               <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} maxLength={60} value={form.email} />
               <i className="fas fa-check-circle" />
@@ -253,7 +253,7 @@ const CrudForm = ({ createData }) => {
           </div>
 
           <div className="form-control" id='form-password'>
-            <label htmlFor="inputPassword">Contraseña</label>
+            <label htmlFor="inputPassword">Contraseña (*obligatorio)</label>
             <div className="inputFormDiv">
               <input type="password" className="form-control" id="inputPassword" name="password" onChange={handleChange} maxLength={20} value={form.password}/>
               <i className="fas fa-check-circle" />
@@ -263,7 +263,7 @@ const CrudForm = ({ createData }) => {
           </div>
 
           <div className="form-control" id='form-repeat-password'>
-            <label htmlFor="inputRepeatPassword">Repetir Contraseña</label>
+            <label htmlFor="inputRepeatPassword">Repetir Contraseña (*obligatorio)</label>
             <div className="inputFormDiv">
               <input type="password" className="form-control" id="inputRepeatPassword" name="password" maxLength={20}/>
               <i className="fas fa-check-circle" />

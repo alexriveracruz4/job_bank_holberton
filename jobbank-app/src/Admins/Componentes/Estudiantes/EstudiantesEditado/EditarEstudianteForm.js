@@ -148,13 +148,8 @@ const CrudForm = ({ updateData, dataToEdit }) => {
       formRepeatPassword.className = 'form-control error';
       errorRepeatPassword.innerText = "La contraseña no coincide";
       formIsValid = false;
-    } else if (repeatpasswordvalue === "") {
-      formRepeatPassword.className = 'form-control error';
-      errorRepeatPassword.innerText = "Complete este campo.";
-      formIsValid = false;
     } else {
       formRepeatPassword.classList.remove('error');
-      alert(repeatpasswordvalue)
     }
 
     const phonenumbervalue = inputPhonenumber.value.trim();
@@ -192,7 +187,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
       formAge.classList.remove('error');
     }
 
-    const availabvalue = inputAvailability.value.trim();
+    /*const availabvalue = inputAvailability.value.trim();
     const formAvailability = document.getElementById('form-availability')
     const errorAvailability = document.getElementById('smallAvailability')
     const selectfor = document.getElementById('inputAvailability');
@@ -211,7 +206,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
       formIsValid = false;
     } else {
       formAvailability.classList.remove('error');
-    }
+    }*/
 
     const provincevalue = inputProvince.value.trim();
     const formProvince = document.getElementById('form-province');
@@ -242,7 +237,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
         <form className='form'>
 
           <div className='form-control' id='form-firstname'>
-            <label htmlFor="inputFirstname">Nombre</label>
+            <label htmlFor="inputFirstname">Nombre (*obligatorio)</label>
             <div className='inputFormDiv'>
               <input type="text" className="form-control" id="inputFirstname" name="firstname" onChange={handleChange} value={form.firstname} maxLength={45}/>
               <i className="fas fa-check-circle" />
@@ -252,7 +247,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           </div>
 
           <div className='form-control' id='form-lastname'>
-            <label htmlFor="inputLastname">Apellidos</label>
+            <label htmlFor="inputLastname">Apellidos (*obligatorio)</label>
             <div className='inputFormDiv'>
               <input type="text" className="form-control" id="inputLastname" name="lastname" onChange={handleChange} value={form.lastname} maxLength={45}/>
               <i className="fas fa-check-circle" />
@@ -262,7 +257,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           </div>
 
           <div className='form-control' id='form-email'>
-            <label htmlFor="inputEmail">Email</label>
+            <label htmlFor="inputEmail">Email (*obligatorio)</label>
             <div className='inputFormDiv'>
               <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} maxLength={60}/>
               <i className="fas fa-check-circle" />
@@ -302,7 +297,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           </div>
 
           <div className='form-control' id='form-age'>
-            <label htmlFor="inputAge">Edad</label>
+            <label htmlFor="inputAge">Edad (*obligatorio)</label>
             <div className='inputFormDiv'>
               <input type="tel" className="form-control" id="inputAge" name="age" maxLength={2} onChange={handleChange} value={form.age} />
               <i className="fas fa-check-circle" />
@@ -312,7 +307,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           </div>
 
           <div className='form-control' id='form-nationality'>
-            <label htmlFor="inputNationality">País</label>
+            <label htmlFor="inputNationality">País (*obligatorio)</label>
             <div className='inputFormDiv'>
               <select className="form-control" id="inputNationality" onChange={handleChange} name="nationality" value={form.nationality}>
                 <option>{form.nationality}</option>
@@ -328,16 +323,6 @@ const CrudForm = ({ updateData, dataToEdit }) => {
 
           <div className='form-control' id='form-province'>
             <label htmlFor="inputProvince">Ciudad (*obligatorio)</label>
-            <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputProvince" name="province" onChange={handleChange} maxLength={45} value={form.province}/>
-              <i className="fas fa-check-circle" />
-              <i className="fas fa-exclamation-circle" />
-            </div>
-            <small id='smallProvince'> Error message </small>
-          </div>
-
-          <div className='form-control' id='form-province'>
-            <label htmlFor="inputProvine">Ciudad</label>
             <div className="inputFormDiv">
               <input type="text" className="form-control" id="inputProvince" name="province" onChange={handleChange} maxLength={45} value={form.province}/>
               <i className="fas fa-check-circle" />

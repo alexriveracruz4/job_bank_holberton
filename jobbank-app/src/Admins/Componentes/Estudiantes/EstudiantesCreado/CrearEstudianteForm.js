@@ -217,7 +217,7 @@ const CrudForm = ({ createData }) => {
       formAge.classList.remove('error');
     }
 
-    const availabvalue = inputAvailability.value.trim();
+    /*const availabvalue = inputAvailability.value.trim();
     const formAvailability = document.getElementById('form-availability')
     const errorAvailability = document.getElementById('smallAvailability')
     const selectfor = document.getElementById('inputAvailability');
@@ -236,7 +236,7 @@ const CrudForm = ({ createData }) => {
       formIsValid = false;
     } else {
       formAvailability.classList.remove('error');
-    }
+    }*/
 
     const provincevalue = inputProvince.value.trim();
     const formProvince = document.getElementById('form-province');
@@ -362,7 +362,7 @@ const CrudForm = ({ createData }) => {
           </div>
 
           <div className='form-control' id='form-availability'>
-            <label htmlFor="inputAvailability">Estado actual (*obligatorio)</label>
+            <label htmlFor="inputAvailability">Estado actual</label>
             <div className='inputFormDiv'>
               <select className="form-control" id="inputAvailability" onChange={handleChange} name="availability" value={form.availability}>
                 <option selected disabled hidden></option>
