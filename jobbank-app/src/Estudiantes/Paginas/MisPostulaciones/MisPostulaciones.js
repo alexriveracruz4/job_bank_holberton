@@ -10,7 +10,9 @@ import "./Paginacion1.css";
 import { helpHttp } from '../../../helpers/helpHttp';
 import Loader from '../../../helpers/Loader';
 import Message from '../../../helpers/Message';
-
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 const cookies = new Cookies();
 
@@ -103,86 +105,127 @@ function MisPostulaciones() {
       <div className='HeaderContainer'>
         <EstudianteNav />
       </div>
-      <div className='MPBodyContainer'>
-        <div className='MPFiltersContainer'>
-        </div>
-        <div className='MPJobsContainer'>
-          {datosTotales.length === 1?
-            <h2 className="NumeroDeEmpleos">HAS POSTULADO A UN EMPLEO</h2>
+
+      <Stack 
+        spacing={1}
+        
+        sx={{
+          width: "100%",
+          m:"10px",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <Stack 
+          sx={{
+          width: "95%",
+          }}
+        >
+          <Typography sx={{
+          width: "95%",
+          display: 'flex',
+          justifyContent: 'center'
+          }} variant="h7" component="h2">
+            {datosTotales.length === 1?
+              <h2 className="NumeroDeEmpleos">HAS POSTULADO A UN EMPLEO</h2>
+            :
+              <h2 className="NumeroDeEmpleos">HAS POSTULADO A {datosTotales} EMPLEOS</h2> 
+            }
+          </Typography>
+        </Stack>
+        <Stack sx={{width: "95%"}} direction="row" justifyContent="center">
+          <Box sx={{width: "75%", display: "flex", flexDirection: "column", alignContent: "center"}}>
+          {loading 
+          ?
+            <div>
+              <Loader/>
+            </div>  
           :
-            <h2 className="NumeroDeEmpleos">HAS POSTULADO A {datosTotales} EMPLEOS</h2> 
-          }
-          {(items) &&
-            <ReactPaginate
-              previousLabel={"<"}
-              nextLabel={">"}
-              breakLabel={"..."}
-              pageCount={pageCount}
-              forcePage={paginaActual}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
-              onPageChange={handlePageClick}
-              containerClassName={"pagination"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={"page-item"}
-              previousLinkClassName={"page-link"}
-              nextClassName={"page-item "}
-              nextLinkClassName={"page-link"}
-              breakClassName={"page-item"}
-              breakLinkClassName={"page-link"}
-              activeClassName={"active"}
-              renderOnZeroPageCount={null}
-            />
-          }
-          {loading && <Loader/>}
-          {(error|| errorPage) && <Message/>}
-          {(items) &&
-            
-            <ListJobs>
-              {loadingPage && <Loader/>}
-              {items.map(trabajo => (
-                <ItemJob
-                  key={trabajo.title}
-                  id_job={trabajo.id}
-                  id_empresa={trabajo.partner_id}
-                  title={trabajo.title}
-                  description={trabajo.description}
-                  city={trabajo.city}
-                  country={trabajo.country}
-                  pres_or_remote={trabajo.pres_or_remote}
-                  deleted={trabajo.deleted}
-                  setCopia={setCopia}
-                  paginaActual={paginaActual}
-                />
-              ))}
-            </ListJobs>
-          }
-          {items &&
-            <ReactPaginate
-              previousLabel={"<"}
-              nextLabel={">"}
-              breakLabel={"..."}
-              pageCount={pageCount}
-              forcePage={paginaActual}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
-              onPageChange={handlePageClick}
-              containerClassName={"pagination"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={"page-item"}
-              previousLinkClassName={"page-link"}
-              nextClassName={"page-item "}
-              nextLinkClassName={"page-link"}
-              breakClassName={"page-item"}
-              breakLinkClassName={"page-link"}
-              activeClassName={"active"}
-              renderOnZeroPageCount={null}
-            />
-          }
-        </div>
-      </div>
+          <>
+            {items &&
+              <ReactPaginate
+                previousLabel={"<"}
+                nextLabel={">"}
+                breakLabel={"..."}
+                pageCount={pageCount}
+                forcePage={copia.page}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                pageClassName={"page-item"}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item "}
+                nextLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                activeClassName={"active"}
+                renderOnZeroPageCount={null}
+              />
+              }
+              {(error || errorPage) && <Message/>}
+              {(items) &&
+                <ListJobs>
+                  {loadingPage 
+                  ?
+                    <div>
+                      <Loader/>
+                    </div>
+                  :
+                  <>
+                    {items.map(trabajo => (
+                      <ItemJob
+                        key={trabajo.code}
+                        id_job={trabajo.id}
+                        id_empresa={trabajo.partner_id}
+                        title={trabajo.title}
+                        description={trabajo.description}
+                        city={trabajo.city}
+                        country={trabajo.country}
+                        updated_at={trabajo.updated_at}
+                        created_at={trabajo.created_at}
+                        pres_or_remote={trabajo.pres_or_remote}
+                        setCopia={setCopia}
+                        paginaActual={paginaActual}
+                      />
+                    ))
+                    }
+                  </>  
+                }
+                </ListJobs>
+              }   
+
+              {(items && !loadingPage) && 
+              <ReactPaginate
+                previousLabel={"<"}
+                nextLabel={">"}
+                breakLabel={"..."}
+                pageCount={pageCount}
+                forcePage={copia.page}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                pageClassName={"page-item"}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item "}
+                nextLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                activeClassName={"active"}
+                renderOnZeroPageCount={null}
+              />
+            }
+            </>
+            }
+          </Box>
+        </Stack>
+      </Stack>
     </div>
   );
 }

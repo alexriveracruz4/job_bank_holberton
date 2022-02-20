@@ -31,13 +31,13 @@ def get_jobs():
 
 
     if kind_of_job is None:
-        kind_of_job = "todas"
+        kind_of_job = ""
     if modality is None:
-        modality = "todas"
+        modality = ""
     if filter_words is None:
         filter_words = ""
     if fecha is None:
-        filter_words = "Todo"
+        filter_words = ""
 
     all_jobs = storage.all(Job).values()
 
@@ -78,7 +78,7 @@ def get_jobs():
         if fecha == "Menor a 2 meses":
             valor_numerico = 5.256e+6
         
-        if total_seconds < valor_numerico or fecha == "Todo":
+        if total_seconds < valor_numerico or fecha == "":
             return True
         else:
             return False
@@ -93,9 +93,9 @@ def get_jobs():
         for job in datos_no_borrados:
             list_jobs.append(job.to_dict())
 
-        datos_filtrados = [ x for x in list_jobs if (x['pres_or_remote'] == modality or modality == "todas") and 
-                                                    (x['job_type'] == kind_of_job or kind_of_job == "todas") and 
-                                                    (filter_words in x['title'].lower()+x["description"].lower()  or filter_words == "") 
+        datos_filtrados = [ x for x in list_jobs if (x['pres_or_remote'] == modality or modality == "" or x['pres_or_remote'] == 'Sin preferencia') and 
+                                                    (x['job_type'] == kind_of_job or kind_of_job == "") and 
+                                                    (filter_words in x['title'].lower()+x["description"].lower() or filter_words == "") 
                                                     ]
         datos_filtrados_por_fecha = [ x for x in datos_filtrados if fecha_de_publicacion(x, fecha)]
         

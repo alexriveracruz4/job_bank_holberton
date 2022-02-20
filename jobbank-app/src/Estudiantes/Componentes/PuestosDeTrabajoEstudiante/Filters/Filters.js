@@ -1,25 +1,94 @@
-import React, { useEffect, useRef, useState } from 'react';
+
+
+import React, { useEffect, useState } from 'react';
 import './Filters.css';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
+import { makeStyles } from "@material-ui/core/styles";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
+import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import Card from "@mui/material/Card";
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Button from '@mui/material/Button';
+
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    margin: theme.spacing(0),
+  },
+  group: {
+    margin: theme.spacing(1, 0),
+  }
+}));
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 2}}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    'aria-controls': `vertical-tabpanel-${index}`,
+  };
+}
 
 
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
 
 // Filters component
 function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, copia, handleClean} ) {
-  
+  const classes = useStyles();
+
   const handleChange = (e) => {
-    setSearchJob({
-      ...searchJob,
-      [e.target.name]:e.target.value,
-    });
+    console.log(e.target.value)
+    if (e.target.value === searchJob.modalidad || e.target.value === searchJob.tipoDeTrabajo || e.target.value === searchJob.fecha) {
+      setSearchJob({
+        ...searchJob,
+        [e.target.name]:"",
+      });
+    } else {
+      setSearchJob({
+        ...searchJob,
+        [e.target.name]:e.target.value,
+      });
+    }
   }
 
   const handleFilters = async () => {
@@ -33,347 +102,251 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
     }
   }
 
-
-  const inputRefmodalidad = useRef(null)
-  const inputReftipoDeTrabajo = useRef(null)
-  const inputReffecha = useRef(null)
-
   const handleDeletePalabraClave = () => {
     setCopia({...searchJob, PalabraClave: ""})
     setSearchJob({...searchJob, PalabraClave: ""})
     fetchComments(0);
   }
   const handleDeletemodalidad = () => {
-    setCopia({...searchJob, modalidad: "todas"})
-    setSearchJob({...searchJob, modalidad: "todas"})
-    inputRefmodalidad.current.click()
+    setCopia({...searchJob, modalidad: ""})
+    setSearchJob({...searchJob, modalidad: ""})
     fetchComments(0);
   }
   const handleDeletetipoDeTrabajo = () => {
-    setCopia({...searchJob, tipoDeTrabajo: "todas"})
-    setSearchJob({...searchJob, tipoDeTrabajo: "todas"})
-    inputReftipoDeTrabajo.current.click()
+    setCopia({...searchJob, tipoDeTrabajo: ""})
+    setSearchJob({...searchJob, tipoDeTrabajo: ""})
     fetchComments(0);
   }
   const handleDeletefecha = () => {
-    setCopia({...searchJob, fecha: "Todo"})
-    setSearchJob({...searchJob, fecha: "Todo"})
-    inputReffecha.current.click()
+    setCopia({...searchJob, fecha: ""})
+    setSearchJob({...searchJob, fecha: ""})
     fetchComments(0);
   }
-  const [showResultsTipo, setShowResultsTipo] = React.useState('Noshow')
-  const [showResultsModalidad, setShowResultsModalidad] = React.useState('Noshow')
-  const [showResultsFecha, setShowResultsFecha] = React.useState('Noshow')
-  const onClick = () => {
-    if (showResultsTipo === 'Noshow'){
-      setShowResultsTipo('OptionsJob')
-    } else {
-      setShowResultsTipo('Noshow')
-    }
-  }
 
-  const onClick2 = () => {
-    if (showResultsModalidad === 'Noshow'){
-      setShowResultsModalidad('OptionsRegion')
-    } else {
-      setShowResultsModalidad('Noshow')
-    }
-  }
+  const [value, setValue] = React.useState(0);
 
-  const onClick3 = () => {
-    if (showResultsFecha === 'Noshow'){
-      setShowResultsFecha('OptionsRegion')
-    } else {
-      setShowResultsFecha('Noshow')
-    }
-  }
+  const handleChangeTable = (event, newValue) => {
+    setValue(newValue);
+  };
+
 
   return (
-    <div className='FilterContainer'>
-      <div className="TitleContainer">
-        <h2> FILTROS </h2>
-        <div>
-          <Stack
-            direction="column"
-            justifyContent="center"
-            alignItems="center"
-            spacing={0.5}
-          >
-          {
-            copia.PalabraClave === "" ? 
-              ""
-            :
-              <Chip label={copia.PalabraClave} color="info" onDelete={handleDeletePalabraClave} />
-          }
-          {
-            copia.modalidad === "todas" ? 
-              ""
-            :
-            <Chip label={copia.modalidad} color="info" onDelete={handleDeletemodalidad} />
-          }
-          {
-            copia.tipoDeTrabajo === "todas" ? 
-              ""
-            :
-              <Chip label={copia.tipoDeTrabajo} color="info" onDelete={handleDeletetipoDeTrabajo} />
-          }
-          {
-            copia.fecha === "Todo" ? 
-              ""
-            :
-              <Chip label={copia.fecha} color="info" onDelete={handleDeletefecha} />
-          }
+
+    <Stack
+    >
+      <Stack
+        direction="column"
+        justifyContent="flex-start"
+        alignItems="center"
+        spacing={1}
+        sx={{ position: "sticky", top:50}}
+      >
+      <Box 
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={1}
+        sx={{ borderRadius: "10px",  my: "5px",  width: "98%",  mb:"10px", mt:"10px", mr:"10px", ml:"10px", borderRadius: "20px"}} 
+      >
+        {
+          copia.PalabraClave === "" ? 
+            ""
+          :
+            <Chip label={copia.PalabraClave} color="info" onDelete={handleDeletePalabraClave} />
+        }
+        {
+          copia.modalidad === "" ? 
+            ""
+          :
+          <Chip label={copia.modalidad} color="info" onDelete={handleDeletemodalidad} />
+        }
+        {
+          copia.tipoDeTrabajo === "" ? 
+            ""
+          :
+            <Chip label={copia.tipoDeTrabajo} color="info" onDelete={handleDeletetipoDeTrabajo} />
+        }
+        {
+          copia.fecha === "" ? 
+            ""
+          :
+            <Chip label={copia.fecha} color="info" onDelete={handleDeletefecha} />
+        }
+      </Box>
+
+      <Card elevation={4} 
+        direction="column"
+        justifyContent="flex-start"
+        alignItems="center"
+        spacing={1}
+        sx={{width: "98%", height: "550px", mb:"10px", mt:"70px", mr:"10px", ml:"10px", borderRadius: "20px"}}
+
+      >
+        <Box sx={{ '& > :not(style)': { mt: 1 }, display: "flex", justifyContent: "center", mt: "5px", borderRadius: "30px"}}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+            <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+            <TextField
+              name="PalabraClave"
+              defaultValue={copia.PalabraClave}
+              value={searchJob.PalabraClave}
+              onChange={handleChange}
+              onKeyPress={handleKeyPress}
+              id="input-with-sx" 
+              label="Buscar"
+              variant="standard" 
+            />
+          </Box>
+        </Box>
+
+        <Box
+        sx={{ flexGrow: 1, display: 'flex', flexDirection: "row", height: 420,  borderRadius: "20px"}}
+        >
+          <Stack sx={{height: 420, width: "35%", display: 'flex', justifyContent: "center" }}>
+            <Tabs
+              orientation="vertical"
+              variant="scrollable"
+              value={value}
+              onChange={handleChangeTable}
+              aria-label="Vertical tabs example"
+              sx={{ borderRight: 1, borderColor: 'divider'}}
+            >
+              <Tab label="Fecha de publicación" {...a11yProps(0)} />
+              <Tab label="Modalidad" {...a11yProps(1)} />
+              <Tab label="Tipo de trabajo" {...a11yProps(2)} />
+            </Tabs>
           </Stack>
-          </div>
-      </div>
+          <Stack sx={{height: 420, width: "70%", display: 'flex', justifyContent: "center" }}>
+            <TabPanel value={value} index={2}>
 
-      <div className="KeyWord">
-        <h3> Palabras clave </h3>
-        <input 
-          type='text'
-          placeholder='Ej:Full Stack'
-          name="PalabraClave"
-          value={searchJob.PalabraClave}
-          onChange={handleChange}
-          onKeyPress={handleKeyPress}
-          defaultValue={copia.tipoDeTrabajo}
-        />
-      </div>
-      <div className="TypeJob">
-        <button onClick={onClick}> Tipo de trabajo </button>
-        <div className={showResultsTipo}>
-          <div>
-            <input 
-              type='radio'
-              id='tiempo_completo'
-              name='tipoDeTrabajo'
-              value="Tiempo completo"
-              onChange={handleChange}
-              defaultChecked={"Tiempo completo" === searchJob.tipoDeTrabajo}
-            />
-            <label htmlFor="tiempo_completo">Tiempo completo</label>
-          </div>
-          <div>
-            <input 
-              type='radio'
-              id='medio_tiempo'
-              name='tipoDeTrabajo'
-              value="Tiempo parcial"
-              onChange={handleChange}
-              defaultChecked={"Tiempo parcial" === copia.tipoDeTrabajo}
-            />
-            <label htmlFor="medio_tiempo">Tiempo parcial</label>
-          </div>
-          <div>
-            <input 
-              type='radio'
-              id='por_horas'
-              name='tipoDeTrabajo'
-              value="Por horas"
-              onChange={handleChange}
-              defaultChecked={"Por horas" === copia.tipoDeTrabajo}
-            />
-            <label htmlFor="por_horas">Por horas</label>
-          </div>
-          <div>
-            <input 
-              ref={inputReftipoDeTrabajo}
-              type='radio'
-              id='todas'
-              name='tipoDeTrabajo'
-              value="todas"
-              onChange={handleChange}
-              defaultChecked={"todas" === copia.tipoDeTrabajo}
-            />
-            <label htmlFor="todas">Todas</label>
-          </div>
-        </div>
-      </div>
-      <div className="TypeRegion">
-        <button  onClick={onClick2}> Modalidad de trabajo </button>
-        <div className={showResultsModalidad}>
-          <div>
-            <input 
-              type='radio'
-              id='presencial'
-              name='modalidad'
-              value="Presencial"
-              onChange={handleChange}
-              defaultChecked={"Presencial" === copia.modalidad}
-            />
-            <label htmlFor="presencial">Presencial</label>
-          </div>
-          <div>
-            <input 
-              type='radio'
-              id='remoto'
-              name='modalidad'
-              value="Remoto"
-              onChange={handleChange}
-              defaultChecked={"Remoto" === copia.modalidad}
-            />
-            <label htmlFor="remoto">Remoto</label>
-          </div>
-          <div>
-            <input 
-              type='radio'
-              id='semi-presencial'
-              name='modalidad'
-              value="Semi-presencial"
-              onChange={handleChange}
-              defaultChecked={"Semi-presencial" === copia.modalidad}
-            />
-            <label htmlFor="semi-presencial">Semi-presencial</label>
-          </div>
-          <div>
-            <input
-              ref={inputRefmodalidad}
-              type='radio'
-              id='all'
-              name='modalidad'
-              value="todas"
-              onChange={handleChange}
-              defaultChecked={"todas" === copia.modalidad}
-            />
-            <label htmlFor="all">Todas</label>
-          </div>
-        </div>
-      </div>
+              <FormControl component="fieldset" className={classes.formControl}>
 
-      <div className="TypeRegion">
-        <button onClick={onClick3} > Fecha de publicación </button>
+                <RadioGroup
+                  aria-label="gender"
+                  name="tipoDeTrabajo"
+                  className={classes.group}
+                  value={searchJob.tipoDeTrabajo}
+                >
+                  <FormControlLabel 
+                    value="Tiempo completo"
+                    control={<Radio onClick={handleChange} />}
+                    label="Tiempo completo"
+                  />
+                  <FormControlLabel
+                    value="Tiempo parcial"
+                    control={<Radio onClick={handleChange} />}
+                    label="Tiempo parcial"
+                  />
+                  <FormControlLabel
+                    value="Por horas"
+                    control={<Radio onClick={handleChange} />}
+                    label="Por horas"
+                  />
+                  <FormControlLabel
+                    value="Por proyecto"
+                    control={<Radio onClick={handleChange} />}
+                    label="Por proyecto"
+                  />
+                </RadioGroup>
 
-        <div className={showResultsFecha}>
-          <div>
-            <input 
-              type='radio'
-              id='hoy'
-              name='fecha'
-              value="Hoy"
-              onChange={handleChange}
-              defaultChecked={"Hoy" === copia.fecha}
-            />
-            <label htmlFor="hoy">Hoy</label>
-          </div>
-          <div>
-            <input 
-              type='radio'
-              id='ayer'
-              name='fecha'
-              value="Ayer"
-              onChange={handleChange}
-              defaultChecked={"Ayer" === copia.fecha}
-            />
-            <label htmlFor="ayer">Ayer</label>
-          </div>
-          <div>
-            <input 
-              type='radio'
-              id='menor_a_3_dias'
-              name='fecha'
-              value="Menor a 3 dias"
-              onChange={handleChange}
-              defaultChecked={"Menor a 3 dias" === copia.fecha}
-            />
-            <label htmlFor="menor_a_3_dias">Menor a 3 días</label>
-          </div>
-          <div>
-            <input 
-              type='radio'
-              id='menor_a_4_dias'
-              name='fecha'
-              value="Menor a 4 dias"
-              onChange={handleChange}
-              defaultChecked={"Menor a 4 dias" === copia.fecha}
-            />
-            <label htmlFor="menor_a_4_dias">Menor a 4 días</label>
-          </div>
-          <div>
-            <input 
-              type='radio'
-              id='menor_a_5_dias'
-              name='fecha'
-              value="Menor a 5 dias"
-              onChange={handleChange}
-              defaultChecked={"Menor a 5 dias" === copia.fecha}
-            />
-            <label htmlFor="menor_a_5_dias">Menor a 5 días</label>
-          </div>
-          <div>
-            <input 
-              type='radio'
-              id='menor_a_1_semana'
-              name='fecha'
-              value="Menor a 1 semana"
-              onChange={handleChange}
-              defaultChecked={"Menor a 1 semana" === copia.fecha}
-            />
-            <label htmlFor="menor_a_1_semana">Menor a 1 semana</label>
-          </div>
-          <div>
-            <input 
-              type='radio'
-              id='menor_a_2_semanas'
-              name='fecha'
-              value="Menor a 2 semanas"
-              onChange={handleChange}
-              defaultChecked={"Menor a 2 semanas" === copia.fecha}
-            />
-            <label htmlFor="menor_a_2_semanas">Menor a 2 semanas</label>
-          </div>
-          <div>
-            <input 
-              type='radio'
-              id='menor_a_1_mes'
-              name='fecha'
-              value="Menor a 1 mes"
-              onChange={handleChange}
-              defaultChecked={"Menor a 1 mes" === copia.fecha}
-            />
-            <label htmlFor="menor_a_1_mes">Menor a 1 mes</label>
-          </div>
-          <div>
-            <input 
-              type='radio'
-              id='menor_a_2_meses'
-              name='fecha'
-              value="Menor a 2 meses"
-              onChange={handleChange}
-              defaultChecked={"Menor a 2 meses" === copia.fecha}
-            />
-            <label htmlFor="menor_a_2_meses">Menor a 2 meses</label>
-          </div>
-          <div>
-            <input
-              ref={inputReffecha}
-              type='radio'
-              id='todo'
-              name='fecha'
-              value="Todo"
-              onChange={handleChange}
-              defaultChecked={"Todo" === copia.fecha}
-            />
-            <label htmlFor="todo">Todo</label>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div className="ConfirmationButtons">
-        <button
-          onClick={handleFilters}> 
-          Filtrar 
-        </button>
-        <button
-          onClick={handleClean}> 
-          Limpiar filtros
-        </button>
-      </div>
-
-    </div>
-
+              </FormControl>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <FormControl component="fieldset" className={classes.formControl}>
+                <RadioGroup
+                  aria-label="gender"
+                  name="modalidad"
+                  className={classes.group}
+                  value={searchJob.modalidad}
+                >
+                  <FormControlLabel
+                    value="Presencial"
+                    control={<Radio onClick={handleChange} />}
+                    label="Presencial"
+                  />
+                  <FormControlLabel
+                    value="Remoto"
+                    control={<Radio onClick={handleChange} />}
+                    label="Remoto"
+                  />
+                  <FormControlLabel
+                    value="Semi-presencial"
+                    control={<Radio onClick={handleChange} />}
+                    label="Semi-presencial"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </TabPanel>
+            <TabPanel value={value} index={0}>
+              <FormControl component="fieldset" className={classes.formControl}>
+                <RadioGroup
+                  aria-label="gender"
+                  name="fecha"
+                  className={classes.group}
+                  value={searchJob.fecha}
+                >
+                  <FormControlLabel
+                    value="Hoy"
+                    control={<Radio onClick={handleChange} />}
+                    label="Hoy"
+                  />
+                  <FormControlLabel
+                    value="Ayer"
+                    control={<Radio onClick={handleChange} />}
+                    label="Ayer"
+                  />
+                  <FormControlLabel
+                    value="Menor a 3 dias"
+                    control={<Radio onClick={handleChange} />}
+                    label="Menor a 3 dias"
+                  />
+                  <FormControlLabel
+                    value="Menor a 4 dias"
+                    control={<Radio onClick={handleChange} />}
+                    label="Menor a 4 dias"
+                  />
+                  <FormControlLabel
+                    value="Menor a 5 dias"
+                    control={<Radio onClick={handleChange} />}
+                    label="Menor a 5 dias"
+                  />
+                  <FormControlLabel
+                    value="Menor a 1 semana"
+                    control={<Radio onClick={handleChange} />}
+                    label="Menor a 1 semana"
+                  />
+                  <FormControlLabel
+                    value="Menor a 2 semanas"
+                    control={<Radio onClick={handleChange} />}
+                    label="Menor a 2 semanas"
+                  />
+                  <FormControlLabel
+                    value="Menor a 1 mes"
+                    control={<Radio onClick={handleChange} />}
+                    label="Menor a 1 mes"
+                  />
+                  <FormControlLabel
+                    value="Menor a 2 meses"
+                    control={<Radio onClick={handleChange} />}
+                    label="Menor a 2 meses"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </TabPanel>
+          </Stack>
+        </Box>
+        <Box sx={{width: "100%", display: 'flex', justifyContent: "space-around", borderRadius: "20px",}}>
+          <Button onClick={handleFilters} variant="outlined" startIcon={<FilterAltIcon />}>
+            Filtrar
+          </Button>
+          <Tooltip onClick={handleClean} title="Limpiar filtros">
+            <IconButton>
+              <DeleteIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </Card>
+      </Stack>
+    </Stack>
   );
 }
-
 export { Filters }
