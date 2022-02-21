@@ -152,25 +152,25 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
           copia.PalabraClave === "" ? 
             ""
           :
-            <Chip label={copia.PalabraClave} color="info" onDelete={handleDeletePalabraClave} />
+            <Chip label={copia.PalabraClave} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px"}} onDelete={handleDeletePalabraClave} />
         }
         {
           copia.modalidad === "" ? 
             ""
           :
-          <Chip label={copia.modalidad} color="info" onDelete={handleDeletemodalidad} />
+          <Chip label={copia.modalidad} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px"}} onDelete={handleDeletemodalidad} />
         }
         {
           copia.tipoDeTrabajo === "" ? 
             ""
           :
-            <Chip label={copia.tipoDeTrabajo} color="info" onDelete={handleDeletetipoDeTrabajo} />
+            <Chip label={copia.tipoDeTrabajo} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px"}} onDelete={handleDeletetipoDeTrabajo} />
         }
         {
           copia.fecha === "" ? 
             ""
           :
-            <Chip label={copia.fecha} color="info" onDelete={handleDeletefecha} />
+            <Chip label={copia.fecha} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px"}} onDelete={handleDeletefecha} />
         }
       </Box>
 
@@ -335,7 +335,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
           </Stack>
         </Box>
         <Box sx={{width: "100%", display: 'flex', justifyContent: "space-around", borderRadius: "20px",}}>
-          <Button onClick={handleFilters} variant="outlined" startIcon={<FilterAltIcon />}>
+          <Button onClick={handleFilters} variant="contained" style={{padding: "6px 16px", backgroundColor: "#1b0c61", borderRadius: "4px", color: "#fff"}} startIcon={<FilterAltIcon />}>
             Filtrar
           </Button>
           <Tooltip onClick={handleClean} title="Limpiar filtros">

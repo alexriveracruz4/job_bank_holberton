@@ -135,7 +135,7 @@ function MisPostulaciones() {
           </Typography>
         </Stack>
         <Stack sx={{width: "95%"}} direction="row" justifyContent="center">
-          <Box sx={{width: "75%", display: "flex", flexDirection: "column", alignContent: "center"}}>
+          <Box sx={{width: "75%", display: "flex", flexDirection: "column", alignContent: "center", alignItems: 'center'}}>
           {loading 
           ?
             <div>

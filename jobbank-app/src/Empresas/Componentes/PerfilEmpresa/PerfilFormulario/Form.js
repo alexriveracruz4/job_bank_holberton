@@ -159,8 +159,6 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     formNation.className = 'form-control error';
     errorNation.innerText = "Complete este campo.";
     formIsValid = false;
-  } else {
-    formNation.classList.remove('error');
   }
 
   const regionvalue = inputRegion.value.trim();

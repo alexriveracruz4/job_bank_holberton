@@ -262,6 +262,8 @@ function JobDescriptionAdminView(props) {
       direction="column"
       justifyContent="flex-start"
       alignItems="center"
+      position="relative"
+      top="80px"
       spacing={1}
       sx={{
         m:"10px",
@@ -296,8 +298,8 @@ function JobDescriptionAdminView(props) {
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
               <TabList onChange={handleChange} aria-label="lab API tabs example">
-                <Tab label="Detalles del trabajo" value="1"/>
-                <Tab label="Detalles de la empresa" value="2"/>
+                <Tab label="Detalles del trabajo" value="1" style={{padding: "0px 20px"}}/>
+                <Tab label="Detalles de la empresa" value="2" style={{padding: "0px 20px"}}/>
               </TabList>
             </Box>
             <TabPanel value="1">

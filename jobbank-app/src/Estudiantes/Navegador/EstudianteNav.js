@@ -207,6 +207,7 @@ function EstudianteNav() {
                     color: '#ce3938',
                   },
                 }}
+                style={{margin: '16px', padding: '6px 8px'}}
               >
                 {page}
               </Button>
@@ -236,7 +237,7 @@ function EstudianteNav() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
+                <MenuItem style={{display: 'flex', padding: '6px 16px'}} key={setting} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

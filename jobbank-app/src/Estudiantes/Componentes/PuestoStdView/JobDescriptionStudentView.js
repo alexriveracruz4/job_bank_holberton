@@ -319,8 +319,8 @@ function JobDescriptionStudentView(props) {
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
             <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab label="Detalles del trabajo" value="1"/>
-              <Tab label="Detalles de la empresa" value="2"/>
+              <Tab label="Detalles del trabajo" value="1" style={{padding: "0px 20px"}}/>
+              <Tab label="Detalles de la empresa" value="2" style={{padding: "0px 20px"}}/>
             </TabList>
           </Box>
           <TabPanel value="1">
@@ -337,13 +337,13 @@ function JobDescriptionStudentView(props) {
                   </Card>
                   <Card elevation={4} sx={{minHeight: "50px", borderRadius: "20px", width: '90%'}}>
                     {datos.deleted || props.EstadoDePostulacion ?
-                      <Button variant="contained" color="success" sx={{width: "100%", height: "50px" }} disabled>
-                        Postular
+                      <Button variant="contained" style={{width: "100%", height: "50px", backgroundColor: "#1b5e20", color: "#fff"}} disabled>
+                        Haz postulado
                       </Button>
                     :
                       <Button 
                         onClick={() => {PostularEmpresa(studentId, PartnerId, JobId)}}
-                        variant="contained" color="success" sx={{width: "100%", height: "50px" }}
+                        variant="contained" color="success" style={{width: "100%", height: "50px", backgroundColor: "#2e7d32", color: "#fff" }}
                       >
                         Postular
                       </Button>
