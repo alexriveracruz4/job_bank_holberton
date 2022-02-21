@@ -151,9 +151,7 @@ const CrudForm = ({ createData }) => {
     const errorPassword = document.getElementById('smallPassword')
 
     if (passwordvalue === "") {
-      formPassword.className = 'form-control error';
-      errorPassword.innerText = "Complete este campo.";
-      formIsValid = false;
+      formPassword.classList.remove('error');
     } else if (!(/^^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(passwordvalue))) {
       formPassword.className = 'form-control error';
       errorPassword.innerText = "Use entre 8 y 20 caracteres. Mínimo una letra Mayúscula, una letra minúscula y un número";
@@ -253,7 +251,7 @@ const CrudForm = ({ createData }) => {
           </div>
 
           <div className="form-control" id='form-password'>
-            <label htmlFor="inputPassword">Contraseña (*obligatorio)</label>
+            <label htmlFor="inputPassword">Contraseña</label>
             <div className="inputFormDiv">
               <input type="password" className="form-control" id="inputPassword" name="password" onChange={handleChange} maxLength={20} value={form.password}/>
               <i className="fas fa-check-circle" />
@@ -263,7 +261,7 @@ const CrudForm = ({ createData }) => {
           </div>
 
           <div className="form-control" id='form-repeat-password'>
-            <label htmlFor="inputRepeatPassword">Repetir Contraseña (*obligatorio)</label>
+            <label htmlFor="inputRepeatPassword">Repetir Contraseña</label>
             <div className="inputFormDiv">
               <input type="password" className="form-control" id="inputRepeatPassword" name="password" maxLength={20}/>
               <i className="fas fa-check-circle" />

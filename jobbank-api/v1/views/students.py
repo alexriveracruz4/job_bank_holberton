@@ -480,7 +480,9 @@ def post_student():
                 print("Enter a valid email, max 60 characters")
                 abort(400, description="Enter a valid email, max 60 characters")
         if key == "password":
-            if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
+            if value == None or value == "":
+                    isvalid = True
+            elif re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
                 isvalid = True
             else:
                 print("password: Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
@@ -831,7 +833,9 @@ def put_student(student_id):
                     print("Must contain a maximum of 1000 characters")
                     abort(400, description="Must contain a maximum of 1000 characters")
             if key == "password":
-                if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
+                if value == None or value == "":
+                    isvalid = True
+                elif re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
                     isvalid = True
                 else:
                     print("Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
@@ -881,7 +885,7 @@ def fileUpload(student_id):
     if ext != ".pdf":
         abort(400, description="It is not a pdf file")
 
-    path = '/home/jhonatanjc/job_bank_holberton/curriculums/'
+    path = '/mnt/d/jbgithub/job_bank_holberton/curriculums/'
     filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -935,7 +939,7 @@ def fileUploadPhoto(student_id):
     if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
         abort(400, description="It is not a png or jpg file")
 
-    path = '/home/jhonatanjc/job_bank_holberton/student_photos/'
+    path = '/mnt/d/jbgithub/job_bank_holberton/student_photos/'
     filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -957,7 +961,7 @@ def fileDownload(cv_filename_logical):
     """
     Download CV
     """
-    path = "/home/jhonatanjc/job_bank_holberton/curriculums/" + cv_filename_logical
+    path = "/mnt/d/jbgithub/job_bank_holberton/curriculums/" + cv_filename_logical
     return send_file(path)
 
 
@@ -966,5 +970,5 @@ def studentPhoto(photo_filename_logical):
     """
     Student Photo
     """
-    path = "/home/jhonatanjc/job_bank_holberton/student_photos/" + photo_filename_logical
+    path = "/mnt/d/jbgithub/job_bank_holberton/student_photos/" + photo_filename_logical
     return send_file(path)

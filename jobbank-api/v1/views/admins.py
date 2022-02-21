@@ -109,7 +109,9 @@ def post_admin():
             else:
                 abort(400, description="Enter a valid email, max 45 characters")
         if key == "password":
-            if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
+            if value == None or value == "":
+                    isvalid = True
+            elif re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
                 isvalid = True
             else:
                 abort(400, description="Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
@@ -155,7 +157,9 @@ def put_admin(admin_id):
                 else:
                     abort(400, description="Enter a valid email, max 45 characters")
             if key == "password":
-                if re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
+                if value == None or value == "":
+                    isvalid = True
+                elif re.match(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$", value):
                     isvalid = True
                 else:
                     abort(400, description="Minimum eight characters, at least one uppercase letter, one lowercase letter and one number")
