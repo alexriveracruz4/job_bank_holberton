@@ -44,7 +44,7 @@ import { Landing } from './Inicio/Paginas/Landing/Landing';
 import { Home } from './Home/Paginas/Home';
 
 // Not found 404 import
-import { NotFoundPage } from './NotFoundPage';
+import { NotFoundPage } from './NotFoundPage/Paginas/NotFoundPage';
 import { Favoritos } from './Home/Paginas/Favoritos';
 import { DescripcionEstudiante } from './Home/Paginas/DescripcionEstudiante';
 import NotFoundUser from './Inicio/Componentes/NotFoundUser';
