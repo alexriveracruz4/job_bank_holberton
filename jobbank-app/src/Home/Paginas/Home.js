@@ -6,7 +6,7 @@ import SectionAfterFooter from "../Componentes/Section-footer/section"
 
 function Home() {
 	return (
-		<div className='Home'>
+		<div className='Home' style={{backgroundColor: "#DF003C"}}>
 			<HomeNav />
       <Main />
       <HomeFooter />

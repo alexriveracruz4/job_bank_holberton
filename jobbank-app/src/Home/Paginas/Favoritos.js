@@ -6,7 +6,7 @@ import MainFavoritos from '../Componentes/Favoritos/MainFavoritos';
 
 function Favoritos() {
 	return (
-		<div className='Home'>
+		<div className='Home' style={{backgroundColor: "#DF003C"}}>
 			<HomeNav />
       <MainFavoritos />
       <HomeFooter />

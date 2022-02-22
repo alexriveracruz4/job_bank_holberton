@@ -84,9 +84,16 @@ def post_skill():
     if 'type' not in request.get_json():
         abort(400, description="Missing type")
 
+    all_skills = storage.all(Skill).values()
     data = request.get_json()
-    isvalid = True
 
+    """Check if the skill already exists"""
+    for skill in all_skills:
+        if skill.name == data["name"]:
+            print("ERROR: Skill exists")
+            abort(400, description="Skill exists")
+    
+    isvalid = True
     for key, value in data.items():
         if key == "name":
             if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
