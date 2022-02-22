@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react'
-import { useAuth0 } from "@auth0/auth0-react";
 import "./HomeNav.css"
+import { useHistory } from 'react-router';
+
 
 function HomeNav() {
+
+  const history = useHistory();
+
   useEffect(() => {
     window.onscroll = function() {
       const headertop = document.getElementById('header-top');
@@ -15,8 +19,6 @@ function HomeNav() {
       }
     };
   })
-
-  const { loginWithRedirect } = useAuth0();
 
   return (
     <header className="header-wrap fixed-top scrolled" id="header-top">
@@ -108,7 +110,7 @@ function HomeNav() {
                     </div>
                   </div>
                   <i className="far fa-question-circle fa-lg mx-3" style={{color: "white"}}></i>
-                  <i className="fas fa-user-circle fa-lg mx-3" onClick={() => loginWithRedirect()} style={{color: "white", cursor: "pointer"}} />
+                  <i className="fas fa-user-circle fa-lg mx-3" onClick={() => history.push("/")} style={{color: "white", cursor: "pointer"}} />
               </div>
             </div>
           </nav>

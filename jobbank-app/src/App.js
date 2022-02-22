@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect, useHistory } from "react-router-dom";
 
 import { Login } from './Login/Paginas/Login';
 
@@ -45,12 +45,14 @@ import { Home } from './Home/Paginas/Home';
 
 // Not found 404 import
 import { NotFoundPage } from './NotFoundPage';
-import NotFoundUser from './Inicio/Componentes/NotFoundUser';
 import { Favoritos } from './Home/Paginas/Favoritos';
 import { DescripcionEstudiante } from './Home/Paginas/DescripcionEstudiante';
+import NotFoundUser from './Inicio/Componentes/NotFoundUser';
+//import NotFoundUser from './Home/Paginas/NotFoundUser';
 
 
 function App() {
+  const history = useHistory();
   return (
     <Router>
       <Switch>
@@ -97,15 +99,21 @@ function App() {
           <Route exact path="/home/favoritos" component={Favoritos}/>
           <Route exact path="/home/candidate/:StudentId" component={DescripcionEstudiante}/>
 
-          <Route exact path="/" component={Landing}/>
           {
-          /*
+            /*
+            <Route exact path="/">
+            <Redirect to="/home"/>
+            </Route>
+            */
+          }
+          <Route exact path="/"component={Landing}/>
+
           <Route path="/404" component={NotFoundPage}/>
           <Route path="*">
             <Redirect to="/404"/>
           </Route>
-          */
-          }
+          
+          
           
       </Switch>
     </Router>

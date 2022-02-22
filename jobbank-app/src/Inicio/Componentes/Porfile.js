@@ -12,6 +12,7 @@ const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   let history = useHistory();
 
+
   if (isLoading) {
     return <Loader/>;
   }
@@ -31,7 +32,7 @@ const Profile = () => {
             if (result.deleted === 0) { //setting cookies when the user logged in
                const token = result.token;
                let respuesta=result;
-               cookies.set('student_id', respuesta.id, {path:"/"});
+               cookies.set('student_id', respuesta.student_id, {path:"/"});
                cookies.set('firstname', respuesta.firstname, {path:"/"});
                cookies.set('lastname', respuesta.lastname, {path:"/"});
                cookies.set('email', respuesta.email, {path:"/"});
@@ -73,24 +74,18 @@ const Profile = () => {
                 timer: "2000"
               })
                localStorage.setItem("token", token);
-               history.push("/estudiante/puestos-de-trabajo");
+               history.push('/estudiante/puestos-de-trabajo');
             } else { // Sweetalert incorrect user
-              /*
-              swal({
-                title: "Error",
-                text: "Lo sentimos, su usuario ha sido eliminado",
-                icon: "warning",
-                dangerMode: true,
-                timer: "2000"
-              })
-              */
-              history.push('/NotFoundUser');
+              history.push({
+                pathname: '/NotFoundUser',
+                state: { deleted: 1 }
+              });
             }
           } else if (result.__class__ === "Partner") {
               if (result.deleted === 0) { // //setting cookies when the user logged in
                 const token = result.token;
                 let respuesta=result;
-                cookies.set('partner_id', respuesta.id, {path:"/"});
+                cookies.set('partner_id', respuesta.partner_id, {path:"/"});
                 cookies.set('name', respuesta.name, {path:"/"});
                 cookies.set('email', respuesta.email, {path:"/"});
                 cookies.set('nation', respuesta.nation, {path:"/"});
@@ -116,24 +111,18 @@ const Profile = () => {
                   timer: "2000"
                 })
                 localStorage.setItem("token", token);
-                history.push("/empresa/mis-puestos-de-trabajo");
+                history.push('/empresa/mis-puestos-de-trabajo');
               } else {
-                  /*
-                  swal({
-                    title: "Error",
-                    text: "Lo sentimos, su usuario ha sido eliminado",
-                    icon: "warning",
-                    dangerMode: true,
-                    timer: "2000"
-                  }) // Sweetalert incorrect user
-                  */
-                  history.push('/NotFoundUser');
+                  history.push({
+                    pathname: '/NotFoundUser',
+                    state: { deleted: 1 }
+                  });
                 }
           } else if (result.__class__ === "Admin") {
-              if (result.admin_id) { // Setting cookies when the user logged in
+              if (result.deleted === 0) { // Setting cookies when the user logged in
                 const token = result.token;
                 let respuesta=result;
-                cookies.set('admin_id', respuesta.id, {path:"/"});
+                cookies.set('admin_id', respuesta.admin_id, {path:"/"});
                 cookies.set('firstname', respuesta.firstname, {path:"/"});
                 cookies.set('lastname', respuesta.lastname, {path:"/"});
                 cookies.set('email', respuesta.email, {path:"/"});
@@ -154,21 +143,20 @@ const Profile = () => {
                   timer: "2000"
                 })
                 localStorage.setItem("token", token);
-                history.push("/admin/empresas");
-              } 
+                history.push('/admin/estudiantes');
+              } else {
+                history.push({
+                  pathname: '/NotFoundUser',
+                  state: { deleted: 1 }
+                });
+              }
           }
 
         }, (error) => {
-          /*
-          swal({
-            title: "Error",
-            text: "Usuario y/o Contraseña incorrectos",
-            icon: "error",
-            dangerMode: true,
-            timer: "2000"
-          })
-          */
-          history.push('/NotFoundUser');
+          history.push({
+            pathname: '/NotFoundUser',
+            state: { deleted: "Not found" }
+          });
       });
   }
 

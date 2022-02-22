@@ -1,6 +1,5 @@
 import React from 'react';
 import LoginButton from '../../Componentes/LoginButton';
-import LogoutButton from '../../Componentes/LogoutButton';
 import Profile from '../../Componentes/Porfile';
 import { useAuth0 } from "@auth0/auth0-react";
 import Loader from '../../../helpers/Loader';

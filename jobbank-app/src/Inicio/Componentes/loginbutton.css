@@ -1,0 +1,37 @@
+.InicioContainer {
+  background-image: url("./fondo\ land-01.png");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  overflow: hidden;
+  width: "100%";
+  height: 745px;
+  background-position: 10% 10%;
+
+}
+
+.logoholbertonInicio {
+  position: relative;
+  top: 10%;
+  left: 5%;
+}
+/*
+.LoginButonInicio {
+  height: 745px;
+  display: flex;  
+  justify-content: center;  
+  align-items: center;  
+}
+*/
+.backButtonInicio {
+  position: relative;
+  top: 15%;
+  left: 5%;
+}
+.LoginButonInicio {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
