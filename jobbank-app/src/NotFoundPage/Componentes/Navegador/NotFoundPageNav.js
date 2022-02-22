@@ -7,19 +7,6 @@ function NotFoundPageNav() {
 
   const history = useHistory();
 
-  useEffect(() => {
-    window.onscroll = function() {
-      const headertop = document.getElementById('header-top');
-      
-      if(window.pageYOffset !== 0) {
-        headertop.className = 'header-wrap fixed-top scrolled';
-        
-      } else {
-        headertop.classList.remove('scrolled');
-      }
-    };
-  })
-
   return (
     <header className="header-wrap fixed-top scrolled" id="header-top">
       <div className="container d-flex justify-content-lg-around">
