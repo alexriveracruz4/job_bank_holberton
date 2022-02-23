@@ -99,7 +99,7 @@ function TablaDeTodosLosTrabajos() {
 
   const restoreData = (data) => {
     swal({
-      title: "RESTAURAR ESTUDIANTE",
+      title: "RESTAURAR TRABAJO",
       text: `¿Está seguro de restaurar los datos del trabajo "${data.title}""?`,
       icon: "warning",
       dangerMode: true,

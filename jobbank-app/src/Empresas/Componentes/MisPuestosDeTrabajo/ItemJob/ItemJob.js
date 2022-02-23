@@ -116,7 +116,14 @@ function ItemJob(props) {
         <Stack direction="row" justifyContent="space-between" spacing={0}>
           <Stack direction="row" spacing={1}>
             <Link to={{ pathname:`/empresa/mis-puestos-de-trabajo/${props.JobId}`}} style={{color: 'inherit', textDecoration: 'inherit'}}>
-              <Button variant="contained" sx={{ textTransform: 'none', backgroundColor: "#251086"}} startIcon={<VisibilityIcon />}>
+              <Button variant="contained" 
+                sx={{ 
+                  textTransform: 'none', 
+                  backgroundColor: "#251086",
+                  '&:hover': {
+                    backgroundColor: '#2c0fae',
+                  }
+                }} startIcon={<VisibilityIcon />}>
                 Ver
               </Button>
             </Link>
@@ -124,13 +131,29 @@ function ItemJob(props) {
             props.deleted ? 
             "" : 
             <Link to={`/empresa/mis-puestos-de-trabajo/${props.JobId}/puesto-editado`} style={{color: 'inherit', textDecoration: 'inherit'}}>
-              <Button variant="contained" sx={{ textTransform: 'none', backgroundColor: "#251086"}} startIcon={<EditIcon />}>
+              <Button variant="contained" 
+                sx={{ 
+                  textTransform: 'none', 
+                  backgroundColor: "#251086",
+                  '&:hover': {
+                    backgroundColor: '#2c0fae',
+                  }
+                }} 
+                startIcon={<EditIcon />}>
                 Editar
               </Button>
             </Link>
             }
             <Link to={{ pathname:`/empresa/mis-puestos-de-trabajo/${props.JobId}/postulantes`, state: { titleJob: props.title } }} style={{color: 'inherit', textDecoration: 'inherit'}}>
-              <Button variant="contained" sx={{ textTransform: 'none', backgroundColor: "#251086"}} startIcon={<PeopleIcon />}>
+              <Button variant="contained" 
+                sx={{ 
+                  textTransform: 'none', 
+                  backgroundColor: "#251086",
+                  '&:hover': {
+                    backgroundColor: '#2c0fae',
+                  }
+                }} 
+                startIcon={<PeopleIcon />}>
                 Ver postulantes
               </Button>
             </Link>
@@ -139,11 +162,17 @@ function ItemJob(props) {
               {
                 props.deleted ? 
                 "" : 
-                <Link to={`/empresa/mis-puestos-de-trabajo/`} style={{color: 'inherit', textDecoration: 'inherit'}}>
-                  
+                <Link to={`/empresa/mis-puestos-de-trabajo/`} style={{color: 'inherit', textDecoration: 'inherit'}}> 
                   <Button 
                     onClick = {() => deleteData(props.JobId, props.title)}
-                    variant="contained" color= "error" startIcon={<DeleteIcon />}>
+                    variant="contained" 
+                      sx={{
+                        backgroundColor: "#e31c3f",
+                        '&:hover': {
+                          backgroundColor: '#fd002c',
+                        }
+                      }} 
+                      startIcon={<DeleteIcon />}>
                     Eliminar
                   </Button>
                 </Link>

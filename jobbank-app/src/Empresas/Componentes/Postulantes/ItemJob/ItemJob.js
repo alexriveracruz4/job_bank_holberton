@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import apiPath from '../../../../ApiPath';
 import Button from '@mui/material/Button';
 import Box from "@material-ui/core/Box";
@@ -24,7 +24,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 
 function ItemJob(props) {
   // Card with information of each applicant
-  const history = useHistory();
   let photo = icoStudent;
   props.setCopia(props.paginaActual);
   // Card with information of each applicant
@@ -46,6 +45,14 @@ function ItemJob(props) {
 
   if (props.student.photo_filename_logical != null && props.student.photo_filename_logical != undefined) {
     photo = `${apiPath}/student_photos/${props.student.photo_filename_logical}`;
+  }
+
+  const sendEmail = () => {
+    const student_email = props.student.email;
+    const copia_email="valery.vargas@holbertonschool.com"
+    const subject=`BÚSQUEDA DE PROGRAMADORES`
+    const body=`Hola, somos de la empresa ${props.partnerName}, queriamos ponernos en contacto con usted para hablar sobre el puesto de trabajo '${props.titleJob}'.`;
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${student_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
   }
 
   return (
@@ -139,7 +146,7 @@ function ItemJob(props) {
                   </Typography>
                 </Box>
                 <Stack direction="row" divider={<Divider />} spacing={2}>
-                  <Button variant="contained" startIcon={<MailOutlineIcon style={{fontSize: '25px'}} />} tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                  <Button onClick={()=>sendEmail()} variant="contained" startIcon={<MailOutlineIcon style={{fontSize: '25px'}} />} tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
                     Contactar
                     <span class="MuiTouchRipple-root"></span>
                   </Button>
@@ -153,8 +160,12 @@ function ItemJob(props) {
                     }}>
                     <ShareOutlinedIcon />
                   </IconButton>
-                  <IconButton href={`/home/candidate/${props.student.student_id}`} color="inherit" aria-label="view more" title="Ver más">
-                    <UnfoldMoreOutlinedIcon style={{color: "#000"}}/>
+                  <IconButton color="inherit" aria-label="view more" title="Ver más">
+                        <UnfoldMoreOutlinedIcon onClick={()=>{
+                          const win = window.open(`/home/candidate/${props.student.student_id}`, "_blank");
+                          win.focus();
+                        }}
+                        />
                   </IconButton>
                 </Stack>
               </Grid>

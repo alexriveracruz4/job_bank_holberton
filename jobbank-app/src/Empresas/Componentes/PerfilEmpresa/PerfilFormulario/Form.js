@@ -67,6 +67,11 @@ const CrudForm = ({ updateData, dataToEdit }) => {
   }
   });
 
+  let photo = UserIcon;
+  if (partner.logo_filename_logical != null && partner.logo_filename_logical != undefined){
+    photo = `${apiPath}/partner_photos/${partner.logo_filename_logical}`;
+  }
+
   // Sweetalert to confirm when the user clicks in Guardar cambios
   const history = useHistory();
   let uploadInputImage = useRef();
@@ -251,7 +256,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
                   <div className="photoform-div">
                     <label htmlFor="inputPhoto" className="col-form-label">Foto de perfil</label>
                     <div className='usericon-div'>
-                      <img src={ UserIcon } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
+                      <img src={ photo } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
                     </div>
                     <small id="photoHelpInline" className="text-muted">Please upload a square-shaped picture. Max 2MB, Formats allowed: jpg, png.</small>
                     <div className="container-selectFile">
@@ -259,7 +264,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
                         <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/*" onChange={handleImageUploaded} />
                       </div>
                       <div className="cv-photo">
-                        <a id='photo-id' value={cookies.get('photo_filename_logical')}>{cookies.get('photo_filename_physical')}</a>
+                        <a id='photo-id' value={cookies.get('logo_filename_logical')}>{cookies.get('logo_filename_physical')}</a>
                       </div>
                     </div>
                   </div>

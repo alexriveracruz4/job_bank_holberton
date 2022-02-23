@@ -7,7 +7,7 @@ import Card from "@mui/material/Card";
 import Box from "@material-ui/core/Box";
 import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
-import CheckIcon from '@mui/icons-material/Check';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
@@ -128,6 +128,12 @@ function ItemJob(props) {
     );
   }
 
+  let photo = "";
+  console.log(PartnerData.logo_filename_logical);
+  if (PartnerData.logo_filename_logical != null && PartnerData.logo_filename_logical != undefined){
+  photo = `${apiPath}/partner_photos/${PartnerData.logo_filename_logical}`;
+  }
+
   return (
     <React.StrictMode>
       <Card elevation={4} sx={{ width: '100%', maxHeight: '270px', minWidth: 900, my: '30px', display: 'flex', borderRadius: '160px', px: '50px', py: '10px'}}>
@@ -135,7 +141,17 @@ function ItemJob(props) {
           <Stack sx={{  minWidth: 900, maxHeight: '270px', display: 'flex', flexDirection: 'row'}}>
             <Stack sx={{ width: '60%', px: '50px', py: '10px', display: 'flex', flexDirection: 'column'}}>
               <Typography sx={{color:"#251086", fontWeight: 'bold'}} variant="h5" component="h2">
-                <Box sx={{ fontWeight: 'bold', m: 0.5 }}>{props.title}</Box>
+                <Stack sx={{display:"flex", flexDirection: "row", justifyContent: "space-between"}}>
+                  <Box sx={{ fontWeight: 'bold', m: 0.5 }}>{props.title}</Box>
+                  {
+                    (photo !== "") &&
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={ photo }
+                      sx={{ width: 40, height: 40, alignSelf: "center",m: "10px"}}
+                    />
+                  }
+                </Stack>
               </Typography>
               <Typography variant="h6" component="h2">
                 <Box sx={{ fontWeight: 'bold'}}>{PartnerData.name}</Box>
@@ -154,7 +170,7 @@ function ItemJob(props) {
               <Stack sx={{ width: '7%', display: 'flex', flexDirection: 'column', justifyContent: "center" }}>
                 <Tooltip title="Trabajo postulado">
                   <IconButton>
-                    <CheckIcon fontSize="large" color="success"/>
+                    <CheckCircleIcon fontSize="large" color="success"/>
                   </IconButton>
                 </Tooltip>
               </Stack>

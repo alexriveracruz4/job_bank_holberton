@@ -244,7 +244,7 @@ function JobDescriptionStudentView(props) {
         title: "POSTULACIÓN",
         text: `¿Está seguro de postular al trabajo '${datos.title}' de la empresa '${partner.name}'?`,
         icon: "warning",
-        buttons: true,
+        buttons: ["Cancelar", "Postular y enviar correo"],
         dangerMode: false,
       })
       .then((willApply) => {
@@ -261,14 +261,19 @@ function JobDescriptionStudentView(props) {
                     setDb([...db, res]);
                     //setLoading(false);
                     swal({
-                        title: "Excelente",
-                        text: `Has postulado exitosamente al trabajo: '${datos.title}' de la empresa '${props.PartnerName}'`,
-                        icon: "success",
-                    });
-                    setTimeout(() => {
-                        history.goBack();
-                    }, 1000);
-                    sendEmail(datos.title);
+                      text: `Recuerde cargar su CV en el correo electrónico`,
+                      icon: "warning",
+                    }).then(() => {
+                      swal({
+                          title: "Excelente",
+                          text: `Has postulado exitosamente al trabajo: '${datos.title}' de la empresa '${partner.name}'`,
+                          icon: "success",
+                      });
+                      setTimeout(() => {
+                          history.goBack();
+                      }, 1000);
+                      sendEmail(datos.title);
+                    })
                 } else {
                   //setLoading(false);
                   swal({

@@ -92,7 +92,7 @@ function ItemStudent(props) {
   const sendEmail = () => {
     const student_email = props.student.email;
     const copia_email="valery.vargas@holbertonschool.com"
-    const subject=`BUSQUEDA DE PROGRAMADORES`
+    const subject=`BÚSQUEDA DE PROGRAMADORES`
     const body="Muy buenos días, tardes o noches, pude ver tu perfil en Holberton y me gustaría hablarte sobre una oportunidad laboral que podría interesarte."
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${student_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
   }
@@ -190,7 +190,6 @@ function ItemStudent(props) {
                     <Box style={{width: 'max-content', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                       <Box style={{ display: 'flex', flexGrow: 1}}>
                         <Button onClick={()=>sendEmail()} variant="contained" startIcon={<MailOutlineIcon style={{fontSize: '25px'}} />} tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
-                          
                           Contactar
                           <span class="MuiTouchRipple-root"></span>
                         </Button>

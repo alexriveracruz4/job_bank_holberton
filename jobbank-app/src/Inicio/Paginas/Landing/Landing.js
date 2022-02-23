@@ -6,11 +6,7 @@ import Loader from '../../../helpers/Loader';
 
 
 function Landing() {
-	const { isAuthenticated, isLoading } = useAuth0();
-
-	if (isLoading) {
-    return <Loader/>
-  }
+	const { isAuthenticated } = useAuth0();
 
 	return (
 		<div className='Landing'>

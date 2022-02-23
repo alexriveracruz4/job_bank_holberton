@@ -29,8 +29,12 @@ function Postulantes(props) {
 
   const { JobId } = useParams();
   const partner_id= cookies.get("partner_id"); //string variable
+  const partnerName= cookies.get("name");
   const location = useLocation();
-  const titleJob = location.state.titleJob;
+  let JobTitle = "";
+  if (location.state !== undefined) {
+    JobTitle = location.state.titleJob;
+  }
 
 
   const [AllStudentsApplicated, setAllStudentsApplicated] = useState(null);
@@ -54,28 +58,6 @@ function Postulantes(props) {
   let limit = 4;
 
   let api = helpHttp();
-
-  /*
-  React.useEffect(() => {
-    const obtenerDatosDeEstudiantes = async () => {
-      const url = `${apiPath}/jobs/${partner_id}/${JobId}/students?_page=${paginaActual}&_limit=${limit}`
-      setLoading(true);
-      api.get(url).then((res) => {
-        if (!res.err) {
-          setAllStudentsApplicated(res.data);
-          setError(null)
-        } else {
-          setAllStudentsApplicated(null);
-          setError(res);
-        }
-        setLoading(false);
-      })
-    };
-    obtenerDatosDeEstudiantes();
-  }, []);
-
-*/
-
 
   useEffect(() => { 
     const getComments = async () => {
@@ -132,7 +114,7 @@ function Postulantes(props) {
         <EmpresaNav />
       </div>
       <div className='PTitleContainer'>
-        <h2>{titleJob}</h2>
+        <h2>{JobTitle}</h2>
         <h3>Postulantes:</h3>
       </div>
         {datosTotales === 1?
@@ -187,6 +169,8 @@ function Postulantes(props) {
                       student={estudiante}
                       setCopia={setCopia}
                       paginaActual={paginaActual}
+                      titleJob={JobTitle}
+                      partnerName={partnerName}
                     />
                   ))}
                 </>

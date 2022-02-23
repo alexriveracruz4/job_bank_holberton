@@ -124,7 +124,12 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   } else {
     cvID.innerText = "Aún no se ha subido ningun CV";
   }
-  })
+  });
+
+  let photo = UserIcon;
+  if (student.photo_filename_logical != null && student.photo_filename_logical != undefined){
+    photo = `${apiPath}/student_photos/${student.photo_filename_logical}`;
+  }
 
   // Sweetalert to confirm when the user clicks in Guardar Cambios
   const history = useHistory();
@@ -651,7 +656,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                   <div className="photoform-div">
                     <label htmlFor="inputPhoto" className="col-form-label">Foto de perfil</label>
                     <div className='usericon-div'>
-                      <img src={ UserIcon } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
+                      <img src={ photo } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
                     </div>
                     <small id="photoHelpInline" className="text-muted">Please upload a square-shaped picture. Max 2MB, Formats allowed: jpg, png.</small>
                     <div className="container-selectFile">

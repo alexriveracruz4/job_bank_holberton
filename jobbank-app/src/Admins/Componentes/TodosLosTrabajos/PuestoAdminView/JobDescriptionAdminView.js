@@ -37,6 +37,8 @@ import Loader from '../../../../helpers/Loader';
 import Message from '../../../../helpers/Message';
 import { helpHttp } from "../../../../helpers/helpHttp";
 import apiPath from "../../../../ApiPath";
+import { useHistory } from 'react-router-dom'; 
+import swal from 'sweetalert';
 
 
 const cookies = new Cookies();
@@ -45,6 +47,8 @@ function JobDescriptionAdminView(props) {
   console.log(props.datos)
   const datos = props.datos[0];
   const [partner, setPartner] = useState([]);
+
+  let history = useHistory();
 
   let api = helpHttp();
 
@@ -256,6 +260,84 @@ function JobDescriptionAdminView(props) {
     );
   }
 
+  const [loadingEliminate, setLoadingEliminate] = useState(false);
+
+  // Sweetalert to confirm removal of job
+  const deleteData = (PartnerId, JobId, TitleJob) => {
+    swal({
+      title: "ELIMINAR TRABAJO",
+      text: `¿Está seguro de eliminar los datos del trabajo "${TitleJob}"?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        setLoadingEliminate(true)
+        let endpoint = `${apiPath}/partners/${PartnerId}/jobs/${JobId}`;
+        let options = {
+          headers: { "content-type": "application/json" },
+        };
+        api.del(endpoint, options).then((res) => {
+          if (!res.err) {
+            setLoadingEliminate(false);
+            swal(`El trabajo ${TitleJob} ha sido eliminado`, {
+              timer:"1500"
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          } else {
+            setLoadingEliminate(false);
+            swal({
+              title: "ERROR",
+              text: `No se pudo elimiar el trabajo'`,
+              icon: "error",
+            });
+          }
+        });
+      } 
+    });
+  }
+
+  const restoreData = (data) => {
+    swal({
+      title: "RESTAURAR TRABAJO",
+      text: `¿Está seguro de restaurar los datos del trabajo "${data.title}""?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willDelete) => {
+      if (willDelete) {   
+        data.deleted = 0;
+        setLoadingEliminate(true);
+        let endpoint = `${apiPath}/partners/${data.partner_id}/jobs/${data.id}`;
+        let options = {
+          body: data,
+          headers: { "content-type": "application/json" },
+        };
+        api.put(endpoint, options).then((res) => {
+          if (!res.err) {
+            setLoadingEliminate(false);
+            swal(`El trabajo ${data.title} ha sido restaurado.`, {
+              timer:"1500"
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          } else {
+            setLoadingEliminate(false);
+            swal({
+              title: "ERROR",
+              text: `No se pudo restaurar el trabajo ${data.title}`,
+              icon: "error",
+            });
+          }
+        });
+      }
+    });
+  }
+
+
   return (
     
     <Stack 
@@ -304,20 +386,51 @@ function JobDescriptionAdminView(props) {
             </Box>
             <TabPanel value="1">
               <Stack direction="row" spacing={3}>
-                <Card elevation={4} sx={{ minHeight: "400px", background: "white", borderRadius: "20px", width: '65%', whiteSpace: 'pre-line', typography: 'body1',p: 2 }}>
+                <Card elevation={4} sx={{ minHeight: "400px", borderRadius: "20px", width: '65%', whiteSpace: 'pre-line', typography: 'body1',p: 2 }}>
                   <Typography sx={{ background: "white"}} variant="body1" component="h2">
                     {datos.description}
                   </Typography>
                 </Card>
                 <Box sx={{ minHeight: "400px", width: '35%', typography: 'body1', p: [2,2,2,0]}}>
                   <Stack  sx={{position: "sticky", top:50}} direction="column" spacing={3}>
-                    <Card elevation={4} sx={{minHeight: "350px", width: '90%', borderRadius: "20px", background: "white"}}>
+                    <Card elevation={4} sx={{minHeight: "350px", width: '90%', borderRadius: "20px"}}>
                       <FolderListTrabajo/>
                     </Card>
                     <Card elevation={4} sx={{minHeight: "50px", borderRadius: "20px", width: '90%'}}>
-                      <Button variant="contained" color="success" sx={{width: "100%", height: "50px" }} disabled>
-                        Postular
-                      </Button>
+                      {
+                        datos.deleted === 0
+                        ?
+                          <Button 
+                            onClick={()=>deleteData(partner.partner_id, datos.id, datos.title)}
+                            variant="contained" 
+                            color="error" 
+                            sx={{
+                              width: "100%", 
+                              height: "50px",
+                              backgroundColor: "#e31c3f",
+                              '&:hover': {
+                                backgroundColor: '#fd002c',
+                              }
+                            }}
+                          >
+                            Eliminar
+                          </Button>
+                        :
+                          <Button 
+                            onClick={()=>restoreData(datos)}
+                            variant="contained"  
+                            sx={{
+                              width: "100%", 
+                              height: "50px", 
+                              backgroundColor: "#251086",
+                              '&:hover': {
+                                backgroundColor: '#2c0fae',
+                              }
+                            }}
+                          >
+                            Restaurar trabajo
+                          </Button>
+                      }
                     </Card>
                   </Stack>
                 </Box>

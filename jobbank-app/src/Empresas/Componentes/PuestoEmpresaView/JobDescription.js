@@ -37,6 +37,8 @@ import LanguageIcon from '@mui/icons-material/Language';
 import Loader from '../../../helpers/Loader';
 import Message from '../../../helpers/Message';
 import { helpHttp } from "../../../helpers/helpHttp";
+import { useHistory } from 'react-router-dom'; 
+
 
 const cookies = new Cookies();
 function JobDescription(props) {
@@ -58,6 +60,7 @@ function JobDescription(props) {
 
   const [loading, setLoading] = useState(false);
 
+  let history = useHistory();
   /*
   const obtenerDatosDePartners = async () => {
       const data = await fetch(`${apiPath}/partners/${partner_id}`);
@@ -317,8 +320,20 @@ function JobDescription(props) {
                       <FolderListTrabajo/>
                     </Card>
                     <Card elevation={4} sx={{minHeight: "50px", borderRadius: "20px", width: '90%'}}>
-                      <Button variant="contained" color="success" sx={{width: "100%", height: "50px" }} disabled>
-                        Postular
+                      <Button 
+                        onClick={()=>
+                          history.push(`/empresa/mis-puestos-de-trabajo/${datos.id}/puesto-editado`)
+                        }
+                        variant="contained" 
+                        sx={{
+                          width: "100%", 
+                          height: "50px", 
+                          backgroundColor: "#251086",
+                          '&:hover': {
+                            backgroundColor: '#2c0fae',
+                          }
+                        }}>
+                        Editar
                       </Button>
                     </Card>
                   </Stack>

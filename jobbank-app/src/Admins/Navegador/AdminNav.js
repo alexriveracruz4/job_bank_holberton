@@ -63,9 +63,8 @@ function AdminNav() {
   let history = useHistory();
 
   let photo = UserIcon;
-
   if (admin.photo_filename_logical != null && admin.photo_filename_logical != undefined){
-    const photo = `${apiPath}/admin_photos/${admin.photo_filename_logical}`;
+    photo = `${apiPath}/admin_photos/${admin.photo_filename_logical}`;
   }
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);

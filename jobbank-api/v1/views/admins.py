@@ -212,7 +212,7 @@ def AdminFileUploadPhoto(admin_id):
     file.save(path + filename_new)
     
     new_list = [cv for cv in os.listdir(path) if cv.startswith(str(admin_id) + "_")]
-    for file_ in sorted(new_list)[:-1]:
+    for file_ in sorted(new_list)[:-2]:
         os.remove(path + file_)
 
 
