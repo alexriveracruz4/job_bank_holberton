@@ -102,10 +102,6 @@ a:hover {
     box-shadow: none;
 }
 
-main {
-    background: #fff;
-}
-
 .header-wrap {
     width: 100%;
     max-width: 100%;
@@ -133,7 +129,6 @@ main {
 }
 
 .padding {
-    padding-top: 80px;
     padding-bottom: 80px;
 }
 
