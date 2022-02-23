@@ -91,7 +91,7 @@ main .navbar {
     align-items: center;
     justify-content: center;
 }
-
+/*no borrar aqui abajo*/
 .title-buttons {
     text-align: center;
     font-size: 25px;
@@ -3033,39 +3033,27 @@ footer ul.social-info li a {
         font-size: 15px;
     }
 }
-
-@media screen and (max-width: 380px) {
-    .call .btn.btn-danger {
-        margin-bottom: 15px;
-    }
-    .swiper-button-next:after,
-    .swiper-button-prev:after {
-        display: none;
-    }
-}
-
-/*
-das
-
-*/
+/*no borrar abajo*/
 .BackButton {
     margin: 10px;
     display: flex;
     align-items: center;
 }
-
+/*no borrar abajo*/
 .StudentsContainer{
     margin: 10px;
 }
+/*no borrar abajo*/
 .DescriptionContainer{
     padding: 30px;
 }
+/*no borrar abajo*/
 .NameAndButtonContainer {
     display: flex;
     flex-direction:row;
     justify-content: space-between;
 }
-
+/*no borrar abajo*/
 .ButtonsContainer {
     margin: 20px;
 }

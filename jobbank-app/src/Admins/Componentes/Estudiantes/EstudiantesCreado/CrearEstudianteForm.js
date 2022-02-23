@@ -25,6 +25,7 @@ const CrudForm = ({ createData }) => {
     province: "",
     availability: "",
     pres_or_remot: "",
+    student_skills: "[]",
     created_by: parseInt(AdminID),
     updated_by: parseInt(AdminID),
   };
