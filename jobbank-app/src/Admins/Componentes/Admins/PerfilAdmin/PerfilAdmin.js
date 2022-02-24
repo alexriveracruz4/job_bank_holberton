@@ -48,6 +48,13 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     setAdmin(applications);
   }
 
+  // Photo in form
+  let photo = UserIcon;
+  if (admin.photo_filename_logical != null && admin.photo_filename_logical != undefined){
+    photo = `${apiPath}/admin_photos/${admin.photo_filename_logical}`;
+  }
+
+  // Photo name in form
   useEffect(() => {
   let photoname = "";
 
@@ -80,16 +87,15 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
           // updateData function
           async function updateForm() {
-            await updateData(form);
+            const updata = await updateData(form);
           
-          setTimeout(() => {
             if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
               const data = new FormData();
               data.append('file', uploadInputImage.files[0]);
               const urlupload = `${apiPath}/admins/`+ cookies.get('admin_id') + '/uploadphoto'
   
               fetch(urlupload, {
-                method: 'POST',
+                method: 'PUT',
                 body: data,
               }).then((response) => {
                 response.json().then((body) => {
@@ -97,13 +103,12 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                 });
               })
             }
-          }, 500);
 
           cookies.set('firstname', form.firstname, {path:"/"});
           cookies.set('lastname', form.lastname, {path:"/"});
 
           swal("HAS EDITADO EXITOSAMENTE LOS DATOS DEL ADMINISTRADOR", {
-              timer:"1500"
+              timer:"1800"
           });
           setTimeout(() => {
             history.go(0);
@@ -243,7 +248,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                   <div className="photoform-div">
                     <label htmlFor="inputPhoto" className="col-form-label">Foto de perfil</label>
                     <div className='usericon-div'>
-                      <img src={ UserIcon } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
+                      <img src={ photo } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
                     </div>
                     <small id="photoHelpInline" className="text-muted">Please upload a square-shaped picture. Max 2MB, Formats allowed: jpg, png.</small>
                     <div className="container-selectFile">

@@ -1,0 +1,113 @@
+.container-profile-admin-edit {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 500px) {
+  .container-profile-admin-edit {
+    width: 500px;
+  }
+}
+
+.header-profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px;
+}
+
+.container-form {
+  border: 2px solid #000;
+}
+
+.form-control {
+  position: relative;
+}
+
+.form-control label {
+  margin: 5px 0px;
+}
+
+.form-control .form-control {
+  padding-right: 30px;
+}
+
+.usericon-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
+}
+
+.usericon-form {
+  width: 150px;
+  height: 150px;
+  border:2px solid #fff;
+  box-shadow: 0px 2px 3px 3px #ccc;
+  color:white;
+  font-size:50px;
+  border-radius: 10px;
+}
+
+.form-control.success .input {
+  border-color: #2ecc71;
+}
+
+.form-control i {
+  visibility: hidden;
+  position: absolute;
+  top: 42px;
+  right: 20px;
+}
+
+.form-control.success i.fa-check-circle {
+  color: #2ecc71;
+  visibility: visible;
+}
+
+.form-control.error i.fa-exclamation-circle {
+  padding-top: 9px;
+  color: #e74c3c;
+  visibility: visible;
+}
+
+.form-control small {
+  color: #e74c3c;
+  font-weight: 700;
+  visibility: hidden;
+}
+
+.form-control.error small {
+  visibility: visible;
+}
+
+.container-selectFile .box-photo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container-selectFile .box-photo input {
+  width: 100%;
+}
+
+
+/* prueba */
+.box-form {
+  margin-top: 64px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.box-form-content {
+  margin-top: 24px;
+}

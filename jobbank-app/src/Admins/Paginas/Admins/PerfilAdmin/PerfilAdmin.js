@@ -5,7 +5,7 @@ import { AdminNav } from "../../../Navegador/AdminNav";
 import CrudForm from '../../../Componentes/Admins/PerfilAdmin/PerfilAdmin';
 import Cookies from 'universal-cookie';
 import apiPath from '../../../../ApiPath';
-
+import PerfilAdminNew from '../../../Componentes/Admins/PerfilAdmin/PerfilAdminNew';
 
 const cookies = new Cookies();
 
@@ -58,7 +58,10 @@ function PerfilAdmin() {
             dataToEdit={dataToEdit}
         />
       </article>
-    </div>
+      {/*<PerfilAdminNew
+          updateData={updateData}
+      dataToEdit={dataToEdit}/>*/}
+      </div>
   );
 }
 
