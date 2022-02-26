@@ -640,7 +640,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
 
   return (
-    <div className="container-profile">
+    <div className="container-profile-student">
       <div className="header-profile">
         <h1>Editar mi perfil</h1>
       </div>

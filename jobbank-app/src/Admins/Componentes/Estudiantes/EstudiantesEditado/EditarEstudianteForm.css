@@ -1,123 +1,3 @@
-/*.form-editar-estudiante .profile-title {
-  display: flex;
-  justify-content: center;
-}
-
-.form-editar-estudiante .form-div {
-  max-width: 100%;
-}
-
-.form-editar-estudiante .form-div .form-group .col-sm-10 .box-photo {
-  display: flex;
-}
-
-.form-editar-estudiante .form-div .form-group {
-  display: flex;
-  justify-content: center;
-  text-align: end;
-  margin-top: 20px;
-}
-
-@media (max-width: 1300px) {
-  .form-editar-estudiante .form-div .form-group .col-form-label {
-    margin-right: 70px;
-  }
-}
-
-@media (max-width: 576px) {
-  .form-editar-estudiante .form-div .form-group .col-form-label {
-    margin-right: 0px;
-  }
-
-  .form-editar-estudiante .form-div .form-group {
-    text-align: center;
-  }
-}
-
-.form-editar-estudiante .form-div .form-group .col-sm-10 {
-  width: 400px;
-}
-
-.form-editar-estudiante .form-div .form-group .form-control {
-  border: 3px solid #000;
-}
-
-.form-editar-estudiante .form-div .form-group .select-travel-div {
-  width: 400px;
-}
-
-
-.form-editar-estudiante .form-div .form-group .text-div {
-  width: 400px;
-}
-
-.form-editar-estudiante .form-div .form-form .div-button-create-partner {
-  display: flex;
-  justify-content: center;
-  text-align: start;
-  margin-top: 20px;
-}*/
-
-/*.form-crear-estudiante .profile-title {
-  display: flex;
-  justify-content: center;
-}
-
-.form-crear-estudiante .form-div {
-  max-width: 100%;
-}
-
-.form-crear-estudiante .form-div .form-group .col-sm-10 .box-photo {
-  display: flex;
-}
-
-.form-crear-estudiante .form-div .form-group {
-  display: flex;
-  justify-content: center;
-  text-align: end;
-  margin-top: 20px;
-}
-
-@media (max-width: 1300px) {
-  .form-crear-estudiante .form-div .form-group .col-form-label {
-    margin-right: 70px;
-  }
-}
-
-@media (max-width: 576px) {
-  .form-crear-estudiante .form-div .form-group .col-form-label {
-    margin-right: 0px;
-  }
-
-  .form-crear-estudiante .form-div .form-group {
-    text-align: center;
-  }
-}
-
-.form-crear-estudiante .form-div .form-group .col-sm-10 {
-  width: 400px;
-}
-
-.form-crear-estudiante .form-div .form-group .form-control {
-  border: 3px solid #000;
-}
-
-.form-crear-estudiante .form-div .form-group .select-travel-div {
-  width: 400px;
-}
-
-
-.form-crear-estudiante .form-div .form-group .text-div {
-  width: 400px;
-}
-
-.form-crear-estudiante .form-div .form-form .div-button-create-partner {
-  display: flex;
-  justify-content: center;
-  text-align: start;
-  margin-top: 20px;
-}*/
-
 .container-profile-edit-student {
   display: grid;
   justify-content: center;
@@ -137,7 +17,9 @@
   margin: 30px;
 }
 
-.container-form {
+.container-profile-edit-student .container-form {
+  width: 600px;
+  border-radius: 5px;
   border: 2px solid #000;
 }
 

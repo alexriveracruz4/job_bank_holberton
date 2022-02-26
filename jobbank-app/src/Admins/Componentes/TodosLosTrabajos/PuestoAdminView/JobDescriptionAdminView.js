@@ -345,7 +345,6 @@ function JobDescriptionAdminView(props) {
       justifyContent="flex-start"
       alignItems="center"
       position="relative"
-      top="80px"
       spacing={1}
       sx={{
         m:"10px",

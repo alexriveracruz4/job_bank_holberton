@@ -106,7 +106,7 @@ function AdminNav() {
 
 
   return (
-    <AppBar  style={{backgroundColor: "#1b0c61", color: "#fff"}}>
+    <AppBar  style={{backgroundColor: "#1b0c61", color: "#fff", position: "sticky"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           

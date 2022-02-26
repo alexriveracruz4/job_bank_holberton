@@ -17,7 +17,9 @@
   margin: 30px;
 }
 
-.container-form {
+.container-profile-job .container-form {
+  width: 600px;
+  border-radius: 5px;
   border: 2px solid #000;
 }
 
