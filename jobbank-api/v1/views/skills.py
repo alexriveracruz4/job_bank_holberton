@@ -14,6 +14,8 @@ from math import ceil
 import os
 import ast
 
+list_of_types = ["tech", "soft", "others"]
+
 @app_views.route('/skills', methods=['GET'], strict_slashes=False)
 def get_skills():
     """
@@ -96,14 +98,18 @@ def post_skill():
     isvalid = True
     for key, value in data.items():
         if key == "name":
-            if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
+            if len(value) <= 45:
                 isvalid = True
             else:
                 print("Not a valid name, max 45 characters")
                 abort(400, description="Not a valid name, max 45 characters")
         if key == "type":
-            if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,44}$", value):
-                isvalid = True
+            if len(value) <= 45:
+                if value in list_of_types:
+                    isvalid = True
+                else:
+                    print("Not a valid type in array list_of_types")
+                    abort(400, description="Not a valid option in list_of_types")
             else:
                 print("Not a valid type, max 45 characters")
                 abort(400, description="Not a valid type, max 45 characters")
@@ -134,14 +140,18 @@ def put_skillpartner(skill_id):
         if key not in ignore:
             # Form validation
             if key == "name":
-                if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,44}$", value):
+                if len(value) <= 45:
                     isvalid = True
                 else:
                     print("Not a valid name, max 45 characters")
                     abort(400, description="Not a valid name, max 45 characters")
             if key == "type":
-                if re.match(r"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,44}$", value):
-                    isvalid = True
+                if len(value) <= 45:
+                    if value in list_of_types:
+                        isvalid = True
+                    else:
+                        print("Not a valid type in array list_of_types")
+                        abort(400, description="Not a valid option in list_of_types")
                 else:
                     print("Not a valid type, max 45 characters")
                     abort(400, description="Not a valid type, max 45 characters")

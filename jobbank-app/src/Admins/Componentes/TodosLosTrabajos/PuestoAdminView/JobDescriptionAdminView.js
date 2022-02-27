@@ -358,8 +358,8 @@ function JobDescriptionAdminView(props) {
       </div>
       :
       <>
-        <Card elevation={4} sx={{ width: '70%', maxWidth: 1000, my: '15px', borderRadius: '20px', padding: '5px', m:"10px" }}>
-          <Stack direction="row" justifyContent="flex-start" spacing={3} sx={{ p:"10px", alignSelf: "center"}}>
+        <Card elevation={4} style={{ width: '70%', maxWidth: 1000, borderRadius: '20px', padding: '5px', margin:"10px" }}>
+          <Stack direction="row" justifyContent="flex-start" spacing={3} style={{ padding:"10px", alignSelf: "center"}}>
             <Avatar
                 alt="Remy Sharp"
                 src={ photo }
@@ -375,7 +375,7 @@ function JobDescriptionAdminView(props) {
             </Stack>
           </Stack>
         </Card>
-        <Box sx={{ width: '70%', typography: 'body1' }}>
+        <Box style={{ width: '70%', typography: 'body1' }}>
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
               <TabList onChange={handleChange} aria-label="lab API tabs example">
@@ -385,17 +385,17 @@ function JobDescriptionAdminView(props) {
             </Box>
             <TabPanel value="1">
               <Stack direction="row" spacing={3}>
-                <Card elevation={4} sx={{ minHeight: "400px", borderRadius: "20px", width: '65%', whiteSpace: 'pre-line', typography: 'body1',p: 2 }}>
+                <Card elevation={4} style={{ minHeight: "400px", borderRadius: "20px", width: '65%', whiteSpace: 'pre-line', typography: 'body1',padding: '16px' }}>
                   <Typography sx={{ background: "white"}} variant="body1" component="h2">
                     {datos.description}
                   </Typography>
                 </Card>
                 <Box sx={{ minHeight: "400px", width: '35%', typography: 'body1', p: [2,2,2,0]}}>
                   <Stack  sx={{position: "sticky", top:50}} direction="column" spacing={3}>
-                    <Card elevation={4} sx={{minHeight: "350px", width: '90%', borderRadius: "20px"}}>
+                    <Card elevation={4} style={{minHeight: "350px", width: '90%', borderRadius: "20px"}}>
                       <FolderListTrabajo/>
                     </Card>
-                    <Card elevation={4} sx={{minHeight: "50px", borderRadius: "20px", width: '90%'}}>
+                    <Card elevation={4} style={{minHeight: "50px", borderRadius: "20px", width: '90%'}}>
                       {
                         datos.deleted === 0
                         ?
@@ -403,12 +403,14 @@ function JobDescriptionAdminView(props) {
                             onClick={()=>deleteData(partner.partner_id, datos.id, datos.title)}
                             variant="contained" 
                             color="error" 
-                            sx={{
+                            style={{
                               width: "100%", 
                               height: "50px",
                               backgroundColor: "#e31c3f",
+                              color: "#fff",
                               '&:hover': {
                                 backgroundColor: '#fd002c',
+                                color: "#fff"
                               }
                             }}
                           >
@@ -418,12 +420,14 @@ function JobDescriptionAdminView(props) {
                           <Button 
                             onClick={()=>restoreData(datos)}
                             variant="contained"  
-                            sx={{
+                            style={{
                               width: "100%", 
                               height: "50px", 
                               backgroundColor: "#251086",
+                              color: "#fff",
                               '&:hover': {
                                 backgroundColor: '#2c0fae',
+                                color: "#fff"
                               }
                             }}
                           >
@@ -438,14 +442,14 @@ function JobDescriptionAdminView(props) {
             </TabPanel>
             <TabPanel value="2">
               <Stack direction="row" spacing={3}>
-                <Card elevation={4} sx={{ minHeight: "100px", borderRadius: "20px", width: '65%', whiteSpace: 'pre-line', typography: 'body1', p: 2 }}>
-                  <Typography sx={{ background: "white"}} variant="body1" component="h2">
+                <Card elevation={4} style={{ minHeight: "100px", borderRadius: "20px", width: '65%', whiteSpace: 'pre-line', typography: 'body1', padding: '16px' }}>
+                  <Typography style={{ background: "white"}} variant="body1" component="h2">
                     {partner.description}
                   </Typography>
                 </Card>
                 <Box sx={{ minHeight: "100px", width: '35%', borderRadius: "20px", typography: 'body1', p: [2,2,2,0]}}>
-                  <Stack  sx={{position: "sticky", top:50}} direction="column" spacing={3}>
-                    <Card elevation={4} sx={{minHeight: "100px", borderRadius: "20px", width: '90%', background: "white"}}>
+                  <Stack  style={{position: "sticky", top:50}} direction="column" spacing={3}>
+                    <Card elevation={4} style={{minHeight: "100px", borderRadius: "20px", width: '90%', background: "white"}}>
                       <FolderListEmpresa/>
                     </Card>
                   </Stack>
