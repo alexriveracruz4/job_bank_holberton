@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./CrearEmpresaForm.css"
-import Countries from "../data/country.json"
+import Countries from "../../../../helpers/Countries.json"
 import swal from 'sweetalert';
 import { useHistory } from "react-router";
 import Cookies from "universal-cookie";

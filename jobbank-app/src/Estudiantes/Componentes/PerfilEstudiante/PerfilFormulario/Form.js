@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router';
 import Cookies from 'universal-cookie';
-import Countries from "../../../data/country.json"
+import Countries from "../../../../helpers/Countries.json"
 import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
 import "./Form.css"
 import swal from 'sweetalert';

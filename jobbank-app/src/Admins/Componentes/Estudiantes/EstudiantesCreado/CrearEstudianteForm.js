@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./CrearEstudianteForm.css";
-import Countries from "../data/country.json";
+import Countries from "../../../../helpers/Countries.json";
 import Cookies from "universal-cookie";
 import swal from 'sweetalert';
 import { useHistory } from "react-router";

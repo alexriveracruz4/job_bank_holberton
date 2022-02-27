@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./EmpresaEditada.css"
-import Countries from "../data/country.json"
+import Countries from "../../../../helpers/Countries.json"
 import swal from 'sweetalert';
 import { useHistory } from "react-router";
 import Cookies from "universal-cookie";
