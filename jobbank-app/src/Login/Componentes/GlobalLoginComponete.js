@@ -1,5 +1,5 @@
 import React from 'react';
-//import './Login.css';
+import './GlobalLoginComponete.css';
 import { withRouter } from "react-router-dom"
 import Cookies from 'universal-cookie';
 import swal from 'sweetalert';

@@ -5,14 +5,12 @@ import { Login } from './Login/Paginas/Login';
 
 
 // Student imports
-import { LoginEstudiantes } from './Estudiantes/Paginas/LoginEstudiantes/LoginEstudiantes';
 import { PuestosDeTrabajoEstudiante } from "./Estudiantes/Paginas/PuestosDeTrabajoEstudiante/PuestosDeTrabajoEstudiante"
 import { Puesto } from "./Estudiantes/Paginas/PuestoStdView/Puesto";
 import { MisPostulaciones } from "./Estudiantes/Paginas/MisPostulaciones/MisPostulaciones";
 import { PerfilEstudiante } from "./Estudiantes/Paginas/PerfilEstudiante/PerfilEstudiante";
 
 // Partner imports
-import { LoginEmpresas } from './Empresas/Paginas/LoginEmpresas/LoginEmpresas';
 import { MisPuestosDeTrabajo } from './Empresas/Paginas/MisPuestosDeTrabajo/MisPuestosDeTrabajo';
 import { NuevoPuestoDeTrabajo } from './Empresas/Paginas/NuevoPuestoDeTrabajo/NuevoPuestoDeTrabajo';
 import { PerfilEmpresa } from './Empresas/Paginas/PerfilEmpresa/PerfilEmpresa';
@@ -21,7 +19,6 @@ import { PuestoEditado } from './Empresas/Paginas/PuestoEditado/PuestoEditado';
 import { Postulantes } from './Empresas/Paginas/Postulantes/Postulantes';
 
 // Admin imports
-import { LoginAdmins } from './Admins/Paginas/LoginAdmins/LoginAdmins';
 import { PerfilAdmin } from './Admins/Paginas/Admins/PerfilAdmin/PerfilAdmin'
 import { AdminEditado } from './Admins/Paginas/Admins/AdminEditado/AdminEditado'
 import { AdminCreado } from './Admins/Paginas/Admins/AdminCreado/AdminCreado';
@@ -60,13 +57,11 @@ function App() {
 
           <Route exact path="/NotFoundUser" component={NotFoundUser}/>
 
-          <Route path="/login/estudiante" component={LoginEstudiantes}/>
           <Route exact path="/estudiante/puestos-de-trabajo" component={PuestosDeTrabajoEstudiante}/>
           <Route exact path="/estudiante/puestos-de-trabajo/partners/:PartnerId/jobs/:JobId" component={Puesto}/>
           <Route exact path="/estudiante/mis-postulaciones" component={MisPostulaciones}/>
           <Route exact path="/estudiante/perfil" component={PerfilEstudiante}/>
 
-          <Route path="/login/empresa" component={LoginEmpresas}/>
           <Route exact path="/empresa/mis-puestos-de-trabajo" component={MisPuestosDeTrabajo}/>
           <Route exact path="/empresa/mis-puestos-de-trabajo/:JobId" component={PuestoEmpresaView}/>
           <Route exact path="/empresa/mis-puestos-de-trabajo/:JobId/puesto-editado" component={PuestoEditado}/>
@@ -74,7 +69,6 @@ function App() {
           <Route exact path="/empresa/nuevo-puesto-de-trabajo" component={NuevoPuestoDeTrabajo}/>
           <Route exact path="/empresa/perfil" component={PerfilEmpresa}/>
 
-          <Route exact path="/login/admin" component={LoginAdmins}/>
           <Route exact path="/admin/perfil" component={PerfilAdmin}/>
 
           <Route exact path="/admin/admins" component={TodasLosAdmins}/>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { GlobalLoginComponete } from '../Componentes/GlobalLoginComponete';
 import { IconHolberton } from '../Componentes/IconHolberton';
+import "./Login.css";
 
 function Login() {
 	return (
