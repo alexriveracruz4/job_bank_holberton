@@ -16,6 +16,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import PeopleIcon from '@mui/icons-material/People';
 import Card from "@mui/material/Card";
+import Box  from "@mui/material/Box";
 
 
 const cookies = new Cookies();
@@ -98,8 +99,10 @@ function ItemJob(props) {
   } 
 
   return (
-    <Card elevation={4} sx={{ width: '100%', height: 320, maxWidth: 1170, my: '15px', display: 'flex', borderRadius: '160px', padding: '30px' }}>
-      <li className='MPDTOneJobeEmpresa'>
+    <Card elevation={4} sx={{ width: '100%', height: 320, maxWidth: 1170, my: '15px', display: 'flex',display: "flex", justifyContent: "center", borderRadius: '160px', padding: '30px'}}>
+
+      <Box sx={{minWidth: 900, alignSelf: "center", display: "flex", flexDirection: "column", justifyContent: "center", alignContent: "center"}} >
+        <Box sx={{minWidth: 900}}>
         {
           props.deleted ? <b className="MPDTNoDisponible"> ELIMINADO </b> : <b className="MPDTDisponible"> DISPONIBLE </b>     
         }
@@ -112,9 +115,10 @@ function ItemJob(props) {
         {
           props.deleted ? <p>Fecha de eliminacion: {tiempoTranscurrido(props.deleted_at)}</p> : ""
         }
+        </Box>
         <div class="MPDTGroupOfButtons">
         <Stack direction="row" justifyContent="space-between" spacing={0}>
-          <Stack direction="row" spacing={1}>
+          <Stack direction="row" spacing={1} >
             <Link to={{ pathname:`/empresa/mis-puestos-de-trabajo/${props.JobId}`}} style={{color: 'inherit', textDecoration: 'inherit'}}>
               <Button variant="contained" 
                 sx={{ 
@@ -180,7 +184,7 @@ function ItemJob(props) {
             </Stack>
           
         </div>
-      </li>
+      </Box>
       </Card>
   );
 }
