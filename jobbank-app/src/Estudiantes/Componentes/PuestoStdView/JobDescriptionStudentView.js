@@ -31,8 +31,6 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import LanguageIcon from '@mui/icons-material/Language';
 
-import Loader from '../../../helpers/Loader';
-import Message from '../../../helpers/Message';
 import swal from 'sweetalert';
 import { helpHttp } from "../../../helpers/helpHttp";
 import { useHistory } from 'react-router-dom';

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-
 import { AdminNav } from "../../../Navegador/AdminNav";
-import { PuestoInfo } from "../../../Componentes/TodosLosTrabajos/PuestoAdminView/PuestoInfo/PuestoInfo";
-import { PartnerInfo } from "../../../Componentes/TodosLosTrabajos/PuestoAdminView/PartnerInfo/PartnerInfo";
 import { useParams } from "react-router";
 import Cookies from 'universal-cookie';
 import apiPath from "../../../../ApiPath";
 import { JobDescriptionAdminView } from "../../../Componentes/TodosLosTrabajos/PuestoAdminView/JobDescriptionAdminView";
-
+import { useAuth0 } from "@auth0/auth0-react";
+import { closeSession } from "../../../../helpers/CloseSession";
 
 const cookies = new Cookies();
 function PuestoAdminView() {
+
+  const { logout } = useAuth0();
 
   // Gets the student data in JSON and saves it in AllAJobData
   const { PartnerId, JobId } = useParams();
@@ -28,9 +28,10 @@ function PuestoAdminView() {
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
-      if (!cookies.get('admin_id')){
-          window.location.href="/login/admin";
-      }
+    if (!cookies.get('admin_id')){
+      closeSession();
+      logout();
+    }
   });
   return (
     <React.Fragment>

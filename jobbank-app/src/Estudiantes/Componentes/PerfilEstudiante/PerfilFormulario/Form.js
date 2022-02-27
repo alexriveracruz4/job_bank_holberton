@@ -13,7 +13,6 @@ import {Modal, TextField} from '@material-ui/core';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import allSkillsArray from '../../../../skills';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';

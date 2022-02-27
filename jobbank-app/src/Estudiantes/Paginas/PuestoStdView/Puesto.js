@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { EstudianteNav } from '../../Navegador/EstudianteNav'
-import PuestoInfo from "../../Componentes/PuestoStdView/PuestoInfo/PuestoInfo";
-import PartnerInfo from "../../Componentes/PuestoStdView/PartnerInfo/PartnerInfo";
 import { useParams } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import apiPath from "../../../ApiPath";
-import { BackButton } from "../../../helpers/BackButton";
 import { useLocation } from "react-router-dom";
 import { helpHttp } from "../../../helpers/helpHttp";
-import Loader from "../../../helpers/Loader";
-import Message from "../../../helpers/Message";
 import { JobDescriptionStudentView } from "../../Componentes/PuestoStdView/JobDescriptionStudentView";
-
+import { useAuth0 } from "@auth0/auth0-react";
+import { closeSession } from "../../../helpers/CloseSession";
 
 
 const cookies = new Cookies();
 function Puesto() {
+
+  const { logout } = useAuth0();
+
   // Get data to use in the component
   const { PartnerId, JobId } = useParams();
   const [JobData, setJobData] = useState(null);
@@ -50,7 +49,8 @@ function Puesto() {
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('student_id')){
-          window.location.href="/login/estudiante";
+        closeSession();
+        logout();
       }
   });
 

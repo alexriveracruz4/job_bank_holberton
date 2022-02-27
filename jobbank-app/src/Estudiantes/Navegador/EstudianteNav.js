@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './EstudianteNav.css';
+//import './EstudianteNav.css';
 import logo from "./ImagenesNav/holberton-logo.png";
 import UserIcon from "./ImagenesNav/user-icon.png";
 import { useHistory } from 'react-router-dom';

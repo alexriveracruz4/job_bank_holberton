@@ -4,12 +4,14 @@ import CrudForm from '../../../Componentes/Empresas/EmpresaCreada/CrearEmpresaFo
 import { AdminNav } from "../../../Navegador/AdminNav";
 import Cookies from 'universal-cookie';
 import apiPath from '../../../../ApiPath';
-
+import { useAuth0 } from "@auth0/auth0-react";
+import { closeSession } from "../../../../helpers/CloseSession";
 
 const cookies = new Cookies();
 
 function EmpresaCreada() {
 
+  const { logout } = useAuth0();
   // State that saves data in db
   const [db, setDb] = useState([]);
 
@@ -30,7 +32,8 @@ function EmpresaCreada() {
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('admin_id')){
-          window.location.href="/login/admin";
+        closeSession();
+        logout();
       }
   });
 

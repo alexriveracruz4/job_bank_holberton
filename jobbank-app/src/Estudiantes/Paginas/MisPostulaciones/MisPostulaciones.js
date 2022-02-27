@@ -13,18 +13,23 @@ import Message from '../../../helpers/Message';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useAuth0 } from "@auth0/auth0-react";
+import { closeSession } from "../../../helpers/CloseSession";
 
 const cookies = new Cookies();
 
 let copia = 0;
 function MisPostulaciones() {
+
+  const { logout } = useAuth0();
   // Obtains the data of the jobs to which the student has applied and saves them in AllMyApplications
   const user_id = cookies.get("student_id");
 
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('student_id')){
-          window.location.href="/login/estudiante";
+        closeSession();
+        logout();
       }
   });
 

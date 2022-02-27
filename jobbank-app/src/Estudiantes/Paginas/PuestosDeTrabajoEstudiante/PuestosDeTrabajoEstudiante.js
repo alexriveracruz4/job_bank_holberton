@@ -29,12 +29,11 @@ function PuestosDeTrabajoEstudiante() {
   const setCopia = (data) => {
     copia = data
   }
-   
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('student_id')){
         closeSession();
-        logout();  
+        logout();
       }
   });
 

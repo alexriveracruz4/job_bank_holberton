@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react';
 import './Filters.css';
 import Chip from '@mui/material/Chip';
