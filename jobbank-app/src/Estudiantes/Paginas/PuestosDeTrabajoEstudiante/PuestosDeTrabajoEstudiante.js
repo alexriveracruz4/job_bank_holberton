@@ -14,11 +14,16 @@ import Message from "../../../helpers/Message";
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useAuth0 } from "@auth0/auth0-react";
+import { closeSession } from "../../../helpers/CloseSession";
 
 
 const cookies = new Cookies();
 let copia = {PalabraClave:"", modalidad:"", tipoDeTrabajo:"", page:0, fecha:""}
 function PuestosDeTrabajoEstudiante() {
+
+  const { logout } = useAuth0();
+
   const [searchJob, setSearchJob] = useState(copia); // Status to filter by 3 options
   
   const setCopia = (data) => {
@@ -28,7 +33,8 @@ function PuestosDeTrabajoEstudiante() {
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
       if (!cookies.get('student_id')){
-          window.location.href="/login/estudiante";
+        closeSession();
+        logout();  
       }
   });
 
