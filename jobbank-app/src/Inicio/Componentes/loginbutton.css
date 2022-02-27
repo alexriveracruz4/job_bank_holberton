@@ -1,15 +1,3 @@
-/*
-.InicioContainer {
-  background-image: url("./fondo\ land-01.png");
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  overflow: hidden;
-  width: "100%";
-  height: 750px;
-}
-*/
 .InicioContainer {
   position: fixed;
   top: 0;

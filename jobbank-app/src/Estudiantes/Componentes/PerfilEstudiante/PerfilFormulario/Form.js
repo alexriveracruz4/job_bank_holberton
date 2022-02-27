@@ -585,6 +585,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                 height: 300,
                 display: 'flex',
                 flexWrap: 'nowrap',
+                overflowY: "auto"
               }}
             >
               <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"tech"}/>
@@ -600,6 +601,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                 height: 300,
                 display: 'flex',
                 flexWrap: 'nowrap',
+                overflowY: "auto"
               }}
             >
               <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"soft"}/>
@@ -616,6 +618,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                 height: 300,
                 display: 'flex',
                 flexWrap: 'nowrap',
+                overflowY: "auto"
               }}
             >
               <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"other"}/>

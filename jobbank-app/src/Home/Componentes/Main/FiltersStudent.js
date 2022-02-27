@@ -443,6 +443,7 @@ function FiltersStudent(props) {
                 height: 300,
                 display: 'flex',
                 flexWrap: 'nowrap',
+                overflowY: "auto"
               }}
             >
               <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"tech"}/>
@@ -458,6 +459,7 @@ function FiltersStudent(props) {
                 height: 300,
                 display: 'flex',
                 flexWrap: 'nowrap',
+                overflowY: "auto"
               }}
             >
               <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"soft"}/>
@@ -474,6 +476,7 @@ function FiltersStudent(props) {
                 height: 300,
                 display: 'flex',
                 flexWrap: 'nowrap',
+                overflowY: "auto"
               }}
             >
               <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"other"}/>
