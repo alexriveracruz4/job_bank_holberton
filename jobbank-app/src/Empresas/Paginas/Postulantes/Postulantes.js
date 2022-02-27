@@ -13,6 +13,8 @@ import apiPath from '../../../ApiPath';
 import { helpHttp } from '../../../helpers/helpHttp';
 import Loader from '../../../helpers/Loader';
 import Message from '../../../helpers/Message';
+import { useAuth0 } from "@auth0/auth0-react";
+import { closeSession } from "../../../helpers/CloseSession";
 
 
 // Get the data of all applicants for a job
@@ -20,10 +22,13 @@ const cookies = new Cookies();
 let copia = 0;
 function Postulantes(props) {
 
+  const { logout } = useAuth0();
+
     // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
     if (!cookies.get('partner_id')){
-      window.location.href="/login/empresa";
+      closeSession();
+      logout(); 
     }
   });
 

@@ -5,12 +5,24 @@ import { helpHttp } from "../../../helpers/helpHttp";
 import CrudForm from "../../Componentes/PerfilEmpresa/PerfilFormulario/Form"
 import Cookies from 'universal-cookie';
 import apiPath from "../../../ApiPath";
+import { useAuth0 } from "@auth0/auth0-react";
+import { closeSession } from "../../../helpers/CloseSession";
 
 const cookies = new Cookies();
 
 function PerfilEmpresa() {
 
+  const { logout } = useAuth0();
+
   const PartnerID= cookies.get("partner_id"); //string variable
+
+  // If the cookies are not found, then the page will return to the login page
+  useEffect(() => {
+    if (!cookies.get('partner_id')){
+      closeSession();
+      logout(); 
+    }
+  });
 
   // Gets the partner data and saves it in dataToEdit
   const [db, setDb] = useState([]);
@@ -38,13 +50,6 @@ function PerfilEmpresa() {
       setDb(newData);
     });
   }
-
-  // If the cookies are not found, then the page will return to the login page
-  useEffect(() => {
-      if (!cookies.get('partner_id')){
-          window.location.href="/login/empresa";
-      }
-  });
 
 
   return (

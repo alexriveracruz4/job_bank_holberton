@@ -14,7 +14,7 @@ from math import ceil
 import os
 import ast
 
-list_of_types = ["tech", "soft", "others"]
+list_of_types = ["tech", "soft", "other"]
 
 @app_views.route('/skills', methods=['GET'], strict_slashes=False)
 def get_skills():

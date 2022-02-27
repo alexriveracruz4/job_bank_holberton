@@ -522,7 +522,7 @@ countries = [
     "country": "Paraguay"
   },
   {
-    "country": "Peru"
+    "country": "Perú"
   },
   {
     "country": "Philippines"

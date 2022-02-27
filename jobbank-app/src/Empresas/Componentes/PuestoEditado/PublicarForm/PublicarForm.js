@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Countries from "../../../data/country.json"
+import Countries from "../../../../helpers/Countries.json"
 import "./PublicarForm.css"
 import swal from 'sweetalert';
 import { useHistory } from 'react-router';

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './ItemJob.css';
 import { Link } from 'react-router-dom';
 import { helpHttp } from '../../../../helpers/helpHttp';
@@ -7,10 +7,8 @@ import { useHistory } from 'react-router';
 import swal from 'sweetalert';
 import apiPath from '../../../../ApiPath';
 import Loader from '../../../../helpers/Loader';
-import Message from '../../../../helpers/Message';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';

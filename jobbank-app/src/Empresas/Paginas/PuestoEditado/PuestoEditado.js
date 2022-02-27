@@ -6,16 +6,21 @@ import CrudForm from "../../Componentes/PuestoEditado/PublicarForm/PublicarForm"
 import Cookies from 'universal-cookie';
 import { useParams } from "react-router";
 import apiPath from "../../../ApiPath";
+import { useAuth0 } from "@auth0/auth0-react";
+import { closeSession } from "../../../helpers/CloseSession";
 
 
 const cookies = new Cookies();
 
 function PuestoEditado() {
 
+  const { logout } = useAuth0();
+
   // If the cookies are not found, then the page will return to the login page
   useEffect(() => {
 	  if (!cookies.get('partner_id')){
-      window.location.href="/login/empresa";
+      closeSession();
+      logout(); 
 	  }
   });
 

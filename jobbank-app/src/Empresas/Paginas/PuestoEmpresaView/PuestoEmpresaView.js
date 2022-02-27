@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { EmpresaNav } from '../../Navegador/EmpresaNav';
-import { PuestoInfo } from "../../Componentes/PuestoEmpresaView/PuestoInfo/PuestoInfo";
-import { PartnerInfo } from "../../Componentes/PuestoEmpresaView/PartnerInfo/PartnerInfo";
 import { useParams } from "react-router";
 import Cookies from 'universal-cookie';
 import apiPath from "../../../ApiPath";
-import { BackButton } from "../../../helpers/BackButton";
 import { helpHttp } from "../../../helpers/helpHttp";
-import Loader from "../../../helpers/Loader";
-import Message from "../../../helpers/Message";
 import { JobDescription } from "../../Componentes/PuestoEmpresaView/JobDescription.js";
-
+import { useAuth0 } from "@auth0/auth0-react";
+import { closeSession } from "../../../helpers/CloseSession";
 
 
 const cookies = new Cookies();
 function PuestoEmpresaView() {
 
+  const { logout } = useAuth0();
+
   // Obtains the data of a job and stores it in AllAJobData
   const partner_id= cookies.get("partner_id"); //string variable
+
+  // If the cookies are not found, then the page will return to the login page
+  useEffect(() => {
+    if (!cookies.get('partner_id')){
+      closeSession();
+      logout(); 
+    }
+  });
 
 
   const { JobId } = useParams();
@@ -52,12 +58,7 @@ function PuestoEmpresaView() {
     setAllAJobDta(jobs);
   }
   */
-  // If the cookies are not found, then the page will return to the login page
-  useEffect(() => {
-      if (!cookies.get('partner_id')){
-          window.location.href="/login/empresa";
-      }
-  });
+
   console.log(JobData);
   return (
     <React.Fragment>
