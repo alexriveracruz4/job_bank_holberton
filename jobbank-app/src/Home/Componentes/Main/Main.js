@@ -1,15 +1,5 @@
 import "./Main.css"
 import Accordion from 'react-bootstrap/Accordion'
-import Button from '@mui/material/Button';
-import ButtonBase from '@mui/material/ButtonBase';
-import Box from "@material-ui/core/Box";
-import Card from "@mui/material/Card";
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import SvgIcon from '@mui/material/SvgIcon';
-import LinesEllipsis from "react-lines-ellipsis";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect, useState } from "react";
 import apiPath from "../../../ApiPath";
@@ -163,9 +153,9 @@ function Main() {
         }
 
           {datosTotales=== 1?
-            <h2 className="PDTENumeroDeEmpleos">UN ESTUDIANTE DISPONIBLE</h2>
+            <h2 className="PDTENumeroDeEmpleos">Un resultado disponible</h2>
             :
-            <h2 className="PDTENumeroDeEmpleos">{datosTotales} ESTUDIANTES DISPONIBLES</h2>
+            <h2 className="PDTENumeroDeEmpleos">{datosTotales} resultados disponibles</h2>
           }
         {(error) && <Message/>}
         <div className="StudentsContainer">
