@@ -115,6 +115,7 @@ function MisPuestosDeTrabajo() {
           :
             <h2 className="NumeroDeEmpleos">Se han publicado {datosTotales} empleos</h2> 
           }
+        </div>
           {loading 
           ?
             <div>
@@ -201,7 +202,6 @@ function MisPuestosDeTrabajo() {
           }
         </>
         }
-        </div>
       </div>
     </div>
   );

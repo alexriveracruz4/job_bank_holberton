@@ -35,6 +35,10 @@ import Message from '../../../helpers/Message';
 import { helpHttp } from "../../../helpers/helpHttp";
 import { useHistory } from 'react-router-dom'; 
 
+import EditIcon from '@mui/icons-material/Edit';
+import RestoreIcon from '@mui/icons-material/Restore';
+import swal from 'sweetalert';
+
 
 const cookies = new Cookies();
 function JobDescription(props) {
@@ -259,6 +263,51 @@ function JobDescription(props) {
     );
   }
 
+
+  const restoreData = (data) => {
+    swal({
+      title: "RESTAURAR TRABAJO",
+      text: `¿Está seguro de restaurar los datos del trabajo "${data.title}""?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willDelete) => {
+      if (willDelete) {   
+        if (data.deleted === 0) {
+          swal({
+            title: "Error",
+            text: `El trabajo ${data.title} está funcionando`,
+            icon: "warning",
+          });
+          return 0;
+        }
+        data.deleted = 0;
+        let endpoint = `${apiPath}/partners/${data.partner_id}/jobs/${data.id}`;
+        let options = {
+          body: data,
+          headers: { "content-type": "application/json" },
+        };
+        api.put(endpoint, options).then((res) => {
+          if (!res.err) {
+            swal(`El trabajo ${data.title} ha sido restaurado.`, {
+              timer:"1500"
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          } else {
+            swal({
+              title: "ERROR",
+              text: `No se pudo restaurar el trabajo ${data.title}`,
+              icon: "error",
+            });
+          }
+        });
+      }
+    });
+  }
+
+
   return (
     
     <Stack 
@@ -316,21 +365,45 @@ function JobDescription(props) {
                       <FolderListTrabajo/>
                     </Card>
                     <Card elevation={4} sx={{minHeight: "50px", borderRadius: "20px", width: '90%'}}>
-                      <Button 
-                        onClick={()=>
-                          history.push(`/empresa/mis-puestos-de-trabajo/${datos.id}/puesto-editado`)
-                        }
-                        variant="contained" 
-                        sx={{
-                          width: "100%", 
-                          height: "50px", 
-                          backgroundColor: "#251086",
-                          '&:hover': {
-                            backgroundColor: '#2c0fae',
+                      {
+                        datos.deleted
+                        ?
+                        <Button 
+                          onClick={()=>
+                            restoreData(datos)
                           }
-                        }}>
-                        Editar
-                      </Button>
+                          variant="contained" 
+                          sx={{
+                            width: "100%", 
+                            height: "50px", 
+                            backgroundColor: "#251086",
+                            '&:hover': {
+                              backgroundColor: '#2c0fae',
+                            }
+                          }}
+                          startIcon={<RestoreIcon />}
+                        >
+                          Restaurar
+                        </Button>
+                        :
+                        <Button 
+                          onClick={()=>
+                            history.push(`/empresa/mis-puestos-de-trabajo/${datos.id}/puesto-editado`)
+                          }
+                          variant="contained" 
+                          sx={{
+                            width: "100%", 
+                            height: "50px", 
+                            backgroundColor: "#251086",
+                            '&:hover': {
+                              backgroundColor: '#2c0fae',
+                            }
+                          }}
+                          startIcon={<EditIcon />}
+                        >
+                          Editar
+                        </Button>
+                      }
                     </Card>
                   </Stack>
                 </Box>

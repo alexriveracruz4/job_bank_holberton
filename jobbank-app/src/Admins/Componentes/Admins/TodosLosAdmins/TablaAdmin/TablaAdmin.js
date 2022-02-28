@@ -7,9 +7,14 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import apiPath from '../../../../../ApiPath';
 import Message from '../../../../../helpers/Message';
 import Loader from '../../../../../helpers/Loader';
+import Cookies from 'universal-cookie';
 
 
+const cookies = new Cookies();
 function TablaAdmin() {
+
+  let admin_id_cookies = cookies.get("admin_id");
+  console.log(admin_id_cookies);
   let history = useHistory();
 
   let api = helpHttp();
@@ -48,10 +53,10 @@ function TablaAdmin() {
 
 
   // Sweetalert to confirm removal of partner
-  const deleteData = (id, name, isDeleted) => {
+  const deleteData = (id, firstname, lastname, isDeleted) => {
     swal({
       title: "ELIMINAR ADMINISTRADOR",
-      text: `¿Está seguro de eliminar los datos del administrador "${name}"?`,
+      text: `¿Está seguro de eliminar los datos del administrador "${firstname} ${lastname}"?`,
       icon: "warning",
       dangerMode: true,
       buttons: true,
@@ -60,7 +65,7 @@ function TablaAdmin() {
         if (isDeleted === 1) {
           swal({
             title: "Error",
-            text: `El administrador ${name} ya está eliminado`,
+            text: `El administrador "${firstname} ${lastname}" ya está eliminado`,
             icon: "warning",
           });
           return 0;
@@ -75,7 +80,7 @@ function TablaAdmin() {
             let newData = AllPartnersData.filter((el) => el.id !== id);
             setAllPartnersData(newData);
             setLoadingEliminate(false);
-            swal(`La administrador ${name} ha sido eliminado.`, {
+            swal(`La administrador "${firstname} ${lastname}" ha sido eliminado.`, {
               timer:"1500"
             });
             setTimeout(() => {
@@ -91,6 +96,54 @@ function TablaAdmin() {
           }
         });
         
+      } 
+    });
+  }
+
+  const restoreData = (data) => {
+    swal({
+      title: "RESTAURAR ADMINISTRADOR",
+      text: `¿Está seguro de restaurar los datos del admin "${data.firstname} ${data.lastname}"?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willDelete) => {
+      if (willDelete) {   
+        if (data.deleted === 0) {
+          swal({
+            title: "Error",
+            text: `La empresa "${data.firstname} ${data.lastname}" está funcionando`,
+            icon: "warning",
+          });
+          return 0;
+        }
+        data.deleted = 0;
+        setLoadingEliminate(true);
+        let endpoint = `${url}/${data.admin_id}`;
+        let options = {
+          body: data,
+          headers: { "content-type": "application/json" },
+        };
+        api.put(endpoint, options).then((res) => {
+          if (!res.err) {
+            let newData = AllPartnersData.map((el) => el.admin_id === data.admin_id ? data:el);
+            setAllPartnersData(newData);
+            setLoadingEliminate(false);
+            swal(`El admin "${data.firstname} ${data.lastname}" ha sido restaurado.`, {
+              timer:"3000"
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          } else {
+            setLoadingEliminate(false);
+            swal({
+              title: "ERROR",
+              text: `No se pudo restaurar al admin "${data.firstname} ${data.lastname}"`,
+              icon: "error",
+            });
+          }
+        });
       } 
     });
   }
@@ -114,11 +167,26 @@ function TablaAdmin() {
                 state: AllPartnersData.filter((el)=> el.admin_id === rowData.admin_id)
               })}
           },
-          {
-            icon: 'delete',
-            tooltip: 'Eliminar admin',
-            onClick: (event, rowData) => {deleteData(rowData.admin_id, rowData.name, rowData.deleted)}
-          },
+          rowData => ({
+            icon: rowData.deleted ? 'restore' : 'delete',
+            tooltip: rowData.deleted ? 'Recrear admin' : 'Eliminar admin',
+            onClick: (event, rowData) => {
+              if (parseInt(admin_id_cookies) === rowData.admin_id) {
+                swal({
+                  title: "ERROR",
+                  text: `Lo sentimos, no esta permitido eliminar su propia cuenta.`,
+                  icon: "error",
+                  timer: "1500"
+                });
+              } else {
+                rowData.deleted 
+                ?
+                  restoreData(rowData)
+                :
+                  deleteData(rowData.admin_id, rowData.firstname, rowData.lastname, rowData.deleted)
+              }
+            }
+          }),
           {
             icon: () => <AddCircleIcon fontSize="large"/>,
             tooltip: "Crear un nuevo admin",

@@ -119,12 +119,14 @@ function MisPostulaciones() {
           m:"10px",
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center'
+          alignItems: 'center',
+          justifyContent: "center",
         }}
       >
         <Stack 
           sx={{
-          width: "95%",
+            width: "95%",
+            alignItems: "center"
           }}
         >
           <Typography sx={{
@@ -133,14 +135,14 @@ function MisPostulaciones() {
           justifyContent: 'center'
           }} variant="h7" component="h2">
             {datosTotales.length === 1?
-              <h2 className="NumeroDeEmpleos">HAS POSTULADO A UN EMPLEO</h2>
+              <h2 className="NumeroDeEmpleosPostulados">HAS POSTULADO A UN EMPLEO</h2>
             :
-              <h2 className="NumeroDeEmpleos">HAS POSTULADO A {datosTotales} EMPLEOS</h2> 
+              <h2 className="NumeroDeEmpleosPostulados">HAS POSTULADO A {datosTotales} EMPLEOS</h2> 
             }
           </Typography>
         </Stack>
         <Stack sx={{width: "95%"}} direction="row" justifyContent="center">
-          <Box sx={{width: "75%", display: "flex", flexDirection: "column", alignContent: "center", alignItems: 'center'}}>
+          <Box sx={{width: "75%", display: "flex", flexDirection: "column", justifyContent: "center"}}>
           {loading 
           ?
             <div>

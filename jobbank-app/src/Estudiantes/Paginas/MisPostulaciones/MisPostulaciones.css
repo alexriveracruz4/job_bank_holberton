@@ -61,6 +61,7 @@
   flex-direction: column;
 }
 
-.NumeroDeEmpleos{
-  margin-top: 15px;
+.NumeroDeEmpleosPostulados {
+  margin-top: 30px;
+  color: #1B0C61;
 }

@@ -153,9 +153,9 @@ function Main() {
         }
 
           {datosTotales=== 1?
-            <h2 className="PDTENumeroDeEmpleos">Un resultado disponible</h2>
+            <h2 className="PDTENumeroDeEstudiantes">Un resultado disponible</h2>
             :
-            <h2 className="PDTENumeroDeEmpleos">{datosTotales} resultados disponibles</h2>
+            <h2 className="PDTENumeroDeEstudiantes">{datosTotales} resultados disponibles</h2>
           }
         {(error) && <Message/>}
         <div className="StudentsContainer">

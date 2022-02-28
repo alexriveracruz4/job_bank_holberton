@@ -16,7 +16,7 @@ const allSkillsArray = [
     "name": "Python", 
     "type": "tech", 
     "updated_at": "2022-02-08T13:57:51.000000"
-  }, 
+  },
   {
     "__class__": "Skill", 
     "created_at": "2022-02-08T13:57:59.000000", 

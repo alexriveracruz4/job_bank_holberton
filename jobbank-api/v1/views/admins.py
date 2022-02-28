@@ -65,8 +65,8 @@ def delete_admin(admin_id):
     if not admin:
         abort(404)
 
-    storage.delete(admin)
-    #setattr(admin, "deleted", 1)
+    #storage.delete(admin)
+    setattr(admin, "deleted", 1)
     setattr(admin, "deleted_at", datetime.now())
     storage.save()
 
@@ -184,7 +184,7 @@ def AdminFileUploadPhoto(admin_id):
     # This part is just to calculate the size of the file
     file.seek(0, os.SEEK_END) # to count the size of the file
     file_length = file.tell() # size of the file in Bytes
-    max_size = 2*10**6 # 4MB max
+    max_size = 10*10**6 # 10MB max
     if int(file_length) > max_size:
         abort(400, description="Maximum file size exceeded")
 
