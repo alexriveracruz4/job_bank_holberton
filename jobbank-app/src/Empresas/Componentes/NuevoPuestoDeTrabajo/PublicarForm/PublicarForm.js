@@ -249,7 +249,7 @@ const handleSubmit = (e) => {
           <div className="form-control" id='form-experience'>
             <label htmlFor="inputExperience">Tiempo de experiencia</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputExperience" maxLength={45} name="experience" onChange={handleChange} value={form.experience}/>
+              <input type="text" className="form-control" id="inputExperience" maxLength={45} name="experience" placeholder="2 años" onChange={handleChange} value={form.experience}/>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -259,7 +259,7 @@ const handleSubmit = (e) => {
           <div className="form-control" id='form-salary'>
             <label htmlFor="inputSalary">Salario</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputSalary" name="salary" maxLength={45} onChange={handleChange} value={form.salary} />
+              <input type="text" className="form-control" id="inputSalary" name="salary" placeholder="1000 dólares" maxLength={45} onChange={handleChange} value={form.salary} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -319,7 +319,7 @@ const handleSubmit = (e) => {
           <div className="div-button-editar-empresa">
             <button
               type="submit"
-              className="btn btn-primary mt-3"
+              className="btn btn-primary m-3"
               onClick={handleSubmit}
               value="Enviar">Guardar cambios
             </button>

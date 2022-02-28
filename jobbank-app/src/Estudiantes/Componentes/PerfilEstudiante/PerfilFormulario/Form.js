@@ -784,7 +784,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className='form-control' id='form-developer_type'>
             <label htmlFor="inputDeveloperType">Tipo de desarrollador (*obligatorio)</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputDeveloperType" name="developer_type" onChange={handleChange} maxLength={45} value={form.developer_type}/>
+              <input type="text" className="form-control" id="inputDeveloperType" name="developer_type" placeholder="FULL STACK" onChange={handleChange} maxLength={45} value={form.developer_type}/>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -835,7 +835,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className='form-control' id='form-portfolio'>
             <label htmlFor="inputPortfolio">Enlace a portafolio</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputPortfolio" name="portfolio" onChange={handleChange} maxLength={45} value={form.portfolio}/>
+              <input type="text" className="form-control" id="inputPortfolio" name="portfolio" placeholder="https://www.ryansimon-pages.co/" onChange={handleChange} maxLength={45} value={form.portfolio}/>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -845,7 +845,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className='form-control' id='form-video_link'>
             <label htmlFor="inputVideoLink">Video de portafolio</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputVideoLink" name="video_link" onChange={handleChange} maxLength={100} value={form.video_link}/>
+              <input type="text" className="form-control" id="inputVideoLink" name="video_link" placeholder='https://www.youtube.com/watch?v=1kpUImeLw3s' onChange={handleChange} maxLength={100} value={form.video_link}/>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

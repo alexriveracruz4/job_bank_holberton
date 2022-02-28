@@ -294,7 +294,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className="div-button-create-partner">
             <button
               type="submit"
-              className="btn btn-primary mt-3"
+              className="btn btn-primary m-3"
               onClick={handleSubmit}
               value="Enviar">Guardar cambios
             </button>

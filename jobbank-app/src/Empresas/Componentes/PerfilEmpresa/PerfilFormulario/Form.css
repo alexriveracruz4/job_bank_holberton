@@ -92,3 +92,9 @@
 .container-selectFile .box-photo input {
   width: 100%;
 }
+
+.container-form .form .div-button-editar-empresa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

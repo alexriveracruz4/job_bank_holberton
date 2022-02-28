@@ -92,3 +92,9 @@
 .container-selectFile .box-photo input {
   width: 100%;
 }
+
+.container-form .form .div-button-create-admin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

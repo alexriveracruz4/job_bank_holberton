@@ -195,10 +195,10 @@ const CrudForm = ({ createData }) => {
             <small id='smallRepeatPassword'> Error message </small>
           </div>
 
-          <div className="div-button-create-partner">
+          <div className="div-button-create-admin">
             <button
               type="submit"
-              className="btn btn-primary mt-3"
+              className="btn btn-primary m-3"
               onClick={handleSubmit}
               value="Enviar"
             >
