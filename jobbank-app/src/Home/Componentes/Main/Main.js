@@ -15,7 +15,7 @@ import Message from "../../../helpers/Message";
 function Main() {
 
   let api = helpHttp();
-  let limit = 4;
+  let limit = 6;
 
   let history = useHistory()
 

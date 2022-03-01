@@ -6,7 +6,6 @@ import { ItemJob } from "../../Componentes/MisPostulaciones/ItemJob/ItemJob";
 import Cookies from 'universal-cookie';
 import apiPath from '../../../ApiPath';
 import ReactPaginate from "react-paginate";
-import "./Paginacion1.css";
 import { helpHttp } from '../../../helpers/helpHttp';
 import Loader from '../../../helpers/Loader';
 import Message from '../../../helpers/Message';

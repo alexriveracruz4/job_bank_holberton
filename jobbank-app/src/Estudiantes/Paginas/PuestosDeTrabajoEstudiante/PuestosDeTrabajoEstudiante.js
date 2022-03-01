@@ -7,7 +7,6 @@ import { ItemJob } from "../../Componentes/PuestosDeTrabajoEstudiante/ItemJob/It
 import Cookies from 'universal-cookie';
 import apiPath from "../../../ApiPath";
 import ReactPaginate from "react-paginate";
-import "./Paginacion.css";
 import { helpHttp } from "../../../helpers/helpHttp";
 import Loader from "../../../helpers/Loader";
 import Message from "../../../helpers/Message";
@@ -16,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useAuth0 } from "@auth0/auth0-react";
 import { closeSession } from "../../../helpers/CloseSession";
+import "../../../helpers/Paginacion.css";
 
 
 const cookies = new Cookies();
@@ -173,7 +173,7 @@ function PuestosDeTrabajoEstudiante() {
                 pageLinkClassName={"page-link"}
                 previousClassName={"page-item"}
                 previousLinkClassName={"page-link"}
-                nextClassName={"page-item "}
+                nextClassName={"page-item"}
                 nextLinkClassName={"page-link"}
                 breakClassName={"page-item"}
                 breakLinkClassName={"page-link"}

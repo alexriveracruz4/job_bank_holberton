@@ -29,7 +29,7 @@ def get_students():
     """
     page = request.args.get('page')
     
-    limit = 4
+    limit = 6
     skills = request.args.get('skills')
     if skills is None:
         skills = ""

@@ -21,7 +21,7 @@ export const helpHttp = () => {
     options.body = JSON.stringify(options.body) || false; // Converts object to string
     if (!options.body) delete options.body;
 
-    setTimeout(() => controller.abort(), 3000); // Run abort if no response in 3 seconds
+    setTimeout(() => controller.abort(), 7000); // Run abort if no response in 3 seconds
 
     return fetch(endpoint, options)
       .then((res) =>

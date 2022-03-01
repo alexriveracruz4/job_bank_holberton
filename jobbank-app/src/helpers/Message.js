@@ -3,8 +3,9 @@ import swal from 'sweetalert';
 
 const Message = () => {
   swal({
-    title: "ERROR",
-    icon: "error",
+    title: "Conexión Fallida",
+    text: `Por favor inténtelo de nuevo.`,
+    icon: "warning",
 });
   return (
     <div>
