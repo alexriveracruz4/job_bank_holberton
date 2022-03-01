@@ -329,7 +329,6 @@ def post_skills_student(student_id):
     list_ids = []
     list_ids = data['skill_id'].split(',')
     list_ids = list(map(int, list_ids))
-    print('esto es data', list_ids)
     student.skills.clear()
     for j in skills:
         if int(j.id) in list_ids:
@@ -339,21 +338,10 @@ def post_skills_student(student_id):
                 for key in skill_dict.copy():
                     if key in ignore:
                         del skill_dict[key]
-
-    print('------------------')
-    print('este es student skills', student.skills, 'este es  el tipo de dato de student skills:', type(student.skills))
-    print('--------------------')
-    print('este es student skills [0]', student.skills[0])
-    print('--------------------')
-    """instancedos = student.skills.extend(list_of_skills)"""
     storage.new(student)
     storage.save()
     skills_of_student = str(list_of_skills)
     setattr(student, 'student_skills', skills_of_student)
-    print('acaboooo de guardar')
-    print('--------------------')
-    print(student.skills)
-    print('--------------------')
 
     # TODO: RUBEN add send email API call
 

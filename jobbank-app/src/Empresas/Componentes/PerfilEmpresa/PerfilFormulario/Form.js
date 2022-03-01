@@ -54,13 +54,13 @@ const CrudForm = ({ updateData, dataToEdit }) => {
   useEffect(() => {
   let photoname = "";
 
-  if (partner.photo_filename_physical != null && partner.photo_filename_physical != undefined){
-    photoname = partner.photo_filename_physical;
+  if (partner.logo_filename_physical != null && partner.logo_filename_physical != undefined){
+    photoname = partner.logo_filename_physical;
   }
 
   const PhotoId = document.getElementById('photo-id');
 
-  if (cookies.get('photo_filename_physical') !== 'null') {
+  if (cookies.get('logo_filename_physical') !== 'null') {
     PhotoId.innerText = photoname;
   } else {
     PhotoId.innerText = "Aún no se ha subido ninguna imagen";
@@ -89,34 +89,59 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           // updateData function
           async function updateForm() {
             const updata = await updateData(form);
-
+          
             if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
-              const data = new FormData();
-              data.append('file', uploadInputImage.files[0]);
-              const urlupload = `${apiPath}/partners/`+ cookies.get('partner_id') + '/uploadphoto'
+              const fileSize = uploadInputImage.files[0].size / 1024 / 1024
+              if (fileSize < 10) {
+                const data = new FormData();
+                data.append('file', uploadInputImage.files[0]);
+                const urlupload = `${apiPath}/partners/`+ cookies.get('partner_id') + '/uploadphoto'
+    
+                fetch(urlupload, {
+                  method: 'POST',
+                  body: data,
+                }).then((response) => {
+                  if (response.ok) {
+                  cookies.set('logo_filename_physical', response.logo_filename_physical);
 
-              fetch(urlupload, {
-                method: 'POST',
-                body: data,
-              }).then((response) => {
-                response.json().then((body) => {
-                  cookies.set('logo_filename_physical', body.logo_filename_physical);
-                });
-              })
+                  cookies.set('name', form.name, {path:"/"});
+                  swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
+                    timer:"1500"
+                  });
+                  setTimeout(() => {
+                    history.go(0);
+                  }, 1000);
+                  window.scrollTo(0, 0);
+                } else {
+                  swal({
+                    title: "Se ha producido un error",
+                    text: "Ocurrió un error al subir la imagen",
+                    icon: "error",
+                    button: "Aceptar"
+                  });
+                }
+                })
+              } else {
+                const formPhoto = document.getElementById('form-photo');
+                const errorPhoto = document.getElementById('smallPhotoError');
+
+                formPhoto.className = 'form-control error';
+                errorPhoto.innerText = "El tamaño de la imagen sobrepasa los 10MB";
+              }
+            } else {
+              cookies.set('name', form.name, {path:"/"});
+
+              swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
+                  timer:"1500"
+              });
+              setTimeout(() => {
+                history.go(0);
+              }, 1000);
+              window.scrollTo(0, 0);
             }
-
-            cookies.set('name', form.name, {path:"/"});
-
-          swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
-              timer:"1500"
-            });
-            setTimeout(() => {
-              history.go(0);
-            }, 1000);
-            window.scrollTo(0, 0);
-          }
-          updateForm();
-        } 
+        }
+        updateForm();
+        }
       });
     } else {
       swal({
@@ -253,19 +278,20 @@ const CrudForm = ({ updateData, dataToEdit }) => {
             <div className="form-Estudiante">
               <div className="form-div">
                 <form className="form-form">
-                  <div className="photoform-div">
+                  <div className="photoform-div" id="form-photo">
                     <label htmlFor="inputPhoto" className="col-form-label">Foto de perfil</label>
                     <div className='usericon-div'>
                       <img src={ photo } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
                     </div>
-                    <small id="photoHelpInline" className="text-muted">Please upload a square-shaped picture. Max 2MB, Formats allowed: jpg, png.</small>
+                    <p id="photoHelpInline" className="text-muted">Seleccione una imagen cuadrada en formato jpg o png, Max 10MB.</p>
                     <div className="container-selectFile">
                       <div className="box-photo form-control">
-                        <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/*" onChange={handleImageUploaded} />
+                        <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/png, image/jpeg" onChange={handleImageUploaded} />
                       </div>
                       <div className="cv-photo">
                         <a id='photo-id' value={cookies.get('logo_filename_logical')}>{cookies.get('logo_filename_physical')}</a>
                       </div>
+                      <small id='smallPhotoError'> Error message </small>
                     </div>
                   </div>
                 </form>

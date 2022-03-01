@@ -138,7 +138,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateInputs() === true) {
-
       swal({
         title: "EDITAR PERFIL",
         text: `¿Está seguro de guardar los cambios realizados?`,
@@ -170,22 +169,6 @@ const CrudForm = ({ updateData, dataToEdit}) => {
               })
             }
 
-            //Upload Profile photo
-            if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
-              const data = new FormData();
-              data.append('file', uploadInputImage.files[0]);
-              const urlupload = `${apiPath}/students/`+ cookies.get('student_id') + '/uploadphoto'
-
-              fetch(urlupload, {
-                method: 'POST',
-                body: data,
-              }).then((response) => {
-                response.json().then((body) => {
-                  cookies.set('photo_filename_physical', body.photo_filename_physical);
-                });
-              })
-            }
-
             // Upload CV
             if (uploadInputCV.files[0] != undefined) {
               const cvData = new FormData();
@@ -201,21 +184,60 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                 });
               });
             }
+          
+            if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
+              const fileSize = uploadInputImage.files[0].size / 1024 / 1024
+              if (fileSize < 2) {
+                const data = new FormData();
+                data.append('file', uploadInputImage.files[0]);
+                const urlupload = `${apiPath}/students/`+ cookies.get('student_id') + '/uploadphoto'
+    
+                fetch(urlupload, {
+                  method: 'POST',
+                  body: data,
+                }).then((response) => {
+                  if (response.ok) {
+                  cookies.set('photo_filename_physical', response.photo_filename_physical);
 
-            cookies.set('firstname', form.firstname, {path:"/"});
+                  cookies.set('firstname', form.firstname, {path:"/"});
+                  cookies.set('lastname', form.lastname, {path:"/"});
+                  swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
+                    timer:"1500"
+                  });
+                  setTimeout(() => {
+                    history.go(0);
+                  }, 1000);
+                  window.scrollTo(0, 0);
+                } else {
+                  swal({
+                    title: "Se ha producido un error",
+                    text: "Ocurrió un error al subir la imagen",
+                    icon: "error",
+                    button: "Aceptar"
+                  });
+                }
+                })
+              } else {
+                const formPhoto = document.getElementById('form-photo');
+                const errorPhoto = document.getElementById('smallPhotoError');
 
-            cookies.set('lastname', form.lastname, {path:"/"});
+                formPhoto.className = 'form-control error';
+                errorPhoto.innerText = "El tamaño de la imagen sobrepasa los 10MB";
+                window.scrollTo(0, 0);
+              }
+            } else {
+              cookies.set('name', form.name, {path:"/"});
 
-          swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
-                timer:"1500"
-            });
-            setTimeout(() => {
-              history.go(0);
-            }, 1000);
-            window.scrollTo(0, 0);
-          }
-
-          updateForm();
+              swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
+                  timer:"1500"
+              });
+              setTimeout(() => {
+                history.go(0);
+              }, 1000);
+              window.scrollTo(0, 0);
+            }
+        }
+        updateForm();
         }
       });
     } else {
@@ -239,6 +261,10 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const inputPresOrRemote = document.getElementById('inputPresOrRemote');
   const inputProvince = document.getElementById('inputProvince');
   const inputDeveloperType = document.getElementById('inputDeveloperType');
+  const inputLinkedIn = document.getElementById('inputLinkedIn');
+  const inputGithub = document.getElementById('inputGithub');
+  const inputTwitter = document.getElementById('inputTwitter');
+  const inputPortfolio = document.getElementById('inputPortfolio');
   const inputEnglishLevel = document.getElementById('inputEnglishLevel');
 
   // Validate form inputs
@@ -403,6 +429,54 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       formIsValid = false;
     } else {
       formDeveloperType.classList.remove('error');
+    }
+
+    const LinkedInValue = inputLinkedIn.value.trim();
+    const formLinkedIn = document.getElementById('form-linkedin');
+    const errorLinkedIn = document.getElementById('smallLinkedIn')
+
+    if (LinkedInValue !== "") {
+      if (LinkedInValue.indexOf("http://") !== 0 && LinkedInValue.indexOf("https://") !== 0) {
+        formLinkedIn.className = 'form-control error';
+        errorLinkedIn.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
+        formIsValid = false;
+      }
+    }
+
+    const GithubValue = inputGithub.value.trim();
+    const formGithub = document.getElementById('form-github');
+    const errorGithub = document.getElementById('smallGithub')
+
+    if (GithubValue !== "") {
+      if (GithubValue.indexOf("http://") !== 0 && GithubValue.indexOf("https://") !== 0) {
+        formGithub.className = 'form-control error';
+        errorGithub.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
+        formIsValid = false;
+      }
+    }
+
+    const TwitterValue = inputTwitter.value.trim();
+    const formTwitter = document.getElementById('form-twitter');
+    const errorTwitter = document.getElementById('smallTwitter')
+
+    if (TwitterValue !== "") {
+      if (TwitterValue.indexOf("http://") !== 0 && TwitterValue.indexOf("https://") !== 0) {
+        formTwitter.className = 'form-control error';
+        errorTwitter.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
+        formIsValid = false;
+      }
+    }
+
+    const portfolioValue = inputPortfolio.value.trim();
+    const formPortfolio = document.getElementById('form-portfolio');
+    const errorPortfolio = document.getElementById('smallPortfolio')
+  
+    if (portfolioValue !== "") {
+      if (portfolioValue.indexOf("http://") !== 0 && portfolioValue.indexOf("https://") !== 0) {
+        formPortfolio.className = 'form-control error';
+        errorPortfolio.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
+        formIsValid = false;
+      }
     }
 
     const english_levelValue = inputEnglishLevel.value.trim();
@@ -655,19 +729,20 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <div className="form-Estudiante">
               <div className="form-div">
                 <form className="form-form">
-                  <div className="photoform-div">
+                  <div className="photoform-div" id="form-photo">
                     <label htmlFor="inputPhoto" className="col-form-label">Foto de perfil</label>
                     <div className='usericon-div'>
                       <img src={ photo } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
                     </div>
-                    <small id="photoHelpInline" className="text-muted">Please upload a square-shaped picture. Max 2MB, Formats allowed: jpg, png.</small>
+                    <p id="photoHelpInline" className="text-muted">Seleccione una imagen cuadrada en formato jpg o png, Max 10MB.</p>
                     <div className="container-selectFile">
                       <div className="box-photo form-control">
-                        <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/*" onChange={handleImageUploaded} />
+                        <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/png, image/jpeg" onChange={handleImageUploaded} />
                       </div>
                       <div className="cv-photo">
                         <a id='photo-id' value={cookies.get('photo_filename_logical')}>{cookies.get('photo_filename_physical')}</a>
                       </div>
+                      <small id='smallPhotoError'> Error message </small>
                     </div>
                   </div>
                 </form>
@@ -867,34 +942,34 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <small> Error message </small>
           </div>
 
-          <div className='form-control'>
+          <div className='form-control' id="form-linkedin">
             <label htmlFor="inputLinkedIn">LinkedIn</label>
             <div className='inputFormDiv'>
-              <input type="url" className="form-control" id="inputLinkedIn" name="linkedin" placeholder='https://www.linkedin.com/in/nombredeusuario' onChange={handleChange} maxLength={70} value={form.linkedin} />
+              <input type="text" className="form-control" id="inputLinkedIn" name="linkedin" placeholder='https://www.linkedin.com/in/nombredeusuario' onChange={handleChange} maxLength={70} value={form.linkedin} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
-            <small> Error message </small>
+            <small id='smallLinkedIn'> Error message </small>
           </div>
 
-          <div className='form-control'>
+          <div className='form-control' id="form-github">
             <label htmlFor="inputGithub">Github</label>
             <div className='inputFormDiv'>
               <input type="text" className="form-control" id="inputGithub" name="github" placeholder='https://github.com/nombredeusuario' onChange={handleChange} maxLength={70} value={form.github} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
-            <small> Error message </small>
+            <small id='smallGithub'> Error message </small>
           </div>
 
-          <div className='form-control'>
+          <div className='form-control' id="form-twitter">
             <label htmlFor="inputTwitter">Twitter</label>
             <div className='inputFormDiv'>
               <input type="text" className="form-control" id="inputTwitter" name="twitter" placeholder='https://twitter.com/nombredeusuario' pattern="https://.*" onChange={handleChange} maxLength={70} value={form.twitter} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
-            <small> Error message </small>
+            <small id="smallTwitter"> Error message </small>
           </div>
 
           <div className='form-control'>

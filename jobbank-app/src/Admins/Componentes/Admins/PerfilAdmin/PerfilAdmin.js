@@ -90,30 +90,56 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             const updata = await updateData(form);
           
             if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
-              const data = new FormData();
-              data.append('file', uploadInputImage.files[0]);
-              const urlupload = `${apiPath}/admins/`+ cookies.get('admin_id') + '/uploadphoto'
-  
-              fetch(urlupload, {
-                method: 'PUT',
-                body: data,
-              }).then((response) => {
-                response.json().then((body) => {
-                  cookies.set('photo_filename_physical', body.photo_filename_physical);
-                });
-              })
+              const fileSize = uploadInputImage.files[0].size / 1024 / 1024
+              if (fileSize < 10) {
+                const data = new FormData();
+                data.append('file', uploadInputImage.files[0]);
+                const urlupload = `${apiPath}/admins/`+ cookies.get('admin_id') + '/uploadphoto'
+    
+                fetch(urlupload, {
+                  method: 'PUT',
+                  body: data,
+                }).then((response) => {
+                  if (response.ok) {
+                  cookies.set('photo_filename_physical', response.photo_filename_physical);
+
+                  cookies.set('firstname', form.firstname, {path:"/"});
+                  cookies.set('lastname', form.lastname, {path:"/"});
+                  swal("HAS EDITADO EXITOSAMENTE LOS DATOS DEL ADMINISTRADOR", {
+                    timer:"1800"
+                  });
+                  setTimeout(() => {
+                    history.go(0);
+                  }, 1000);
+                  window.scrollTo(0, 0);
+                } else {
+                  swal({
+                    title: "Se ha producido un error",
+                    text: "Ocurrió un error al subir la imagen",
+                    icon: "error",
+                    button: "Aceptar"
+                  });
+                }
+                })
+              } else {
+                const formPhoto = document.getElementById('form-photo');
+                const errorPhoto = document.getElementById('smallPhotoError');
+
+                formPhoto.className = 'form-control error';
+                errorPhoto.innerText = "El tamaño de la imagen sobrepasa los 10MB";
+              }
+            } else {
+              cookies.set('firstname', form.firstname, {path:"/"});
+              cookies.set('lastname', form.lastname, {path:"/"});
+
+              swal("HAS EDITADO EXITOSAMENTE LOS DATOS DEL ADMINISTRADOR", {
+                  timer:"1800"
+              });
+              setTimeout(() => {
+                history.go(0);
+              }, 1000);
+              window.scrollTo(0, 0);
             }
-
-          cookies.set('firstname', form.firstname, {path:"/"});
-          cookies.set('lastname', form.lastname, {path:"/"});
-
-          swal("HAS EDITADO EXITOSAMENTE LOS DATOS DEL ADMINISTRADOR", {
-              timer:"1800"
-          });
-          setTimeout(() => {
-            history.go(0);
-          }, 1000);
-          window.scrollTo(0, 0);
         }
         updateForm();
         }
@@ -138,6 +164,27 @@ const CrudForm = ({ updateData, dataToEdit}) => {
  // Validate form inputs
  function validateInputs() {
   let formIsValid = true;
+
+  /*if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
+    const formPhoto = document.getElementById('form-photo');
+    const errorPhoto = document.getElementById('smallPhotoError');
+  
+    const data = new FormData();
+    data.append('file', uploadInputImage.files[0]);
+    const urlupload = `${apiPath}/admins/`+ cookies.get('admin_id') + '/uploadphoto'
+
+    fetch(urlupload, {
+      method: 'PUT',
+      body: data,
+    }).then((response) => {
+      if (!response.ok) throw Error(response.status);
+    }).catch(error => {
+      formPhoto.className = 'form-control error';
+      errorPhoto.innerText = "Imagen invalida";
+      formIsValid = false;
+    });
+    return formIsValid
+  }*/
 
   const firstnamevalue = inputFirstname.value.trim();
   const formFirstname = document.getElementById('form-firstname');
@@ -245,19 +292,20 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <div className="form-Admin">
               <div className="form-div">
                 <form className="form-form">
-                  <div className="photoform-div">
+                  <div className="photoform-div" id="form-photo">
                     <label htmlFor="inputPhoto" className="col-form-label">Foto de perfil</label>
                     <div className='usericon-div'>
                       <img src={ photo } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
                     </div>
-                    <small id="photoHelpInline" className="text-muted">Please upload a square-shaped picture. Max 2MB, Formats allowed: jpg, png.</small>
+                    <p id="photoHelpInline" className="text-muted">Seleccione una imagen cuadrada en formato jpg o png, Max 10MB.</p>
                     <div className="container-selectFile">
                       <div className="box-photo form-control">
-                        <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/*" onChange={handleImageUploaded} />
+                        <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/png, image/jpeg" onChange={handleImageUploaded} />
                       </div>
                       <div className="cv-photo">
                         <a id='photo-id' value={cookies.get('photo_filename_logical')}>{cookies.get('photo_filename_physical')}</a>
                       </div>
+                      <small id='smallPhotoError'> Error message </small>
                     </div>
                   </div>
                 </form>
