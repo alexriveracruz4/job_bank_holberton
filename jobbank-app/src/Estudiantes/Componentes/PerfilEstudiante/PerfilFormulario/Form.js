@@ -187,7 +187,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           
             if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
               const fileSize = uploadInputImage.files[0].size / 1024 / 1024
-              if (fileSize < 2) {
+              if (fileSize < 10) {
                 const data = new FormData();
                 data.append('file', uploadInputImage.files[0]);
                 const urlupload = `${apiPath}/students/`+ cookies.get('student_id') + '/uploadphoto'
