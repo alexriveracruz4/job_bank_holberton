@@ -127,7 +127,7 @@ function PuestosDeTrabajoEstudiante() {
         <Stack 
           sx={{
           width: "95%",
-          pl: "400px"
+          pl: "400px",
           }}
         >
           <Typography variant="h7" component="h2">
@@ -150,7 +150,7 @@ function PuestosDeTrabajoEstudiante() {
               handleClean={handleClean}
             />
           </Box>
-          <Box sx={{width: "75%", display: "flex", flexDirection: "column", alignContent: "center"}}>
+          <Box sx={{width: "75%", display: "flex", flexDirection: "column", alignItems: "center"}}>
           {loading 
           ?
             <div>

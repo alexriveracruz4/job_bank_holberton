@@ -107,102 +107,97 @@ function MisPuestosDeTrabajo() {
       <div className='HeaderContainer'>
         <EmpresaNav />
       </div>
-      <div className='MPDTBodyContainer'>
         
-        <div className='MPDTJobsContainer'>
-          {datosTotales === 1?
-            <h2 className="NumeroDeEmpleos">Se ha publicado 1 empleo</h2>
-          :
-            <h2 className="NumeroDeEmpleos">Se han publicado {datosTotales} empleos</h2> 
-          }
-        </div>
-          {loading 
+      {datosTotales === 1?
+        <h2 className="NumeroDeMisEmpleos">Se ha publicado 1 empleo</h2>
+      :
+        <h2 className="NumeroDeMisEmpleos">Se han publicado {datosTotales} empleos</h2> 
+      }
+      {loading 
+      ?
+        <div>
+          <Loader/>
+        </div>  
+      :
+      <>
+        {(items) &&
+          <ReactPaginate
+            previousLabel={"<"}
+            nextLabel={">"}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            forcePage={paginaActual}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item "}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+            renderOnZeroPageCount={null}
+          />
+        }
+
+        {(error|| errorPage) && <Message/>}
+        {(items) &&
+        <ListJobs>
+          {loadingPage 
           ?
             <div>
               <Loader/>
             </div>  
           :
           <>
-          {(items) &&
-            <ReactPaginate
-              previousLabel={"<"}
-              nextLabel={">"}
-              breakLabel={"..."}
-              pageCount={pageCount}
-              forcePage={paginaActual}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
-              onPageChange={handlePageClick}
-              containerClassName={"pagination"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={"page-item"}
-              previousLinkClassName={"page-link"}
-              nextClassName={"page-item "}
-              nextLinkClassName={"page-link"}
-              breakClassName={"page-item"}
-              breakLinkClassName={"page-link"}
-              activeClassName={"active"}
-              renderOnZeroPageCount={null}
-            />
-          }
-          
-          {(error|| errorPage) && <Message/>}
-          {(items) &&
-
-          <ListJobs>
-            {loadingPage 
-            ?
-              <div>
-                <Loader/>
-              </div>  
-            :
-            <>
-              {items.map(trabajo => (   
-                <ItemJob 
-                  key={trabajo.token}
-                  JobId={trabajo.id}
-                  title={trabajo.title}
-                  deleted={trabajo.deleted}
-                  created_at={trabajo.created_at}
-                  deleted_at={trabajo.deleted_at}
-                  updated_at={trabajo.updated_at}
-                  setCopia={setCopia}
-                  paginaActual={paginaActual}
-                />
-                ))
-              }
-            </>
+            {items.map(trabajo => (   
+              <ItemJob 
+                key={trabajo.token}
+                JobId={trabajo.id}
+                title={trabajo.title}
+                deleted={trabajo.deleted}
+                created_at={trabajo.created_at}
+                deleted_at={trabajo.deleted_at}
+                updated_at={trabajo.updated_at}
+                setCopia={setCopia}
+                paginaActual={paginaActual}
+              />
+              ))
             }
-          </ListJobs>
+          </>
           }
-          
-          {(items && !loadingPage) &&
-            <ReactPaginate
-              previousLabel={"<"}
-              nextLabel={">"}
-              breakLabel={"..."}
-              pageCount={pageCount}
-              forcePage={paginaActual}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
-              onPageChange={handlePageClick}
-              containerClassName={"pagination"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={"page-item"}
-              previousLinkClassName={"page-link"}
-              nextClassName={"page-item "}
-              nextLinkClassName={"page-link"}
-              breakClassName={"page-item"}
-              breakLinkClassName={"page-link"}
-              activeClassName={"active"}
-              renderOnZeroPageCount={null}
-            />
-          }
-        </>
+        </ListJobs>
         }
-      </div>
+
+        {(items && !loadingPage) &&
+          <ReactPaginate
+            previousLabel={"<"}
+            nextLabel={">"}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            forcePage={paginaActual}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item "}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+            renderOnZeroPageCount={null}
+          />
+        }
+      </>
+      }
     </div>
   );
 }

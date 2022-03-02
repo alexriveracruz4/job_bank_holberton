@@ -137,7 +137,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
         justifyContent="flex-start"
         alignItems="center"
         spacing={1}
-        sx={{ position: "sticky", top:50}}
+        sx={{ position: "sticky", top:50, width: "98%"}}
       >
       <Box 
         direction="column"

@@ -97,10 +97,10 @@ function ItemJob(props) {
   } 
 
   return (
-    <Card elevation={4} sx={{ width: '100%', height: 320, maxWidth: 1170, my: '15px', display: 'flex',display: "flex", justifyContent: "center", borderRadius: '160px', padding: '30px'}}>
+    <Card elevation={4} sx={{ width: '100%', height: 320, maxWidth: 1170, my: '15px', display: "flex", justifyContent: "center", borderRadius: '160px', padding: '30px'}}>
 
-      <Box sx={{minWidth: 900, alignSelf: "center", display: "flex", flexDirection: "column", justifyContent: "center", alignContent: "center"}} >
-        <Box sx={{minWidth: 900}}>
+      <Box sx={{width: '100%', padding: '33px 50px 30px', alignSelf: "center", display: "flex", flexDirection: "column", justifyContent: "center", alignContent: "center"}} >
+        <Box sx={{width: '100%', minWidth: 900}}>
         {
           props.deleted ? <b className="MPDTNoDisponible"> ELIMINADO </b> : <b className="MPDTDisponible"> DISPONIBLE </b>     
         }

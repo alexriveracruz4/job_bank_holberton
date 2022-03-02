@@ -108,7 +108,7 @@ function ItemJob(props) {
 
   return (
     <React.StrictMode>
-      <Card elevation={4} sx={{ width: '100%', maxHeight: '270px', minWidth: 900, my: '30px', display: 'flex', borderRadius: '160px', px: '50px', py: '10px'}}>
+      <Card elevation={4} sx={{ width: '95%', maxHeight: '270px', minWidth: 900, maxWidth: 1170, my: '30px', display: 'flex', borderRadius: '160px', px: '50px', py: '10px'}}>
         <Link to={{ pathname:`/estudiante/puestos-de-trabajo/partners/${props.id_empresa}/jobs/${props.id_job}`, state: { EstadoDePostulacion: true, DatosEmpresa: PartnerData } }} style={{ color: 'inherit', textDecoration: 'inherit'}}> 
           <Stack sx={{  minWidth: 900, maxHeight: '270px', display: 'flex', flexDirection: 'row'}}>
             <Stack sx={{ width: '60%', px: '50px', py: '10px', display: 'flex', flexDirection: 'column'}}>
