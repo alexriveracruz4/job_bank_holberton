@@ -61,7 +61,7 @@ main .navbar {
 }
 
 .padding-main {
-    background: url(../images/holbertonbackground.png) no-repeat; 
+    background: url(../images/fondoholberton.jpeg) no-repeat; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -79,6 +79,12 @@ main .navbar {
     margin-right: calc(-.5 * var(--bs-gutter-x));
     margin-left: calc(-.5 * var(--bs-gutter-x));
 }
+
+@media (max-width: 1400px) {
+    #div-title-background {
+      display: none;
+    }
+  }
 
 .navbar-brand {
     margin-right: 45px;

@@ -1,10 +1,44 @@
+#div-title-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-background {
+    padding-bottom: 60%;
+    font-size: 125px;
+    font-weight: 700;
+    writing-mode: vertical-rl;
+    /*position: absolute;*/
+    text-align: end;
+    transform: rotate(180deg);
+    height: 250vh;
+    color: #000;
+    left: 0;
+}
+
+.mundo {
+    font-size: 125px;
+    font-weight: 700;
+    writing-mode: vertical-rl;
+    text-align: end;
+    transform: rotate(180deg);
+    height: 250vh;
+    color: #fff;
+}
+
 .padding-main {
-    background: url(../images/holbertonbackground.png) no-repeat; 
+    background: url(../images/fondoholberton.jpeg) no-repeat; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    min-height: 1800px;
 }
 
 .padding-main .container .row {
@@ -25,7 +59,78 @@
     color: #fff;
 }
 
-.PDTENumeroDeEstudiantes {
-    margin-left: 10%;
-    color: white;
+/*#main-container::before {
+    content: "Hola Mundo";
+    display: flex;
+}*/
+
+/*main::before {
+    content: "HOLA MUNDO";
+    font-size: 125px;
+    font-weight: 700;
+    writing-mode: vertical-rl;*/
+    /*position: absolute;*/
+    /*text-align: center;
+    transform: rotate(180deg);
+    height: 290vh;
+    color: #000;
+    left: 0;
+}*/
+
+/*.titulo-probando-div {*/
+    /*writing-mode:tb-rl;*/
+    /*transform: rotate(-90deg);
+    transform-origin: top left;
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    white-space:nowrap;
+    display:block;
+    bottom:0;
+    position: absolute;
+    outline: solid 2px green;
+    width:auto;
+    height:20px;
+}*/
+
+@media (min-width: 1700px) {
+    /*main::before {
+        content: "HOLA MUNDO";
+        font-size: 125px;
+        font-weight: 700;
+        writing-mode: vertical-rl;*/
+        /*position: absolute;*/
+        /*text-align: center;
+        transform: rotate(180deg);
+        height: 290vh;
+        color: #000;
+        left: 0;
+    }*/
+    #div-title-background {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        left: 3%;
+    }
+    .title-background {
+        padding-bottom: 60%;
+        font-size: 125px;
+        font-weight: 700;
+        writing-mode: vertical-rl;
+        /*position: absolute;*/
+        text-align: end;
+        transform: rotate(180deg);
+        height: 250vh;
+        color: #000;
+        left: 0;
+    }
+  }
+
+@media (min-width: 1600px) and (max-width: 1700px) {
+  #div-title-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 1%;
+  }
 }

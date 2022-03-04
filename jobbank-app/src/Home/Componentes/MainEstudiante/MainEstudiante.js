@@ -140,6 +140,11 @@ function MainEstudiante() {
 
   return (
     <main className="padding-main">
+      <div classname="div-title-background" id="div-title-background">
+        <p className="title-background">Holberton en el 
+          <span className="mundo"> Mundo</span>
+        </p>
+      </div>
       <div className="container padding mt-3">
         <div className="BackButton">
         <Tooltip title="Atrás"  placement="right" >
