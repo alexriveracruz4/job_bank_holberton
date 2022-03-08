@@ -23,9 +23,6 @@ function MainFavoritos() {
   let query = new URLSearchParams(search);
   const location = useLocation();
 
-
-
-
   let page = query.get("page")
   let skills = query.get("skills")
   let english = query.get("english")

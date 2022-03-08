@@ -26,7 +26,7 @@ def get_jobs():
     filter_words = request.args.get('_filter_words')
     kind_of_job = request.args.get('_kind_of_job')
     modality = request.args.get('_modality')
-
+    experience = request.args.get('_experience')
     fecha = request.args.get('_fecha')
 
 
@@ -37,7 +37,9 @@ def get_jobs():
     if filter_words is None:
         filter_words = ""
     if fecha is None:
-        filter_words = ""
+        fecha = ""
+    if experience is None:
+        experience = ""
 
     all_jobs = storage.all(Job).values()
 
@@ -95,7 +97,8 @@ def get_jobs():
 
         datos_filtrados = [ x for x in list_jobs if (x['pres_or_remote'] == modality or modality == "" or x['pres_or_remote'] == 'Sin preferencia') and 
                                                     (x['job_type'] == kind_of_job or kind_of_job == "") and 
-                                                    (filter_words in x['title'].lower()+x["description"].lower() or filter_words == "") 
+                                                    (filter_words in x['title'].lower()+x["description"].lower() or filter_words == "") and 
+                                                    (x['experience'] == experience or experience == "") 
                                                     ]
         datos_filtrados_por_fecha = [ x for x in datos_filtrados if fecha_de_publicacion(x, fecha)]
         
