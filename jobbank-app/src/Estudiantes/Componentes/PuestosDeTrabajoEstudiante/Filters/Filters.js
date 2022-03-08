@@ -76,7 +76,7 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
 
   const handleChange = (e) => {
     console.log(e.target.value)
-    if (e.target.value === searchJob.modalidad || e.target.value === searchJob.tipoDeTrabajo || e.target.value === searchJob.fecha) {
+    if (e.target.value === searchJob.modalidad || e.target.value === searchJob.tipoDeTrabajo || e.target.value === searchJob.fecha || e.target.value === searchJob.experiencia) {
       setSearchJob({
         ...searchJob,
         [e.target.name]:"",
@@ -118,6 +118,11 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
   const handleDeletefecha = () => {
     setCopia({...searchJob, fecha: ""})
     setSearchJob({...searchJob, fecha: ""})
+    fetchComments(0);
+  }
+  const handleDeleteExperiencia = () => {
+    setCopia({...searchJob, experiencia: ""})
+    setSearchJob({...searchJob, experiencia: ""})
     fetchComments(0);
   }
 
@@ -170,6 +175,12 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
           :
             <Chip label={copia.fecha} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px"}} onDelete={handleDeletefecha} />
         }
+        {
+          copia.experiencia === "" ? 
+            ""
+          :
+            <Chip label={copia.experiencia} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px"}} onDelete={handleDeleteExperiencia} />
+        }
       </Box>
 
       <Card elevation={4} 
@@ -211,9 +222,47 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
               <Tab label="Fecha de publicación" {...a11yProps(0)} />
               <Tab label="Modalidad" {...a11yProps(1)} />
               <Tab label="Tipo de trabajo" {...a11yProps(2)} />
+              <Tab label="Experiencia" {...a11yProps(3)} />
             </Tabs>
           </Stack>
           <Stack sx={{height: 420, width: "70%", display: 'flex', justifyContent: "center" }}>
+            <TabPanel value={value} index={3}>
+              <FormControl component="fieldset" className={classes.formControl}>
+                <RadioGroup
+                  aria-label="gender"
+                  name="experiencia"
+                  className={classes.group}
+                  value={searchJob.experiencia}
+                >
+                  <FormControlLabel 
+                    value="1 año"
+                    control={<Radio onClick={handleChange} />}
+                    label="1 año"
+                  />
+                  <FormControlLabel
+                    value="2 años"
+                    control={<Radio onClick={handleChange} />}
+                    label="2 años"
+                  />
+                  <FormControlLabel
+                    value="3 o 4 años"
+                    control={<Radio onClick={handleChange} />}
+                    label="3 o 4 años"
+                  />
+                  <FormControlLabel
+                    value="Más de 4 años"
+                    control={<Radio onClick={handleChange} />}
+                    label="Más de 4 años"
+                  />
+                  <FormControlLabel
+                    value="Sin experiencia"
+                    control={<Radio onClick={handleChange} />}
+                    label="Sin experiencia"
+                  />
+                </RadioGroup>
+
+              </FormControl>
+            </TabPanel>
             <TabPanel value={value} index={2}>
 
               <FormControl component="fieldset" className={classes.formControl}>

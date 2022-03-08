@@ -35,7 +35,7 @@ def login():
     for admin in all_admins:
         list_all_users.append(admin.to_dict(save_fs="No"))
     for i in range (0, len(list_all_users)):
-        if data["username"] == list_all_users[i]["email"]:
+        if data["username"].lower() == list_all_users[i]["email"].lower():
             if data["password"] == list_all_users[i]["password"]:
                 if list_all_users[i]["__class__"] == "Student":
                     user =  storage.get(Student, list_all_users[i]["student_id"])
@@ -68,7 +68,7 @@ def login2():
     for admin in all_admins:
         list_all_users.append(admin.to_dict(save_fs="No"))
     for i in range (0, len(list_all_users)):
-        if data["username"] == list_all_users[i]["email"]:
+        if data["username"].lower() == list_all_users[i]["email"].lower():
             if list_all_users[i]["__class__"] == "Student":
                 user =  storage.get(Student, list_all_users[i]["student_id"])
             if list_all_users[i]["__class__"] == "Partner":

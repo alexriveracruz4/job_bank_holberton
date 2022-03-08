@@ -19,7 +19,7 @@ import "../../../helpers/Paginacion.css";
 
 
 const cookies = new Cookies();
-let copia = {PalabraClave:"", modalidad:"", tipoDeTrabajo:"", page:0, fecha:""}
+let copia = {PalabraClave:"", modalidad:"", tipoDeTrabajo:"", page:0, fecha:"", experiencia:""}
 function PuestosDeTrabajoEstudiante() {
 
   const { logout } = useAuth0();
@@ -63,7 +63,7 @@ function PuestosDeTrabajoEstudiante() {
 
   useEffect(() => { 
     const getComments = async () => {
-      const url = `${apiPath}/jobs?_page=${copia.page}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}&_fecha=${copia.fecha}`
+      const url = `${apiPath}/jobs?_page=${copia.page}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}&_fecha=${copia.fecha}&_experience=${copia.experiencia}`
       setLoading(true);
       api.get(url).then((res) => {
         if (!res.err) {
@@ -83,7 +83,7 @@ function PuestosDeTrabajoEstudiante() {
     getComments();
   }, [copia]);
   const fetchComments = async (currentPage) => {
-    const url = `${apiPath}/jobs?_page=${currentPage}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}&_fecha=${copia.fecha}`
+    const url = `${apiPath}/jobs?_page=${currentPage}&_limit=${limit}&_filter_words=${copia.PalabraClave}&_kind_of_job=${copia.tipoDeTrabajo}&_modality=${copia.modalidad}&_fecha=${copia.fecha}&_experience=${copia.experiencia}`
       setLoadingPage(true);
       api.get(url).then((res) => {
         if (!res.err) {

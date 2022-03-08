@@ -90,9 +90,9 @@ function ItemStudent(props) {
 
   const sendEmail = () => {
     const student_email = props.student.email;
-    const copia_email="valery.vargas@holbertonschool.com"
-    const subject=`BÚSQUEDA DE PROGRAMADORES`
-    const body="Muy buenos días, tardes o noches, pude ver tu perfil en Holberton y me gustaría hablarte sobre una oportunidad laboral que podría interesarte."
+    const copia_email="valery.vargas@holbertonschool.com";
+    const subject=`Búsqueda de programadores`;
+    const body=`Hola ${props.student.firstname} ${props.student.lastname},%0D%0AVi tu perfil en la web de Holberton y me gustaría conversar contigo sobre una posible oferta laboral.%0D%0APor favor responder este correo en caso estes interesado,%0D%0AGracias.`;
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${student_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
   }
 

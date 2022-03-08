@@ -45,7 +45,8 @@ function JobDescriptionStudentView(props) {
   let history = useHistory();
   let api = helpHttp();
   const studentId = cookies.get("student_id");
-  console.log(props.datos)
+  const studentName = cookies.get("firstname") + " " + cookies.get("lastname");
+
   const datos = props.datos[0];
   //const [partner, setPartner] = useState([]);
   const partner = props.DatosEmpresa;
@@ -228,12 +229,11 @@ function JobDescriptionStudentView(props) {
   const [db, setDb] = useState([]);
 
   // Sweetalert to confirm when the user clicks in Postula Aquí
-
   const sendEmail = (title) => {
     const partner_email = partner.email;
     const copia_email="valery.vargas@holbertonschool.com"
-    const subject=`POSTULACION AL TRABAJO: ${title}`
-    const body="Me gustaría postular a este trabajo"
+    const subject=`Postulación al trabajo: ${title}`
+    const body=`Hola%0D%0AMi nombre es ${studentName}. Estoy interesado en el puesto y me gustaría que me pudiesen tomar en consideración. Adjunto mi CV y quedo a su disposición.%0D%0A%0D%0AMuchas gracias,%0D%0A%0D%0A${studentName}`
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${partner_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
   }
 
@@ -286,6 +286,7 @@ function JobDescriptionStudentView(props) {
             text:"HAS CANCELADO TU POSTULACIÓN",
             timer:"2000"
           });
+          sendEmail(datos.title);
         }
     });
   }
