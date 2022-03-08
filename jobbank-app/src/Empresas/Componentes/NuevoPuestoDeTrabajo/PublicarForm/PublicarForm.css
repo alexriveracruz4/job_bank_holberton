@@ -18,7 +18,7 @@
 }
 
 .container-profile-job .container-form {
-  width: 600px;
+  width: 700px;
   border-radius: 5px;
   border: 2px solid #000;
 }
@@ -91,4 +91,14 @@
 
 .container-selectFile .box-photo input {
   width: 100%;
+}
+
+.form-control .ql-editor {
+  min-height: 700px;
+  background-color: white;
+}
+
+.form-control .ql-toolbar.ql-snow {
+  display: flex;
+  justify-content: center;
 }

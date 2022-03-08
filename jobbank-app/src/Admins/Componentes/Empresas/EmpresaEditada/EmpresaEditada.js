@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./EmpresaEditada.css"
 import Countries from "../../../../helpers/Countries.json"
 import swal from 'sweetalert';
 import { useHistory } from "react-router";
+import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
 import Cookies from "universal-cookie";
+import apiPath from "../../../../ApiPath";
+
 
 const cookies = new Cookies();
 
@@ -13,6 +16,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
   // Form with empty string start
   const initailForm = {
+    partner_id: "",
     name: "",
     nation: "",
     region: "",
@@ -22,6 +26,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     web: "",
     description:"",
     updated_by: parseInt(AdminID),
+    logo_filename_physical: "",
+    logo_filename_logical: "",
   };
 
   // Adding state to fill the form with the data received from dataToEdit
@@ -38,7 +44,46 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     });
   };
 
+  // Get photoname
+  const [partner, setPartner] = useState([2]);
+
+  React.useEffect(() => {
+    obtenerDatosDePartners();
+  }, []);
+
+  let partner_id = form.partner_id
+
+  const obtenerDatosDePartners = async () => {
+    const data = await fetch(`${apiPath}/partners/${partner_id}`);
+    const applications = await data.json();
+    setPartner(applications);
+  }
+
+  useEffect(() => {
+  let photoname = "";
+
+  if (form.logo_filename_physical !== null && form.logo_filename_physical !== undefined){
+    photoname = form.logo_filename_physical;
+  }
+
+  const PhotoId = document.getElementById('photo-id');
+
+  if (form.logo_filename_physical !== null) {
+    PhotoId.innerText = photoname;
+  } else {
+    PhotoId.innerText = "Aún no se ha subido ninguna imagen";
+  }
+  });
+
+  // Photo in form
+  let photo = UserIcon;
+  if (form.logo_filename_logical !== null && form.logo_filename_logical !== undefined){
+    photo = `${apiPath}/partner_photos/${form.logo_filename_logical}`;
+  }
+
   // Sweetalert to confirm when the user clicks in Guardar cambios
+  let uploadInputImage = useRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateInputs() === true) {
@@ -48,17 +93,66 @@ const CrudForm = ({ updateData, dataToEdit}) => {
         buttons: ["Cancelar", "Guardar"],
       }).then((willEdit) => {
         if (willEdit) {
-          updateData(form);
-          swal("HAS EDITADO EXITOSAMENTE LOS DATOS DE LA EMPRESA", {
-              timer:"1500"
-          });
-          setTimeout(() => {
-            history.go(0);
-          }, 1000);
-          window.scrollTo(0, 0);
+          // updateData function
+          async function updateForm() {
+            const updata = await updateData(form);
+          
+            if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
+              const fileSize = uploadInputImage.files[0].size / 1024 / 1024
+              if (fileSize < 10) {
+                const data = new FormData();
+                data.append('file', uploadInputImage.files[0]);
+                const urlupload = `${apiPath}/partners/`+ partner_id + '/uploadphoto'
+    
+                fetch(urlupload, {
+                  method: 'POST',
+                  body: data,
+                }).then((response) => {
+                  if (response.ok) {
+                    swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
+                      timer:"1500"
+                    });
+                    setTimeout(() => {
+                      history.go(0);
+                    }, 1000);
+                    window.scrollTo(0, 0);
+                  } else {
+                    swal({
+                      title: "Se ha producido un error",
+                      text: "Ocurrió un error al subir la imagen",
+                      icon: "error",
+                      button: "Aceptar"
+                    });
+                  }
+                })
+              } else {
+                const formPhoto = document.getElementById('form-photo');
+                const errorPhoto = document.getElementById('smallPhotoError');
+
+                formPhoto.className = 'form-control error';
+                errorPhoto.innerText = "El tamaño de la imagen sobrepasa los 10MB";
+              }
+            } else {
+              swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
+                  timer:"1500"
+              });
+              setTimeout(() => {
+                history.go(0);
+              }, 1000);
+              window.scrollTo(0, 0);
+            }
+        }
+        updateForm();
         }
       });
-    };
+    } else {
+      swal({
+        title: "Se ha producido un error",
+        text: "Por favor revise que haya ingresado sus datos correctamente",
+        icon: "error",
+        button: "Aceptar"
+      });
+    }
   }
 
   // Getting variables from html
@@ -187,6 +281,22 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     return formIsValid
   }
 
+  // See the chosen image
+  const uploadedImage = React.useRef(null);
+
+  const handleImageUploaded = e => {
+    const [file] = e.target.files;
+    if (file) {
+      const reader = new FileReader();
+      const {current} = uploadedImage;
+      current.file = file;
+      reader.onload = (e) => {
+          current.src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <div className="container-profile-edit-partner">
       <div className="profile-title">
@@ -195,6 +305,31 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
       <div className='container-form'>
         <form className='form'>
+
+          <div className='form-control'>
+            <div className="form-Estudiante">
+              <div className="form-div">
+                <form className="form-form">
+                  <div className="photoform-div" id="form-photo">
+                    <label htmlFor="inputPhoto" className="col-form-label">Foto de perfil</label>
+                    <div className='usericon-div'>
+                      <img src={ photo } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
+                    </div>
+                    <p id="photoHelpInline" className="text-muted">Seleccione una imagen cuadrada en formato jpg o png, Max 10MB.</p>
+                    <div className="container-selectFile">
+                      <div className="box-photo form-control">
+                        <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/png, image/jpeg" onChange={handleImageUploaded} />
+                      </div>
+                      <div className="cv-photo">
+                        <a id='photo-id' value={form.logo_filename_logical}>{form.logo_filename_physical}</a>
+                      </div>
+                      <small id='smallPhotoError'> Error message </small>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
 
           <div className="form-control" id='form-name'>
             <label htmlFor="inputName">Empresa</label>

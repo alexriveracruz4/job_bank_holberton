@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import ButtonBase from '@mui/material/ButtonBase';
 import Box from "@material-ui/core/Box";
 import Card from "@mui/material/Card";
+import Chip from '@mui/material/Chip';
 import Container from '@material-ui/core/Container';
 import Divider from '@mui/material/Divider';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
@@ -97,6 +98,28 @@ function ItemStudent(props) {
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${student_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
   }
 
+  function getSkillTechName(stdskill) {
+    const arrskills = JSON.parse(stdskill.replace(/'/g, '"'));
+    const list_of_names = []
+    for (const [key, value] of Object.entries(arrskills)) {
+      if (value.type === "tech") {
+        list_of_names.push(value.name)
+      }
+    }
+    return list_of_names.splice(0, 7)
+  }
+
+  function getLengthOfSkillTech(stdskill) {
+    const arrskills = JSON.parse(stdskill.replace(/'/g, '"'));
+    let times = 0
+    for (const [key, value] of Object.entries(arrskills)) {
+      if (value.type === "tech") {
+        times += 1
+      }
+    }
+    return times
+  }
+
   return (
     <React.StrictMode>     
           <Card elevation={4} sx={{ width: '100%', height: 320, maxWidth: 1170, my: '15px', display: 'flex', borderRadius: '160px', padding: '30px' }}>
@@ -139,11 +162,13 @@ function ItemStudent(props) {
                     <Grid item>
                       <Stack
                           direction="row"
-                          divider={<Divider style={{height: '30px'}} orientation="vertical" flexItem />}
-                          spacing={2}
-                          style={{display: 'flex',flexWrap: 'wrap', alignItems: 'baseline', justifyContent: 'center'}}
+                          spacing={1}
+                          style={{display: 'flex',flexWrap: 'wrap', alignItems: 'baseline', justifyContent: 'center', height: '80px'}}
                         >
-                          {JSON.parse(props.student.student_skills.replace(/'/g, '"')).slice(0, 7).map(skill => <p id="skill">{skill.name}</p>)}
+                          {getSkillTechName(props.student.student_skills).map(skill => <Chip label={skill} />)}
+                          {getLengthOfSkillTech(props.student.student_skills) > 7
+                            ? <Chip onClick={()=>history.push(`/home/candidate/${props.student.student_id}`)} label="Ver más" style={{ backgroundColor: "rgba(0, 0, 0, 0.15)" }}/>
+                            : null}
                         </Stack>
                     </Grid>
                   </Grid>
@@ -199,21 +224,7 @@ function ItemStudent(props) {
                         </Button>
                       </Box>
                       <IconButton color="inherit" aria-label="favorite" title="Agregar a favoritos">
-                        {/*favoriteIcon ? <FavoriteIcon /> : <FavoriteBorderOutlinedIcon />*/}
                         <FavoriteIconState />
-                        {/*<FavoriteBorderOutlinedIcon onClick={()=>{
-                          {favoriteIcon ? setFavoriteIcon(false) : setFavoriteIcon(true)}
-                              if (props.favorites !== null) {
-                                if (props.favorites.includes(props.student.student_id)) {
-                                  props.setFavorites(props.favorites.filter(item => item !== props.student.student_id))
-                                  
-                                } else {
-                                  props.setFavorites([...props.favorites, props.student.student_id])
-                                }
-                              } else {
-                                props.setFavorites([props.student.student_id])
-                              }
-                            }}/>*/}
                       </IconButton>
                       <IconButton color="inherit" id="copyIcon" aria-label="share" title="Copiar enlace del perfil" onClick={() => {
                           navigator.clipboard.writeText(`${window.location.origin}/home/candidate/${props.student.student_id}`)

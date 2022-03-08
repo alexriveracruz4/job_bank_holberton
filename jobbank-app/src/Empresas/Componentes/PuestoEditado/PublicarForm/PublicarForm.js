@@ -229,7 +229,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           </div>
 
           <div className="form-control" id='form-salary'>
-            <label htmlFor="inputSalary">Salario</label>
+            <label htmlFor="inputSalary">Salario en dólares</label>
             <div className="inputFormDiv">
               <input type="text" className="form-control" id="inputSalary" name="salary" maxLength={45} placeholder="1000 dólares" onChange={handleChange} value={form.salary} />
               <i className="fas fa-check-circle" />

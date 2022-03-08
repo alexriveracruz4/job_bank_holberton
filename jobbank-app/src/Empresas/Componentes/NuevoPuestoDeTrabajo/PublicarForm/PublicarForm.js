@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Countries from "../../../../helpers/Countries.json"
 import "./PublicarForm.css"
 import Cookies from 'universal-cookie';
 import swal from 'sweetalert';
 import { useHistory } from 'react-router';
 import apiPath from '../../../../ApiPath';
+
+
+import Quill from 'quill';
+import "quill/dist/quill.snow.css"
 
 const cookies = new Cookies();
   
@@ -202,6 +206,32 @@ const handleSubmit = (e) => {
     return formIsValid
   }
 
+  var quill = new Quill('#editor-container', {
+    modules: {
+      toolbar: [
+        ['bold', 'italic'],
+        ['link', 'blockquote', 'code-block', 'image'],
+        [{ list: 'ordered' }, { list: 'bullet' }]
+      ]
+    },
+    placeholder: 'Compose an epic...',
+    theme: 'snow'
+  });
+
+  const wrapperRef = useCallback(wrapper => {
+    if (wrapper == null) return
+
+    wrapper.innerHTML = ""
+    const editor = document.createElement('div')
+    const p = document.createElement('p')
+    const textP = document.createTextNode("This is a new paragraph.");
+    p.appendChild(textP);
+    editor.append(p)
+    wrapper.append(editor)
+    new Quill(editor, {theme: "snow"})
+  }, [])
+
+
   return (
     <div className="container-profile-job">
       <div className="profile-title">
@@ -257,7 +287,7 @@ const handleSubmit = (e) => {
           </div>
 
           <div className="form-control" id='form-salary'>
-            <label htmlFor="inputSalary">Salario</label>
+            <label htmlFor="inputSalary">Salario en dólares</label>
             <div className="inputFormDiv">
               <input type="text" className="form-control" id="inputSalary" name="salary" placeholder="1000 dólares" maxLength={45} onChange={handleChange} value={form.salary} />
               <i className="fas fa-check-circle" />
@@ -306,10 +336,21 @@ const handleSubmit = (e) => {
             <small id='smallTravelAvailability'> Error message </small>
           </div>
 
-          <div className='form-control' id='form-description'>
+          {/*<div className='form-control' id='form-description'>
             <label htmlFor="inputDescription">Descripción</label>
             <div className='inputFormDiv'>
               <textarea className="form-control" id="inputDescription" rows="10" maxLength={3000} name="description" onChange={ handleChange } value={form.description} />
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallDescription'> Error message </small>
+              </div>*/}
+
+          <div className='form-control' id='form-description'>
+            <label htmlFor="inputDescription">Descripción del trabajo</label>
+            <div className='inputFormDiv'>
+              <input name="description" type="hidden" />
+              <div className='containerEditText' ref={wrapperRef}></div>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

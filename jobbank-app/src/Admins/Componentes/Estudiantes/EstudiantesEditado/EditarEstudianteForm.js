@@ -1,14 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./EditarEstudianteForm.css";
 import Countries from "../../../../helpers/Countries.json";
 import swal from 'sweetalert';
 import { useHistory } from "react-router";
+import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
+import apiPath from "../../../../ApiPath";
+
+/////
+import {makeStyles} from '@material-ui/core/styles';
+import {Modal, TextField} from '@material-ui/core';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 
 const CrudForm = ({ updateData, dataToEdit }) => {
   const history = useHistory();
 
   // Form with empty string at start
   const initailForm = {
+    student_id: "",
     firstname: "",
     lastname: "",
     email: "",
@@ -20,7 +33,24 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     availability: "",
     pres_or_remot: "",
     description: "",
+    photo_filename_logical: "",
+    photo_filename_physical: "",
+    cv_filename_logical: "",
+    cv_filename_physical: "",
   };
+
+  const useStyles = makeStyles(() => ({
+    modal3:{
+      position: 'absolute',
+      width: 1000,
+      borderRadius: "30px",
+      backgroundColor: ' #f7f9f9 ',
+      padding: "16px 32px 24px",
+      top:'50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+    }
+  }))
 
   // Adding state to fill the form with the data received from dataToEdit
   const [form, setForm] = useState(initailForm);
@@ -36,7 +66,60 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     });
   };
 
+  const [student, setStudent] = useState([2]);
+
+  React.useEffect(() => {
+    obtenerDatosDeEstudiantes();
+  }, []);
+
+  let student_id = form.student_id
+
+  const obtenerDatosDeEstudiantes = async () => {
+    const data = await fetch(`${apiPath}/students/${student_id}`);
+    const applications = await data.json();
+    setStudent(applications);
+  }
+
+    // Get photoname
+
+  useEffect(() => {
+  let photoname = "";
+  let cvname = "";
+
+  if (form.photo_filename_physical !== null && form.photo_filename_physical !== undefined){
+    photoname = form.photo_filename_physical;
+  }
+
+  if (form.cv_filename_physical !== null && form.cv_filename_physical != undefined){
+    cvname = form.cv_filename_physical;
+  }
+
+  const PhotoId = document.getElementById('photo-id');
+
+  if (form.photo_filename_physical !== null) {
+    PhotoId.innerText = photoname;
+  } else {
+    PhotoId.innerText = "Aún no se ha subido ninguna imagen";
+  }
+
+  const cvID = document.getElementById('cv-name');
+
+  if (form.cv_filename_physical !== 'null') {
+    cvID.innerText = cvname;
+  } else {
+    cvID.innerText = "Aún no se ha subido ningun CV";
+  }
+  });
+
+  let photo = UserIcon;
+  if (form.photo_filename_logical != null && form.photo_filename_logical != undefined){
+    photo = `${apiPath}/student_photos/${form.photo_filename_logical}`;
+  }
+
   // Sweetalert to confirm when the user clicks in Guardar cambios
+  let uploadInputImage = useRef();
+  let uploadInputCV = useRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateInputs() === true) {
@@ -46,18 +129,104 @@ const CrudForm = ({ updateData, dataToEdit }) => {
         buttons: ["Cancelar", "Guardar"],
       }).then((willEdit) => {
         if (willEdit) {
-          updateData(form);
-          swal("HAS EDITADO EXITOSAMENTE UN NUEVO ESTUDIANTE", {
-              timer:"1500"
-          });
-          setTimeout(() => {
-            history.go(0);
-          }, 1000);
-          window.scrollTo(0, 0);
+          // updateData function
+          async function updateForm() {
+            const updata = await updateData(form);
+
+            // Upload Skills
+            if (selectSkills != undefined || selectSkills != null) {
+              const dictSkills = {}
+              const urlUploadSkills =  `${apiPath}/students/`+ student_id + '/skills'
+              const skillsdata = selectSkills.map(obj => obj.id);
+              dictSkills['skill_id'] = skillsdata.toString()
+              
+              fetch(urlUploadSkills, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dictSkills),
+              }).then((response) => {
+                response.json().then((body) => {
+                  console.log(body);
+                });
+              })
+            }
+
+            // Upload CV
+            if (uploadInputCV.files[0] != undefined) {
+              const cvData = new FormData();
+              cvData.append('file', uploadInputCV.files[0]);
+              const urlUploadCV = `${apiPath}/students/`+ student_id + '/uploadcv'
+
+              fetch(urlUploadCV, {
+                method: 'POST',
+                body: cvData,
+              }).then((response) => {
+                response.json().then((body) => {
+                  console.log(body.cv_filename_physical);
+                });
+              });
+            }
+          
+            if (uploadInputImage.files[0] != undefined || uploadInputImage.files[0] != null) {
+              const fileSize = uploadInputImage.files[0].size / 1024 / 1024
+              if (fileSize < 10) {
+                const data = new FormData();
+                data.append('file', uploadInputImage.files[0]);
+                const urlupload = `${apiPath}/students/`+ student_id + '/uploadphoto'
+    
+                fetch(urlupload, {
+                  method: 'POST',
+                  body: data,
+                }).then((response) => {
+                  if (response.ok) {
+                  swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
+                    timer:"1500"
+                  });
+                  setTimeout(() => {
+                    history.go(0);
+                  }, 1000);
+                  window.scrollTo(0, 0);
+                } else {
+                  swal({
+                    title: "Se ha producido un error",
+                    text: "Ocurrió un error al subir la imagen",
+                    icon: "error",
+                    button: "Aceptar"
+                  });
+                }
+                })
+              } else {
+                const formPhoto = document.getElementById('form-photo');
+                const errorPhoto = document.getElementById('smallPhotoError');
+
+                formPhoto.className = 'form-control error';
+                errorPhoto.innerText = "El tamaño de la imagen sobrepasa los 10MB";
+                window.scrollTo(0, 0);
+              }
+            } else {
+              swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
+                  timer:"1500"
+              });
+              setTimeout(() => {
+                history.go(0);
+              }, 1000);
+              window.scrollTo(0, 0);
+            }
+        }
+        updateForm();
         }
       });
-    };
-  };
+    } else {
+      swal({
+        title: "Se ha producido un error",
+        text: "Por favor revise que haya ingresado sus datos correctamente",
+        icon: "error",
+        button: "Aceptar"
+      });
+    }
+  }
 
   // Getting variables from html
 
@@ -227,6 +396,217 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     return formIsValid
   };
 
+  // See the chosen image
+  const uploadedImage = React.useRef(null);
+
+  const handleImageUploaded = e => {
+    const [file] = e.target.files;
+    if (file) {
+      const reader = new FileReader();
+      const {current} = uploadedImage;
+      current.file = file;
+      reader.onload = (e) => {
+          current.src = e.target.result;
+      }
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const [allSkills, setAllSkills] = useState([]);
+
+  const [selectSkills, setSelectSkills] = useState([])
+
+  React.useEffect(() => {
+    obtenerDatosDeSkills();
+    obtenerSkillsDeEstudiante();
+  }, []);
+
+  const obtenerDatosDeSkills = async () => {
+    const data = await fetch(`${apiPath}/skills`);
+    setAllSkills(await data.json());
+  }
+
+  const obtenerSkillsDeEstudiante = async () => {
+    const data = await fetch(`${apiPath}/students/${student_id}/skills`);
+    setSelectSkills(await data.json());
+  }
+
+  const handleRemoveItem = (data,setData, id) => {
+    setData(data.filter(item => item.id !== id))
+  }
+
+  const styles = useStyles();
+  const [searchValue, setSearchValue] = useState('')
+
+  const abrirCerrarSkillsModal = () => {
+    setSkillsModal(!skillsModal);
+  }
+  const [skillsModal, setSkillsModal] = useState(false)
+
+  function RenderAllSkillsList(props) {
+    const skills = props.allSkills;
+    const HabilidadesSeleccionadas = props.selectSkills;
+    const copySelectedSkills = skills.filter((item) => {
+      for (let i of HabilidadesSeleccionadas) {
+        if (item.id === i.id){
+          return true;
+        }
+      }
+    });
+
+    const newArraySkills = skills.filter((item) => !copySelectedSkills.includes(item));
+    
+    //const uniqueItemss = [...new Set(newArraySkills)]
+
+    const uniqueItemss = newArraySkills.reduce((acc, current) => {
+      const x = acc.find(item => item.id === current.id);
+      if (!x) {
+        return acc.concat([current]);
+      } else {
+        return acc;
+      }
+    }, []);
+
+    const filterSkills = uniqueItemss.filter(item => {
+      if (item.name.toLowerCase().includes(searchValue)) {
+        return true;
+      }
+    })
+
+    const techSkills = filterSkills.filter((obj)=> obj.type === props.tipo || props.tipo === "all")
+    return (
+      <div>
+        {techSkills.map((skill) => (
+            <Chip
+              key={skill.id}
+              onClick={() => {
+                setSelectSkills([...selectSkills, skill]);
+                handleRemoveItem(allSkills,setAllSkills, skill.id);
+              }}
+              sx={{ m: 0.3 }}
+              label={skill.name} />
+        ))}
+      </div>
+    );
+  }
+  
+
+  function RenderSelectedSkillsList(props) {
+    const skills = props.selectSkills;
+    return (
+      <div>
+        {skills.map((skill) => (
+            <Chip 
+              key={skill.id}
+              onDelete={() => {
+                handleRemoveItem(selectSkills, setSelectSkills, skill.id);
+                setAllSkills([...allSkills, skill]);
+                
+              }} 
+              sx={{ m: 0.3 }}
+              label={skill.name}
+            />
+        ))}
+      </div>
+    );
+  }
+
+  const skillsBody=(
+    <div className={styles.modal3}>
+      <Stack direction="row" spacing={1} justifyContent="flex-end">
+        <TextField
+          fullWidth
+          label="Palabra clave"
+          id="fullWidth"
+          onChange={e => setSearchValue(e.target.value)} 
+        />
+      </Stack>
+      <br/>
+      {
+        (selectSkills.length !== 0)
+        ?
+        <Box
+        sx={{
+          width: 900,
+          height: 80,
+          display: 'flex',
+          flexWrap: 'nowrap',
+        }}
+        >
+        <RenderSelectedSkillsList selectSkills={selectSkills} tipo={"tech"}/>
+        </Box>
+        :
+        ""
+      }
+      <br/>
+      <div align="center">
+        <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2} justifyContent="space-around">
+          <Stack direction="column"  spacing={2} >
+            <Typography variant="h6" gutterBottom component="div">
+              Habilidades técnicas
+            </Typography>
+            <Box
+              sx={{
+                width: 300,
+                height: 300,
+                display: 'flex',
+                flexWrap: 'nowrap',
+                overflowY: "auto"
+              }}
+            >
+              <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"tech"}/>
+            </Box>
+          </Stack>
+          <Stack direction="column"  spacing={2} >
+            <Typography variant="h6" gutterBottom component="div">
+              Habilidades blandas
+            </Typography>
+            <Box
+              sx={{
+                width: 300,
+                height: 300,
+                display: 'flex',
+                flexWrap: 'nowrap',
+                overflowY: "auto"
+              }}
+            >
+              <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"soft"}/>
+            </Box>
+          </Stack>
+          <Stack direction="column" spacing={2} >
+            <Typography variant="h6" gutterBottom component="div">
+              Otras habilidades
+            </Typography>
+
+            <Box
+              sx={{
+                width: 300,
+                height: 300,
+                display: 'flex',
+                flexWrap: 'nowrap',
+                overflowY: "auto"
+              }}
+            >
+              <RenderAllSkillsList allSkills={allSkills} selectSkills={selectSkills} tipo={"other"}/>
+            </Box>
+          </Stack>
+        </Stack>
+      </div>
+      <br/>
+
+
+      <div align="right">
+        <Stack direction="row-reverse" spacing={2} justifyContent="flex-start" >
+        <Button variant="outlined" color="error"
+          onClick={()=> abrirCerrarSkillsModal()}
+        >
+          Cerrar
+        </Button>
+        </Stack>
+      </div>
+    </div>
+  )
+
   return (
     <div className="container-profile-edit-student">
       <div className="header-profile">
@@ -235,6 +615,31 @@ const CrudForm = ({ updateData, dataToEdit }) => {
 
       <div className='container-form'>
         <form className='form'>
+          {/* Photo */}
+          <div className='form-control'>
+            <div className="form-Estudiante">
+              <div className="form-div">
+                <form className="form-form">
+                  <div className="photoform-div" id="form-photo">
+                    <label htmlFor="inputPhoto" className="col-form-label">Foto de perfil</label>
+                    <div className='usericon-div'>
+                      <img src={ photo } ref={uploadedImage} className="usericon-form" alt="imagen de usuario" />
+                    </div>
+                    <p id="photoHelpInline" className="text-muted">Seleccione una imagen cuadrada en formato jpg o png, Max 10MB.</p>
+                    <div className="container-selectFile">
+                      <div className="box-photo form-control">
+                        <input ref={(ref) => { uploadInputImage = ref; }} type="file" accept="image/png, image/jpeg" onChange={handleImageUploaded} />
+                      </div>
+                      <div className="cv-photo">
+                        <a id='photo-id' value={form.photo_filename_logical}>{form.photo_filename_physical}</a>
+                      </div>
+                      <small id='smallPhotoError'> Error message </small>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
 
           <div className='form-control' id='form-firstname'>
             <label htmlFor="inputFirstname">Nombre (*obligatorio)</label>
@@ -331,6 +736,28 @@ const CrudForm = ({ updateData, dataToEdit }) => {
             <small id='smallProvince'> Error message </small>
           </div>
 
+          <div className='form-control'>
+            <label htmlFor="inputNationality">Habilidades (*obligatorio)</label>
+            <div className='inputFormDiv'>
+            <button
+              onClick={()=> abrirCerrarSkillsModal()}
+              type="button" 
+              style={{width: '100%'}}
+            >
+              Seleccionar habilidades
+            </button>
+            <Modal
+              open={skillsModal}
+              onClose={abrirCerrarSkillsModal}
+            >
+              {skillsBody}
+            </Modal>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small> Error message </small>
+          </div>
+
           <div className='form-control' id='form-availability'>
             <label htmlFor="inputAvailability">Estado actual</label>
             <div className='inputFormDiv'>
@@ -369,6 +796,26 @@ const CrudForm = ({ updateData, dataToEdit }) => {
               <i className="fas fa-exclamation-circle" />
             </div>
             <small> Error message </small>
+          </div>
+
+          <div className='form-control'>
+            <div className="form-Estudiante">
+              <div className="form-div">
+                <form className="form-form">
+                  <div className="form-group row">
+                    <label htmlFor="inputPhoto" className="col-form-label">Subir CV</label>
+                    <div className="container-selectFile">
+                      <div className="box-photo form-control">
+                        <input ref={(ref) => { uploadInputCV = ref; }} type="file" accept="application/pdf" />
+                      </div>
+                      <div className="cv-name-div">
+                        <a id='cv-name' value={form.cv_filename_physical}>{form.cv_filename_physical}</a>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
 
           <div className="div-button-create-partner">

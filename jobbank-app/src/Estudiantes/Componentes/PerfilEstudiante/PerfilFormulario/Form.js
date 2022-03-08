@@ -418,14 +418,19 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     const developertypeValue = inputDeveloperType.value.trim();
     const formDeveloperType = document.getElementById('form-developer_type');
     const errorDeveloperType = document.getElementById('smallDeveloperType');
+    const selectforDeveloperType = document.getElementById('inputDeveloperType');
+    const arrayoptionsDeveloperType = []
+    for (var i = 0; i < selectforDeveloperType.options.length; i++) {
+      arrayoptionsDeveloperType.push(selectforDeveloperType.options[i].value);
+    }
 
     if (developertypeValue === "") {
       formDeveloperType.className = 'form-control error';
       errorDeveloperType.innerText = "Complete este campo.";
       formIsValid = false;
-    } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(developertypeValue))) {
+    } else if (!(arrayoptionsDeveloperType.includes(developertypeValue))) {
       formDeveloperType.className = 'form-control error';
-      errorDeveloperType.innerText = "Use solo letras.";
+      errorDeveloperType.innerText = "Ingrese una opcion del menú desplegable"
       formIsValid = false;
     } else {
       formDeveloperType.classList.remove('error');
@@ -858,8 +863,13 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
           <div className='form-control' id='form-developer_type'>
             <label htmlFor="inputDeveloperType">Tipo de desarrollador (*obligatorio)</label>
-            <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputDeveloperType" name="developer_type" placeholder="FULL STACK" onChange={handleChange} maxLength={45} value={form.developer_type}/>
+            <div className='inputFormDiv'>
+              <select className="form-control" id="inputDeveloperType" onChange={handleChange} name="developer_type" value={form.developer_type}>
+                <option selected disabled hidden></option>
+                <option onClick={e => e.target.textarea}>Full-stack</option>
+                <option onClick={e => e.target.textarea}>Front-end</option>
+                <option onClick={e => e.target.textarea}>Back-end</option>
+              </select>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

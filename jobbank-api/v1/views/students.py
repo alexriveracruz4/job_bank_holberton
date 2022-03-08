@@ -20,6 +20,7 @@ import random
 availabilityList = ["Actualmente trabajando", "En busca de ofertas laborales", ""]
 pres_or_remotList = ["Presencial", "Remoto", "Semi-presencial", "Sin preferencia", ""]
 disp_travelList = ["Disponible", "No disponible", ""]
+developer_typeList = ["Full-stack", "Front-end", "Back-end"]
 english_levelList = ["No ingles", "A1", "A2", "B1", "B2", "C1", "C2"]
 
 @app_views.route('/students', methods=['GET'], strict_slashes=False)
@@ -517,7 +518,11 @@ def post_student():
             if value == None or value == "":
                 isvalid = True
             elif len(value) <= 45:
-                isvalid = True
+                if value in developer_typeList:
+                    isvalid = True
+                else:
+                    print("Not a valid option in developer_type")
+                    abort(400, description="Not a valid option in developer_type")
             else:
                 print("developer_type must contain a maximum of 45 characters")
                 abort(400, description="developer_type must contain a maximum of 45 characters")
@@ -736,7 +741,11 @@ def put_student(student_id):
                 if value == None or value == "":
                     isvalid = True
                 elif len(value) <= 45:
-                    isvalid = True
+                    if value in developer_typeList:
+                        isvalid = True
+                    else:
+                        print("Not a valid option in developer_type")
+                        abort(400, description="Not a valid option in developer_type")
                 else:
                     print("developer_type must contain a maximum of 45 characters")
                     abort(400, description="developer_type must contain a maximum of 45 characters")
