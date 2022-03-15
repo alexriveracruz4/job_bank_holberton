@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useParams } from 'react-router-dom'
 import "./EditarEstudianteForm.css";
 import Countries from "../../../../helpers/Countries.json";
 import swal from 'sweetalert';
@@ -18,6 +19,7 @@ import Typography from '@mui/material/Typography';
 
 const CrudForm = ({ updateData, dataToEdit }) => {
   const history = useHistory();
+  const { id } = useParams();
 
   // Form with empty string at start
   const initailForm = {
@@ -30,6 +32,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     age: "",
     nationality: "",
     province: '',
+    developer_type: "",
     availability: "",
     pres_or_remot: "",
     description: "",
@@ -240,6 +243,12 @@ const CrudForm = ({ updateData, dataToEdit }) => {
   const inputNationality = document.getElementById('inputNationality');
   const inputAvailability = document.getElementById('inputAvailability');
   const inputProvince = document.getElementById('inputProvince');
+  const inputDeveloperType = document.getElementById('inputDeveloperType');
+  const inputLinkedIn = document.getElementById('inputLinkedIn');
+  const inputGithub = document.getElementById('inputGithub');
+  const inputTwitter = document.getElementById('inputTwitter');
+  const inputPortfolio = document.getElementById('inputPortfolio');
+  const inputEnglishLevel = document.getElementById('inputEnglishLevel');
 
 
    // Validate form inputs
@@ -382,15 +391,99 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     const errorProvince = document.getElementById('smallProvince');
 
     if (provincevalue === "") {
-      formProvince.className = 'form-control error';
-      errorProvince.innerText = "Complete este campo.";
-      formIsValid = false;
+      formProvince.classList.remove('error');
     } else if (!(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/u.test(provincevalue))) {
       formProvince.className = 'form-control error';
       errorProvince.innerText = "Use solo letras.";
       formIsValid = false;
     } else {
       formProvince.classList.remove('error');
+    }
+
+    const developertypeValue = inputDeveloperType.value.trim();
+    const formDeveloperType = document.getElementById('form-developer_type');
+    const errorDeveloperType = document.getElementById('smallDeveloperType');
+    const selectforDeveloperType = document.getElementById('inputDeveloperType');
+    const arrayoptionsDeveloperType = []
+    for (var i = 0; i < selectforDeveloperType.options.length; i++) {
+      arrayoptionsDeveloperType.push(selectforDeveloperType.options[i].value);
+    }
+
+    if (developertypeValue === "") {
+      formDeveloperType.classList.remove('error');
+    } else if (!(arrayoptionsDeveloperType.includes(developertypeValue))) {
+      formDeveloperType.className = 'form-control error';
+      errorDeveloperType.innerText = "Ingrese una opcion del menú desplegable"
+      formIsValid = false;
+    } else {
+      formDeveloperType.classList.remove('error');
+    }
+
+    const english_levelValue = inputEnglishLevel.value.trim();
+    const formEnglishLevel = document.getElementById('form-english_level')
+    const errorEnglishLevel = document.getElementById('smallEnglishLevel')
+    const selectforEnglishLevel = document.getElementById('inputEnglishLevel');
+    const arrayoptionsEnglishLevel = []
+    for (var i = 0; i < selectforEnglishLevel.options.length; i++) {
+      arrayoptionsEnglishLevel.push(selectforEnglishLevel.options[i].value);
+    }
+
+    const LinkedInValue = inputLinkedIn.value.trim();
+    const formLinkedIn = document.getElementById('form-linkedin');
+    const errorLinkedIn = document.getElementById('smallLinkedIn')
+
+    if (LinkedInValue !== "") {
+      if (LinkedInValue.indexOf("http://") !== 0 && LinkedInValue.indexOf("https://") !== 0) {
+        formLinkedIn.className = 'form-control error';
+        errorLinkedIn.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
+        formIsValid = false;
+      }
+    }
+
+    const GithubValue = inputGithub.value.trim();
+    const formGithub = document.getElementById('form-github');
+    const errorGithub = document.getElementById('smallGithub')
+
+    if (GithubValue !== "") {
+      if (GithubValue.indexOf("http://") !== 0 && GithubValue.indexOf("https://") !== 0) {
+        formGithub.className = 'form-control error';
+        errorGithub.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
+        formIsValid = false;
+      }
+    }
+
+    const TwitterValue = inputTwitter.value.trim();
+    const formTwitter = document.getElementById('form-twitter');
+    const errorTwitter = document.getElementById('smallTwitter')
+
+    if (TwitterValue !== "") {
+      if (TwitterValue.indexOf("http://") !== 0 && TwitterValue.indexOf("https://") !== 0) {
+        formTwitter.className = 'form-control error';
+        errorTwitter.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
+        formIsValid = false;
+      }
+    }
+
+    const portfolioValue = inputPortfolio.value.trim();
+    const formPortfolio = document.getElementById('form-portfolio');
+    const errorPortfolio = document.getElementById('smallPortfolio')
+  
+    if (portfolioValue !== "") {
+      if (portfolioValue.indexOf("http://") !== 0 && portfolioValue.indexOf("https://") !== 0) {
+        formPortfolio.className = 'form-control error';
+        errorPortfolio.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
+        formIsValid = false;
+      }
+    }
+
+    if (english_levelValue === "") {
+      formEnglishLevel.classList.remove('error');
+    } else if (!(arrayoptionsEnglishLevel.includes(english_levelValue))) {
+      formEnglishLevel.className = 'form-control error';
+      errorEnglishLevel.innerText = "Ingrese una opcion del menú desplegable"
+      formIsValid = false;
+    } else {
+      formEnglishLevel.classList.remove('error');
     }
 
     return formIsValid
@@ -427,7 +520,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
   }
 
   const obtenerSkillsDeEstudiante = async () => {
-    const data = await fetch(`${apiPath}/students/${student_id}/skills`);
+    const data = await fetch(`${apiPath}/students/${id}/skills`);
     setSelectSkills(await data.json());
   }
 
@@ -711,53 +804,6 @@ const CrudForm = ({ updateData, dataToEdit }) => {
             <small id='smallAge'> Error message </small>
           </div>
 
-          <div className='form-control' id='form-nationality'>
-            <label htmlFor="inputNationality">País (*obligatorio)</label>
-            <div className='inputFormDiv'>
-              <select className="form-control" id="inputNationality" onChange={handleChange} name="nationality" value={form.nationality}>
-                <option>{form.nationality}</option>
-                {Countries.map(data => {;
-                  return <option value={data.country}>{data.country}</option>;
-                })}
-              </select>
-              <i className="fas fa-check-circle" />
-              <i className="fas fa-exclamation-circle" />
-            </div>
-            <small id='smallNationality'> Error message </small>
-          </div>
-
-          <div className='form-control' id='form-province'>
-            <label htmlFor="inputProvince">Ciudad (*obligatorio)</label>
-            <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputProvince" name="province" onChange={handleChange} maxLength={45} value={form.province}/>
-              <i className="fas fa-check-circle" />
-              <i className="fas fa-exclamation-circle" />
-            </div>
-            <small id='smallProvince'> Error message </small>
-          </div>
-
-          <div className='form-control'>
-            <label htmlFor="inputNationality">Habilidades (*obligatorio)</label>
-            <div className='inputFormDiv'>
-            <button
-              onClick={()=> abrirCerrarSkillsModal()}
-              type="button" 
-              style={{width: '100%'}}
-            >
-              Seleccionar habilidades
-            </button>
-            <Modal
-              open={skillsModal}
-              onClose={abrirCerrarSkillsModal}
-            >
-              {skillsBody}
-            </Modal>
-              <i className="fas fa-check-circle" />
-              <i className="fas fa-exclamation-circle" />
-            </div>
-            <small> Error message </small>
-          </div>
-
           <div className='form-control' id='form-availability'>
             <label htmlFor="inputAvailability">Estado actual</label>
             <div className='inputFormDiv'>
@@ -786,6 +832,152 @@ const CrudForm = ({ updateData, dataToEdit }) => {
               <i className="fas fa-exclamation-circle" />
             </div>
             <small> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-nationality'>
+            <label htmlFor="inputNationality">País (*obligatorio)</label>
+            <div className='inputFormDiv'>
+              <select className="form-control" id="inputNationality" onChange={handleChange} name="nationality" value={form.nationality}>
+                <option>{form.nationality}</option>
+                {Countries.map(data => {;
+                  return <option value={data.country}>{data.country}</option>;
+                })}
+              </select>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallNationality'> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-province'>
+            <label htmlFor="inputProvince">Ciudad (*obligatorio)</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputProvince" name="province" onChange={handleChange} maxLength={45} value={form.province}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallProvince'> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-developer_type'>
+            <label htmlFor="inputDeveloperType">Tipo de desarrollador (*obligatorio)</label>
+            <div className='inputFormDiv'>
+              <select className="form-control" id="inputDeveloperType" onChange={handleChange} name="developer_type" value={form.developer_type}>
+                <option selected disabled hidden></option>
+                <option onClick={e => e.target.textarea}>Full-stack</option>
+                <option onClick={e => e.target.textarea}>Front-end</option>
+                <option onClick={e => e.target.textarea}>Back-end</option>
+              </select>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallDeveloperType'> Error message </small>
+          </div>
+
+          <div className='form-control'>
+            <label htmlFor="inputNationality">Habilidades (*obligatorio)</label>
+            <div className='inputFormDiv'>
+            <button
+              onClick={()=> abrirCerrarSkillsModal()}
+              type="button" 
+              style={{width: '100%'}}
+            >
+              Seleccionar habilidades
+            </button>
+            <Modal
+              open={skillsModal}
+              onClose={abrirCerrarSkillsModal}
+            >
+              {skillsBody}
+            </Modal>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-english_level'>
+            <label htmlFor="inputEnglishLevel">Nivel de ingles (*obligatorio)</label>
+            <div className='inputFormDiv'>
+              <select className="form-control" id="inputEnglishLevel" onChange={handleChange} name="english_level" value={form.english_level}>
+                <option selected disabled hidden></option>
+                <option onClick={e => e.target.textarea}>No ingles</option>
+                <option onClick={e => e.target.textarea}>A1</option>
+                <option onClick={e => e.target.textarea}>A2</option>
+                <option onClick={e => e.target.textarea}>B1</option>
+                <option onClick={e => e.target.textarea}>B2</option>
+                <option onClick={e => e.target.textarea}>C1</option>
+                <option onClick={e => e.target.textarea}>C2</option>
+              </select>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallEnglishLevel'> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-portfolio'>
+            <label htmlFor="inputPortfolio">Enlace a portafolio</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputPortfolio" name="portfolio" placeholder="https://www.ryansimon-pages.co/" onChange={handleChange} maxLength={45} value={form.portfolio}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallPortfolio'> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-video_link'>
+            <label htmlFor="inputVideoLink">Video de portafolio</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputVideoLink" name="video_link" placeholder='https://www.youtube.com/watch?v=1kpUImeLw3s' onChange={handleChange} maxLength={100} value={form.video_link}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallVideoLink'> Error message </small>
+          </div>
+
+
+          <div className='form-control'>
+            <label htmlFor="inputDisptravel">Disponibilidad para viajar</label>
+            <div className='inputFormDiv'>
+              <select className="form-control" id="inputDiptravel" onChange={handleChange} name="disp_travel" value={form.disp_travel}>
+                <option selected disabled hidden>{form.disp_travel}</option>
+                <option value="Disponible">Disponible</option>
+                <option value="No disponible">No disponible</option>
+              </select>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small> Error message </small>
+          </div>
+
+          <div className='form-control' id="form-linkedin">
+            <label htmlFor="inputLinkedIn">LinkedIn</label>
+            <div className='inputFormDiv'>
+              <input type="text" className="form-control" id="inputLinkedIn" name="linkedin" placeholder='https://www.linkedin.com/in/nombredeusuario' onChange={handleChange} maxLength={70} value={form.linkedin} />
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallLinkedIn'> Error message </small>
+          </div>
+
+          <div className='form-control' id="form-github">
+            <label htmlFor="inputGithub">Github</label>
+            <div className='inputFormDiv'>
+              <input type="text" className="form-control" id="inputGithub" name="github" placeholder='https://github.com/nombredeusuario' onChange={handleChange} maxLength={70} value={form.github} />
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallGithub'> Error message </small>
+          </div>
+
+          <div className='form-control' id="form-twitter">
+            <label htmlFor="inputTwitter">Twitter</label>
+            <div className='inputFormDiv'>
+              <input type="text" className="form-control" id="inputTwitter" name="twitter" placeholder='https://twitter.com/nombredeusuario' pattern="https://.*" onChange={handleChange} maxLength={70} value={form.twitter} />
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id="smallTwitter"> Error message </small>
           </div>
 
           <div className='form-control'>
