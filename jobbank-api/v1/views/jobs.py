@@ -135,7 +135,7 @@ def get_job(partner_id, job_id):
         abort(404)
     job = [job.to_dict() for job in partner.jobs if job.id == int(job_id)]
     if not job:
-        return jsonify({[]})
+        return jsonify({})
 
     return jsonify(job)
 

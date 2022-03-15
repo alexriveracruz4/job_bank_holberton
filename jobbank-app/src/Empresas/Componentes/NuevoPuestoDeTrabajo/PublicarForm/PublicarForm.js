@@ -32,6 +32,7 @@ const CrudForm = ({ createData }) => {
     salary: '',
     travel_availability: '',
     code: '',
+    description: '',
   };
 
   const [form, setForm] = useState(initailForm);
@@ -194,43 +195,95 @@ const handleSubmit = (e) => {
     const DescriptionValue = inputDescription.value.trim();
     const formDescription = document.getElementById('form-description');
     const errorDescription = document.getElementById('smallDescription');
+  
+    var justHtml = quill.root.innerHTML;
+    form.description = justHtml
+    console.log(form.description)
 
-    if (DescriptionValue === "") {
+    if (form.description === "<p><br></p>") {
       formDescription.className = 'form-control error';
       errorDescription.innerText = "Complete este campo.";
       formIsValid = false;
     } else {
+      setForm({
+        ...form,
+        ["description"]: justHtml,
+      });
       formDescription.classList.remove('error');
     }
 
     return formIsValid
   }
 
-  var quill = new Quill('#editor-container', {
-    modules: {
-      toolbar: [
-        ['bold', 'italic'],
-        ['link', 'blockquote', 'code-block', 'image'],
-        [{ list: 'ordered' }, { list: 'bullet' }]
-      ]
-    },
-    placeholder: 'Compose an epic...',
-    theme: 'snow'
-  });
+  var Size = Quill.import('attributors/style/size');
+  Size.whitelist = ['14px', '16px', '18px'];
+  Quill.register(Size, true);
+
+  let toolbarOptions = [
+    ['bold', 'italic', 'underline', 'strike'],
+    ['link'],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    [{ 'size': ['14px', '16px', '18px'] }],
+  ];
+
+  const [quill, setQuill] = useState("");
+  const [counter, setCounter] = useState(0);
 
   const wrapperRef = useCallback(wrapper => {
     if (wrapper == null) return
 
     wrapper.innerHTML = ""
     const editor = document.createElement('div')
-    const p = document.createElement('p')
-    const textP = document.createTextNode("This is a new paragraph.");
-    p.appendChild(textP);
-    editor.append(p)
     wrapper.append(editor)
-    new Quill(editor, {theme: "snow"})
+    const q = new Quill(editor, {
+      modules: {
+        toolbar: toolbarOptions
+      },
+      theme: 'snow'
+    });
+    setQuill(q)
   }, [])
 
+  useEffect(() => {
+    if (quill !== null) {
+      if (quill.root !== undefined) {
+        var limit = 3000;
+
+        var container = document.querySelector('#counter');
+        quill.on('text-change', function (delta, old, source) {
+          if (quill.getLength() > limit) {
+            quill.deleteText(limit, quill.getLength());
+            container.innerText = "se alcanzó el límite de 3000 caracteres"
+          } else {
+            container.innerText = quill.getLength() - 1
+            return
+          }
+        });
+      } else {
+        return
+      }
+    }
+  })
+  
+
+  function testSubmit (e) {
+    e.preventDefault();
+    // Populate hidden form on submit
+    const description = document.querySelector('input[name=description]');
+    //description.value = JSON.stringify(quill.getContents());
+    console.log("valor de description", description.value)
+    var valor = quill.getContents()
+    var valortext = quill.getText()
+    var justHtml = quill.root.innerHTML;
+    description.value = justHtml
+    setForm({
+      ...form,
+      ["description"]: justHtml,
+    });
+    console.log(valor)
+    console.log(valortext)
+    console.log(justHtml)
+  };
 
   return (
     <div className="container-profile-job">
@@ -349,13 +402,15 @@ const handleSubmit = (e) => {
           <div className='form-control' id='form-description'>
             <label htmlFor="inputDescription">Descripción del trabajo</label>
             <div className='inputFormDiv'>
-              <input name="description" type="hidden" />
+              <input className="form-control" name="description" id="inputDescription" type="hidden" value={form.description} onChange={ handleChange } />
               <div className='containerEditText' ref={wrapperRef}></div>
+              <div id="counter" onChange={e => setCounter(e.target.value.length)}>{counter}</div>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
             <small id='smallDescription'> Error message </small>
           </div>
+          <button onClick={testSubmit}>probar description</button>
 
           <div className="div-button-editar-empresa">
             <button

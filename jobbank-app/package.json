@@ -61,5 +61,6 @@
   "devDependencies": {},
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "resolutions": { "react-devtools-core": "4.14.0" }
 }

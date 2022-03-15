@@ -39,6 +39,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import RestoreIcon from '@mui/icons-material/Restore';
 import swal from 'sweetalert';
 
+import './JobDescription.css'
+
 
 const cookies = new Cookies();
 function JobDescription(props) {
@@ -356,7 +358,8 @@ function JobDescription(props) {
               <Stack direction="row" spacing={3}>
                 <Card elevation={4} sx={{ minHeight: "400px", background: "white", borderRadius: "20px", width: '65%', whiteSpace: 'pre-line', typography: 'body1',p: 2 }}>
                   <Typography sx={{ }} variant="body1" component="h2">
-                    {datos.description}
+                    {/*datos.description*/}
+                    <div id="quill-html-container" dangerouslySetInnerHTML={{__html: datos.description}} />
                   </Typography>
                 </Card>
                 <Box sx={{ minHeight: "400px", width: '35%', typography: 'body1', p: [2,2,2,0]}}>

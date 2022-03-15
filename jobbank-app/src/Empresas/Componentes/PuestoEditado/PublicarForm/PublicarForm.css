@@ -18,7 +18,7 @@
 }
 
 .container-profile-job-edit .container-form {
-  width: 600px;
+  width: 700px;
   border-radius: 5px;
   border: 2px solid #000;
 }
@@ -91,4 +91,37 @@
 
 .container-selectFile .box-photo input {
   width: 100%;
+}
+
+.form-control .ql-editor {
+  min-height: 700px;
+  background-color: white;
+}
+
+.form-control .ql-toolbar.ql-snow {
+  display: flex;
+  justify-content: center;
+}
+
+/* Quill default font size */
+
+.ql-container {
+  font-size: 14px;
+}
+
+/* Quill font size label in toolbar*/
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="14px"]::before {
+  content: 'Normal';
+  font-size: 14px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="16px"]::before {
+  content: 'Large';
+  font-size: 16px !important;
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="18px"]::before {
+  content: 'Huge';
+  font-size: 18px !important;
 }

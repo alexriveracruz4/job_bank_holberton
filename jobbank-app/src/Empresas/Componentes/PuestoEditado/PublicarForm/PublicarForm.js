@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Countries from "../../../../helpers/Countries.json"
 import "./PublicarForm.css"
 import swal from 'sweetalert';
 import { useHistory } from 'react-router';
+
+import Quill from 'quill';
+import "quill/dist/quill.snow.css"
 
 
 const CrudForm = ({ updateData, dataToEdit}) => {
@@ -163,16 +166,83 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       const formDescription = document.getElementById('form-description');
       const errorDescription = document.getElementById('smallDescription');
   
-      if (DescriptionValue === "") {
+      var justHtml = quill.root.innerHTML;
+      form.description = justHtml
+      //var justHtml = quill.root.innerHTML;
+      //description.value = justHtml
+
+      if (form.description === "<p><br></p>") {
         formDescription.className = 'form-control error';
         errorDescription.innerText = "Complete este campo.";
         formIsValid = false;
       } else {
         formDescription.classList.remove('error');
       }
-  
       return formIsValid
     }
+
+  var Size = Quill.import('attributors/style/size');
+  Size.whitelist = ['14px', '16px', '18px'];
+  Quill.register(Size, true);
+
+  let toolbarOptions = [
+    ['bold', 'italic', 'underline', 'strike'],
+    ['link'],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    [{ 'size': ['14px', '16px', '18px'] }],
+  ];
+
+  const [quill, setQuill] = useState("");
+  const [counter, setCounter] = useState(0);
+
+  const wrapperRef = useCallback(wrapper => {
+    if (wrapper == null) return
+
+    wrapper.innerHTML = ""
+    const editor = document.createElement('div')
+    wrapper.append(editor)
+    const q = new Quill(editor, {
+      modules: {
+        toolbar: toolbarOptions
+      },
+      theme: 'snow'
+    });
+    setQuill(q)
+  }, [])
+
+  useEffect(() => {
+    if (quill !== null) {
+      if (quill.root !== undefined) {
+        quill.root.innerHTML = form.description
+        var limit = 3000;
+
+        var container = document.querySelector('#counter');
+        quill.on('text-change', function (delta, old, source) {
+          if (quill.getLength() > limit) {
+            quill.deleteText(limit, quill.getLength());
+            container.innerText = "se alcanzó el límite de 3000 caracteres"
+          } else {
+            container.innerText = quill.getLength() - 1
+            return
+          }
+        });
+      } else {
+        return
+      }
+    }
+  });
+
+  function testSubmit (e) {
+    e.preventDefault();
+    // Populate hidden form on submit
+    //const description = document.querySelector('input[name=description]');
+    //description.value = JSON.stringify(quill.getContents());
+    var justHtml = quill.root.innerHTML;
+    setForm({
+      ...form,
+      ["description"]: justHtml,
+    });
+  };
 
   return (
     <div className="container-profile-job-edit">
@@ -199,7 +269,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
               <select className="form-control" id="inputCountry" onChange={handleChange} name="country" value={form.country}>
                 <option>{form.country}</option>
                 {Countries.map(data => {;
-                  return <option value={data.country}>{data.country}</option>;
+                  return <option key={data.id} value={data.country}>{data.country}</option>;
                 })}
               </select>
               <i className="fas fa-check-circle" />
@@ -278,7 +348,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <small id='smallTravelAvailability'> Error message </small>
           </div>
 
-          <div className='form-control' id='form-description'>
+          {/*<div className='form-control' id='form-description'>
             <label htmlFor="inputDescription">Descripción</label>
             <div className='inputFormDiv'>
               <textarea className="form-control" id="inputDescription" rows="10" maxLength={3000} name="description" onChange={ handleChange } value={form.description} />
@@ -286,14 +356,26 @@ const CrudForm = ({ updateData, dataToEdit}) => {
               <i className="fas fa-exclamation-circle" />
             </div>
             <small id='smallDescription'> Error message </small>
+              </div>*/}
+
+          <div className='form-control' id='form-description'>
+            <label htmlFor="inputDescription">Descripción del trabajo</label>
+            <div className='inputFormDiv'>
+              <input className="form-control" name="description" id="inputDescription" type="hidden" value={form.description} onChange={ handleChange } />
+              <div className='containerEditText' ref={wrapperRef}></div>
+              <div id="counter" onChange={e => setCounter(e.target.value.length)}>{counter}</div>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallDescription'> Error message </small>
           </div>
+          {/*<button onClick={testSubmit}>probar description</button>*/}
 
           <div className="div-button-editar-estudiante">
             <button
               type="submit"
               className="btn btn-primary m-3"
               onClick={handleSubmit}
-              onClickCapture
               value="Enviar">Guardar cambios
             </button>
           </div>
