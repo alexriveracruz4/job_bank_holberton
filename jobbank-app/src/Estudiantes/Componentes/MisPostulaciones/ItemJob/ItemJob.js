@@ -119,7 +119,7 @@ function ItemJob(props) {
                 <Box sx={{ fontWeight: 'bold'}}>{PartnerData.name}</Box>
               </Typography>
               <Typography variant="body1" component="h2">
-              {props.description.slice(0, 200) + "..."}
+                <div id="quill-html-container-pos-student" dangerouslySetInnerHTML={{__html: props.description.slice(0, 200) + "..."}} />
               </Typography>
             </Stack>
             <Divider orientation="vertical" flexItem>

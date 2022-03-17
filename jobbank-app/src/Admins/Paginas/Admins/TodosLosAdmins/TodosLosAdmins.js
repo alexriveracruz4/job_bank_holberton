@@ -19,14 +19,10 @@ function TodasLosAdmins() {
   });
 
   return (
-    <div className='Admin-empresas-div'>
-      <div className='HeaderContainer'>
-        <AdminNav />
-      </div>
-      <div className='TablaEmpresasContainer'>
-        <TablaAdmin />
-      </div>
-    </div>
+    <React.Fragment>
+      <AdminNav />
+      <TablaAdmin />
+    </React.Fragment>
   );
 }
 

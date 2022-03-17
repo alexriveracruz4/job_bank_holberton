@@ -142,44 +142,44 @@ function Filters( {searchJob, setSearchJob, fetchComments, setItems, setCopia, c
         justifyContent="flex-start"
         alignItems="center"
         spacing={1}
-        sx={{ position: "sticky", top:50, width: "98%"}}
+        sx={{ position: "sticky", top:120, width: "98%"}}
       >
       <Box 
         direction="column"
         justifyContent="center"
         alignItems="center"
         spacing={1}
-        sx={{ borderRadius: "10px",  my: "5px",  width: "98%",  mb:"10px", mt:"10px", mr:"10px", ml:"10px", borderRadius: "20px"}} 
+        sx={{ borderRadius: "10px",  my: "5px",  width: "98%", mt:"10px", mr:"10px", ml:"10px", borderRadius: "20px"}} 
       >
         {
           copia.PalabraClave === "" ? 
             ""
           :
-            <Chip label={copia.PalabraClave} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px"}} onDelete={handleDeletePalabraClave} />
+            <Chip label={copia.PalabraClave} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px", margin:"3px"}} onDelete={handleDeletePalabraClave} />
         }
         {
           copia.modalidad === "" ? 
             ""
           :
-          <Chip label={copia.modalidad} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px"}} onDelete={handleDeletemodalidad} />
+          <Chip label={copia.modalidad} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px", margin:"3px"}} onDelete={handleDeletemodalidad} />
         }
         {
           copia.tipoDeTrabajo === "" ? 
             ""
           :
-            <Chip label={copia.tipoDeTrabajo} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px"}} onDelete={handleDeletetipoDeTrabajo} />
+            <Chip label={copia.tipoDeTrabajo} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px", margin:"3px"}} onDelete={handleDeletetipoDeTrabajo} />
         }
         {
           copia.fecha === "" ? 
             ""
           :
-            <Chip label={copia.fecha} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px"}} onDelete={handleDeletefecha} />
+            <Chip label={copia.fecha} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px", margin:"3px"}} onDelete={handleDeletefecha} />
         }
         {
           copia.experiencia === "" ? 
             ""
           :
-            <Chip label={copia.experiencia} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px"}} onDelete={handleDeleteExperiencia} />
+            <Chip label={copia.experiencia} style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px", margin:"3px"}} onDelete={handleDeleteExperiencia} />
         }
       </Box>
 

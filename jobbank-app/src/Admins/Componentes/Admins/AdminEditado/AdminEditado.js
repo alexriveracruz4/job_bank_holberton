@@ -6,6 +6,14 @@ import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
 import swal from 'sweetalert';
 import apiPath from '../../../../ApiPath';
 
+
+import IconButton from "@material-ui/core/IconButton";
+import Visibility from "@material-ui/icons/Visibility";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Input from "@material-ui/core/Input";
+
+
 const cookies = new Cookies();
 
 const CrudForm = ({ updateData, dataToEdit}) => {
@@ -253,6 +261,16 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     }
   };
 
+  const [passwordShown, setPasswordShown] = useState(false);
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+  };
+
+  const [passwordShownRepeat, setPasswordShownRepeat] = useState(false);
+  const togglePasswordRepeat = () => {
+    setPasswordShownRepeat(!passwordShownRepeat);
+  };
+
   return (
     <div className="container-profile-admin-edit">
       <div className="profile-title">
@@ -310,7 +328,16 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className="form-control" id='form-email'>
             <label htmlFor="inputEmail">Email</label>
             <div className="inputFormDiv">
-              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} maxLength={60} value={form.email} />
+              <Input
+                type="email"
+                onChange={handleChange}
+                value={form.email}
+                maxLength={60}
+                autoComplete="new-email" 
+                className="form-control" 
+                id="inputEmail" 
+                name="email"
+              />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -320,7 +347,25 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className="form-control" id='form-password'>
             <label htmlFor="inputPassword">Contraseña</label>
             <div className="inputFormDiv">
-              <input type="password" className="form-control" id="inputPassword" name="password" onChange={handleChange} maxLength={20} value={form.password}/>
+              <Input
+                type={passwordShown  ? "text" : "password"}
+                onChange={handleChange}
+                value={form.password}
+                maxLength={20}
+                autoComplete="new-password" 
+                className="form-control" 
+                id="inputPassword" 
+                name={passwordShown  ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={()=>togglePassword()}
+                    >
+                      {passwordShown ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -330,7 +375,22 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className="form-control" id='form-repeat-password'>
             <label htmlFor="inputRepeatPassword">Repetir Contraseña</label>
             <div className="inputFormDiv">
-              <input type="password" className="form-control" id="inputRepeatPassword" name="password" maxLength={20}/>
+              <Input
+                type={passwordShownRepeat  ? "text" : "password"}
+                maxLength={20}
+                className="form-control" 
+                id="inputRepeatPassword" 
+                name={passwordShownRepeat  ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={()=>togglePasswordRepeat()}
+                    >
+                      {passwordShownRepeat ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

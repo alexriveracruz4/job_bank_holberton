@@ -59,7 +59,6 @@ function PuestoEmpresaView() {
   }
   */
 
-  console.log(JobData);
   return (
     <React.Fragment>
       <EmpresaNav />

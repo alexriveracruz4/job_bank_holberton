@@ -110,9 +110,7 @@ function PuestosDeTrabajoEstudiante() {
 
   return (
     <div className='PDTEPuestosDeTrabajoEstudianteContainer'>
-      <div className='HeaderContainer'>
-        <EstudianteNav />
-      </div>
+      <EstudianteNav />
       <Stack 
         direction="column"
         justifyContent="flex-start"
@@ -242,38 +240,5 @@ function PuestosDeTrabajoEstudiante() {
     </div>
   );
 }
-
-
-/*
-  const handlePageClick2 = async (pageInfo) => {
-    //setCurrentPage(selectedPage)
-    //selectedPage = 1;
-    let currentPage1 = pageInfo - 1;
-    copia.page = currentPage1;
-    const commentsFormServer = await fetchComments(currentPage1);
-    window.scrollTo(0, 0);
-    setItems(commentsFormServer);
-  };
-  let paginationConfig = {
-    totalPages:pageCount,
-    currentPage: copia.page + 1,
-    size: "mg",
-    showMax: 3,
-    threeDots: true,
-    prevNext: true,
-    onClick: handlePageClick2,
-    center:true,
-    shadow:true,
-  };
-  {pageCount=== 0?
-            <h2></h2>
-            :
-            <div className='pagination'>
-            <Pagination {...paginationConfig} >
-            
-            </Pagination>
-          </div>
-          }
-*/
 
 export { PuestosDeTrabajoEstudiante };

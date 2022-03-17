@@ -125,3 +125,8 @@
   content: 'Huge';
   font-size: 18px !important;
 }
+
+.div-button-editar-estudiante {
+  display: flex;
+  justify-content: center;
+}

@@ -63,8 +63,7 @@ function Puesto() {
           DatosEmpresa={DatosEmpresa}
           EstadoDePostulacion={EstadoDePostulacion}
         />
-        }
-        
+        }  
     </React.Fragment>
   );
 }

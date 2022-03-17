@@ -17,6 +17,13 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
+import IconButton from "@material-ui/core/IconButton";
+import Visibility from "@material-ui/icons/Visibility";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Input from "@material-ui/core/Input";
+
+
 const CrudForm = ({ updateData, dataToEdit }) => {
   const history = useHistory();
   const { id } = useParams();
@@ -576,13 +583,22 @@ const CrudForm = ({ updateData, dataToEdit }) => {
                 setSelectSkills([...selectSkills, skill]);
                 handleRemoveItem(allSkills,setAllSkills, skill.id);
               }}
-              sx={{ m: 0.3 }}
+              style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px", margin:"3px"}}
               label={skill.name} />
         ))}
       </div>
     );
   }
   
+  const [passwordShown, setPasswordShown] = useState(false);
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+  };
+
+  const [passwordShownRepeat, setPasswordShownRepeat] = useState(false);
+  const togglePasswordRepeat = () => {
+    setPasswordShownRepeat(!passwordShownRepeat);
+  };
 
   function RenderSelectedSkillsList(props) {
     const skills = props.selectSkills;
@@ -596,7 +612,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
                 setAllSkills([...allSkills, skill]);
                 
               }} 
-              sx={{ m: 0.3 }}
+              style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px", margin:"3px"}}
               label={skill.name}
             />
         ))}
@@ -691,6 +707,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
       <div align="right">
         <Stack direction="row-reverse" spacing={2} justifyContent="flex-start" >
         <Button variant="outlined" color="error"
+          style={{padding: "5px 15px", borderRadius: "4px", margin:"3px", fontWeight: 500, color:"#d32f2f", border: "solid 1px #d32f2f"}}
           onClick={()=> abrirCerrarSkillsModal()}
         >
           Cerrar
@@ -757,7 +774,16 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           <div className='form-control' id='form-email'>
             <label htmlFor="inputEmail">Email (*obligatorio)</label>
             <div className='inputFormDiv'>
-              <input type="email" className="form-control" id="inputEmail" name="email" onChange={handleChange} value={form.email} maxLength={60}/>
+              <Input
+                type="email"
+                onChange={handleChange}
+                value={form.email}
+                maxLength={60}
+                autoComplete="new-email" 
+                className="form-control" 
+                id="inputEmail" 
+                name="email"
+              />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -767,7 +793,25 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           <div className="form-control" id='form-password'>
             <label htmlFor="inputPassword">Contraseña</label>
             <div className="inputFormDiv">
-              <input type="password" className="form-control" id="inputPassword" name="password" onChange={handleChange} maxLength={20} value={form.password}/>
+              <Input
+                type={passwordShown  ? "text" : "password"}
+                onChange={handleChange}
+                value={form.password}
+                maxLength={20}
+                autoComplete="new-password" 
+                className="form-control" 
+                id="inputPassword" 
+                name={passwordShown  ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={()=>togglePassword()}
+                    >
+                      {passwordShown ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -777,7 +821,22 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           <div className="form-control" id='form-repeat-password'>
             <label htmlFor="inputRepeatPassword">Repetir Contraseña</label>
             <div className="inputFormDiv">
-              <input type="password" className="form-control" id="inputRepeatPassword" name="password" maxLength={20}/>
+              <Input
+                type={passwordShownRepeat  ? "text" : "password"}
+                maxLength={20}
+                className="form-control" 
+                id="inputRepeatPassword" 
+                name={passwordShownRepeat  ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={()=>togglePasswordRepeat()}
+                    >
+                      {passwordShownRepeat ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

@@ -595,7 +595,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                 setSelectSkills([...selectSkills, skill]);
                 handleRemoveItem(allSkills,setAllSkills, skill.id);
               }}
-              sx={{ m: 0.3 }}
+              style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px", margin:"3px"}}
               label={skill.name} />
         ))}
       </div>
@@ -614,8 +614,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                 handleRemoveItem(selectSkills, setSelectSkills, skill.id);
                 setAllSkills([...allSkills, skill]);
                 
-              }} 
-              sx={{ m: 0.3 }}
+              }}
+              style={{backgroundColor: "rgba(0, 0, 0, 0.08)", borderRadius: "16px", margin:"3px"}}
               label={skill.name}
             />
         ))}
@@ -709,7 +709,9 @@ const CrudForm = ({ updateData, dataToEdit}) => {
 
       <div align="right">
         <Stack direction="row-reverse" spacing={2} justifyContent="flex-start" >
-        <Button variant="outlined" color="error"
+        <Button 
+          variant="outlined"
+          style={{padding: "5px 15px", borderRadius: "4px", margin:"3px", fontWeight: 500, color:"#d32f2f", border: "solid 1px #d32f2f"}}
           onClick={()=> abrirCerrarSkillsModal()}
         >
           Cerrar
@@ -1012,7 +1014,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             </div>
           </div>
 
-          <div className='form-control'>
+          <div className='div-button-editar-estudiante'>
             <button
               type="submit"
               className="btn btn-primary mt-3"

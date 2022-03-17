@@ -20,14 +20,10 @@ function TodasLasEmpresas() {
   });
 
   return (
-    <div className='Admin-empresas-div'>
-      <div className='HeaderContainer'>
-        <AdminNav />
-      </div>
-      <div className='TablaEmpresasContainer'>
-        <TablaEmpresa />
-      </div>
-    </div>
+    <React.Fragment>
+      <AdminNav />
+      <TablaEmpresa />
+    </React.Fragment>
   );
 }
 

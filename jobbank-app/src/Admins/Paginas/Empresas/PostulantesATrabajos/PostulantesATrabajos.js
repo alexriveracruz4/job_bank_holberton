@@ -19,14 +19,10 @@ function PostulantesATrabajos() {
   });
 
   return (
-    <div className='PostulantesATrabajosContainer'>
-      <div className='HeaderContainer'>
-        <AdminNav />
-      </div>
-      <div className='TablaPostulantesATrabajosContainer'>
-        <TablaPostulantesATrabajos />
-      </div>
-    </div>
+    <React.Fragment>
+      <AdminNav />
+      <TablaPostulantesATrabajos />
+    </React.Fragment>
   );
 }
 

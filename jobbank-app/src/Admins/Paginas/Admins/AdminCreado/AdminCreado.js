@@ -38,14 +38,14 @@ function AdminCreado() {
   });
 
   return (
-    <div>
+    <React.Fragment>
       <AdminNav />
       <article className="grid-1-2">
         <CrudForm
             createData={ createData }
         />
       </article>
-    </div>
+    </React.Fragment>
   );
 }
 

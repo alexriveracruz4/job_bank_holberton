@@ -206,7 +206,7 @@ def AdminFileUploadPhoto(admin_id):
     if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
         abort(400, description="It is not a png or jpg file")
 
-    path = '/mnt/d/jbgithub/job_bank_holberton/admin_photos/'
+    path = '/home/jhonatanjc/job_bank_holberton/admin_photos/'
     filename_new = admin_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -229,5 +229,5 @@ def adminPhoto(photo_filename_logical):
     """
     Admin Photo
     """
-    path = "/mnt/d/jbgithub/job_bank_holberton/admin_photos/" + photo_filename_logical
+    path = "/home/jhonatanjc/job_bank_holberton/admin_photos/" + photo_filename_logical
     return send_file(path)

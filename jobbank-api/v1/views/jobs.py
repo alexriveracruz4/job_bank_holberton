@@ -192,9 +192,8 @@ def get_job_students(partner_id, job_id):
     try:
         page = int(page)
         limit = int(limit)
-
         number_of_pages = ceil(len(postulantes)/limit)
-        part_of_student = postulantes[limit*page:limit*(page+1)]
+        part_of_students = postulantes[limit*page:limit*(page+1)]
 
         data = {"data":part_of_students,
                "len_total_data":len(postulantes),

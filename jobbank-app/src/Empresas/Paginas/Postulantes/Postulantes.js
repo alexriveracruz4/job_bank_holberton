@@ -87,7 +87,7 @@ function Postulantes(props) {
   }, [limit]);
 
   const fetchComments = async (currentPage) => {
-    const url = `${apiPath}/jobs/${partner_id}/${JobId}/students?_page=${paginaActual}&_limit=${limit}`
+    const url = `${apiPath}/jobs/${partner_id}/${JobId}/students?_page=${currentPage}&_limit=${limit}`
       setLoadingPage(true);
       api.get(url).then((res) => {
         if (!res.err) {
@@ -115,9 +115,7 @@ function Postulantes(props) {
 
   return (
     <div className='PostulantesContainer'>
-      <div className='HeadersContainer'>
-        <EmpresaNav />
-      </div>
+      <EmpresaNav />
       <div className='PTitleContainer'>
         <h2>{JobTitle}</h2>
         <h3>Postulantes:</h3>
@@ -170,7 +168,7 @@ function Postulantes(props) {
                 <>
                   {AllStudentsApplicated.map(estudiante => (
                     <ItemJob
-                      key={estudiante.student_id}
+                      key={estudiante.lastname}
                       student={estudiante}
                       setCopia={setCopia}
                       paginaActual={paginaActual}

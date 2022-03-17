@@ -14,7 +14,7 @@ function PostulantesATrabajos() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   // Table title
-  let Title = "Postulantes al empleo: " + JobTitle + " publicados por la empresa " + PartnerName;
+  let Title = PartnerName + " - " + "Postulantes al empleo: " + JobTitle;
   const { PartnerId, JobId } = useParams();
 
   let api = helpHttp();

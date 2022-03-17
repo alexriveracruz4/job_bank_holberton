@@ -8,7 +8,7 @@ import apiPath from '../../../../../ApiPath';
 import Message from '../../../../../helpers/Message';
 import Loader from '../../../../../helpers/Loader';
 import Cookies from 'universal-cookie';
-
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 const cookies = new Cookies();
 function TablaAdmin() {
@@ -25,7 +25,7 @@ function TablaAdmin() {
   // Columns name
   const columnas = [
     { title:'ID', field:'admin_id', type:"numeri", textAlign:"center", filtering:false},
-    { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{1:"Si", 0:"No"}, filtering:true},
+    { title:'ELIMINADO', field:'deleted', type:"numeric", lookup:{1:"Si", 0:"No"}, filtering:true,},
     { title:'NOMBRE', field:'firstname', filtering:false},
     { title:'APELLIDO', field:'lastname', filtering:false},
     { title:'EMAIL', field:'email', filtering:false}
@@ -192,7 +192,7 @@ function TablaAdmin() {
             tooltip: "Crear un nuevo admin",
             onClick: (e) => {history.push(`/admin/admins/crear-admin`)},
             isFreeAction:true
-          }
+          },
         ]}
         isLoading={loading}
         options={{

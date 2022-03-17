@@ -179,7 +179,7 @@ function JobDescriptionAdminView(props) {
                   <AttachMoneyIcon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary="Salario" secondary={datos.salary}/>
+              <ListItemText primary="Salario (dólares)" secondary={datos.salary}/>
             </ListItem>
           </>
         }
@@ -387,11 +387,11 @@ function JobDescriptionAdminView(props) {
               <Stack direction="row" spacing={3}>
                 <Card elevation={4} style={{ minHeight: "400px", borderRadius: "20px", width: '65%', whiteSpace: 'pre-line', typography: 'body1',padding: '16px' }}>
                   <Typography sx={{ background: "white"}} variant="body1" component="h2">
-                    {datos.description}
+                    <div id="quill-html-container-student" dangerouslySetInnerHTML={{__html: datos.description}} />
                   </Typography>
                 </Card>
                 <Box sx={{ minHeight: "400px", width: '35%', typography: 'body1', p: [2,2,2,0]}}>
-                  <Stack  sx={{position: "sticky", top:50}} direction="column" spacing={3}>
+                  <Stack  sx={{position: "sticky", top:120}} direction="column" spacing={3}>
                     <Card elevation={4} style={{minHeight: "350px", width: '90%', borderRadius: "20px"}}>
                       <FolderListTrabajo/>
                     </Card>
@@ -448,7 +448,7 @@ function JobDescriptionAdminView(props) {
                   </Typography>
                 </Card>
                 <Box sx={{ minHeight: "100px", width: '35%', borderRadius: "20px", typography: 'body1', p: [2,2,2,0]}}>
-                  <Stack  style={{position: "sticky", top:50}} direction="column" spacing={3}>
+                  <Stack  style={{position: "sticky", top:120}} direction="column" spacing={3}>
                     <Card elevation={4} style={{minHeight: "100px", borderRadius: "20px", width: '90%', background: "white"}}>
                       <FolderListEmpresa/>
                     </Card>

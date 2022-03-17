@@ -11,61 +11,6 @@
   flex-direction : column;
 }
 
-.HeaderContainer {
-  display: flex;
-  flex-direction : row;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  width: 100%;
-  height: 70px;
-  position: relative;
-}
-
-.PDTEBodyContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction : row;
-  border-top: 2px solid black;
-}
-
-.PDTEFiltersContainer {
-  width: 40%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-@media (max-width: 800px) {
-  .PDTEBodyContainer {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction : column;
-  }
-
-  .PDTEFiltersContainer {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .PDTEJobsContainer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-.PDTEJobsContainer {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
 .PDTENumeroDeEmpleos {
   color: #1B0C61;
   margin-left: 40px;

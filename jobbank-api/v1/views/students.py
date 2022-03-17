@@ -92,7 +92,9 @@ def get_students():
         for student in datos_no_borrados:
             list_students.append(student.to_dict())
 
-        datos_filtrados = [x for x in list_students if ((PalabraClave.lower() in toNoneStrings(x["description"]).lower()) or (PalabraClave == "")) and 
+        datos_filtrados = [x for x in list_students if ((PalabraClave.lower() in toNoneStrings(x["description"]).lower()) or 
+                                                        (PalabraClave == "") or 
+                                                        (PalabraClave.lower() in x["student_skills"].lower())) and 
                                                         (filtro_de_ingles(x, english)) and (filtro_de_habilidades(x, skills))]
         number_of_pages = ceil(len(datos_filtrados)/limit)
         #datos_no_borrados_ordenados = random.sample(datos_filtrados, len(datos_filtrados))
@@ -882,7 +884,7 @@ def fileUpload(student_id):
     if ext != ".pdf":
         abort(400, description="It is not a pdf file")
 
-    path = '/mnt/d/jbgithub/job_bank_holberton/curriculums/'
+    path = '/home/jhonatanjc/job_bank_holberton/curriculums/'
     filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -936,7 +938,7 @@ def fileUploadPhoto(student_id):
     if ext not in [".jpg", ".png", ".JPG", ".PNG"]:
         abort(400, description="It is not a png or jpg file")
 
-    path = '/mnt/d/jbgithub/job_bank_holberton/student_photos/'
+    path = '/home/jhonatanjc/job_bank_holberton/student_photos/'
     filename_new = student_id + '_' + datetime.now().strftime('%Y%m%d%H%M%S') + ext
 
     file.save(path + filename_new)
@@ -958,7 +960,7 @@ def fileDownload(cv_filename_logical):
     """
     Download CV
     """
-    path = "/mnt/d/jbgithub/job_bank_holberton/curriculums/" + cv_filename_logical
+    path = "/home/jhonatanjc/job_bank_holberton/curriculums/" + cv_filename_logical
     return send_file(path)
 
 
@@ -967,5 +969,5 @@ def studentPhoto(photo_filename_logical):
     """
     Student Photo
     """
-    path = "/mnt/d/jbgithub/job_bank_holberton/student_photos/" + photo_filename_logical
+    path = "/home/jhonatanjc/job_bank_holberton/student_photos/" + photo_filename_logical
     return send_file(path)

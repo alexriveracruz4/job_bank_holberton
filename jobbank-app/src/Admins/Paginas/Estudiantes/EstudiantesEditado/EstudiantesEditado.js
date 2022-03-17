@@ -59,12 +59,12 @@ function EstudianteEditado() {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <AdminNav />
       <article className="grid-1-2">
         <CrudForm updateData={updateData} dataToEdit={dataToEdit} />
       </article>
-    </div>
+    </React.Fragment>
   );
 }
 

@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import LoginIcon from '@mui/icons-material/Login';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import { BackButton } from "../../helpers/BackButton";
+import { HomeButton } from "../../helpers/HomeButton";
 
 
 const LoginButton = () => {
@@ -18,7 +18,7 @@ const LoginButton = () => {
         </a>
       </div>
       <div className="backButtonInicio">
-        <BackButton/>
+        <HomeButton/>
       </div>
       <div className="LoginButonInicio">
         <Stack spacing={2} sx={{ display: "flex", flexDirection: "column", alignItems: "center"}}>

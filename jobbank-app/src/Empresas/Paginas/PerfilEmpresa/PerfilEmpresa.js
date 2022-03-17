@@ -53,7 +53,7 @@ function PerfilEmpresa() {
 
 
   return (
-    <div>
+    <React.Fragment>
       <EmpresaNav />
       <article className="grid-1-2">
         <CrudForm
@@ -61,7 +61,7 @@ function PerfilEmpresa() {
             dataToEdit={dataToEdit}
         />
       </article>
-    </div>
+    </React.Fragment>
   );
 }
 

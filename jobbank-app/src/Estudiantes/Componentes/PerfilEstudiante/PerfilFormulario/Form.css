@@ -92,3 +92,9 @@
 .container-selectFile .box-photo input {
   width: 100%;
 }
+
+.div-button-editar-estudiante {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}

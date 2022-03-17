@@ -56,7 +56,7 @@ function PerfilAdmin() {
   }
 
   return (
-    <div>
+    <React.Fragment>
       <AdminNav />
       <article className="grid-1-2">
         <CrudForm
@@ -67,7 +67,7 @@ function PerfilAdmin() {
       {/*<PerfilAdminNew
           updateData={updateData}
       dataToEdit={dataToEdit}/>*/}
-      </div>
+    </React.Fragment>
   );
 }
 

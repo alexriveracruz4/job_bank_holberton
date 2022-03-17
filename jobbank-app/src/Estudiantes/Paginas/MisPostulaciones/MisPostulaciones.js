@@ -106,9 +106,7 @@ function MisPostulaciones() {
 
   return (
     <div className='MisPostulacionesContainer'>
-      <div className='HeaderContainer'>
-        <EstudianteNav />
-      </div>
+      <EstudianteNav />
 
       {datosTotales.length === 1?
         <h2 className="NumeroDeEmpleosPostulados">HAS POSTULADO A UN EMPLEO</h2>
@@ -129,7 +127,7 @@ function MisPostulaciones() {
             nextLabel={">"}
             breakLabel={"..."}
             pageCount={pageCount}
-            forcePage={copia.page}
+            forcePage={paginaActual}
             marginPagesDisplayed={2}
             pageRangeDisplayed={3}
             onPageChange={handlePageClick}
@@ -163,6 +161,7 @@ function MisPostulaciones() {
                     id_empresa={trabajo.partner_id}
                     title={trabajo.title}
                     description={trabajo.description}
+                    deleted={trabajo.deleted}
                     city={trabajo.city}
                     country={trabajo.country}
                     updated_at={trabajo.updated_at}
@@ -176,14 +175,14 @@ function MisPostulaciones() {
               </>  
             }
             </ListJobs>
-          }   
+          }
           {(items && !loadingPage) && 
           <ReactPaginate
             previousLabel={"<"}
             nextLabel={">"}
             breakLabel={"..."}
             pageCount={pageCount}
-            forcePage={copia.page}
+            forcePage={paginaActual}
             marginPagesDisplayed={2}
             pageRangeDisplayed={3}
             onPageChange={handlePageClick}
@@ -199,8 +198,8 @@ function MisPostulaciones() {
             activeClassName={"active"}
             renderOnZeroPageCount={null}
           />
-        }
-      </>
+          }
+        </>
       }
     </div>
   );

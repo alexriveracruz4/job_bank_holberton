@@ -54,7 +54,7 @@ function EmpresaEditada() {
   }
 
   return (
-    <div>
+    <React.Fragment>
       <AdminNav />
       <article className="grid-1-2">
         <CrudForm
@@ -62,7 +62,7 @@ function EmpresaEditada() {
             dataToEdit={dataToEdit}
         />
       </article>
-    </div>
+    </React.Fragment>
   );
 }
 

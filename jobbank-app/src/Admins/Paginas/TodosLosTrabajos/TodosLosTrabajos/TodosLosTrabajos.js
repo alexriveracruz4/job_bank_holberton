@@ -20,14 +20,10 @@ function TodosLosTrabajos() {
   });
 
   return (
-    <div className='TablaDeTodoLosTrabajosContainer'>
-      <div className='HeaderContainer'>
-        <AdminNav />
-      </div>
-      <div className='TablaDeTodoLosTrabajosContainer'>
-        <TablaDeTodoLosTrabajos />
-      </div>
-    </div>
+    <React.Fragment>
+      <AdminNav />
+      <TablaDeTodoLosTrabajos />
+    </React.Fragment>
   );
 }
 

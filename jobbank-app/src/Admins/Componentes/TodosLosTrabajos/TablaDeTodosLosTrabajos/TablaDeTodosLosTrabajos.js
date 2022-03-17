@@ -87,7 +87,7 @@ function TablaDeTodosLosTrabajos() {
             setLoadingEliminate(false);
             swal({
               title: "ERROR",
-              text: `No se pudo elimiar el trabajo'`,
+              text: `No se pudo eliminar el trabajo'`,
               icon: "error",
             });
           }

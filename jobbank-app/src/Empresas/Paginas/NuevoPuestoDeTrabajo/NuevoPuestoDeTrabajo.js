@@ -38,14 +38,14 @@ function NuevoPuestoDeTrabajo() {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <EmpresaNav />
       <article className="grid-1-2">
         <CrudForm
             createData={ createData }
         />
       </article>
-    </div>
+    </React.Fragment>
     );
 }
 

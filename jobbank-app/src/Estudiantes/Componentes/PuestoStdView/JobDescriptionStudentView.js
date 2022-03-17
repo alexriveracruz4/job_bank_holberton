@@ -36,6 +36,7 @@ import { helpHttp } from "../../../helpers/helpHttp";
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
+import './JobDescriptionStudentView.css'
 
 
 const cookies = new Cookies();
@@ -146,7 +147,7 @@ function JobDescriptionStudentView(props) {
                   <AttachMoneyIcon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary="Salario" secondary={datos.salary}/>
+              <ListItemText primary="Salario (dólares)" secondary={datos.salary}/>
             </ListItem>
           </>
         }
@@ -233,7 +234,7 @@ function JobDescriptionStudentView(props) {
     const partner_email = partner.email;
     const copia_email="valery.vargas@holbertonschool.com"
     const subject=`Postulación al trabajo: ${title}`
-    const body=`Hola%0D%0AMi nombre es ${studentName}. Estoy interesado en el puesto y me gustaría que me pudiesen tomar en consideración. Adjunto mi CV y quedo a su disposición.%0D%0A%0D%0AMuchas gracias,%0D%0A%0D%0A${studentName}`
+    const body=`Hola%0D%0AMi nombre es ${studentName}. Estoy interesado en el puesto y me gustaría que me pudiesen tomar en consideración. Adjunto mi CV y quedo a su disposición.%0D%0AMuchas gracias,%0D%0A${studentName}`
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${partner_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
   }
 
@@ -259,7 +260,7 @@ function JobDescriptionStudentView(props) {
                     setDb([...db, res]);
                     //setLoading(false);
                     swal({
-                      text: `Recuerde cargar su CV en el correo electrónico`,
+                      text: `Recuerde cargar su CV antes de enviar el correo electrónico`,
                       icon: "warning",
                     }).then(() => {
                       swal({
@@ -286,7 +287,6 @@ function JobDescriptionStudentView(props) {
             text:"HAS CANCELADO TU POSTULACIÓN",
             timer:"2000"
           });
-          sendEmail(datos.title);
         }
     });
   }
@@ -331,11 +331,11 @@ function JobDescriptionStudentView(props) {
             <Stack direction="row" spacing={3}>
               <Card elevation={4} sx={{ minHeight: "400px", background: "white", borderRadius: "20px", width: '65%', whiteSpace: 'pre-line', typography: 'body1',p: 2 }}>
                 <Typography sx={{ background: "white"}} variant="body1" component="h2">
-                  {datos.description}
+                  <div id="quill-html-container-student" dangerouslySetInnerHTML={{__html: datos.description}} />
                 </Typography>
               </Card>
               <Box sx={{ minHeight: "400px", width: '35%', typography: 'body1', p: [2,2,2,0]}}>
-                <Stack  sx={{position: "sticky", top:50}} direction="column" spacing={3}>
+                <Stack  sx={{position: "sticky", top:120}} direction="column" spacing={3}>
                   <Card elevation={4} sx={{minHeight: "350px", width: '90%', borderRadius: "20px", background: "white"}}>
                     <FolderListTrabajo/>
                   </Card>
@@ -366,7 +366,7 @@ function JobDescriptionStudentView(props) {
                 </Typography>
               </Card>
               <Box sx={{ minHeight: "100px", width: '35%', borderRadius: "20px", typography: 'body1', p: [2,2,2,0]}}>
-                <Stack  sx={{position: "sticky", top:50}} direction="column" spacing={3}>
+                <Stack  sx={{position: "sticky", top:120}} direction="column" spacing={3}>
                   <Card elevation={4} sx={{minHeight: "100px", borderRadius: "20px", width: '90%', background: "white"}}>
                     <FolderListEmpresa/>
                   </Card>

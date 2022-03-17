@@ -53,10 +53,10 @@ function PerfilEstudiante() {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <EstudianteNav />
-        <CrudForm updateData={updateData} dataToEdit={dataToEdit} />
-    </div>
+      <CrudForm updateData={updateData} dataToEdit={dataToEdit} />
+    </React.Fragment>
   );
 }
 

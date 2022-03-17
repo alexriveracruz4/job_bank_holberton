@@ -288,10 +288,17 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <small id='smallCity'> Error message </small>
           </div>
 
-          <div className="form-control" id='form-experience'>
-            <label htmlFor="inputExperience">Experiencia</label>
-            <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputExperience" maxLength={45} name="experience" placeholder="2 años" onChange={handleChange} value={form.experience}/>
+          <div className='form-control' id='form-experience'>
+            <label htmlFor="inputExperience">Tiempo de experiencia</label>
+            <div className='inputFormDiv'>
+              <select className="form-control" id="inputExperience" onChange={handleChange} name="experience" value={form.experience}>
+                <option selected disabled hidden></option>
+                <option value="1 año">1 año</option>
+                <option value="2 años">2 años</option>
+                <option value="3 o 4 años">3 o 4 años</option>
+                <option value="Más de 4 años">Más de 4 años</option>
+                <option value="Sin experiencia">Sin experiencia</option>
+              </select>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -301,7 +308,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           <div className="form-control" id='form-salary'>
             <label htmlFor="inputSalary">Salario en dólares</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputSalary" name="salary" maxLength={45} placeholder="1000 dólares" onChange={handleChange} value={form.salary} />
+              <input type="text" className="form-control" id="inputSalary" name="salary" maxLength={45} placeholder="1500" onChange={handleChange} value={form.salary} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
@@ -312,7 +319,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <label htmlFor="inputJobType">Jornada</label>
             <div className="inputFormDiv">
               <select className="form-control" id="inputJobType" onChange={handleChange} name="job_type" value={form.job_type}>
-                <option></option>
+                <option selected disabled hidden></option>
                 <option value="Tiempo completo">Tiempo completo</option>
                 <option value="Tiempo parcial">Tiempo parcial</option>
                 <option value="Por horas">Por horas</option>
@@ -326,7 +333,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <label htmlFor="inputPresOrRemote">Remoto o presencial</label>
             <div className="inputFormDiv">
               <select className="form-control" id="inputPresOrRemote" onChange={handleChange} name="pres_or_remote" value={form.pres_or_remote}>
-                <option></option>
+                <option selected disabled hidden></option>
                 <option value="Sin preferencia">Sin preferencia</option>
                 <option value="Presencial">Presencial</option>
                 <option value="Remoto">Remoto</option>
@@ -340,7 +347,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <label htmlFor="inputDispTravel">Disponibilidad para viajar</label>
             <div className="inputFormDiv">
               <select className="form-control" id="inputDipTravel" onChange={handleChange} name="travel_availability" value={form.travel_availability}>
-                <option></option>
+                <option selected disabled hidden></option>
                 <option value="Si">Si</option>
                 <option value="No">No</option>
               </select>

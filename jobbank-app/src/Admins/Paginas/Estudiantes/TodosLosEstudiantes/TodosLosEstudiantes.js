@@ -21,14 +21,10 @@ function TodosLosEstudiantes() {
   });
 
   return (
-    <div className='PuestosDeTrabajoEstudianteContainer'>
-      <div className='HeaderContainer'>
-        <AdminNav />
-      </div>
-      <div className='TablaEstudiantesContainer'>
-        <TablaEstudiante />
-      </div>
-    </div>
+    <React.Fragment>
+      <AdminNav />
+      <TablaEstudiante />
+    </React.Fragment>
   );
 }
 

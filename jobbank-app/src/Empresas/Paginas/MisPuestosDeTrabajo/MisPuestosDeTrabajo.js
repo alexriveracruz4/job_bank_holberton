@@ -104,10 +104,7 @@ function MisPuestosDeTrabajo() {
 
   return (
     <div className='MisPuestosDeTrabajoContainer'>
-      <div className='HeaderContainer'>
-        <EmpresaNav />
-      </div>
-        
+      <EmpresaNav />
       {datosTotales === 1?
         <h2 className="NumeroDeMisEmpleos">Se ha publicado 1 empleo</h2>
       :

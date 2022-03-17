@@ -20,14 +20,10 @@ function TrabajosDeCadaEmpresa() {
   });
 
   return (
-    <div className='TrabajosDeCadaEmpresaContainer'>
-      <div className='HeaderContainer'>
-        <AdminNav />
-      </div>
-      <div className='TablaTrabajosPorEmpresaContainer'>
-        <TablaTrabajosDeCadaEmpresa />
-      </div>
-    </div>
+    <React.Fragment>
+      <AdminNav />
+      <TablaTrabajosDeCadaEmpresa />
+    </React.Fragment>
   );
 }
 

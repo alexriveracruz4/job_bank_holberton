@@ -184,7 +184,7 @@ function JobDescription(props) {
                   <AttachMoneyIcon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary="Salario" secondary={datos.salary}/>
+              <ListItemText primary="Salario (dólares)" secondary={datos.salary}/>
             </ListItem>
           </>
         }
@@ -358,12 +358,11 @@ function JobDescription(props) {
               <Stack direction="row" spacing={3}>
                 <Card elevation={4} sx={{ minHeight: "400px", background: "white", borderRadius: "20px", width: '65%', whiteSpace: 'pre-line', typography: 'body1',p: 2 }}>
                   <Typography sx={{ }} variant="body1" component="h2">
-                    {/*datos.description*/}
                     <div id="quill-html-container" dangerouslySetInnerHTML={{__html: datos.description}} />
                   </Typography>
                 </Card>
                 <Box sx={{ minHeight: "400px", width: '35%', typography: 'body1', p: [2,2,2,0]}}>
-                  <Stack  sx={{position: "sticky", top:50}} direction="column" spacing={3}>
+                  <Stack  sx={{position: "sticky", top:120}} direction="column" spacing={3}>
                     <Card elevation={4} sx={{minHeight: "350px", width: '90%', borderRadius: "20px", background: "white"}}>
                       <FolderListTrabajo/>
                     </Card>
@@ -421,7 +420,7 @@ function JobDescription(props) {
                   </Typography>
                 </Card>
                 <Box sx={{ minHeight: "100px", width: '35%', borderRadius: "20px", typography: 'body1', p: [2,2,2,0]}}>
-                  <Stack  sx={{position: "sticky", top:50}} direction="column" spacing={3}>
+                  <Stack  sx={{position: "sticky", top:120}} direction="column" spacing={3}>
                     <Card elevation={4} sx={{minHeight: "100px", borderRadius: "20px", width: '90%', background: "white"}}>
                       <FolderListEmpresa/>
                     </Card>

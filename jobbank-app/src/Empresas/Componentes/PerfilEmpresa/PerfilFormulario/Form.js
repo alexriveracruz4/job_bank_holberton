@@ -357,7 +357,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           <div className='form-control' id='form-web'>
             <label htmlFor="inputWeb">Web</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputWeb" name="web" onChange={handleChange} maxLength={100} value={form.web} />
+              <input type="text" className="form-control" id="inputWeb" name="web" placeholder='https://holberton-peru.com' onChange={handleChange} maxLength={100} value={form.web} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

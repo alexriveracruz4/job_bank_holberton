@@ -103,8 +103,8 @@ function Main() {
     let currentPage = selectedPage;
     parameters.page = currentPage + 1;
     let url = `/home?` + creadorURLs(parameters);
-    console.log(url);
     history.push(url);
+    window.scrollTo(0, 0);
     obtenerEstudiantes();
   };
 

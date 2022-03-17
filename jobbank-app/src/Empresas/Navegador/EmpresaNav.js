@@ -103,7 +103,7 @@ function EmpresaNav() {
   };
 
   return (
-    <AppBar sx={{ bgcolor: "#1b0c61"}} position="static">
+    <AppBar sx={{ bgcolor: "#1b0c61", position: "sticky"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           
