@@ -139,11 +139,10 @@ main .navbar {
 
 main .container .MuiPaper-root  {
     width: 100%;
-    height: 320px;
-    max-width: 1170px;
-    margin: 15px 0px;
+    height: 330px;
+    max-width: 100%;
     display: flex;
-    border-radius: 160px;
+    border-radius: 200px;
 }
 
 
@@ -3047,9 +3046,9 @@ footer ul.social-info li a {
     align-items: center;
 }
 /*no borrar abajo*/
-.StudentsContainer{
+/*.StudentsContainer{
     margin: 10px;
-}
+}*/
 /*no borrar abajo*/
 .DescriptionContainer{
     padding: 30px;

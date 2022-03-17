@@ -3,7 +3,7 @@ import React from 'react';
 // List
 function ListStudents(props) {
   return (
-    <section>
+    <section className='list-students-section'>
       <ul>
         {props.children} 
       </ul>

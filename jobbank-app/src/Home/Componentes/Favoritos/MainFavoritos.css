@@ -1,0 +1,108 @@
+#div-title-background-fav {
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-background-fav {
+  padding-bottom: 60%;
+  font-size: 125px;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  text-align: end;
+  transform: rotate(180deg);
+  height: 250vh;
+  color: #000;
+  left: 0;
+}
+
+/*.mundo {
+  font-size: 125px;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  text-align: end;
+  transform: rotate(180deg);
+  height: 250vh;
+  color: #fff;
+}*/
+
+
+
+.padding-main-fav {
+  background: url(../images/fondoholberton.jpeg) no-repeat; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  min-height: auto;
+  min-height: 1300px;
+}
+
+.padding-main-fav .container .row {
+  background: #fff;
+  --bs-gutter-x: 0;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-.5 * var(--bs-gutter-x));
+  margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+
+.title-buttons {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.button-skill {
+  color: #000;
+  border-radius: 8px;
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none;
+  margin: 5px 1px;
+  border: 0;
+}
+
+@media (min-width: 1700px) {
+  #div-title-background-fav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      left: 3%;
+  }
+  .title-background-fav {
+      padding-bottom: 60%;
+      font-size: 125px;
+      font-weight: 700;
+      writing-mode: vertical-rl;
+      text-align: end;
+      transform: rotate(180deg);
+      height: 250vh;
+      color: #000;
+      left: 0;
+  }
+}
+
+@media (min-width: 1600px) and (max-width: 1700px) {
+  #div-title-background-fav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 1%;
+  }
+}
+
+.list-students-section ul {
+  padding-left: 0;
+}

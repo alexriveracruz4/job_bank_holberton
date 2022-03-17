@@ -1,4 +1,4 @@
-import "../Main/Main.css"
+import "./MainFavoritos.css"
 import Accordion from 'react-bootstrap/Accordion'
 import Button from '@mui/material/Button';
 import ButtonBase from '@mui/material/ButtonBase';
@@ -61,8 +61,8 @@ function MainFavoritos() {
   }
 
   return (
-    <main className="padding-main">
-      <div classname="div-title-background" id="div-title-background">
+    <main className="padding-main-fav">
+      <div classname="div-title-background-fav" id="div-title-background-fav">
         <p className="title-background">Holberton en el 
           <span className="mundo"> Mundo</span>
         </p>
