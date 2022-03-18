@@ -30,7 +30,7 @@ def get_students():
     """
     page = request.args.get('page')
     
-    limit = 6
+    limit = 10 #Change in the front-end part also "src/Home/Componentes/Main/Main.js"
     skills = request.args.get('skills')
     if skills is None:
         skills = ""
@@ -97,9 +97,9 @@ def get_students():
                                                         (PalabraClave.lower() in x["student_skills"].lower())) and 
                                                         (filtro_de_ingles(x, english)) and (filtro_de_habilidades(x, skills))]
         number_of_pages = ceil(len(datos_filtrados)/limit)
-        #datos_no_borrados_ordenados = random.sample(datos_filtrados, len(datos_filtrados))
+        datos_no_borrados_ordenados = random.sample(datos_filtrados, len(datos_filtrados))
  
-        part_of_jobs = datos_filtrados[limit*(page):limit*(page + 1)]
+        part_of_jobs = datos_no_borrados_ordenados[limit*(page):limit*(page + 1)]
  
         data = {"data":part_of_jobs,
                 "len_not_deleted_data":len(datos_no_borrados),

@@ -15,7 +15,7 @@ import Message from "../../../helpers/Message";
 function Main() {
 
   let api = helpHttp();
-  let limit = 6;
+  let limit = 10; //Change in the back-end part also "job_bank_holberton/jobbank-api/v1/views/students.py" in the get_students() function 
 
   let history = useHistory()
 
@@ -111,7 +111,6 @@ function Main() {
   useEffect(() => {    
     obtenerEstudiantes();
   }, []);
-
 
   
 
