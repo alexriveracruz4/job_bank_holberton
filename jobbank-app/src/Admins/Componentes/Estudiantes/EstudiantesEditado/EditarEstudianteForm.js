@@ -38,8 +38,9 @@ const CrudForm = ({ updateData, dataToEdit }) => {
     phonenumber: "",
     age: "",
     nationality: "",
-    province: '',
+    province: "",
     developer_type: "",
+    specialization: "",
     availability: "",
     pres_or_remot: "",
     description: "",
@@ -932,6 +933,17 @@ const CrudForm = ({ updateData, dataToEdit }) => {
             </div>
             <small id='smallDeveloperType'> Error message </small>
           </div>
+
+          <div className='form-control' id='form-specialization'>
+            <label htmlFor="inputSpecialization">Especialización complementaria</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputSpecialization" name="specialization" placeholder="Machine Learning" onChange={handleChange} maxLength={45} value={form.specialization}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallSpecialization'> Error message </small>
+          </div>
+
 
           <div className='form-control'>
             <label htmlFor="inputNationality">Habilidades (*obligatorio)</label>

@@ -25,8 +25,6 @@ const CrudForm = ({ createData }) => {
     city:'',
     pres_or_remote: '',
     experience: '',
-    age_min: 0,
-    age_max: 0,
     job_type: '',
     pres_or_remote: '',
     salary: '',
@@ -95,8 +93,7 @@ const handleSubmit = (e) => {
   const inputCountry = document.getElementById('inputCountry');
   const inputCity = document.getElementById('inputCity');
   const inputExperience = document.getElementById('inputExperience');
-  const inputAgeMin = document.getElementById('inputAgeMin');
-  const inputAgeMax = document.getElementById('inputAgeMax');
+  const inputSalary = document.getElementById('inputSalary')
   const inputJobType = document.getElementById('inputJobType');
   const inputPresOrRemote = document.getElementById('inputPresOrRemote');
   const inputTravelAvailability = document.getElementById('inputDipTravel');
@@ -155,6 +152,33 @@ const handleSubmit = (e) => {
     } else {
       formExperience.classList.remove('error');
     }
+
+  const salaryvalue = inputSalary.value.trim();
+  const formSalary = document.getElementById('form-salary');
+  const errorSalary = document.getElementById('smallSalary');
+
+  if (salaryvalue !== "") {
+    if ((/^\d+$/.test(salaryvalue))) {
+      const salaryIntValue = parseInt(salaryvalue)
+      if (salaryIntValue === 0) {
+        formSalary.className = 'form-control error';
+        errorSalary.innerText = "Complete este campo.";
+        formIsValid = false;
+      } else if (!(/^\d*(?:\.\d{1,2})?$/.test(salaryIntValue))) {
+        formSalary.className = 'form-control error';
+        errorSalary.innerText = "Ingrese un número válido"
+        formIsValid = false;
+      } else {
+        formSalary.classList.remove('error');
+      }
+    } else {
+      formSalary.className = 'form-control error';
+      errorSalary.innerText = "Solo puedes ingresar números."
+      formIsValid = false;
+    }
+  } else {
+    formSalary.classList.remove('error');
+  }
 
     const JobTypeValue = inputJobType.value.trim();
     const formJobType = document.getElementById('form-job_type');
@@ -326,13 +350,16 @@ const handleSubmit = (e) => {
             <small id='smallExperience'> Error message </small>
           </div>
 
-
-
-
           <div className="form-control" id='form-salary'>
             <label htmlFor="inputSalary">Salario en dólares</label>
             <div className="inputFormDiv">
-              <input type="text" className="form-control" id="inputSalary" name="salary" placeholder="1500" maxLength={45} onChange={handleChange} value={form.salary} />
+              <input type="tel" className="form-control" id="inputSalary" name="salary" placeholder="1500" maxLength={8}
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }} 
+                onChange={handleChange} value={form.salary} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>

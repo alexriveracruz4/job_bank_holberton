@@ -339,7 +339,7 @@ def post_job():
                 print("Travel_availability must contain a maximum of 45 characters")
                 abort(400, description="Travel_availability must contain a maximum of 45 characters")
         if key == "description":
-            if len(value) <= 3000:
+            if len(value) <= 10000:
                 isvalid = True
             else:
                 print("Description must contain a maximum of 3000 characters")
@@ -449,7 +449,7 @@ def put_job(partner_id, job_id):
                     print("Travel_availability must contain a maximum of 45 characters")
                     abort(400, description="Travel_availability must contain a maximum of 45 characters")
             if key == "description":
-                if len(value) <= 3000:
+                if len(value) <= 10000:
                     isvalid = True
                 else:
                     print("Description must contain a maximum of 3000 characters")

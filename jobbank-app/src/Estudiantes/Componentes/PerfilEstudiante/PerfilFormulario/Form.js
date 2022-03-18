@@ -31,6 +31,7 @@ const initailForm = {
   nationality: '',
   province: '',
   developer_type: "",
+  specialization: '',
   english_level: "",
   availability: '',
   pres_or_remot: '',
@@ -261,6 +262,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const inputPresOrRemote = document.getElementById('inputPresOrRemote');
   const inputProvince = document.getElementById('inputProvince');
   const inputDeveloperType = document.getElementById('inputDeveloperType');
+  const inputSpecialization = document.getElementById('inputSpecialization');
   const inputLinkedIn = document.getElementById('inputLinkedIn');
   const inputGithub = document.getElementById('inputGithub');
   const inputTwitter = document.getElementById('inputTwitter');
@@ -435,6 +437,10 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     } else {
       formDeveloperType.classList.remove('error');
     }
+
+    const specializationvalue = inputSpecialization.value.trim();
+    const formSpecialization = document.getElementById('form-specialization');
+    const errorSpecialization = document.getElementById('smallSpecialization');
 
     const LinkedInValue = inputLinkedIn.value.trim();
     const formLinkedIn = document.getElementById('form-linkedin');
@@ -876,6 +882,16 @@ const CrudForm = ({ updateData, dataToEdit}) => {
               <i className="fas fa-exclamation-circle" />
             </div>
             <small id='smallDeveloperType'> Error message </small>
+          </div>
+
+          <div className='form-control' id='form-specialization'>
+            <label htmlFor="inputSpecialization">Especialización complementaria</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputSpecialization" name="specialization" placeholder="Machine Learning" onChange={handleChange} maxLength={45} value={form.specialization}/>
+              <i className="fas fa-check-circle" />
+              <i className="fas fa-exclamation-circle" />
+            </div>
+            <small id='smallSpecialization'> Error message </small>
           </div>
 
           <div className='form-control'>

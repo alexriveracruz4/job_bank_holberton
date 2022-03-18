@@ -17,6 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import PlaceIcon from '@mui/icons-material/Place';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import Stack from '@mui/material/Stack';
@@ -98,28 +99,63 @@ function ItemStudent(props) {
 
   const sendEmail = () => {
     const student_email = props.student.email;
-    const copia_email="valery.vargas@holbertonschool.com"
-    const subject=`BÚSQUEDA DE PROGRAMADORES`
+    const copia_email="valery.vargas@holbertonschool.com";
+    const subject=`Búsqueda de programadores`;
     const body=`Hola ${props.student.firstname} ${props.student.lastname},%0D%0AVi tu perfil en la web de Holberton y me gustaría conversar contigo sobre una posible oferta laboral.%0D%0APor favor responder este correo en caso estés interesado(a),%0D%0AGracias.`;
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${student_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
+  }
+
+  function isYTorVimeo(url) {
+    if (url !== null) {
+      var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+      if (regexp.test(url)) {
+        const a = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+        if (a === "youtube") {
+          return (<Box className="videoBox" onClick={()=> setOpen(true)} style={{position: "relative"}} >
+                    <CardMedia className="videoCardMedia" component="img" id="video_link-button" image={youtube_parser(props.student.video_link)} value={props.student.video_link} src="https://player.vimeo.com/video/49384334" href={props.student.video_link} />
+                    <PlayArrowIcon onClick={()=> setOpen(true)} style={{backgroundColor: "#0b0b0b87", color: "#fff", borderRadius: "50%", position: "absolute", top: "0px", right: "0px", bottom: "0px", left: "0px", margin: "auto", fontSize: "75", cursor: "pointer", cursor: "hand"}}/>
+                  </Box>)
+        } else if (a === "vimeo") {
+          return (<Box className="videoBox" onClick={()=> setOpen(true)} style={{position: "relative"}} >
+                    <CardMedia className="videoCardMedia" component="img" id="video_link-button" image={youtube_parser(props.student.video_link)} value={props.student.video_link} src="https://player.vimeo.com/video/49384334" href={props.student.video_link} />
+                    <PlayArrowIcon onClick={()=> setOpen(true)} style={{backgroundColor: "#0b0b0b87", color: "#fff", borderRadius: "50%", position: "absolute", top: "0px", right: "0px", bottom: "0px", left: "0px", margin: "auto", fontSize: "75", cursor: "pointer", cursor: "hand"}}/>
+                  </Box>)
+        } else {
+          return null
+        }
+      } else {
+        return null
+      }
+    } else {
+      return null
+    }
   }
 
   /* react-video-modal */
   const [isOpen, setOpen] = useState(false)
 
   function getVideo_id(url) {
-    const a = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
-    if (a === "youtube") {
-      var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-      var match = url.match(regExp);
-      const video_id = (match&&match[7].length==11)? match[7] : false;
-      return <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId={video_id} onClose={() => setOpen(false)} />
-    } else if (a === "vimeo") {
-    var regExp = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/;
-    var parseUrl = regExp.exec(url)
-    return <ModalVideo channel='vimeo' autoplay isOpen={isOpen} videoId={parseUrl[5]} onClose={() => setOpen(false)} />
+    if (url !== null) {
+      var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+      if (regexp.test(url)) {
+        const a = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+        if (a === "youtube") {
+          var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+          var match = url.match(regExp);
+          const video_id = (match&&match[7].length==11)? match[7] : false;
+          return <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId={video_id} onClose={() => setOpen(false)} />
+        } else if (a === "vimeo") {
+        var regExp = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/;
+        var parseUrl = regExp.exec(url)
+        return <ModalVideo channel='vimeo' autoplay isOpen={isOpen} videoId={parseUrl[5]} onClose={() => setOpen(false)} />
+        } else {
+          return null
+        }
+      } else {
+        return null
+      }
     } else {
-    //
+      return null
     }
   }
 
@@ -193,19 +229,16 @@ function ItemStudent(props) {
                         '&:hover': { cursor: "pointer" },
                       }}
                     >
-                      <a rel="noopener" title="" style={{display: 'block', textDecoration: 'none', color: 'inherit', width: '80px', cursor: 'pointer', height: '80px', maxWidth: '80px', minWidth: '80px', maxHeight: '80px', minHeight: '80px', marginRight: '25px'}}>
+                      <a rel="noopener" style={{display: 'block', textDecoration: 'none', color: 'inherit', width: '80px', cursor: 'pointer', height: '80px', maxWidth: '80px', minWidth: '80px', maxHeight: '80px', minHeight: '80px', marginRight: '25px'}}>
                         <img src={ photo } alt="Profile" style={{display: 'block', width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} />
                       </a>
                       <Box
                       >
-                        <a class="MuiTypography-root MuiTypography-h6 MuiTypography-alignLeft" style={{color: 'inherit', display: 'block', textDecoration: 'none', cursor: 'pointer', lineHeight: '1.7rem', marginBottom: '0.3rem', textAlign: 'left', fontSize: '1.25rem', fontWeight: '500'}} rel="noopener"> {props.student.firstname} {props.student.lastname}</a>
-                        <a class="MuiTypography-root jss86 jss127 jss125 MuiTypography-body2 MuiTypography-alignLeft" rel="noopener" style={{color: 'inherit', display: 'block', textDecoration: 'none', textAlign: 'left', fontSize: '1rem', fontWeight: '400', lineHeight: '1.43', display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: '1', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book'}}>{props.student.developer_type}</a>
+                        <Typography variant="h6"> {props.student.firstname} {props.student.lastname}</Typography>
+                        <Typography>{props.student.developer_type} {props.student.specialization ? "- " + props.student.specialization : null}</Typography>
                         <a rel="noopener" style={{color: 'inherit', margin: '4px 0px 4px -4px', display: 'flex', textDecoration: 'none'}}>
-                          <svg class="MuiSvgIcon-root" style={{fill: 'currentColor', width: '1em', height: '1em', display: 'inline-block', fontSize: '1.25rem', transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', flexShrink: '0', userSelect: 'none', marginRight: '5px', color: 'inherit', textDecoration: 'none'}} focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zM7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.88-2.88 7.19-5 9.88C9.92 16.21 7 11.85 7 9z"></path>
-                            <circle cx="12" cy="9" r="2.5"></circle>
-                          </svg>
-                          <p class="MuiTypography-root MuiTypography-body1" style={{height: '23px', display: '-webkit-box', overflow: 'hidden', fontSize: '14px', marginTop: '1px', textAlign: 'left', WebkitBoxOrient: 'vertical', WebkitLineClamp: '1', fontWeight: '500', lineHeight: '1.5', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book'}}>{props.student.province} - {props.student.nationality}</p>
+                          <PlaceIcon fontSize='small' style={{marginRight: '5px'}} />
+                          <Typography variant="body2" style={{fontWeight: '500'}}>{props.student.province} - {props.student.nationality}</Typography>
                         </a>
                       </Box>
                     </Box>
@@ -215,9 +248,9 @@ function ItemStudent(props) {
                           spacing={1}
                           style={{display: 'flex',flexWrap: 'wrap', alignItems: 'baseline', justifyContent: 'center', height: '80px'}}
                         >
-                          {getSkillTechName(props.student.student_skills).map(skill => <Chip label={skill} />)}
+                          {getSkillTechName(props.student.student_skills).map(skill => <Chip style={{margin: '2px'}} label={skill} />)}
                           {getLengthOfSkillTech(props.student.student_skills) > 7
-                            ? <Chip onClick={()=>history.push(`/home/candidate/${props.student.student_id}`)} label="Ver más" style={{ backgroundColor: "rgba(0, 0, 0, 0.15)" }}/>
+                            ? <Chip onClick={()=>history.push(`/home/candidate/${props.student.student_id}`)} label="Ver más" style={{ backgroundColor: "rgba(0, 0, 0, 0.15)", margin: '2px' }}/>
                             : null}
                         </Stack>
                     </Grid>
@@ -307,11 +340,10 @@ function ItemStudent(props) {
                       </IconButton>
                     </Box>
                   </Grid>
-                  
                 </Box>
               </Container>
             </Box>
-            {props.student.video_link
+            {isYTorVimeo(props.student.video_link)
               ? <Box className="videoBox" onClick={()=> setOpen(true)} style={{position: "relative"}} >
                     <CardMedia className="videoCardMedia" component="img" id="video_link-button" image={youtube_parser(props.student.video_link)} value={props.student.video_link} src="https://player.vimeo.com/video/49384334" href={props.student.video_link} />
                     <PlayArrowIcon onClick={()=> setOpen(true)} style={{backgroundColor: "#0b0b0b87", color: "#fff", borderRadius: "50%", position: "absolute", top: "0px", right: "0px", bottom: "0px", left: "0px", margin: "auto", fontSize: "75", cursor: "pointer", cursor: "hand"}}/>

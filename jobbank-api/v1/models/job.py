@@ -18,7 +18,7 @@ class Job(BaseModel, Base):
     job_type = Column(String(45), nullable=True)
     code = Column(String(255), nullable=False)
     title = Column(String(100), nullable=False)
-    description = Column(String(3000), nullable=True)
+    description = Column(String(10000), nullable=True)
     city = Column(String(45), nullable=True)
     country = Column(String(45), nullable=True)
     pres_or_remote = Column(String(45), nullable=True)

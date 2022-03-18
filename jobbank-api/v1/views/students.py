@@ -528,6 +528,14 @@ def post_student():
             else:
                 print("developer_type must contain a maximum of 45 characters")
                 abort(400, description="developer_type must contain a maximum of 45 characters")
+        if key == "specialization":
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 45:
+                    isvalid = True
+                else:
+                    print("specialization must contain a maximum of 45 character")
+                    abort(400, description="specialization must contain a maximum of 45 characters")
         if key == "english_level":
             if value == None or value == "":
                 isvalid = True
@@ -751,6 +759,14 @@ def put_student(student_id):
                 else:
                     print("developer_type must contain a maximum of 45 characters")
                     abort(400, description="developer_type must contain a maximum of 45 characters")
+            if key == "specialization":
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 45:
+                    isvalid = True
+                else:
+                    print("specialization must contain a maximum of 45 character")
+                    abort(400, description="specialization must contain a maximum of 45 characters")
             if key == "english_level":
                 if value == None or value == "":
                     isvalid = True
