@@ -304,7 +304,11 @@ def post_job():
             if value == None or value == "":
                 isvalid = True
             elif len(value) <= 45:
-                isvalid = True
+                if (value.isnumeric()):
+                    isvalid = True
+                else:
+                    print("Salary: please use only numbers")
+                    abort(400, description="Salary: please use only numbers")
             else:
                 print("Salary must contain a maximum of 45 characters")
                 abort(400, description="Salary must contain a maximum of 45 characters")
@@ -414,7 +418,11 @@ def put_job(partner_id, job_id):
                 if value == None or value == "":
                     isvalid = True
                 elif len(value) <= 45:
-                    isvalid = True
+                    if (value.isnumeric()):
+                        isvalid = True
+                    else:
+                        print("Salary: please use only numbers")
+                        abort(400, description="Salary: please use only numbers")
                 else:
                     print("Salary must contain a maximum of 45 characters")
                     abort(400, description="Salary must contain a maximum of 45 characters")
