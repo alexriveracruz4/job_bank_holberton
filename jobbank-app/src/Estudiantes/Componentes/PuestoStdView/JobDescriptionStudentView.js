@@ -147,7 +147,7 @@ function JobDescriptionStudentView(props) {
                   <AttachMoneyIcon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary="Salario (dólares)" secondary={datos.salary}/>
+              <ListItemText primary="Salario (dólares)" secondary={"$"+datos.salary}/>
             </ListItem>
           </>
         }
