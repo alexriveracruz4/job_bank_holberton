@@ -156,8 +156,8 @@ function ItemJob(props) {
               <Typography variant="h6" component="h2">
                 <Box sx={{ fontWeight: 'bold'}}>{PartnerData.name}</Box>
               </Typography>
-              <Typography variant="body1" component="h2">
-                <div id="quill-html-container-pre-student" dangerouslySetInnerHTML={{__html: props.description.slice(0, 200) + "..."}} />
+              <Typography variant="body1" component="h2" sx={{ display: '-webkit-box', overflow: "hidden", WebkitBoxOrient: 'vertical', WebkitLineClamp: 4}}>
+                <div id="quill-html-container-pre-student" dangerouslySetInnerHTML={{__html: props.description}} />
               </Typography>
             </Stack>
             <Divider orientation="vertical" flexItem>

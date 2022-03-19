@@ -261,7 +261,7 @@ function MainEstudiante() {
                 <div className="AllDescriptionContainer">
                   {studentData.description && 
                   <Box>
-                    <Typography color='textPrimary' align='left' style={{fontSize: '14px', marginTop: '10px', minHeight: '64px', marginBottom: '10px'}}>
+                    <Typography color='textPrimary' align='left' style={{whiteSpace: 'pre-line', fontSize: '14px', marginTop: '10px', minHeight: '64px', marginBottom: '10px'}}>
                       {String(studentData.description)}
                     </Typography>
                   </Box>

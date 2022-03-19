@@ -306,7 +306,7 @@ function ItemStudent(props) {
                     </Grid>
                     {props.student.description && 
                       <Box>
-                        <Typography color='textPrimary' align='left' style={{fontSize: '14px', marginTop: '20px', minHeight: '64px', marginBottom: '20px'}}>
+                        <Typography color='textPrimary' align='left' style={{whiteSpace: 'pre-line', fontSize: '14px', marginTop: '20px', minHeight: '64px', marginBottom: '20px'}}>
                         <LinesEllipsis
                           text={String(props.student.description)}
                           maxLine='5'
