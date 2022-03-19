@@ -92,7 +92,9 @@ def get_students():
         for student in datos_no_borrados:
             list_students.append(student.to_dict())
 
-        datos_filtrados = [x for x in list_students if ((PalabraClave.lower() in toNoneStrings(x["description"]).lower()) or 
+        datos_filtrados = [x for x in list_students if ((PalabraClave.lower() in toNoneStrings(x["specialization"]).lower()) or 
+                                                        (PalabraClave.lower() in toNoneStrings(x["developer_type"]).lower()) or
+                                                        (PalabraClave.lower() in toNoneStrings(x["description"]).lower()) or 
                                                         (PalabraClave == "") or 
                                                         (PalabraClave.lower() in x["student_skills"].lower())) and 
                                                         (filtro_de_ingles(x, english)) and (filtro_de_habilidades(x, skills))]
