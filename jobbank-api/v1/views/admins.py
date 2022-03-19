@@ -90,6 +90,15 @@ def post_admin():
         abort(400, description="Missing password")
 
     data = request.get_json()
+
+    """Check if the email already exists"""
+    all_admins = storage.all(Admin).values()
+
+    for admin in all_admins:
+        if admin.email == data["email"]:
+            print("ERROR: Email exists")
+            abort(400, description="Email exists")
+
     isvalid = True
 
     for key, value in data.items():
@@ -138,6 +147,15 @@ def put_admin(admin_id):
     isvalid = True
 
     data = request.get_json()
+
+    """Check if the email already exists"""
+    all_admins = storage.all(Admin).values()
+
+    for admin in all_admins:
+        if admin.email == data["email"]:
+            print("ERROR: Email exists")
+            abort(400, description="Email exists")
+
     for key, value in data.items():
         if key not in ignore:
             # Form validation
