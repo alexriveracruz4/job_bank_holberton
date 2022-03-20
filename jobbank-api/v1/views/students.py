@@ -675,15 +675,6 @@ def put_student(student_id):
     isvalid = True
 
     data = request.get_json()
-
-    """Check if the email already exists"""
-    all_students = storage.all(Student).values()
-
-    for std in all_students:
-        if std.email == data["email"]:
-            print("ERROR: Email exists")
-            abort(400, description="Email exists")
-
     for key, value in data.items():
         if key not in ignore:
             # Form validation

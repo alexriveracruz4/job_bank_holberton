@@ -184,14 +184,6 @@ def put_partner(partner_id):
 
     data = request.get_json()
 
-    """Check if the email already exists"""
-    all_partners = storage.all(Partner).values()
-
-    for partner in all_partners:
-        if partner.email == data["email"]:
-            print("ERROR: Email exists")
-            abort(400, description="Email exists")
-
     for key, value in data.items():
         if key not in ignore:
             # Form validation
