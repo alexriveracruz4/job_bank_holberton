@@ -225,7 +225,7 @@ function ItemStudent(props) {
                     <Box
                       onClick={()=>history.push(`/home/candidate/${props.student.student_id}`)}
                       sx={{
-                        display: 'flex', paddingLeft: '20px', marginBottom: '40px',
+                        display: 'flex', justifyContent: 'center', marginBottom: '40px',
                         '&:hover': { cursor: "pointer" },
                       }}
                     >

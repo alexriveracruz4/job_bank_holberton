@@ -78,7 +78,28 @@
       justify-content: center;
       align-items: center;
       position: absolute;
-      left: 3%;
+      left: 2%;
+  }
+  .title-background-fav {
+      padding-bottom: 60%;
+      font-size: 125px;
+      font-weight: 700;
+      writing-mode: vertical-rl;
+      text-align: end;
+      transform: rotate(180deg);
+      height: 250vh;
+      color: #000;
+      left: 0;
+  }
+}
+
+@media (min-width: 1800px) {
+  #div-title-background-fav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      left: 4%;
   }
   .title-background-fav {
       padding-bottom: 60%;

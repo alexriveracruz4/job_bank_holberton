@@ -70,57 +70,35 @@
     border: 0;
 }
 
-/*#main-container::before {
-    content: "Hola Mundo";
-    display: flex;
-}*/
-
-/*main::before {
-    content: "HOLA MUNDO";
-    font-size: 125px;
-    font-weight: 700;
-    writing-mode: vertical-rl;*/
-    /*position: absolute;*/
-    /*text-align: center;
-    transform: rotate(180deg);
-    height: 290vh;
-    color: #000;
-    left: 0;
-}*/
-
-/*.titulo-probando-div {*/
-    /*writing-mode:tb-rl;*/
-    /*transform: rotate(-90deg);
-    transform-origin: top left;
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-    white-space:nowrap;
-    display:block;
-    bottom:0;
-    position: absolute;
-    outline: solid 2px green;
-    width:auto;
-    height:20px;
-}*/
-
 @media (min-width: 1700px) {
-    /*main::before {
-        content: "HOLA MUNDO";
-        font-size: 125px;
-        font-weight: 700;
-        writing-mode: vertical-rl;*/
-        /*position: absolute;*/
-        /*text-align: center;
-        transform: rotate(180deg);
-        height: 290vh;
-        color: #000;
-        left: 0;
-    }*/
     #div-title-background {
         display: flex;
         justify-content: center;
         align-items: center;
         position: absolute;
-        left: 3%;
+        left: 2%;
+    }
+    .title-background {
+        padding-bottom: 60%;
+        font-size: 100px;
+        font-weight: 700;
+        writing-mode: vertical-rl;
+        /*position: absolute;*/
+        text-align: end;
+        transform: rotate(180deg);
+        height: 250vh;
+        color: #000;
+        left: 0;
+    }
+  }
+
+  @media (min-width: 1800px) {
+    #div-title-background {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        left: 4%;
     }
     .title-background {
         padding-bottom: 60%;
