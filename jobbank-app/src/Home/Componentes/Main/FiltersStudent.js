@@ -71,10 +71,20 @@ function FiltersStudent(props) {
   const abrirCerrarSkillsModal = () => {
     setSkillsModal(!skillsModal);
   }
+
   const body=(
     <div className={styles.modal}>
       <Stack direction="row" spacing={1} justifyContent="flex-end">
-        <TextField 
+        <TextField
+          onKeyPress={(event) => {
+            if(event.key === 'Enter') {
+              props.parameters.page = 1;
+              let url = `/home?` + props.creadorURLs(props.parameters);  
+              history.push(url);
+              abrirCerrarModal();
+              window.location.reload();
+            }
+          }}
           fullWidth 
           label="Palabra clave" 
           id="fullWidth" 
@@ -87,7 +97,7 @@ function FiltersStudent(props) {
       <br/>
       <div align="right">
         <Stack direction="row-reverse" spacing={2} justifyContent="flex-start">
-        <Button variant="outlined" color="primary"
+        <Button variant="outlined" color="primary"      
           onClick={()=> {
             props.parameters.page = 1;
             let url = `/home?` + props.creadorURLs(props.parameters);  
