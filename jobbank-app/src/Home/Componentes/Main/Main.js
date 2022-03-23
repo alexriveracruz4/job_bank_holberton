@@ -135,10 +135,14 @@ function Main() {
           
           {students &&
             <div className="div-paginate-student-numbers">
+            {!loading &&
+            <>
             {datosTotales=== 1?
               <span className="PDTENumeroDeEstudiantes">Un resultado disponible</span>
               :
               <span className="PDTENumeroDeEstudiantes"><span style={{fontWeight: "bold"}}>{datosTotales}</span> resultados disponibles</span>
+            }
+            </>
             }
             <ReactPaginate
               previousLabel={"<"}
