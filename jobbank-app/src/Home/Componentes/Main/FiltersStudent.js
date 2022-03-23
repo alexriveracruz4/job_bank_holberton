@@ -433,6 +433,7 @@ function FiltersStudent(props) {
           height: 80,
           display: 'flex',
           flexWrap: 'nowrap',
+          overflowY: "auto"
         }}
         >
         <RenderSelectedSkillsList selectSkills={selectSkills} tipo={"tech"}/>

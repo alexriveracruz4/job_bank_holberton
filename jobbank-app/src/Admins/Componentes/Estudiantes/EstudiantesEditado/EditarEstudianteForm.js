@@ -641,6 +641,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
           height: 80,
           display: 'flex',
           flexWrap: 'nowrap',
+          overflowY: "auto"
         }}
         >
         <RenderSelectedSkillsList selectSkills={selectSkills} tipo={"tech"}/>
