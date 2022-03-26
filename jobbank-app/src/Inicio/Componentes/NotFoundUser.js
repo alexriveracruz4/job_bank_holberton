@@ -15,6 +15,17 @@ import MenuItem from '@mui/material/MenuItem';
 import logo from "./holberton-logo.png";
 import { useLocation } from "react-router-dom"
 import ErrorIcon from '@mui/icons-material/Error';
+import { styled } from '@mui/system';
+
+const StyledButtonReturn = styled(Button)`
+  background-color: #1b0c61;
+  color: #fff;
+  padding: 6px 12px;
+  &:hover {
+    background-color: #3a20bc;
+    color: #fff;
+  }
+`;
 
 
 const pages = [];
@@ -142,8 +153,14 @@ function NotFoundUser() {
         </Typography>
         
         <Typography sx={{ fontWeight: 'bold', color: "#1b0c61", my: "40px" }} variant="h4" textAlign="center">
-          Por favor, póngase en contacto con el administrador del sitio.           
+          Por favor, póngase en contacto con el administrador del sitio:      
         </Typography>
+        <Typography sx={{ fontWeight: 'bold', color: "#1b0c61" }} variant="h4" textAlign="center">
+          valery.vargas@holbertonschool.com        
+        </Typography>
+        <StyledButtonReturn href="/home" variant="contained" sx={{m: 10}}>
+					Volver al inicio
+				</StyledButtonReturn>
       </Box>
     </Box>
     </Box>
