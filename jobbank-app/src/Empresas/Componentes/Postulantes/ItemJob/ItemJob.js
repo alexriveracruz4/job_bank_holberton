@@ -373,7 +373,7 @@ function ItemJob(props) {
                               }}
                               
                             >
-                              <Paper>
+                              <Box sx={{backgroundColor: '#FFF'}}>
                                 <ClickAwayListener onClickAway={handleClose}>
                                   <MenuList id="split-button-menu" >
                                     {options.map((option, index) => (
@@ -392,7 +392,7 @@ function ItemJob(props) {
                                     ))}
                                   </MenuList>
                                 </ClickAwayListener>
-                              </Paper>
+                              </Box>
                             </Grow>
                           )}
                         </Popper>
