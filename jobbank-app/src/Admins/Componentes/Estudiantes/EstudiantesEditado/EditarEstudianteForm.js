@@ -544,6 +544,24 @@ const CrudForm = ({ updateData, dataToEdit }) => {
   }
   const [skillsModal, setSkillsModal] = useState(false)
 
+
+  function dynamicSort(property) {
+    var sortOrder = 1;
+
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+
+    return function (a,b) {
+        if(sortOrder == -1){
+            return b[property].localeCompare(a[property]);
+        }else{
+            return a[property].localeCompare(b[property]);
+        }        
+    }
+  }
+
   function RenderAllSkillsList(props) {
     const skills = props.allSkills;
     const HabilidadesSeleccionadas = props.selectSkills;
@@ -567,7 +585,7 @@ const CrudForm = ({ updateData, dataToEdit }) => {
         return acc;
       }
     }, []);
-
+    uniqueItemss.sort(dynamicSort("name"));
     const filterSkills = uniqueItemss.filter(item => {
       if (item.name.toLowerCase().includes(searchValue)) {
         return true;

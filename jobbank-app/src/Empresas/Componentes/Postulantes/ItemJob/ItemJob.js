@@ -40,6 +40,16 @@ import 'react-modal-video/scss/modal-video.scss';
 import ReactDOM from 'react-dom'
 import ModalVideo from 'react-modal-video'
 
+import ButtonGroup from '@mui/material/ButtonGroup';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Grow from '@mui/material/Grow';
+import Popper from '@mui/material/Popper';
+import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
+import { width } from '@mui/system';
+
+
 import './ItemJob.css'
 
 function ItemJob(props) {
@@ -69,12 +79,21 @@ function ItemJob(props) {
     photo = `${apiPath}/student_photos/${props.student.photo_filename_logical}`;
   }
 
-  const sendEmail = () => {
+  const sendGmailEmail = () => {
     const student_email = props.student.email;
     const copia_email="valery.vargas@holbertonschool.com"
     const subject=`Búsqueda de programadores`
     const body=`Hola ${props.student.firstname} ${props.student.lastname},%0D%0ASomos de la empresa ${props.partnerName}, queríamos ponernos en contacto con usted para hablar sobre el puesto de trabajo '${props.titleJob}'%0D%0AGracias.`;
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${student_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
+  }
+
+
+  const sendOutlookEmail = () => {
+    const student_email = props.student.email;
+    const copia_email="valery.vargas@holbertonschool.com"
+    const subject=`Búsqueda de programadores`
+    const body=`Hola ${props.student.firstname} ${props.student.lastname},%0D%0ASomos de la empresa ${props.partnerName}, queríamos ponernos en contacto con usted para hablar sobre el puesto de trabajo '${props.titleJob}'%0D%0AGracias.`;
+    window.location.href = `mailto:${student_email}?Cc=${copia_email}&subject=${subject}&body=${body}`; 
   }
 
   function isYTorVimeo(url) {
@@ -177,6 +196,35 @@ function ItemJob(props) {
     }
     return times
   }
+
+  const options = ['Gmail', 'Outlook'];
+
+  const [open, setOpenOptions] = React.useState(false);
+  const anchorRef = React.useRef(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    if (index === 0){
+      sendGmailEmail();
+    }
+    if (index === 1){
+      sendOutlookEmail();
+    }
+    setOpenOptions(false);
+  };
+
+  const handleToggle = () => {
+    setOpenOptions((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setOpenOptions(false);
+  };
+
 
   return (
     <React.StrictMode>     
@@ -290,10 +338,72 @@ function ItemJob(props) {
                   </Box>
                 }
                 <Stack direction="row" divider={<Divider />} spacing={2}>
+                  <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
+                          <Button startIcon={<MailOutlineIcon style={{fontSize: '25px'}} />}
+                            style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px 0px 0px 4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}
+                          >
+                            Contactar
+                          </Button>
+                          <Button
+                            style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 0px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '0px 4px 4px 0px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}
+                            size="small"
+                            aria-controls={open ? 'split-button-menu' : undefined}
+                            aria-expanded={open ? 'true' : undefined}
+                            aria-label="select merge strategy"
+                            aria-haspopup="menu"
+                            onClick={handleToggle}
+                          >
+                            <ArrowDropDownIcon />
+                          </Button>
+                        </ButtonGroup>
+                        <Popper
+                          open={open}
+                          anchorEl={anchorRef.current}
+                          role={undefined}
+                          transition
+                          disablePortal={false}
+                          
+                        >
+                          {({ TransitionProps, placement }) => (
+                            <Grow
+                              {...TransitionProps}
+                              style={{
+                                transformOrigin:
+                                  placement === 'bottom' ? 'center top' : 'center bottom',
+                              }}
+                              
+                            >
+                              <Paper>
+                                <ClickAwayListener onClickAway={handleClose}>
+                                  <MenuList id="split-button-menu" >
+                                    {options.map((option, index) => (
+                                      <Button variant="contained"
+                                        sx={{ backgroundColor: '#FF003C', mx: "10px", my: "4px",
+                                         '&:hover': {
+                                          backgroundColor: '#FF003C',
+                                          }
+                                        }}
+                                        key={option}
+                                        selected={index === selectedIndex}
+                                        onClick={(event) => handleMenuItemClick(event, index)}
+                                      >
+                                        {option}
+                                      </Button>
+                                    ))}
+                                  </MenuList>
+                                </ClickAwayListener>
+                              </Paper>
+                            </Grow>
+                          )}
+                        </Popper>
+                  {
+                  /*
                   <Button onClick={()=>sendEmail()} variant="contained" startIcon={<MailOutlineIcon style={{fontSize: '25px'}} />} tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
                     Contactar
                     <span class="MuiTouchRipple-root"></span>
                   </Button>
+                  */
+                  }
                   <Button variant="contained" startIcon={<VisibilityIcon style={{fontSize: '25px'}} />} tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}
                     onClick={() => Downloadcv(props.student.cv_filename_logical, props.student.firstname, props.student.lastname)} >
                       Ver CV

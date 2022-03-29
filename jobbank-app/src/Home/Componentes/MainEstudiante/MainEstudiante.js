@@ -1,4 +1,5 @@
 import "./MainEstudiante.css"
+import React from 'react';
 import Accordion from 'react-bootstrap/Accordion'
 import { useEffect, useState } from "react";
 import apiPath from "../../../ApiPath";
@@ -19,6 +20,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
+import Paper from "@material-ui/core/Paper";
 
 
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -29,6 +31,14 @@ import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import LinesEllipsis from "react-lines-ellipsis";
 import Typography from "@material-ui/core/Typography";
 
+import ButtonGroup from '@mui/material/ButtonGroup';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Grow from '@mui/material/Grow';
+import Popper from '@mui/material/Popper';
+import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
+import { width } from '@mui/system';
 
 function MainEstudiante() {
 
@@ -38,7 +48,7 @@ function MainEstudiante() {
   const { StudentId } = useParams();
   let history = useHistory();
   
-
+  window.scrollTo(0, 0);
   const [studentData, setStudentData] = useState(null);
   const [studentSkills, setStudentSkills] = useState(null);
 
@@ -87,8 +97,6 @@ function MainEstudiante() {
     obtenerDatosEstudiante();
     obtenerSkillsEstudiante();
   }, []);
-  console.log("object");
-  console.log(studentSkills)
 
   let photo = student_avatar;
 
@@ -107,11 +115,8 @@ function MainEstudiante() {
       return null;
     }
   }
-  console.log("Prueba")
-  console.log(EmptyArraySkills(studentSkills, "tech"));
-  console.log(EmptyArraySkills(studentSkills, "soft"));
-  console.log(EmptyArraySkills(studentSkills, "other"));
-  window.scrollTo(0, 0);
+
+  
   function RenderAllSkillsList(props) {
     let skills = props.studentSkills;
     if (skills === null) {
@@ -130,7 +135,7 @@ function MainEstudiante() {
     );
   }
 
-  const sendEmail = () => {
+  const sendGmailEmail = () => {
     const student_email = studentData.email;
     const copia_email="valery.vargas@holbertonschool.com";
     const subject=`Búsqueda de programadores`;
@@ -138,6 +143,42 @@ function MainEstudiante() {
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${student_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
   }
 
+  const sendOutlookEmail = () => {
+    const student_email = studentData.email;
+    const copia_email="valery.vargas@holbertonschool.com";
+    const subject=`Búsqueda de programadores`;
+    const body=`Hola ${studentData.firstname} ${studentData.lastname},%0D%0AVi tu perfil en la web de Holberton y me gustaría conversar contigo sobre una posible oferta laboral.%0D%0APor favor responder este correo en caso estés interesado(a),%0D%0AGracias.`;
+    window.location.href = `mailto:${student_email}?Cc=${copia_email}&subject=${subject}&body=${body}`; 
+  }
+
+  const options = ['Gmail', 'Outlook'];
+
+  const [open, setOpenOptions] = React.useState(false);
+  const anchorRef = React.useRef(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleMenuItemClick = (event, index) => {
+    setSelectedIndex(index);
+    if (index === 0){
+      sendGmailEmail();
+    }
+    if (index === 1){
+      sendOutlookEmail();
+    }
+    setOpenOptions(false);
+  };
+
+  const handleToggle = () => {
+    setOpenOptions((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpenOptions(false);
+  };
   return (
     <main className="padding-main">
       <div classname="div-title-background" id="div-title-background">
@@ -220,10 +261,73 @@ function MainEstudiante() {
                 </div>
                 <Box id="box-buttons" sx={{width: 'max-content', display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: '20px'}}>
                       <Box style={{ display: 'flex', flexGrow: 1}}>
+                        <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
+                          <Button startIcon={<MailOutlineIcon style={{fontSize: '25px'}} />}
+                            style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px 0px 0px 4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}
+                          >
+                            Contactar
+                          </Button>
+                          <Button
+                            style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 0px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '0px 4px 4px 0px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}
+                            size="small"
+                            aria-controls={open ? 'split-button-menu' : undefined}
+                            aria-expanded={open ? 'true' : undefined}
+                            aria-label="select merge strategy"
+                            aria-haspopup="menu"
+                            onClick={handleToggle}
+                          >
+                            <ArrowDropDownIcon />
+                          </Button>
+                        </ButtonGroup>
+                        <Popper
+                          open={open}
+                          anchorEl={anchorRef.current}
+                          role={undefined}
+                          transition
+                          disablePortal={false}
+                          
+                        >
+                          {({ TransitionProps, placement }) => (
+                            <Grow
+                              {...TransitionProps}
+                              style={{
+                                transformOrigin:
+                                  placement === 'bottom' ? 'center top' : 'center bottom',
+                              }}
+                              
+                            >
+                              <Paper>
+                                <ClickAwayListener onClickAway={handleClose}>
+                                  <MenuList id="split-button-menu" >
+                                    {options.map((option, index) => (
+                                      <Button variant="contained"
+                                        sx={{ backgroundColor: '#FF003C', mx: "10px", my: "4px",
+                                         '&:hover': {
+                                          backgroundColor: '#FF003C',
+                                          color: 'white',
+                                          }
+                                        }}
+                                        key={option}
+                                        selected={index === selectedIndex}
+                                        onClick={(event) => handleMenuItemClick(event, index)}
+                                      >
+                                        {option}
+                                      </Button>
+                                    ))}
+                                  </MenuList>
+                                </ClickAwayListener>
+                              </Paper>
+                            </Grow>
+                          )}
+                        </Popper>
+                        {
+                        /*
                         <Button onClick={()=>sendEmail()} variant="contained" startIcon={<MailOutlineIcon style={{fontSize: '25px'}} />} tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
                           Contactar
                           <span class="MuiTouchRipple-root"></span>
                         </Button>
+                        */
+                        }
                       </Box>
                       {studentData.github &&
                       <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
