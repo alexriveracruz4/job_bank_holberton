@@ -30,6 +30,10 @@
     border: 0;
 }
 
+#copyright .list-group-item.text {
+    padding: 0
+}
+
 #copyright .list-group:last-of-type .list-group-item:last-of-type {
     position: relative;
 }
