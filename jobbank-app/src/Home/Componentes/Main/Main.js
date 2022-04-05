@@ -20,6 +20,7 @@ function Main() {
   let history = useHistory()
 
   let { search } = useLocation();
+  
   let query = new URLSearchParams(search);
 
   let page = query.get("page");
@@ -28,7 +29,11 @@ function Main() {
     page = 1;
   }
 
+  console.log('search');
+  console.log(search);
   let skills = query.get("skills")
+  console.log('SKILLS');
+  console.log(skills);
   let english = query.get("english")
 
   let PalabraClave = query.get("PalabraClave")
@@ -37,7 +42,8 @@ function Main() {
 
   const creadorURLs = (parametros) =>{
     let url = ``
-    let array_string = [`skills=${parametros.skills}`, `english=${parametros.english}`, `page=${parametros.page}`, `PalabraClave=${parametros.PalabraClave}`]
+    let array_string = [`skills=${encodeURIComponent(parametros.skills)}`, `english=${parametros.english}`, `page=${parametros.page}`, `PalabraClave=${parametros.PalabraClave}`]
+    // Importante agregar el encodeURIComponent() para el reconocimiento de caracteres especiales como + y #, para los casos de C++ Y c#
     let array = [parametros.skills, parametros.english, parametros.page, parametros.PalabraClave]
     let counter = 0;
     for (let element of array) {

@@ -81,19 +81,21 @@ function ItemJob(props) {
 
   const sendGmailEmail = () => {
     const student_email = props.student.email;
-    const copia_email="valery.vargas@holbertonschool.com"
+    const copia_email1="valery.vargas@holbertonschool.com"
+    const copia_email2="erika.benavides@holbertonschool.com";
     const subject=`Búsqueda de programadores`
     const body=`Hola ${props.student.firstname} ${props.student.lastname},%0D%0ASomos de la empresa ${props.partnerName}, queríamos ponernos en contacto con usted para hablar sobre el puesto de trabajo '${props.titleJob}'%0D%0AGracias.`;
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${student_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${student_email}&su=${subject}&body=${body}&cc=${copia_email1},${copia_email2}`, '_blank'); 
   }
 
 
   const sendOutlookEmail = () => {
     const student_email = props.student.email;
-    const copia_email="valery.vargas@holbertonschool.com"
+    const copia_email1="valery.vargas@holbertonschool.com"
+    const copia_email2="erika.benavides@holbertonschool.com";
     const subject=`Búsqueda de programadores`
     const body=`Hola ${props.student.firstname} ${props.student.lastname},%0D%0ASomos de la empresa ${props.partnerName}, queríamos ponernos en contacto con usted para hablar sobre el puesto de trabajo '${props.titleJob}'%0D%0AGracias.`;
-    window.location.href = `mailto:${student_email}?Cc=${copia_email}&subject=${subject}&body=${body}`; 
+    window.location.href = `mailto:${student_email}?Cc=${copia_email1},${copia_email2}&subject=${subject}&body=${body}`; 
   }
 
   function isYTorVimeo(url) {
@@ -197,7 +199,7 @@ function ItemJob(props) {
     return times
   }
 
-  const options = ['Gmail', 'Outlook'];
+  const options = ['Gmail', 'Outlook', 'Copiar email'];
 
   const [open, setOpenOptions] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -210,6 +212,9 @@ function ItemJob(props) {
     }
     if (index === 1){
       sendOutlookEmail();
+    }
+    if (index === 2){
+      navigator.clipboard.writeText(`${props.student.email}`)
     }
     setOpenOptions(false);
   };
@@ -243,7 +248,10 @@ function ItemJob(props) {
             >
               <Grid style={{width: '35%', display: 'flex', flexDirection: 'column', justifyContent: 'center'}} >
                 <Box
-                  onClick={()=>history.push(`/home/candidate/${props.student.student_id}`)}
+                  onClick={()=>{
+                    const win = window.open(`/home/candidate/${props.student.student_id}`, "_blank");
+                    win.focus();
+                  }}
                   sx={{
                     display: 'flex', justifyContent: 'center', marginBottom: '40px',
                     '&:hover': { cursor: "pointer" },
@@ -270,8 +278,13 @@ function ItemJob(props) {
                     >
                       {getSkillTechName(props.student.student_skills).map(skill => <Chip style={{margin: '2px'}} label={skill} />)}
                       {getLengthOfSkillTech(props.student.student_skills) > 7
-                        ? <Chip onClick={()=>history.push(`/home/candidate/${props.student.student_id}`)} label="Ver más" style={{ backgroundColor: "rgba(0, 0, 0, 0.15)", margin: '2px' }}/>
-                        : null}
+                        ? <Chip 
+                            onClick={()=>{
+                              const win = window.open(`/home/candidate/${props.student.student_id}`, "_blank");
+                              win.focus();
+                            }}
+                            label="Ver más" style={{ backgroundColor: "rgba(0, 0, 0, 0.15)", margin: '2px' }}/>
+                          : null}
                     </Stack>
                 </Grid>
               </Grid>
@@ -341,6 +354,7 @@ function ItemJob(props) {
                   <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
                           <Button startIcon={<MailOutlineIcon style={{fontSize: '25px'}} />}
                             style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px 0px 0px 4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}
+                            onClick={handleToggle}
                           >
                             Contactar
                           </Button>
@@ -373,7 +387,7 @@ function ItemJob(props) {
                               }}
                               
                             >
-                              <Box sx={{backgroundColor: '#FFF'}}>
+                              <Box sx={{backgroundColor: '#FFF', marginTop: "7px", backgroundColor: "#edecf1", borderRadius: "6px"}}>
                                 <ClickAwayListener onClickAway={handleClose}>
                                   <MenuList id="split-button-menu" >
                                     {options.map((option, index) => (

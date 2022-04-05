@@ -160,6 +160,25 @@ function FiltersStudent(props) {
     }
   ];
 
+  function NumbersToStringEnglish (string) {
+    const array = string.split(',')
+    let lowLevel = array[0]
+    let highLevel = array[1]
+    let newString = ''
+    for (let i of marks) {
+      if (i.value === parseInt(lowLevel)){
+        newString = newString + i.label
+      }
+    }
+    newString = newString + '-'
+    for (let i of marks) {
+      if (i.value === parseInt(highLevel)){
+        newString = newString + i.label
+      }
+    }
+    return newString;
+  }
+
   function Formatter(num) {
     if (num === 0) {
       return "No tiene"; 
@@ -424,6 +443,9 @@ function FiltersStudent(props) {
     for (let i of Array) {
       array.push(i.name)
     }
+    console.log('pruebasaddasaads');
+    console.log(array);
+    console.log(array.toString())
     return array.toString()
   }
 
@@ -538,24 +560,64 @@ function FiltersStudent(props) {
     </div>
   )
 
-  const StyledButton = styled(Button)`
+  const StyledButtonPalabraClave = styled(Button)`
+  background-color: #DF003C;
+  border: ${props => props.parametros.PalabraClave === null ? "" : "solid 3px #1B0C61;"};
+  color: #fff;
+  padding: 6px 12px;
+  &:hover {
+    background-color: #1B0C61;
+  }
+  `;
+
+  const StyledButtonSkills = styled(Button)`
+  background-color: #DF003C;
+  border: ${props => props.parametros.skills === null ? "" : "solid 3px #1B0C61;"};
+  color: #fff;
+  padding: 6px 12px;
+  &:hover {
+    background-color: #1B0C61;
+  }
+  `;
+
+  const StyledButtonEnglish = styled(Button)`
+  background-color: #DF003C;
+  border: ${props => props.parametros.english === null ? "" : "solid 3px #1B0C61;"};
+  color: #fff;
+  padding: 6px 12px;
+  &:hover {
+    background-color: #1B0C61;
+  }
+  `;
+
+  const StyledButtonFavorites = styled(Button)`
+  background-color: #DF003C;
+  border: ${props => props.favoritos === null || props.favoritos.length === 0 ? "" : "solid 3px #1B0C61;"};
+  color: #fff;
+  padding: 6px 12px;
+  &:hover {
+    background-color: #1B0C61;
+  }
+  `;
+
+  const StyledButtonFilters = styled(Button)`
   background-color: #DF003C;
   color: #fff;
   padding: 6px 12px;
   &:hover {
     background-color: #1B0C61;
   }
-`;
+  `;
 
   return (
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div className="collapse navbar-collapse d-flex justify-content-center" id="navbarMainHolberton">
         <ul class="nav nav-filter">
           <li class="nav-item mx-3 my-3">
-            <StyledButton variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize", width: "70px"}} onClick={()=> abrirCerrarModal()} >
+            <StyledButtonPalabraClave parametros={props.parameters} variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize", width: "70px"}} onClick={()=> abrirCerrarModal()} >
               <SearchIcon />
               <span class="MuiTouchRipple-root"></span>
-            </StyledButton>
+            </StyledButtonPalabraClave>
             <Modal
               open={modal}
               onClose={abrirCerrarModal}
@@ -564,11 +626,15 @@ function FiltersStudent(props) {
             </Modal>
           </li>
           <li class="nav-item mx-3 my-3">
-            <StyledButton variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> abrirCerrarSkillsModal()}
+            <StyledButtonSkills parametros={props.parameters} variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> abrirCerrarSkillsModal()}
               >
-              Habilidades
+              { props.parameters.skills === null?
+                "Habilidades"
+                :
+                `Habilidades (${props.parameters.skills.split(",").length})`
+              }
               <span class="MuiTouchRipple-root"></span>
-            </StyledButton>
+            </StyledButtonSkills>
             <Modal
               open={skillsModal}
               onClose={abrirCerrarSkillsModal}
@@ -577,10 +643,15 @@ function FiltersStudent(props) {
             </Modal>
           </li>
           <li class="nav-item mx-3 my-3">
-            <StyledButton variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> abrirCerrarEnglishModal()}>
-              Nivel de Inglés
+            <StyledButtonEnglish parametros={props.parameters} variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> abrirCerrarEnglishModal()}>
+              
+              { props.parameters.english === null?
+                "Nivel de Inglés"
+                :
+                `Nivel de Inglés (${NumbersToStringEnglish(props.parameters.english)})`
+              }
               <span class="MuiTouchRipple-root"></span>
-            </StyledButton>
+            </StyledButtonEnglish>
             <Modal
                 open={englishModal}
                 onClose={abrirCerrarEnglishModal}
@@ -589,7 +660,7 @@ function FiltersStudent(props) {
               </Modal>
           </li>
           <li class="nav-item mx-3 my-3">
-            <StyledButton variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> {
+            <StyledButtonFavorites favoritos={props.favorites} variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> {
                   let url = `/home/favoritos`
                   history.push({
                     pathname: url,
@@ -597,19 +668,23 @@ function FiltersStudent(props) {
                     });
                 }}>
               <FavoriteBorderIcon />
-              &nbsp;Favoritos
+              { props.favorites === null || props.favorites.length === 0?
+                "Favoritos"
+                :
+                `Favoritos (${props.favorites.length})`
+              }
               <span class="MuiTouchRipple-root"></span>
-            </StyledButton>
+            </StyledButtonFavorites>
           </li>
           <li class="nav-item mx-3 my-3">
-            <StyledButton variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> {
+            <StyledButtonFilters parametros={props.parameters} variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> {
                 let url = `/home`
                 history.push(url);
                 window.location.reload();
               }}>
               Limpiar filtros
               <span class="MuiTouchRipple-root"></span>
-            </StyledButton>
+            </StyledButtonFilters>
           </li>
         </ul>
       </div>

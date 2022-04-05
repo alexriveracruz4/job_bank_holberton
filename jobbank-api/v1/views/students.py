@@ -41,6 +41,7 @@ def get_students():
     if PalabraClave is None:
         PalabraClave = ""
     
+    print(skills)
     all_students = storage.all(Student).values()
 
     def filtro_de_ingles(student, rango):
@@ -93,6 +94,7 @@ def get_students():
             list_students.append(student.to_dict())
 
         datos_filtrados = [x for x in list_students if ((PalabraClave.lower() in toNoneStrings(x["specialization"]).lower()) or 
+                                                        (PalabraClave.lower() in x["firstname"].lower() + " " + x["lastname"].lower()) or
                                                         (PalabraClave.lower() in toNoneStrings(x["developer_type"]).lower()) or
                                                         (PalabraClave.lower() in toNoneStrings(x["description"]).lower()) or 
                                                         (PalabraClave == "") or 

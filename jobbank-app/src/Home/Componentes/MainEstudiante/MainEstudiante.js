@@ -137,21 +137,23 @@ function MainEstudiante() {
 
   const sendGmailEmail = () => {
     const student_email = studentData.email;
-    const copia_email="valery.vargas@holbertonschool.com";
+    const copia_email1="valery.vargas@holbertonschool.com";
+    const copia_email2="erika.benavides@holbertonschool.com";
     const subject=`Búsqueda de programadores`;
     const body=`Hola ${studentData.firstname} ${studentData.lastname},%0D%0AVi tu perfil en la web de Holberton y me gustaría conversar contigo sobre una posible oferta laboral.%0D%0APor favor responder este correo en caso estés interesado(a),%0D%0AGracias.`;
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${student_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${student_email}&su=${subject}&body=${body}&cc=${copia_email1},${copia_email2}`, '_blank'); 
   }
 
   const sendOutlookEmail = () => {
     const student_email = studentData.email;
-    const copia_email="valery.vargas@holbertonschool.com";
+    const copia_email1="valery.vargas@holbertonschool.com";
+    const copia_email2="erika.benavides@holbertonschool.com";
     const subject=`Búsqueda de programadores`;
     const body=`Hola ${studentData.firstname} ${studentData.lastname},%0D%0AVi tu perfil en la web de Holberton y me gustaría conversar contigo sobre una posible oferta laboral.%0D%0APor favor responder este correo en caso estés interesado(a),%0D%0AGracias.`;
-    window.location.href = `mailto:${student_email}?Cc=${copia_email}&subject=${subject}&body=${body}`; 
+    window.location.href = `mailto:${student_email}?Cc=${copia_email1},${copia_email2}&subject=${subject}&body=${body}`; 
   }
 
-  const options = ['Gmail', 'Outlook'];
+  const options = ['Gmail', 'Outlook', 'Copiar email'];
 
   const [open, setOpenOptions] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -164,6 +166,9 @@ function MainEstudiante() {
     }
     if (index === 1){
       sendOutlookEmail();
+    }
+    if (index === 2){
+      navigator.clipboard.writeText(`${studentData.email}`)
     }
     setOpenOptions(false);
   };
@@ -264,6 +269,7 @@ function MainEstudiante() {
                         <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
                           <Button startIcon={<MailOutlineIcon style={{fontSize: '25px'}} />}
                             style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px 0px 0px 4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}
+                            onClick={handleToggle}
                           >
                             Contactar
                           </Button>

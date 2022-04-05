@@ -342,7 +342,7 @@ function JobDescriptionStudentView(props) {
                   <Card elevation={4} sx={{minHeight: "50px", borderRadius: "20px", width: '90%'}}>
                     {datos.deleted || props.EstadoDePostulacion ?
                       <Button variant="contained" style={{width: "100%", height: "50px", backgroundColor: "#1b5e20", color: "#fff"}} disabled>
-                        Haz postulado
+                        Trabajo postulado
                       </Button>
                     :
                       <Button 
