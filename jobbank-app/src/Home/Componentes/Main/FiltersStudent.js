@@ -667,7 +667,7 @@ function FiltersStudent(props) {
                     state: props.favorites,
                     });
                 }}>
-              <FavoriteBorderIcon />
+              <FavoriteBorderIcon sx={{marginRight: "3px"}}/>
               { props.favorites === null || props.favorites.length === 0?
                 "Favoritos"
                 :

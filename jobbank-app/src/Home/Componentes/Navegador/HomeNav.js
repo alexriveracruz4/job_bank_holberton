@@ -48,7 +48,7 @@ function HomeNav() {
                     </div>
                   </div>
                   <i className="far fa-question-circle fa-lg mx-3" style={{color: "white"}}></i>
-                  <i className="fas fa-user-circle fa-lg mx-3" onClick={() => history.push("/")} style={{color: "white", cursor: "pointer"}} />
+                  <i className="fas fa-user-circle fa-lg mx-3" title="Iniciar sesión" onClick={() => history.push("/")} style={{color: "white", cursor: "pointer"}} />
               </div>
             </div>
           </nav>

@@ -217,11 +217,12 @@ const CrudForm = ({ updateData, dataToEdit }) => {
                 window.scrollTo(0, 0);
               }
             } else {
-              swal("HAS EDITADO EXITOSAMENTE TU PERFIL", {
+              swal("HAS EDITADO EXITOSAMENTE LOS DATOS DEL ESTUDIANTE", {
                   timer:"1500"
               });
               setTimeout(() => {
-                history.go(0);
+                let path = `/admin/estudiantes`; 
+                history.push(path);
               }, 1000);
               window.scrollTo(0, 0);
             }

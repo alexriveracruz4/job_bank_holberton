@@ -115,7 +115,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                     timer:"1800"
                   });
                   setTimeout(() => {
-                    history.go(0);
+                    let path = `/admin/admins`; 
+                    history.push(path);
                   }, 1000);
                   window.scrollTo(0, 0);
                 } else {
@@ -139,7 +140,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
                   timer:"1800"
               });
               setTimeout(() => {
-                history.go(0);
+                let path = `/admin/admins`; 
+                history.push(path);
               }, 1000);
               window.scrollTo(0, 0);
             }
