@@ -233,9 +233,10 @@ function JobDescriptionStudentView(props) {
   const sendEmail = (title) => {
     const partner_email = partner.email;
     const copia_email="valery.vargas@holbertonschool.com"
+    const copia_email2="erika.benavides@holbertonschool.com";
     const subject=`Postulación al trabajo: ${title}`
     const body=`Hola%0D%0AMi nombre es ${studentName}. Estoy interesado en el puesto y me gustaría que me pudiesen tomar en consideración. Adjunto mi CV y quedo a su disposición.%0D%0AMuchas gracias,%0D%0A${studentName}`
-    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${partner_email}&su=${subject}&body=${body}&cc=${copia_email}`, '_blank'); 
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${partner_email}&su=${subject}&body=${body}&cc=${copia_email},${copia_email2}`, '_blank'); 
   }
 
     const PostularEmpresa = (studentId, PartnerId, JobId) => {
