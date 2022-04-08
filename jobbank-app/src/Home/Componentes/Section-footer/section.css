@@ -49,6 +49,17 @@
     transform: translateY(-50%);
 }
 
+#copyright-ul {
+    color: #fff;
+    text-decoration: none;
+}
+
+#copyright-ul a{
+    color: #fff;
+    text-decoration: none;
+    margin-left: 3px;
+}
+
 @media screen and (min-width: 1920px) {
     .header-wrap,
     main,
