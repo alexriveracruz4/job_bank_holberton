@@ -20,6 +20,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     age_min: 0,
     age_max: 0,
     salary: '',
+    application_link: '',
     job_type: '',
     description: '',
   };
@@ -71,6 +72,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const inputJobType = document.getElementById('inputJobType');
   const inputPresOrRemote = document.getElementById('inputPresOrRemote');
   const inputTravelAvailability = document.getElementById('inputDipTravel');
+  const inputApplicationLink = document.getElementById('inputApplicationLink');
   const inputDescription = document.getElementById('inputDescription');
 
     // Validate form inputs
@@ -188,6 +190,22 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       } else {
         formTravelAvailability.classList.remove('error');
       }
+
+      const ApplicationValue = inputApplicationLink.value.trim();
+      const formApplication = document.getElementById('form-application_link');
+      const errorApplication = document.getElementById('smallApplicationLink')
+  
+      if (ApplicationValue !== "") {
+        if (ApplicationValue.indexOf("http://") !== 0 && ApplicationValue.indexOf("https://") !== 0) {
+          formApplication.className = 'form-control error';
+          errorApplication.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
+          formIsValid = false;
+        } else {
+          formApplication.classList.remove('error');
+        }
+      } else {
+        formApplication.classList.remove('error');
+      }  
   
       const DescriptionValue = inputDescription.value.trim();
       const formDescription = document.getElementById('form-description');
@@ -388,15 +406,15 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <small id='smallTravelAvailability'> Error message </small>
           </div>
 
-          {/*<div className='form-control' id='form-description'>
-            <label htmlFor="inputDescription">Descripción</label>
-            <div className='inputFormDiv'>
-              <textarea className="form-control" id="inputDescription" rows="10" maxLength={3000} name="description" onChange={ handleChange } value={form.description} />
+          <div className='form-control' id='form-application_link'>
+            <label htmlFor="inputApplicationLink">Enlace a postulación</label>
+            <div className="inputFormDiv">
+              <input type="text" className="form-control" id="inputApplicationLink" name="application_link" placeholder='https://www.bumeran.com.pe/empleos/frontend-ejemplo.html' onChange={handleChange} maxLength={100} value={form.application_link}/>
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
-            <small id='smallDescription'> Error message </small>
-              </div>*/}
+            <small id='smallApplicationLink'> Error message </small>
+          </div>
 
           <div className='form-control' id='form-description'>
             <label htmlFor="inputDescription">Descripción del trabajo</label>

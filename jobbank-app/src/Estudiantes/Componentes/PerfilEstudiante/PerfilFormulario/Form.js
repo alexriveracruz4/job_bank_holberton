@@ -268,6 +268,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const inputTwitter = document.getElementById('inputTwitter');
   const inputPortfolio = document.getElementById('inputPortfolio');
   const inputEnglishLevel = document.getElementById('inputEnglishLevel');
+  const inputVideoLink = document.getElementById('inputVideoLink');
 
   // Validate form inputs
 
@@ -438,9 +439,19 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       formDeveloperType.classList.remove('error');
     }
 
-    const specializationvalue = inputSpecialization.value.trim();
-    const formSpecialization = document.getElementById('form-specialization');
-    const errorSpecialization = document.getElementById('smallSpecialization');
+    const VideoLinkValue = inputVideoLink.value.trim();
+    const formVideoLink = document.getElementById('form-video_link');
+    const errorVideoLink = document.getElementById('smallVideoLink')
+
+    if (VideoLinkValue !== "") {
+      if (VideoLinkValue.indexOf("http://") !== 0 && VideoLinkValue.indexOf("https://") !== 0) {
+        formVideoLink.className = 'form-control error';
+        errorVideoLink.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
+        formIsValid = false;
+      }
+    } else {
+      formVideoLink.classList.remove('error');
+    }
 
     const LinkedInValue = inputLinkedIn.value.trim();
     const formLinkedIn = document.getElementById('form-linkedin');
@@ -452,6 +463,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
         errorLinkedIn.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
         formIsValid = false;
       }
+    } else {
+      formLinkedIn.classList.remove('error');
     }
 
     const GithubValue = inputGithub.value.trim();
@@ -464,6 +477,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
         errorGithub.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
         formIsValid = false;
       }
+    } else {
+      formGithub.classList.remove('error');
     }
 
     const TwitterValue = inputTwitter.value.trim();
@@ -476,6 +491,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
         errorTwitter.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
         formIsValid = false;
       }
+    } else {
+      formTwitter.classList.remove('error');
     }
 
     const portfolioValue = inputPortfolio.value.trim();
@@ -488,6 +505,8 @@ const CrudForm = ({ updateData, dataToEdit}) => {
         errorPortfolio.innerText = "Por favor ingrese un enlace valido (http:// o https:// requerido)";
         formIsValid = false;
       }
+    } else {
+      formPortfolio.classList.remove('error');
     }
 
     const english_levelValue = inputEnglishLevel.value.trim();

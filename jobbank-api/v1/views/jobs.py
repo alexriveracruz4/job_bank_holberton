@@ -342,6 +342,14 @@ def post_job():
             else:
                 print("Travel_availability must contain a maximum of 45 characters")
                 abort(400, description="Travel_availability must contain a maximum of 45 characters")
+        if key == "application_link":
+            if value == None or value == "":
+                isvalid = True
+            elif len(value) <= 250:
+                isvalid = True
+            else:
+                print("application_link must contain a maximum of 250 characters")
+                abort(400, description="application_link must contain a maximum of 250 characters")
         if key == "description":
             if len(value) <= 10000:
                 isvalid = True
@@ -456,6 +464,14 @@ def put_job(partner_id, job_id):
                 else:
                     print("Travel_availability must contain a maximum of 45 characters")
                     abort(400, description="Travel_availability must contain a maximum of 45 characters")
+            if key == "application_link":
+                if value == None or value == "":
+                    isvalid = True
+                elif len(value) <= 250:
+                    isvalid = True
+                else:
+                    print("application_link must contain a maximum of 250 characters")
+                    abort(400, description="application_link must contain a maximum of 250 characters")
             if key == "description":
                 if len(value) <= 10000:
                     isvalid = True

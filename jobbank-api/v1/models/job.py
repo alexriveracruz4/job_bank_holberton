@@ -25,6 +25,7 @@ class Job(BaseModel, Base):
     experience = Column(String(45), nullable=True)
     travel_availability = Column(String(45), nullable=True)
     salary = Column(String(45), nullable=True)
+    application_link = Column(String(250), nullable=True)
     deleted = Column(TINYINT(1), default=0, nullable=False)
     created_by = Column(Integer, nullable=True)
     updated_by = Column(Integer, nullable=True)

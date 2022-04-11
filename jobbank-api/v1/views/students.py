@@ -572,11 +572,11 @@ def post_student():
         if key == "video_link":
             if value == None or value == "":
                 isvalid = True
-            elif len(value) <= 100:
+            elif len(value) <= 250:
                 isvalid = True
             else:
-                print("video_link must contain a maximum of 100 characters")
-                abort(400, description="video_link must contain a maximum of 100 characters")
+                print("video_link must contain a maximum of 250 characters")
+                abort(400, description="video_link must contain a maximum of 250 characters")
         if key == "availability":
             if value == None or value == "":
                 isvalid = True
@@ -803,11 +803,11 @@ def put_student(student_id):
             if key == "video_link":
                 if value == None or value == "":
                     isvalid = True
-                elif len(value) <= 100:
+                elif len(value) <= 250:
                     isvalid = True
                 else:
-                    print("video_link must contain a maximum of 100 characters")
-                    abort(400, description="video_link must contain a maximum of 45 characters")
+                    print("video_link must contain a maximum of 250 characters")
+                    abort(400, description="video_link must contain a maximum of 250 characters")
             if key == "disp_travel":
                 if value == None or value == "":
                     isvalid = True
