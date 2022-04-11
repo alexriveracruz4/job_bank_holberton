@@ -41,6 +41,8 @@ import swal from 'sweetalert';
 
 import './JobDescription.css'
 
+import LinkIcon from '@mui/icons-material/Link';
+import Link from '@mui/material/Link';
 
 const cookies = new Cookies();
 function JobDescription(props) {
@@ -209,6 +211,19 @@ function JobDescription(props) {
           </ListItemAvatar>
           <ListItemText primary="Disponibilidad de viajar" secondary={datos.travel_availability}/>
         </ListItem>
+        {
+          (datos.application_link !== '' && datos.application_link !== null) && 
+          <>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  <LinkIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={<Link href={datos.application_link} target="_blank">ENLACE DE POSTULACIÓN</Link>} />
+            </ListItem>
+          </>
+        }
       </List>
     );
   }

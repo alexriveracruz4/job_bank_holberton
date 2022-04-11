@@ -38,6 +38,8 @@ import { useParams } from 'react-router-dom';
 
 import './JobDescriptionStudentView.css'
 
+import LinkIcon from '@mui/icons-material/Link';
+import Link from '@mui/material/Link';
 
 const cookies = new Cookies();
 
@@ -172,6 +174,19 @@ function JobDescriptionStudentView(props) {
           </ListItemAvatar>
           <ListItemText primary="Disponibilidad de viajar" secondary={datos.travel_availability}/>
         </ListItem>
+        {
+          (datos.application_link !== '' && datos.application_link !== null) && 
+          <>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  <LinkIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={<Link href={datos.application_link} target="_blank">POSTULA AQUÍ</Link>} />
+            </ListItem>
+          </>
+        }
       </List>
     );
   }
@@ -341,10 +356,18 @@ function JobDescriptionStudentView(props) {
                     <FolderListTrabajo/>
                   </Card>
                   <Card elevation={4} sx={{minHeight: "50px", borderRadius: "20px", width: '90%'}}>
-                    {datos.deleted || props.EstadoDePostulacion ?
-                      <Button variant="contained" style={{width: "100%", height: "50px", backgroundColor: "#1b5e20", color: "#fff"}} disabled>
-                        Trabajo postulado
-                      </Button>
+                    {datos.application_link || props.EstadoDePostulacion ?
+                      <>
+                      { props.EstadoDePostulacion ?
+                        <Button variant="contained" style={{width: "100%", height: "50px", backgroundColor: "#1b5e20", color: "#fff"}} disabled>
+                          Trabajo postulado
+                        </Button>
+                        :
+                        <Button variant="contained" style={{width: "100%", height: "50px", backgroundColor: "#AED6A8", color: "#fff"}} disabled>
+                          Postular
+                        </Button>
+                      }
+                      </>
                     :
                       <Button 
                         onClick={() => {PostularEmpresa(studentId, PartnerId, JobId)}}
