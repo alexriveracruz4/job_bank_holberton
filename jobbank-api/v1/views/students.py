@@ -75,6 +75,13 @@ def get_students():
             if i.__dict__["deleted"] == 0:
                 nueva_lista.append(i)
         return nueva_lista
+    
+    def filtro_de_ocultos(list_de_datos):
+        nueva_lista=[]
+        for i in list_de_datos:
+            if i.__dict__["is_public"] == 1:
+                nueva_lista.append(i)
+        return nueva_lista
 
     list_students = []
 
@@ -90,7 +97,9 @@ def get_students():
             page = 0
         datos_no_borrados = filtro_de_eliminados(list(all_students))
  
-        for student in datos_no_borrados:
+        datos_no_borrados_no_ocultos = filtro_de_ocultos(datos_no_borrados)
+        
+        for student in datos_no_borrados_no_ocultos:
             list_students.append(student.to_dict())
 
         datos_filtrados = [x for x in list_students if ((PalabraClave.lower() in toNoneStrings(x["specialization"]).lower()) or 
@@ -268,6 +277,38 @@ def post_app_student():
     # TODO: RUBEN add send email API call
 
     return make_response(jsonify(instance.to_dict()), 201)
+
+@app_views.route('/students/applications/<student_id>/<partner_id>/<job_id>',
+                 methods=['DELETE'], strict_slashes=False)
+def delete_appl_app_student(student_id, partner_id, job_id):
+    """
+    Delete a Application
+    """
+    """
+    if not request.get_json():
+        abort(400, description="Not a JSON")
+    
+    if 'partner_id' not in request.get_json():
+        abort(400, description="partner_id")
+    if 'job_id' not in request.get_json():
+        abort(400, description="Missing job_id")
+    if 'student_id' not in request.get_json():
+        abort(400, description="Missing student_id")
+    """
+
+    all_applications = storage.all(Application).values()
+    list_applications = []
+    for app in all_applications:
+        if app.student_id == int(student_id) and app.partner_id == int(partner_id) and app.job_id == int(job_id):
+            list_applications.append(app)
+
+    storage.delete(list_applications[0])
+    #setattr(student, "deleted", 1)
+    #setattr(list_applications[0], "deleted_at", datetime.now())
+    storage.save()
+
+    return make_response(jsonify({}), 200)
+
 
 @app_views.route('/students/skills',
                  methods=['POST'], strict_slashes=False)

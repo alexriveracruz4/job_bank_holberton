@@ -7,7 +7,8 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import apiPath from '../../../../../ApiPath';
 import Message from '../../../../../helpers/Message';
 import Loader from '../../../../../helpers/Loader';
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 function TablaEstudiante() {
   let history = useHistory();
@@ -61,7 +62,7 @@ function TablaEstudiante() {
         if (isDeleted === 1) {
           swal({
             title: "Error",
-            text: `El usuario ${name} ${lastname} ya está eliminado`,
+            text: `El usuario "${name} ${lastname}" ya está eliminado`,
             icon: "warning",
           });
           return 0;
@@ -76,7 +77,7 @@ function TablaEstudiante() {
             let newData = AllPartnersData.filter((el) => el.id !== id);
             setAllPartnersData(newData);
             setLoadingEliminate(false);
-            swal(`El usuario ${name} ${lastname} ha sido eliminado.`, {
+            swal(`El usuario "${name} ${lastname}" ha sido eliminado.`, {
               timer:"1500"
             });
             setTimeout(() => {
@@ -89,6 +90,9 @@ function TablaEstudiante() {
               text: `No se pudo eliminar al estudiante'`,
               icon: "error",
             });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
           }
         });
         
@@ -108,7 +112,7 @@ function TablaEstudiante() {
         if (data.deleted === 0) {
           swal({
             title: "Error",
-            text: `El usuario ${data.firstname} ${data.lastname} está funcionando`,
+            text: `El usuario "${data.firstname} ${data.lastname}" está funcionando`,
             icon: "warning",
           });
           return 0;
@@ -125,7 +129,7 @@ function TablaEstudiante() {
             let newData = AllPartnersData.map((el) => el.student_id === data.student_id ? data:el);
             setAllPartnersData(newData);
             setLoadingEliminate(false);
-            swal(`El usuario ${data.firstname} ${data.lastname} ha sido restaurada.`, {
+            swal(`El usuario "${data.firstname} ${data.lastname}" ha sido restaurada.`, {
               timer:"1500"
             });
             setTimeout(() => {
@@ -135,9 +139,116 @@ function TablaEstudiante() {
             setLoadingEliminate(false);
             swal({
               title: "ERROR",
-              text: `No se pudo restaurar al usuario ${data.firstname} ${data.lastname}"`,
+              text: `No se pudo restaurar al usuario "${data.firstname} ${data.lastname}"`,
               icon: "error",
             });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          }
+        });
+      }
+    });
+  }
+
+  const hideData = (data) => {
+    swal({
+      title: "OCULTAR ESTUDIANTE",
+      text: `¿Está seguro de ocultar los datos del estudiante "${data.firstname} ${data.lastname}"?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willHide) => {
+      if (willHide) {   
+        if (data.is_public === 0) {
+          swal({
+            title: "Error",
+            text: `El usuario "${data.firstname} ${data.lastname}" ya está oculto`,
+            icon: "warning",
+          });
+          return 0;
+        }
+        data.is_public = 0;
+        setLoadingEliminate(true);
+        let endpoint = `${url}/${data.student_id}`;
+        let options = {
+          body: data,
+          headers: { "content-type": "application/json" },
+        };
+
+        api.put(endpoint, options).then((res) => {
+          if (!res.err) {
+            let newData = AllPartnersData.map((el) => el.student_id === data.student_id ? data:el);
+            setAllPartnersData(newData);
+            setLoadingEliminate(false);
+            swal(`El usuario "${data.firstname} ${data.lastname}" ha sido ocultado.`, {
+              timer:"1500"
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          } else {
+            setLoadingEliminate(false);
+            swal({
+              title: "ERROR",
+              text: `No se pudo ocultar al usuario "${data.firstname} ${data.lastname}"`,
+              icon: "error",
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          }
+        });
+        
+      } 
+    });
+  }
+  
+  const showData = (data) => {
+    swal({
+      title: "MOSTRAR ESTUDIANTE",
+      text: `¿Está seguro de mostrar los datos del estudiante "${data.firstname} ${data.lastname}"?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willShow) => {
+      if (willShow) {   
+        if (data.is_public === 1) {
+          swal({
+            title: "Error",
+            text: `El usuario "${data.firstname} ${data.lastname}" es visible.`,
+            icon: "warning",
+          });
+          return 0;
+        }
+        data.is_public = 1;
+        setLoadingEliminate(true);
+        let endpoint = `${url}/${data.student_id}`;
+        let options = {
+          body: data,
+          headers: { "content-type": "application/json" },
+        };
+        api.put(endpoint, options).then((res) => {
+          if (!res.err) {
+            let newData = AllPartnersData.map((el) => el.student_id === data.student_id ? data:el);
+            setAllPartnersData(newData);
+            setLoadingEliminate(false);
+            swal(`El usuario "${data.firstname} ${data.lastname}" ya es visible.`, {
+              timer:"1500"
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          } else {
+            setLoadingEliminate(false);
+            swal({
+              title: "ERROR",
+              text: `No se pudo hacer visible al usuario "${data.firstname} ${data.lastname}"`,
+              icon: "error",
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
           }
         });
       }
@@ -154,6 +265,16 @@ function TablaEstudiante() {
         data={AllPartnersData}
         title="ESTUDIANTES"
         actions={[
+          rowData => ({
+            icon: rowData.is_public ? () => <VisibilityOffIcon /> : () => <VisibilityIcon />,
+            tooltip: rowData.is_public ? 'Ocultar estudiante' : 'Mostrar Estudiante',
+            onClick: (event, rowData) => {
+              rowData.is_public ?
+                hideData(rowData)
+              :
+                showData(rowData)
+            }
+          }),
           {
             icon: 'edit',
             tooltip: 'Editar estudiante',

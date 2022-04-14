@@ -254,7 +254,85 @@ function JobDescriptionStudentView(props) {
     window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${partner_email}&su=${subject}&body=${body}&cc=${copia_email},${copia_email2}`, '_blank'); 
   }
 
-    const PostularEmpresa = (studentId, PartnerId, JobId) => {
+  const CancelarPostulacion = (studentId, PartnerId, JobId) => {
+    swal({
+        title: "POSTULACIÓN",
+        text: `¿Está seguro de cancelar la postulación al trabajo '${datos.title}' de la empresa '${partner.name}'?`,
+        icon: "warning",
+        buttons: ["NO", "SI"],
+        dangerMode: false,
+      })
+      .then((willApply) => {
+        if (willApply) {
+            //setLoading(true);
+            let url = `${apiPath}/students/applications/${studentId}/${PartnerId}/${JobId}`;
+            let options = {
+                headers: { "content-type": "application/json" },
+            };
+            api.del(url, options).then((res) => {
+                if (!res.err) {
+                  setDb([...db, res]);
+                  swal({
+                    title: "Excelente",
+                    text: `Has cancelado exitosamente tu postulación al trabajo: '${datos.title}' de la empresa '${partner.name}'`,
+                    icon: "success",
+                  });
+                  setTimeout(() => {
+                    history.goBack();
+                  }, 1000);
+                } else {
+                  //setLoading(false);
+                  swal({
+                        title: "ERROR",
+                        text: `No ha podido cancelar su postulación al trabajo: '${datos.title}'`,
+                        icon: "error",
+                    });
+                } 
+            });
+        }
+    });
+  }
+
+  const RemoverPostulacion = (studentId, PartnerId, JobId) => {
+    swal({
+        title: "POSTULACIÓN",
+        text: `¿Está seguro que desea remover la postulación al trabajo '${datos.title}' de la empresa '${partner.name}' de su historial?`,
+        icon: "warning",
+        buttons: ["NO", "SI"],
+        dangerMode: false,
+      })
+      .then((willApply) => {
+        if (willApply) {
+            //setLoading(true);
+            let url = `${apiPath}/students/applications/${studentId}/${PartnerId}/${JobId}`;
+            let options = {
+                headers: { "content-type": "application/json" },
+            };
+            api.del(url, options).then((res) => {
+                if (!res.err) {
+                  setDb([...db, res]);
+                  swal({
+                    title: "Excelente",
+                    text: `Has eliminado exitosamente el trabajo '${datos.title}' de tu historial de postulaciones.`,
+                    icon: "success",
+                  });
+                  setTimeout(() => {
+                    history.goBack();
+                  }, 1000);
+                } else {
+                  //setLoading(false);
+                  swal({
+                        title: "ERROR",
+                        text: `No se ha podido eliminarexitosamente el trabajo '${datos.title}' de tu historial de postulaciones.`,
+                        icon: "error",
+                    });
+                } 
+            });
+        }
+    });
+  }
+
+  const PostularEmpresa = (studentId, PartnerId, JobId) => {
     swal({
         title: "POSTULACIÓN",
         text: `¿Está seguro de postular al trabajo '${datos.title}' de la empresa '${partner.name}'?`,
@@ -359,9 +437,23 @@ function JobDescriptionStudentView(props) {
                     {datos.application_link || props.EstadoDePostulacion ?
                       <>
                       { props.EstadoDePostulacion ?
-                        <Button variant="contained" style={{width: "100%", height: "50px", backgroundColor: "#1b5e20", color: "#fff"}} disabled>
-                          Trabajo postulado
-                        </Button>
+                        <>
+                        {
+                          datos.deleted ?
+                          <Button 
+                            onClick={() => {RemoverPostulacion(studentId, PartnerId, JobId)}}
+                            variant="contained" style={{width: "100%", height: "50px", backgroundColor: "#e31c3f", color: "#fff"}}>
+                            Remover del historial
+                          </Button>
+                          :
+                          <Button 
+                            onClick={() => {CancelarPostulacion(studentId, PartnerId, JobId)}}
+                            variant="contained" style={{width: "100%", height: "50px", backgroundColor: "#e31c3f", color: "#fff"}}>
+                            Cancelar postulación
+                          </Button>
+                        }
+                        </>
+                        
                         :
                         <Button variant="contained" style={{width: "100%", height: "50px", backgroundColor: "#AED6A8", color: "#fff"}} disabled>
                           Postular
