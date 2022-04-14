@@ -28,7 +28,7 @@ function FiltersStudent(props) {
       <div className="collapse navbar-collapse d-flex justify-content-center" id="navbarMainHolberton">
         <ul class="nav nav-filter">
           <li class="nav-item mx-3 my-3">
-            <StyledButton variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> {
+            <StyledButton variant="contained" sx={{ minWidth: "max-content", textTransform: "capitalize"}} onClick={()=> {
                   let url = `/home`
                   history.push(url);
                 }}>
@@ -38,7 +38,7 @@ function FiltersStudent(props) {
             </StyledButton>
           </li>
           <li class="nav-item mx-3 my-3">
-            <StyledButton variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> {
+            <StyledButton variant="contained" sx={{ minWidth: "max-content", textTransform: "capitalize"}} onClick={()=> {
                   props.setFavorites([]);
                   //let url = `/home`
                   //history.push(url);

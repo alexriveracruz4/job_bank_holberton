@@ -677,7 +677,7 @@ function FiltersStudent(props) {
             </StyledButtonFavorites>
           </li>
           <li class="nav-item mx-3 my-3">
-            <StyledButtonFilters parametros={props.parameters} variant="contained" sx={{ minWidth: "max-content", marginRight: "10px", textTransform: "capitalize"}} onClick={()=> {
+            <StyledButtonFilters parametros={props.parameters} variant="contained" sx={{ minWidth: "max-content", textTransform: "capitalize"}} onClick={()=> {
                 let url = `/home`
                 history.push(url);
                 window.location.reload();

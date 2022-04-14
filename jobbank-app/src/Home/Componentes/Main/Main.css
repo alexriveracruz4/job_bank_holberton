@@ -41,6 +41,13 @@
     min-height: 1300px;
 }
 
+.padding-main .container .container-content-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .padding-main .container .row {
     background: #fff;
     --bs-gutter-x: 0;
@@ -134,6 +141,7 @@
     display: flex;
     align-items: center;
     margin-top: 20px;
+    width: 100%;
 }
 
 .PDTENumeroDeEstudiantes {
@@ -171,6 +179,10 @@
 }
 
 /* Accordion border radius top and bottom */
+
+.Accordion-FAQ {
+    width: 100%;
+}
 
 .accordion-item:first-of-type {
     border-top-left-radius: 10px;

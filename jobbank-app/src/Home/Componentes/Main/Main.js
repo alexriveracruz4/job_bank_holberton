@@ -129,7 +129,7 @@ function Main() {
       </div>
       <div className="container padding mt-3" id="main-container">
         <div className="container-content-main">
-          <div class="row">
+          <div class="row px-1">
             <FiltersStudent
               parameters={parameters}
               setParameters={setParameters}

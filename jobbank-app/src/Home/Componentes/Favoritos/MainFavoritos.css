@@ -43,6 +43,13 @@
   min-height: 1300px;
 }
 
+.padding-main-fav .container .container-content-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .padding-main-fav .container .row {
   background: #fff;
   --bs-gutter-x: 0;
