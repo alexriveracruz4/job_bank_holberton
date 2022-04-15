@@ -1,11 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router';
+import CardMedia from '@mui/material/CardMedia';
 import Cookies from 'universal-cookie';
 import Countries from "../../../../helpers/Countries.json"
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
 import "./Form.css"
 import swal from 'sweetalert';
 import apiPath from '../../../../ApiPath';
+
+import 'react-modal-video/scss/modal-video.scss';
+import ReactDOM from 'react-dom'
+import ModalVideo from 'react-modal-video'
 
 /////
 import {makeStyles} from '@material-ui/core/styles';
@@ -95,7 +101,33 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     setStdskills(await data.json());
   }
 
-    // Get photoname
+  // Get video id
+  function getVideo_id(url) {
+    if (url !== null) {
+      var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+      if (regexp.test(url)) {
+        const a = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+        if (a === "youtube") {
+          var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+          var match = url.match(regExp);
+          const video_id = (match&&match[7].length==11)? match[7] : false;
+          return video_id
+        } else if (a === "vimeo") {
+        var regExp = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/;
+        var parseUrl = regExp.exec(url)
+        return parseUrl[5]
+        } else {
+          return null
+        }
+      } else {
+        return null
+      }
+    } else {
+      return null
+    }
+  }
+
+  // Get photoname
 
   useEffect(() => {
   let photoname = "";
@@ -991,8 +1023,17 @@ const CrudForm = ({ updateData, dataToEdit}) => {
               <i className="fas fa-exclamation-circle" />
             </div>
             <small id='smallVideoLink'> Error message </small>
+            {form.video_link
+                ? <div className='display-video' style={{display: 'flex', justifyContent: 'center'}}>
+                    <iframe src={`https://www.youtube.com/embed/${getVideo_id(form.video_link)}`}
+                      frameborder='0'
+                      allow='autoplay; encrypted-media'
+                      allowfullscreen
+                      title='video'
+                      style={{width: '80%', height: '40vh'}}
+                    /></div>
+                : null}
           </div>
-
 
           <div className='form-control'>
             <label htmlFor="inputDisptravel">Disponibilidad para viajar</label>
