@@ -1,8 +1,8 @@
 import "./MainEstudiante.css"
 import React from 'react';
 import Accordion from 'react-bootstrap/Accordion'
+import CardMedia from '@mui/material/CardMedia';
 import { useEffect, useState } from "react";
-import apiPath from "../../../ApiPath";
 import { helpHttp } from "../../../helpers/helpHttp";
 import Loader from "../../../helpers/Loader";
 import Message from "../../../helpers/Message";
@@ -14,6 +14,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Divider from '@mui/material/Divider';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { useHistory } from "react-router-dom";
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import student_avatar from "./student_avatar.png"
 import IconButton from '@mui/material/IconButton';
@@ -22,6 +23,9 @@ import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import Paper from "@material-ui/core/Paper";
 
+import 'react-modal-video/scss/modal-video.scss';
+import ReactDOM from 'react-dom'
+import ModalVideo from 'react-modal-video'
 
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -39,6 +43,8 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { width } from '@mui/system';
+
+import apiPath from "../../../ApiPath";
 
 function MainEstudiante() {
 
@@ -60,7 +66,6 @@ function MainEstudiante() {
 
   const obtenerDatosEstudiante = async () => {
     const url = `${apiPath}/students/${StudentId}`;
-    console.log(url)
     setLoading(true);
     api.get(url).then((res) => {
       if (!res.err) {
@@ -97,7 +102,7 @@ function MainEstudiante() {
     obtenerDatosEstudiante();
     obtenerSkillsEstudiante();
   }, []);
-
+  
   let photo = student_avatar;
 
   if (studentData !== null && studentData.photo_filename_logical != null && studentData.photo_filename_logical != undefined  ) {
@@ -183,6 +188,86 @@ function MainEstudiante() {
     }
 
     setOpenOptions(false);
+  };
+
+  // Video functions:
+  function isYTorVimeo(url) {
+    if (url !== null) {
+      var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+      if (regexp.test(url)) {
+        const a = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+        if (a === "youtube") {
+          return (<Box className="videoBox" onClick={()=> setOpen(true)} style={{position: "relative"}} >
+                    <CardMedia className="videoCardMedia" component="img" id="video_link-button" image={youtube_parser(studentData.video_link)} value={studentData.video_link} src="https://player.vimeo.com/video/49384334" href={studentData.video_link} />
+                    <PlayArrowIcon onClick={()=> setOpen(true)} style={{backgroundColor: "#0b0b0b87", color: "#fff", borderRadius: "50%", position: "absolute", top: "0px", right: "0px", bottom: "0px", left: "0px", margin: "auto", fontSize: "75", cursor: "pointer", cursor: "hand"}}/>
+                  </Box>)
+        } else if (a === "vimeo") {
+          return (<Box className="videoBox" onClick={()=> setOpen(true)} style={{position: "relative"}} >
+                    <CardMedia className="videoCardMedia" component="img" id="video_link-button" image={youtube_parser(studentData.video_link)} value={studentData.video_link} src="https://player.vimeo.com/video/49384334" href={studentData.video_link} />
+                    <PlayArrowIcon onClick={()=> setOpen(true)} style={{backgroundColor: "#0b0b0b87", color: "#fff", borderRadius: "50%", position: "absolute", top: "0px", right: "0px", bottom: "0px", left: "0px", margin: "auto", fontSize: "75", cursor: "pointer", cursor: "hand"}}/>
+                  </Box>)
+        } else {
+          return null
+        }
+      } else {
+        return null
+      }
+    } else {
+      return null
+    }
+  }
+
+  /* react-video-modal */
+  const [isOpen, setOpen] = useState(false)
+
+  function getVideo_id(url) {
+    if (url !== null) {
+      var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+      if (regexp.test(url)) {
+        const a = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+        if (a === "youtube") {
+          var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+          var match = url.match(regExp);
+          const video_id = (match&&match[7].length==11)? match[7] : false;
+          return <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId={video_id} onClose={() => setOpen(false)} />
+        } else if (a === "vimeo") {
+        var regExp = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/;
+        var parseUrl = regExp.exec(url)
+        return <ModalVideo channel='vimeo' autoplay isOpen={isOpen} videoId={parseUrl[5]} onClose={() => setOpen(false)} />
+        } else {
+          return null
+        }
+      } else {
+        return null
+      }
+    } else {
+      return null
+    }
+  }
+
+  /* get video thumbnail in image*/
+  function youtube_parser(url){
+    const a = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+    if (a === "youtube") {
+      var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+      var match = url.match(regExp);
+      const video_id = (match&&match[7].length==11)? match[7] : false;
+      return("https://i1.ytimg.com/vi/" + video_id + "/maxresdefault.jpg")
+    } else if (a === "vimeo") {
+      var regExp = /^.*(vimeo\.com\/)((channels\/[A-z]+\/)|(groups\/[A-z]+\/videos\/))?([0-9]+)/;
+      var parseUrl = regExp.exec(url)
+      return "https://vumbnail.com/" + parseUrl[5] + "_large.jpg"
+      /*const newurl = "http://vimeo.com/api/v2/video/" + parseUrl[5] + ".json";
+      fetch(newurl)
+      .then(res => res.json())
+      .then(out =>{
+        console.log(out[0].thumbnail_large)
+        return out[0].thumbnail_large
+      })
+      .catch(err => {throw err});*/
+    } else {
+      return("no hay")
+    }
   };
   return (
     <main className="padding-main">
@@ -425,6 +510,21 @@ function MainEstudiante() {
             </Stack>
           }
         </div>
+
+        {studentData &&
+          isYTorVimeo(studentData.video_link)
+                ? <Box className="videoBoxRectangle" onClick={()=> setOpen(true)} >
+                      <CardMedia className="videoCardMediaRectangle" component="img" id="video_link-button" image={youtube_parser(studentData.video_link)} value={studentData.video_link} src="https://player.vimeo.com/video/49384334" href={studentData.video_link} />
+                      <PlayArrowIcon className="playIcon" onClick={()=> setOpen(true)}/>
+                  </Box>
+                : null}
+
+        {studentData &&
+          /*react-video-modal*/
+          studentData.video_link
+          ? getVideo_id(studentData.video_link)
+          : null}
+        
 
         <div className="title-buttons">
           Preguntas frecuentes sobre contratar un desarrollador
