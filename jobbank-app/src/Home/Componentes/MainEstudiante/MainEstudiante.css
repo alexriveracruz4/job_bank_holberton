@@ -3080,6 +3080,7 @@ HABILIDADES
     height: 430px;
     margin-top: 20px;
     margin-bottom: 20px;
+    border-radius: 8px;
     position: relative;
     cursor: pointer;
     cursor: hand;
@@ -3088,7 +3089,6 @@ HABILIDADES
 
 .videoBoxRectangle .videoCardMediaRectangle {
     height: 100%;
-    border-radius: 8px;
     transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     z-index: 1;
 }
