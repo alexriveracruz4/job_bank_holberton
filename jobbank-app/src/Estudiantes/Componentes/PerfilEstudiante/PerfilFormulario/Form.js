@@ -23,6 +23,10 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import { helpHttp } from '../../../../helpers/helpHttp';
 
 const cookies = new Cookies();
 
@@ -797,6 +801,101 @@ const CrudForm = ({ updateData, dataToEdit}) => {
     </div>
   )
 
+  let api = helpHttp();
+  let url = `${apiPath}/students`;
+  const hideData = (data) => {
+    swal({
+      title: "OCULTAR PERFIL",
+      text: `¿Está seguro(a) de ocultar su perfil de la página principal?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willHide) => {
+      if (willHide) {   
+        if (data.is_public === 0) {
+          swal({
+            title: "Error",
+            text: `El usuario "${data.firstname} ${data.lastname}" ya está oculto.`,
+            icon: "warning",
+          });
+          return 0;
+        }
+        data.is_public = 0;
+        let endpoint = `${url}/${data.student_id}`;
+        let options = {
+          body: data,
+          headers: { "content-type": "application/json" },
+        };
+
+        api.put(endpoint, options).then((res) => {
+          if (!res.err) {
+            swal(`Su perfil ha sido ocultado de la página principal.`, {
+              timer:"1500"
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          } else {
+            swal({
+              title: "ERROR",
+              text: `No se pudo ocultar su perfil de la página principal.`,
+              icon: "error",
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          }
+        });
+        
+      } 
+    });
+  }
+  
+  const showData = (data) => {
+    swal({
+      title: "MOSTRAR PERFIL",
+      text: `¿Está seguro(a) de mostrar su perfil en la página principal?`,
+      icon: "warning",
+      dangerMode: true,
+      buttons: true,
+    }).then((willShow) => {
+      if (willShow) {   
+        if (data.is_public === 1) {
+          swal({
+            title: "Error",
+            text: `El usuario "${data.firstname} ${data.lastname}" es visible.`,
+            icon: "warning",
+          });
+          return 0;
+        }
+        data.is_public = 1;
+        let endpoint = `${url}/${data.student_id}`;
+        let options = {
+          body: data,
+          headers: { "content-type": "application/json" },
+        };
+        api.put(endpoint, options).then((res) => {
+          if (!res.err) {
+            swal(`Su perfil ya es visible en la página principal`, {
+              timer:"1500"
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          } else {
+            swal({
+              title: "ERROR",
+              text: `No se pudo hacer visible su perfil en la página principal`,
+              icon: "error",
+            });
+            setTimeout(() => {
+              history.go(0);
+            }, 1000);
+          }
+        });
+      }
+    });
+  }
 
   return (
     <div className="container-profile-student">
@@ -808,6 +907,21 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       <div className='container-form'>
         <form className='form'>
           {/* Photo */}
+
+          <div className='usericon-div' >
+            <FormGroup>
+              <FormControlLabel 
+                control={
+                  <Switch 
+                    checked={form.is_public === 0 ? false: true} 
+                    onChange={form.is_public === 0 ? ()=>showData(form): ()=>hideData(form)}
+                  />
+                } 
+                label="Mostrar perfil en la página principal"
+              />
+            </FormGroup>
+          </div>
+
           <div className='form-control'>
             <div className="form-Estudiante">
               <div className="form-div">
