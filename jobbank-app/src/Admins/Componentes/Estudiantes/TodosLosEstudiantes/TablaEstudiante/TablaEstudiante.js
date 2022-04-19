@@ -266,7 +266,7 @@ function TablaEstudiante() {
         title="ESTUDIANTES"
         actions={[
           rowData => ({
-            icon: rowData.is_public ? () => <VisibilityOffIcon /> : () => <VisibilityIcon />,
+            icon: rowData.is_public ? () => <VisibilityIcon /> : () => <VisibilityOffIcon />,
             tooltip: rowData.is_public ? 'Ocultar estudiante' : 'Mostrar Estudiante',
             onClick: (event, rowData) => {
               rowData.is_public ?

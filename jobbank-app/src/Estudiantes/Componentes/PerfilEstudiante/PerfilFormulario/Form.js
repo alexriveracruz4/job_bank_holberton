@@ -25,8 +25,8 @@ import Typography from '@mui/material/Typography';
 
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import { helpHttp } from '../../../../helpers/helpHttp';
+import Switch from '../../../../helpers/Switch';
 
 const cookies = new Cookies();
 
@@ -72,6 +72,7 @@ const useStyles = makeStyles(() => ({
 const CrudForm = ({ updateData, dataToEdit}) => {
   const [form, setForm] = useState(initailForm);
 
+  
   useEffect(() => {
     setForm(dataToEdit);
   }, [dataToEdit]);
@@ -908,15 +909,16 @@ const CrudForm = ({ updateData, dataToEdit}) => {
         <form className='form'>
           {/* Photo */}
 
-          <div className='usericon-div' >
+          <div className='usericon-div1' >
             <FormGroup>
               <FormControlLabel 
                 control={
-                  <Switch 
-                    checked={form.is_public === 0 ? false: true} 
-                    onChange={form.is_public === 0 ? ()=>showData(form): ()=>hideData(form)}
+                  <Switch
+                  isOn={form.is_public === 0 ? false: true}
+                  onColor="#1976d2"
+                  handleToggle={form.is_public === 0 ? ()=>showData(form): ()=>hideData(form)}
                   />
-                } 
+                }
                 label="Mostrar perfil en la página principal"
               />
             </FormGroup>
