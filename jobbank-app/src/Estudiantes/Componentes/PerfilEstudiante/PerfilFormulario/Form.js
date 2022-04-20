@@ -306,6 +306,7 @@ const CrudForm = ({ updateData, dataToEdit}) => {
   const inputPortfolio = document.getElementById('inputPortfolio');
   const inputEnglishLevel = document.getElementById('inputEnglishLevel');
   const inputVideoLink = document.getElementById('inputVideoLink');
+  const inputDescription = document.getElementById('inputDescription');
 
   // Validate form inputs
 
@@ -565,6 +566,18 @@ const CrudForm = ({ updateData, dataToEdit}) => {
       formIsValid = false;
     } else {
       formEnglishLevel.classList.remove('error');
+    }
+
+    const descriptionvalue = inputDescription.value.trim();
+    const formDescription = document.getElementById('form-description');
+    const errorDescription = document.getElementById('smallDescription');
+
+    if (descriptionvalue === "") {
+      formDescription.className = 'form-control error';
+      errorDescription.innerText = "Complete este campo.";
+      formIsValid = false;
+    } else {
+      formDescription.classList.remove('error');
     }
 
     return formIsValid
@@ -1195,14 +1208,14 @@ const CrudForm = ({ updateData, dataToEdit}) => {
             <small id="smallTwitter"> Error message </small>
           </div>
 
-          <div className='form-control'>
-            <label htmlFor="inputDescription">Descripción</label>
+          <div className='form-control' id="form-description">
+            <label htmlFor="inputDescription">Descripción (*obligatorio)</label>
             <div className='inputFormDiv'>
               <textarea className="form-control" id="inputDescription" rows="10" maxLength={1000} name="description" onChange={ handleChange } value={form.description} />
               <i className="fas fa-check-circle" />
               <i className="fas fa-exclamation-circle" />
             </div>
-            <small> Error message </small>
+            <small id="smallDescription"> Error message </small>
           </div>
 
           <div className='form-control'>
