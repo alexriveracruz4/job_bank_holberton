@@ -44,6 +44,9 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { width } from '@mui/system';
 
+import swal from 'sweetalert';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+
 
 function ItemStudent(props) {
 
@@ -258,6 +261,22 @@ function ItemStudent(props) {
     setOpenOptions(false);
   };
 
+  const urldown = `${apiPath}/downloadcv/` + props.student.cv_filename_logical;
+
+  const Downloadcv = (cv_filename_logical, nombre, apellido) => {
+    if (cv_filename_logical === null) {
+      swal({
+        title: "Lástima",
+        text: `El usuario ${nombre} ${apellido} no ha cargado su CV, intente en otro momento.`,
+        icon: "error",
+        timer:"4000"
+      });      
+    } else {
+      window.open(urldown);
+    }
+  }
+
+
 
   return (
     <React.StrictMode>     
@@ -383,6 +402,7 @@ function ItemStudent(props) {
                           >
                             Contactar
                           </Button>
+                          
                           <Button
                             style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 0px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '0px 4px 4px 0px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}
                             size="small"
@@ -394,7 +414,13 @@ function ItemStudent(props) {
                           >
                             <ArrowDropDownIcon />
                           </Button>
+                          
                         </ButtonGroup>
+                        <Button variant="contained" startIcon={<VisibilityIcon style={{fontSize: '25px'}} />} tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', marginLeft: "10px", textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px', border: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}
+                            onClick={() => Downloadcv(props.student.cv_filename_logical, props.student.firstname, props.student.lastname)} >
+                            Ver CV
+                            <span class="MuiTouchRipple-root"></span>
+                          </Button>
                         <Popper
                           open={open}
                           anchorEl={anchorRef.current}

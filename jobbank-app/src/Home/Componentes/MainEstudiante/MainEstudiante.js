@@ -46,6 +46,10 @@ import { width } from '@mui/system';
 
 import apiPath from "../../../ApiPath";
 
+import swal from 'sweetalert';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+
+
 function MainEstudiante() {
 
   const { idUrl } = useParams()
@@ -62,6 +66,7 @@ function MainEstudiante() {
   const [error, setError] = useState(null);
 
   const [loadingSkills, setLoadingSkills] = useState(false);
+
   const [errorSkills, setErrorSkills] = useState(null);
 
   const obtenerDatosEstudiante = async () => {
@@ -269,6 +274,21 @@ function MainEstudiante() {
       return("no hay")
     }
   };
+
+
+  const Downloadcv = (cv_filename_logical, nombre, apellido, urldown) => {
+    if (cv_filename_logical === null) {
+      swal({
+        title: "Lástima",
+        text: `El usuario ${nombre} ${apellido} no ha cargado su CV, intente en otro momento.`,
+        icon: "error",
+        timer:"4000"
+      });      
+    } else {
+      window.open(urldown);
+    }
+  }
+
   return (
     <main className="padding-main">
       <div classname="div-title-background" id="div-title-background">
@@ -350,7 +370,53 @@ function MainEstudiante() {
                   </div>
                 </div>
                 <Box id="box-buttons" sx={{width: 'max-content', display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: '20px'}}>
-                      <Box style={{ display: 'flex', flexGrow: 1}}>
+                      
+                      {studentData.github &&
+                      <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
+                        <Button variant="contained" startIcon={<GitHubIcon style={{fontSize: '25px'}} />} id="github-button" value={studentData.github} tabindex="0" type="button" target="_blank" href={studentData.github} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                            Github
+                          <span class="MuiTouchRipple-root"></span>
+                        </Button>
+                      </Box>
+                      }
+                      {studentData.linkedin &&
+                      <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
+                        <Button variant="contained" startIcon={<LinkedInIcon style={{fontSize: '25px'}} />} id="linkedin-button" value={studentData.linkedin} tabindex="0" type="button" target="_blank" href={studentData.linkedin} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                            Linkedin
+                          <span class="MuiTouchRipple-root"></span>
+                        </Button>
+                      </Box>
+                      }
+                      {studentData.portfolio &&
+                      <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
+                        <Button variant="contained" startIcon={<WorkOutlineIcon style={{fontSize: '25px'}} />} id="portfolio-button" value={studentData.portfolio} tabindex="0" type="button" target="_blank" href={studentData.portfolio} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                            Portafolio
+                          <span class="MuiTouchRipple-root"></span>
+                        </Button>
+                      </Box>
+                      }
+                      {(studentData.portfolio || studentData.english_level || studentData.linkedin || studentData.github || studentData.english_level) &&
+                        <Divider style={{height: '35px'}} orientation="vertical" />
+                      }
+                      
+                      {studentData.english_level &&
+                      <Box style={{ display: 'flex', marginRight: '20px', marginLeft: '20px', borderLeft: '2px solid #D7D7D7', paddingLeft: '20px', flexGrow: 1}}>
+                        <Button variant="contained" startIcon={<LanguageIcon style={{fontSize: '25px'}} />} id="english-button" value={studentData.english_level} tabindex="0" type="button" style={{ cursor: 'default', minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
+                            Inglés-{studentData.english_level}
+                          <span class="MuiTouchRipple-root"></span></Button>
+                      </Box>
+                      }
+                    </Box>
+                <div className="AllDescriptionContainer">
+                  {studentData.description && 
+                  <Box>
+                    <Typography color='textPrimary' align='left' style={{whiteSpace: 'pre-line', fontSize: '14px', marginTop: '10px', minHeight: '164px', marginBottom: '10px'}}>
+                      {String(studentData.description)}
+                    </Typography>
+                  </Box>
+                  }
+                </div>
+                <Box style={{ display: 'flex', flexGrow: 1}}>
                         <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
                           <Button startIcon={<MailOutlineIcon style={{fontSize: '25px'}} />}
                             style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', borderRadius: '4px 0px 0px 4px', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}
@@ -370,6 +436,16 @@ function MainEstudiante() {
                             <ArrowDropDownIcon />
                           </Button>
                         </ButtonGroup>
+                        <Button variant="contained" startIcon={<VisibilityIcon style={{fontSize: '25px'}} />} tabindex="0" type="button" style={{ minWidth: 'max-content', marginRight: '10px', marginLeft: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}
+                            onClick={() => {
+                              const urldown = `${apiPath}/downloadcv/` + studentData.cv_filename_logical;
+                              Downloadcv(studentData.cv_filename_logical, studentData.firstname, studentData.lastname, urldown);
+                              }
+                            } >
+                            Ver CV
+                            <span class="MuiTouchRipple-root"></span>
+                        </Button>
+                        
                         <Popper
                           open={open}
                           anchorEl={anchorRef.current}
@@ -420,48 +496,6 @@ function MainEstudiante() {
                         */
                         }
                       </Box>
-                      {studentData.github &&
-                      <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
-                        <Button variant="contained" startIcon={<GitHubIcon style={{fontSize: '25px'}} />} id="github-button" value={studentData.github} tabindex="0" type="button" target="_blank" href={studentData.github} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
-                            Github
-                          <span class="MuiTouchRipple-root"></span>
-                        </Button>
-                      </Box>
-                      }
-                      {studentData.linkedin &&
-                      <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
-                        <Button variant="contained" startIcon={<LinkedInIcon style={{fontSize: '25px'}} />} id="linkedin-button" value={studentData.linkedin} tabindex="0" type="button" target="_blank" href={studentData.linkedin} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
-                            Linkedin
-                          <span class="MuiTouchRipple-root"></span>
-                        </Button>
-                      </Box>
-                      }
-                      {studentData.portfolio &&
-                      <Box style={{ display: 'flex', marginLeft: '20px', flexGrow: 1}}>
-                        <Button variant="contained" startIcon={<WorkOutlineIcon style={{fontSize: '25px'}} />} id="portfolio-button" value={studentData.portfolio} tabindex="0" type="button" target="_blank" href={studentData.portfolio} style={{ minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
-                            Portafolio
-                          <span class="MuiTouchRipple-root"></span>
-                        </Button>
-                      </Box>
-                      }
-                      <Divider style={{height: '35px'}} orientation="vertical" />
-                      {studentData.english_level &&
-                      <Box style={{ display: 'flex', marginRight: '20px', marginLeft: '20px', borderLeft: '2px solid #D7D7D7', paddingLeft: '20px', flexGrow: 1}}>
-                        <Button variant="contained" startIcon={<LanguageIcon style={{fontSize: '25px'}} />} id="english-button" value={studentData.english_level} tabindex="0" type="button" style={{ cursor: 'default', minWidth: 'max-content', marginRight: '10px', textTransform: 'capitalize', backgroundColor: '#FF003C', color: '#FFF', boxShadow: '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)', padding: '6px 16px', fontSize: '0.875rem', boxSizing: 'border-box', fontWeight: '500', transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms', fontFamily: 'Roboto,Avenir Medium,Avenir Heavy,Avenir Black,Avenir Light,Avenir Roman,Avenir Book', lineHeight: '1.75', border: '0', margin: '0', display: 'inline-flex', outline: '0', alignItems: 'center', userSelect: 'none', verticalAlign: 'middle', justifyContent: 'center', textDecoration: 'none', WebkitAppearance: 'none', WebkitTapHighlightColor: 'transparent'}}>
-                            Inglés-{studentData.english_level}
-                          <span class="MuiTouchRipple-root"></span></Button>
-                      </Box>
-                      }
-                    </Box>
-                <div className="AllDescriptionContainer">
-                  {studentData.description && 
-                  <Box>
-                    <Typography color='textPrimary' align='left' style={{whiteSpace: 'pre-line', fontSize: '14px', marginTop: '10px', minHeight: '64px', marginBottom: '10px'}}>
-                      {String(studentData.description)}
-                    </Typography>
-                  </Box>
-                  }
-                </div>
               </div>
             </Box>
             <Box
