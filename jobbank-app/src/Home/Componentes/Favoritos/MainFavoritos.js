@@ -95,56 +95,49 @@ function MainFavoritos() {
             Preguntas frecuentes sobre contratar un desarrollador
           </div>
           <div className="Accordion-FAQ">
-            <Accordion>
+          <Accordion>
               <Accordion.Item eventKey="0">
-                <Accordion.Header>¿Cómo contratar el mejor programador?</Accordion.Header>
+                <Accordion.Header>¿Qué es hire holbies?</Accordion.Header>
                 <Accordion.Body>
-                  Con Holberton podrás obtener acceso a nuestra base de graduados e incorporar
-                  a la persona adecuada a tu proyecto, de manera inmediata y con cero costo.
+                  Holberton tiene desarrolladores entrenados en las últimas tecnologías listos para unirse a tu equipo. 
+                  Somos el mejor partner para encontrar el talento que las empresas necesitan para los equipos de tecnología. 
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="1">
-                <Accordion.Header>¿Dónde puedo contratar programadores?</Accordion.Header>
+                <Accordion.Header>¿Cómo encontrar al talento de Holberton?</Accordion.Header>
                 <Accordion.Body>
-                En Holberton ofrecemos los mejores programadores de LATAM, listos para sumarse a tu equipo. 
-                Nuestros graduados fueron entrenados en diversas habilidades técnicas y blandas y están 
-                preparados para desempeñarse en distintos roles y áreas.
+                  Acceda a talento de calidad, ahorra tiempo y dinero permitiendo que nuestro equipo busque candidatos para ti. 
+                  En el perfil de cada talento podrás obtener información sobre las tecnologías que domina, su background, intereses y proyectos. 
+                  Puedes encontrar al candidato ideal según su ubicación, habilidades o nivel de inglés.
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="2">
-                <Accordion.Header>¿Cómo contactar a un programador?</Accordion.Header>
+                <Accordion.Header>¿Por qué contratar al talento de Holberton?</Accordion.Header>
                 <Accordion.Body>
-                Es muy sencillo. Para contactar a un programador desde nuestra plataforma, 
-                solo tienes que clickear el botón “Contactar” en el perfil del candidato que 
-                te haya interesado. Podrás enviarle un correo electrónico y realizarle una 
-                propuesta directamente.
+                  <ol>
+                    Trabajamos arduamente para identificar el mejor talento, así tu empresa ahorra tiempo, esfuerzos y recursos para encontrarlo.
+                    <li>
+                      <span>Entendemos tus necesidades:</span> Te compartimos perfiles que hacen match con tu vacante.
+                    </li>
+                    <li>
+                      <span>Acompañamos tu reclutamiento:</span> Te apoyamos en todas las etapas de búsqueda del mejor talento tech.
+                    </li>
+                    <li>
+                      <span>Perfiles listos para trabajar:</span> Nuestro bootcamp simula un entorno laboral con cultura de trabajo ágil.
+                    </li>
+                    <li>
+                      <span>Cero costo:</span> en todo este proceso nosotros no cobramos nada.
+                    </li>
+                  </ol> 
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="3">
-                <Accordion.Header>¿Cómo encontrar desarrolladores?</Accordion.Header>
+                <Accordion.Header>¿Cómo contactar a un talento de Holberton?</Accordion.Header>
                 <Accordion.Body>
-                Nuestra plataforma te permite acceder al mejor talento y realizarles una oferta directa. 
-                En su perfil podrás obtener información sobre las tecnologías que domina, su background, 
-                intereses y proyectos. Puedes encontrar al candidato ideal según su ubicación, 
-                habilidades o nivel de inglés.
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="4">
-                <Accordion.Header>¿Dónde encontrar programadores freelance?</Accordion.Header>
-                <Accordion.Body>
-                En Holberton se encuentra disponible todo nuestro talento, listo para sumarse a tu equipo. 
-                Contacta al candidato ideal para contarle tu proyecto y contrata de inmediato, 
-                sin intermediarios.
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="5">
-                <Accordion.Header>¿Qué es Holberton?</Accordion.Header>
-                <Accordion.Body>
-                Holberton es una escuela de programación creada en el 2016 en Silicon Valley, 
-                con el propósito de insertar rápidamente a los estudiantes al mercado laboral como 
-                desarrolladores full stack. Holberton, elimina las barreras económicas de acceso a 
-                educación de calidad y además prepara en 9 meses (a diferencia de institutos o 
-                universidades que demoran 3 a 5 años) a los alumnos para que puedan trabajar.
+                  Nuestra plataforma es muy amigable, 
+                  para contactar a un programador solo tienes que seleccionar el botón “Contactar” 
+                  en el perfil del candidato que te haya interesado. 
+                  Podrás enviarle un correo electrónico y realizarle una propuesta directamente.
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>

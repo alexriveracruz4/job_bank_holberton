@@ -184,6 +184,15 @@
     width: 100%;
 }
 
+.Accordion-FAQ li {
+    margin-left: 20px;
+    list-style-type: '- ';
+}
+
+.Accordion-FAQ li span {
+    font-weight: 600;
+}
+
 .accordion-item:first-of-type {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
