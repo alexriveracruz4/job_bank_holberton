@@ -632,7 +632,6 @@ function MainEstudiante() {
               <Accordion.Item eventKey="2">
                 <Accordion.Header>¿Por qué contratar al talento de Holberton?</Accordion.Header>
                 <Accordion.Body>
-                  <ol>
                     Trabajamos arduamente para identificar el mejor talento, así tu empresa ahorra tiempo, esfuerzos y recursos para encontrarlo.
                     <li>
                       <span>Entendemos tus necesidades:</span> Te compartimos perfiles que hacen match con tu vacante.
@@ -646,7 +645,6 @@ function MainEstudiante() {
                     <li>
                       <span>Cero costo:</span> en todo este proceso nosotros no cobramos nada.
                     </li>
-                  </ol> 
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="3">
