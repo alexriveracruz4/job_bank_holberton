@@ -105,3 +105,9 @@
   align-items: center;
   margin: 15px;
 }
+
+/* Description title */
+.description-title {
+  display: flex;
+  flex-direction: row;
+}

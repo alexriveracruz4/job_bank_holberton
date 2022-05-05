@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import CardMedia from '@mui/material/CardMedia';
 import Cookies from 'universal-cookie';
 import Countries from "../../../../helpers/Countries.json"
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import UserIcon from "../../../Navegador/ImagenesNav/user-icon.png"
 import "./Form.css"
@@ -22,6 +23,8 @@ import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
+
+import NewModalDescription from './ModalDescription';
 
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -1209,7 +1212,10 @@ const CrudForm = ({ updateData, dataToEdit}) => {
           </div>
 
           <div className='form-control' id="form-description">
-            <label htmlFor="inputDescription">Descripción (*obligatorio)</label>
+            <div className='description-title'>
+              <label htmlFor="inputDescription">Descripción (*obligatorio)</label>
+              <NewModalDescription />
+            </div>
             <div className='inputFormDiv'>
               <textarea className="form-control" id="inputDescription" rows="10" maxLength={1000} name="description" onChange={ handleChange } value={form.description} />
               <i className="fas fa-check-circle" />
