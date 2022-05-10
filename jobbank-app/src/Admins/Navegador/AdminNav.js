@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 //import './AdminNav.css';
 import logo from "./ImagenesNav/holberton-logo.png";
-import UserIcon from "./ImagenesNav/user-icon.png";
+import UserIcon from "./ImagenesNav/user-icon-nav.png";
 import { useHistory } from 'react-router-dom'; 
 import Cookies from 'universal-cookie';
 import { useAuth0 } from "@auth0/auth0-react";

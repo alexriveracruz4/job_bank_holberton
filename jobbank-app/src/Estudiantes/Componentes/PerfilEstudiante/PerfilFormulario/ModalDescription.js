@@ -5,9 +5,10 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { height } from '@mui/system';
+import { styled } from '@mui/material/styles';
 
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -60,6 +61,8 @@ export default function NewModalDescription() {
   )
   
 
+
+/*
   return (
     <div className='modal-description' style={{display: 'flex', alignItems: 'center', transform: "rotate(-180deg)", margin: '0px 5px'}}>
       <div className='information-icon' style={{color: '#1b0c61'}}>
@@ -76,4 +79,30 @@ export default function NewModalDescription() {
       </div>
     </div>
   );
+}
+*/
+
+const CustomWidthTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 600,
+  },
+});
+
+const longText = `En esta sección podrás resaltar que es lo que te apasiona, contar sobre tu experiencia previa y finalmente invitar a los Hiring Partners a que te contacten. Si lo consideras necesario, también puedes agregar algo adicional que consideres importante resaltar sobre tu perfil. Por ejemplo:
+
+¡Hola! Soy Erika, Full-Stack Developer, me apasiona la tecnología y particularmente el front-end, ¡Puedo pasarme horas programando! Me destaco en mi capacidad de trabajar en equipo, aprender constantemente y compromiso.
+          Estudié psicología, pero desde muy pequeña me gusta la programación, decidí cambiarme de carrera hace 2 años. 
+          Desde entonces he trabajado como programadora front-end en varias empresas.
+          Si deseas charlar conmigo acerca de cómo podría ayudar, colaborar y potenciar a tu empresa, no dudes en contactarme.
+          `;
+
+return (
+  <div className='modal-description' style={{display: 'flex', alignItems: 'center', transform: "rotate(-180deg)", margin: '0px 5px'}}>
+  <CustomWidthTooltip title={<span style={{ whiteSpace: 'pre-line' }}>{longText}</span>}>
+    <ErrorOutlineIcon type="button" onClick={()=> abrirCerrarDescriptionModal()} />
+  </CustomWidthTooltip>    
+  </div>
+);
 }
