@@ -14,26 +14,25 @@ import Input from "@material-ui/core/Input";
 
 const cookies = new Cookies();
 
-// Form with empty string start
-const AdminID = cookies.get("admin_id");
-
-const initailForm = {
-  name: "",
-  description:"",
-  email: "",
-  nation: "",
-  phonenumber: "",
-  region: "",
-  web: "",
-  password: "",
-  created_by: parseInt(AdminID),
-  updated_by: parseInt(AdminID),
-};
-
 const CrudForm = ({ createData }) => {
-
   // Adding state to fill the form
   const history = useHistory();
+  // Form with empty string start
+  const AdminID = cookies.get("admin_id");
+
+  const initailForm = {
+    name: "",
+    description:"",
+    email: "",
+    nation: "",
+    phonenumber: "",
+    region: "",
+    web: "",
+    password: "",
+    created_by: parseInt(AdminID),
+    updated_by: parseInt(AdminID),
+  };
+
   const [form, setForm] = useState(initailForm);
 
   const handleChange = (e) => {
