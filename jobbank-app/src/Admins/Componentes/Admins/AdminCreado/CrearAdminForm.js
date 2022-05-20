@@ -10,20 +10,19 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Input from "@material-ui/core/Input";
 
-
-
-// Form with empty string start
-const initailForm = {
-  firstname: "",
-  lastname:"",
-  email: "",
-  password: ""
-};
-
 const CrudForm = ({ createData }) => {
 
   // Adding state to fill the form
   const history = useHistory();
+
+  // Form with empty string start
+  const initailForm = {
+    firstname: "",
+    lastname:"",
+    email: "",
+    password: ""
+  };
+
   const [form, setForm] = useState(initailForm);
 
   const handleChange = (e) => {
