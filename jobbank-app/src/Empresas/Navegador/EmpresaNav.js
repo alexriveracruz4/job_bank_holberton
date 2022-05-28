@@ -19,7 +19,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Mis puestos de trabajo', 'Agregar puesto de trabajo'];
+const pages = ['Mis puestos de trabajo', 'Agregar puesto de trabajo', 'Ver candidatos'];
 const settings = ['Editar Perfil', 'Cerrar Sesión'];
 
 const cookies = new Cookies();
@@ -88,6 +88,10 @@ function EmpresaNav() {
     } 
     if (page === 'Agregar puesto de trabajo'){
       history.push("/empresa/nuevo-puesto-de-trabajo");
+    }
+    if (page === 'Ver candidatos'){
+      const win = window.open("/home", "_blank");
+      win.focus()
     }
   };
 
